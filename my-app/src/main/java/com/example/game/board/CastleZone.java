@@ -9,6 +9,8 @@ public class CastleZone {
     private Wall manaWall;      // 法力區
     private Wall playWall;      // 出牌區
     
+    private static final int MAX_TOTAL_TOKENS = 10; // 所有牆的最大Token總數
+    
     /**
      * 城牆 - 每個城牆是一個獨立的戰場
      */
@@ -16,7 +18,6 @@ public class CastleZone {
         private String name;
         private int tokenCount;
         private int health;     // 城牆生命值
-        private static final int MAX_TOKENS = 10;
         private static final int MAX_HEALTH = 10; // 最大生命值
         
         public Wall(String name) {
@@ -26,11 +27,8 @@ public class CastleZone {
         }
         
         public boolean addToken() {
-            if (tokenCount < MAX_TOKENS) {
-                tokenCount++;
-                return true;
-            }
-            return false; // 已達到最大Token數
+            tokenCount++;
+            return true;
         }
         
         public int getTokenCount() {
@@ -119,11 +117,24 @@ public class CastleZone {
     }
     
     /**
+     * 獲取當前所有城牆的Token總數
+     */
+    public int getTotalTokenCount() {
+        return drawWall.getTokenCount() + manaWall.getTokenCount() + playWall.getTokenCount();
+    }
+    
+    /**
      * 向指定區域添加一個Token
      * @param wallType 城牆類型：1=抽牌區, 2=法力區, 3=出牌區
      * @return 是否成功添加
      */
     public boolean addTokenToWall(int wallType) {
+        // 檢查是否已達到Token總數上限
+        if (getTotalTokenCount() >= MAX_TOTAL_TOKENS) {
+            System.out.println("所有城牆Token總數已達上限 (" + MAX_TOTAL_TOKENS + ")!");
+            return false;
+        }
+        
         switch (wallType) {
             case 1: return drawWall.addToken();
             case 2: return manaWall.addToken();
@@ -159,12 +170,12 @@ public class CastleZone {
      * 顯示城堡區狀態
      */
     public void displayStatus() {
-        System.out.println("城堡區狀態:");
-        System.out.println("- " + drawWall.getName() + ": " + drawWall.getTokenCount() + "/10 個Token" + 
+        System.out.println("城堡區狀態: (Token總數: " + getTotalTokenCount() + "/" + MAX_TOTAL_TOKENS + ")");
+        System.out.println("- " + drawWall.getName() + ": " + drawWall.getTokenCount() + " 個Token" + 
                           ", 生命值: " + drawWall.getHealth() + "/" + drawWall.getMaxHealth());
-        System.out.println("- " + manaWall.getName() + ": " + manaWall.getTokenCount() + "/10 個Token" + 
+        System.out.println("- " + manaWall.getName() + ": " + manaWall.getTokenCount() + " 個Token" + 
                           ", 生命值: " + manaWall.getHealth() + "/" + manaWall.getMaxHealth());
-        System.out.println("- " + playWall.getName() + ": " + playWall.getTokenCount() + "/10 個Token" + 
+        System.out.println("- " + playWall.getName() + ": " + playWall.getTokenCount() + " 個Token" + 
                           ", 生命值: " + playWall.getHealth() + "/" + playWall.getMaxHealth());
     }
 } 

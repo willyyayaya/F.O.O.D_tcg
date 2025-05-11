@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.example.game.board.GameBoard;
 import com.example.game.card.Card;
+import com.example.game.card.CardLibrary;
 import com.example.game.card.CharacterCard;
 import com.example.game.player.Player;
 
@@ -21,12 +22,18 @@ public class FOODGameEngine {
     // 靜態引用，方便其他類（如卡牌圖鑑）訪問當前遊戲實例
     private static FOODGameEngine currentGameInstance;
     
+    // 新增變數追蹤玩家是否已放置Token
+    private boolean hasPlacedTokenThisTurn;
+    
     public FOODGameEngine() {
         this.gameBoard = new GameBoard();
         this.gameOver = false;
         this.turnNumber = 1;
         // 設置當前遊戲實例
         currentGameInstance = this;
+        
+        // 初始化卡牌圖鑑
+        initializeCardLibrary();
     }
     
     // 靜態方法獲取當前玩家1
@@ -50,18 +57,26 @@ public class FOODGameEngine {
     public void start() {
         System.out.println("歡迎來到 F.O.O.D TCG - 食物擬人對戰卡牌遊戲!");
         
-        // 初始化卡牌圖鑑
-        initializeCardLibrary();
-        System.out.println("卡牌圖鑑已初始化，開始遊戲...");
-        
         initializePlayers();
         gameLoop();
     }
     
     private void initializeCardLibrary() {
-        // 如果已有卡牌圖鑑類，則調用其初始化方法
-        // 暫時簡單處理
-        System.out.println("初始化F.O.O.D TCG卡牌圖鑑...");
+        System.out.println("正在初始化 F.O.O.D TCG 卡牌圖鑑...");
+        // 調用卡牌圖鑑的初始化方法
+        CardLibrary.initialize();
+        
+        // 驗證初始化結果
+        int totalCards = CardLibrary.getAllCharacters().size() + 
+                         CardLibrary.getAllTechniques().size() + 
+                         CardLibrary.getAllMinions().size() + 
+                         CardLibrary.getAllSpells().size();
+        
+        System.out.println("F.O.O.D TCG卡牌圖鑑初始化完成，共有 " + totalCards + " 張卡牌");
+        System.out.println("- 角色卡: " + CardLibrary.getAllCharacters().size() + " 張");
+        System.out.println("- 技術卡: " + CardLibrary.getAllTechniques().size() + " 張");
+        System.out.println("- 隨從卡: " + CardLibrary.getAllMinions().size() + " 張");
+        System.out.println("- 法術卡: " + CardLibrary.getAllSpells().size() + " 張");
     }
     
     private void initializePlayers() {
@@ -89,10 +104,21 @@ public class FOODGameEngine {
             while (true) {
                 displayGameState();
                 System.out.println(currentPlayer.getName() + " 的回合。請選擇操作:");
-                System.out.println("1.放置新Token 2.出牌 3.戰鬥 4.查看手牌 5.結束回合");
+                
+                // 根據是否已放置Token調整選單選項
+                if (!hasPlacedTokenThisTurn) {
+                    System.out.println("1.放置新Token 7.結束回合");
+                } else {
+                    System.out.println("1.(已放置Token) 2.出牌 3.戰鬥 4.查看手牌 5.查看卡牌圖鑑 6.查看場上角色 7.結束回合");
+                }
                 
                 try {
                     int choice = scanner.nextInt();
+                    
+                    if (!hasPlacedTokenThisTurn && (choice > 1 && choice < 7)) {
+                        System.out.println("您必須先放置新Token才能進行其他操作!");
+                        continue;
+                    }
                     
                     switch (choice) {
                         case 1:
@@ -105,9 +131,15 @@ public class FOODGameEngine {
                             battle();
                             break;
                         case 4:
-                            gameBoard.displayPlayerHand(currentPlayer);
+                            currentPlayer.displayHandDetailed();
                             break;
                         case 5:
+                            CardLibrary.showLibrary();
+                            break;
+                        case 6:
+                            gameBoard.displayBattlefieldDetails(player1, player2, currentPlayer);
+                            break;
+                        case 7:
                             // 結束回合
                             break;
                         default:
@@ -115,7 +147,7 @@ public class FOODGameEngine {
                             continue;
                     }
                     
-                    if (choice == 5) {
+                    if (choice == 7) {
                         break; // 結束當前回合
                     }
                 } catch (Exception e) {
@@ -136,25 +168,74 @@ public class FOODGameEngine {
         System.out.println("======= 回合 " + turnNumber + " =======");
         System.out.println(currentPlayer.getName() + " 的回合開始");
         
-        // 回合開始時抽一張牌
-        currentPlayer.drawCard();
-        
         // 回合開始時的處理
         currentPlayer.startNewTurn();
+        
+        // 重置Token放置狀態
+        hasPlacedTokenThisTurn = false;
+        
+        // 不再自動獲得資源，需要先放置Token
+        System.out.println(currentPlayer.getName() + " 需要先放置新Token才能獲得資源");
     }
     
     private void placeNewToken() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("選擇要放置新Token的城牆:");
-        System.out.println("1.抽牌區 2.法力區 3.出牌區");
+        
+        // 檢查是否已經放置過Token
+        if (hasPlacedTokenThisTurn) {
+            System.out.println("您本回合已經放置過Token了，每回合只能放置一次!");
+            return;
+        }
+        
+        // 先獲取當前 Token 總數
+        int totalTokens = currentPlayer.getCastleZone().getTotalTokenCount();
+        int maxTokens = 10; // 最大 Token 總數
+        
+        System.out.println("選擇要放置新Token的城牆 (當前總數: " + totalTokens + "/" + maxTokens + "):");
+        System.out.println("1.抽牌區 (當前: " + currentPlayer.getCastleZone().getDrawWall().getTokenCount() + " 個 Token，影響每回合抽牌數)");
+        System.out.println("2.法力區 (當前: " + currentPlayer.getCastleZone().getManaWall().getTokenCount() + " 個 Token，影響每回合法力值)");
+        System.out.println("3.出牌區 (當前: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + " 個 Token，影響每回合出牌數)");
         
         try {
             int wallType = scanner.nextInt();
             if (wallType >= 1 && wallType <= 3) {
                 if (currentPlayer.placeNewToken(wallType)) {
                     System.out.println("Token放置成功!");
+                    
+                    // 設定已放置Token狀態
+                    hasPlacedTokenThisTurn = true;
+                    
+                    // 根據抽牌區的 Token 數量抽牌
+                    int drawAmount = currentPlayer.getCastleZone().getDrawWall().getTokenCount();
+                    System.out.println(currentPlayer.getName() + " 根據抽牌區的 " + drawAmount + " 個 Token 抽 " + drawAmount + " 張牌");
+                    for (int i = 0; i < drawAmount; i++) {
+                        currentPlayer.drawCard();
+                    }
+                    
+                    // 根據法力區 Token 更新法力值
+                    int manaTokens = currentPlayer.getCastleZone().getManaWall().getTokenCount();
+                    currentPlayer.updateManaPoints(manaTokens);
+                    
+                    // 根據出牌區 Token 更新最大出牌數
+                    int playTokens = currentPlayer.getCastleZone().getPlayWall().getTokenCount();
+                    currentPlayer.updateMaxCardsToPlay(playTokens);
+                    
+                    // 顯示放置後的效果說明
+                    String effectDescription = "";
+                    switch (wallType) {
+                        case 1: 
+                            effectDescription = "本回合抽了 " + drawAmount + " 張牌";
+                            break;
+                        case 2: 
+                            effectDescription = "本回合獲得了 " + manaTokens + " 點法力值";
+                            break;
+                        case 3: 
+                            effectDescription = "本回合可出 " + playTokens + " 張牌";
+                            break;
+                    }
+                    System.out.println(effectDescription);
                 } else {
-                    System.out.println("該城牆Token已達上限，請選擇其他城牆!");
+                    System.out.println("Token放置失敗，可能已達到總數上限(10個)");
                 }
             } else {
                 System.out.println("選擇無效，請輸入1-3的數字!");
@@ -167,6 +248,12 @@ public class FOODGameEngine {
     private void playCard() {
         Scanner scanner = new Scanner(System.in);
         
+        // 檢查出牌次數限制
+        if (currentPlayer.getCardsPlayedThisTurn() >= currentPlayer.getMaxCardsToPlay()) {
+            System.out.println("本回合出牌次數已達上限! (" + currentPlayer.getCardsPlayedThisTurn() + "/" + currentPlayer.getMaxCardsToPlay() + ")");
+            return;
+        }
+        
         // 顯示玩家手牌
         gameBoard.displayPlayerHand(currentPlayer);
         
@@ -174,6 +261,10 @@ public class FOODGameEngine {
             System.out.println("您沒有手牌可以打出!");
             return;
         }
+        
+        // 顯示當前資源
+        System.out.println("\n當前法力值: " + currentPlayer.getManaPoints());
+        System.out.println("出牌數: " + currentPlayer.getCardsPlayedThisTurn() + "/" + currentPlayer.getMaxCardsToPlay());
         
         try {
             System.out.println("選擇要打出的手牌 (1-" + currentPlayer.getHand().size() + "):");
@@ -188,22 +279,22 @@ public class FOODGameEngine {
             Card selectedCard = currentPlayer.getHand().get(cardIndex);
             selectedCard.displayCardDetails();
             
-            System.out.println("選擇要消耗Token的城牆:");
-            System.out.println("1.抽牌區 (當前Token: " + currentPlayer.getCastleZone().getDrawWall().getTokenCount() + ")");
-            System.out.println("2.法力區 (當前Token: " + currentPlayer.getCastleZone().getManaWall().getTokenCount() + ")");
-            System.out.println("3.出牌區 (當前Token: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + ")");
-            System.out.println("0.取消");
+            // 檢查法力值是否足夠
+            if (selectedCard.getTokenCost() > currentPlayer.getManaPoints()) {
+                System.out.println("法力值不足! 需要: " + selectedCard.getTokenCost() + ", 實際有: " + currentPlayer.getManaPoints());
+                return;
+            }
             
-            int wallChoice = scanner.nextInt();
+            System.out.println("確認打出卡牌? (1=是, 0=否)");
+            int confirm = scanner.nextInt();
             
-            if (wallChoice >= 1 && wallChoice <= 3) {
-                if (currentPlayer.playCard(cardIndex, wallChoice)) {
+            if (confirm == 1) {
+                // 傳入 0 作為 wallType 參數，因為現在不再使用它
+                if (currentPlayer.playCard(cardIndex, 0)) {
                     System.out.println("成功打出卡牌!");
                 }
-            } else if (wallChoice == 0) {
-                System.out.println("取消出牌");
             } else {
-                System.out.println("無效的城牆選擇!");
+                System.out.println("取消出牌");
             }
         } catch (Exception e) {
             System.out.println("輸入錯誤! " + e.getMessage());
@@ -300,6 +391,22 @@ public class FOODGameEngine {
     
     private void displayGameState() {
         gameBoard.displayBoard(player1, player2, currentPlayer);
+        
+        // 顯示當前玩家的資源資訊
+        System.out.println("\n" + currentPlayer.getName() + " 的資源:");
+        
+        if (hasPlacedTokenThisTurn) {
+            System.out.println("- 法力值: " + currentPlayer.getManaPoints());
+            System.out.println("- 出牌次數: " + currentPlayer.getCardsPlayedThisTurn() + "/" + currentPlayer.getMaxCardsToPlay());
+        } else {
+            System.out.println("- 尚未放置Token，請先放置Token以獲得本回合資源");
+        }
+        
+        // 顯示城堡區狀態
+        System.out.println("\n" + currentPlayer.getName() + " 的城堡區:");
+        System.out.println("- 抽牌區: " + currentPlayer.getCastleZone().getDrawWall().getTokenCount() + " 個 Token (影響額外抽牌數)");
+        System.out.println("- 法力區: " + currentPlayer.getCastleZone().getManaWall().getTokenCount() + " 個 Token (影響額外法力值)"); 
+        System.out.println("- 出牌區: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + " 個 Token (影響出牌上限)");
     }
     
     private void endTurn() {

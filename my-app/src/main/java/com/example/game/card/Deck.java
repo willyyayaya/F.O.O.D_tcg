@@ -79,7 +79,7 @@ public class Deck {
                     cost, 
                     "一個隨機生成的食物角色", 
                     rarity, 
-                    attack,
+                    attack, 
                     defense,
                     health,
                     isOffensive);

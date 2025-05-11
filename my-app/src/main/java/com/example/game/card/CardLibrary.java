@@ -20,6 +20,13 @@ public class CardLibrary {
      * 初始化卡牌圖鑑
      */
     public static void initialize() {
+        // 先清空現有卡牌，防止重複初始化
+        allCards.clear();
+        allMinions.clear();
+        allSpells.clear();
+        allCharacters.clear();
+        allTechniques.clear();
+        
         // 初始化一些預設卡牌
         initializeMinions();
         initializeSpells();
@@ -27,20 +34,27 @@ public class CardLibrary {
         initializeTechniques();
         
         System.out.println("卡牌圖鑑初始化完成，共 " + allCards.size() + " 張卡牌。");
+        System.out.println("其中角色卡: " + allCharacters.size() + " 張，技術卡: " + allTechniques.size() + " 張");
     }
     
     /**
      * 初始化隨從卡
      */
     private static void initializeMinions() {
-        // 保持空方法但不再添加隨從卡
+        // 這裡可以添加一些基本的隨從卡（如果需要）
+        addMinion(new Minion("小麵包", 1, "基礎隨從，適合新手使用", Rarity.COMMON, 1, 2));
+        addMinion(new Minion("奶油餅乾", 2, "香甜可口的餅乾隨從", Rarity.COMMON, 2, 2));
+        addMinion(new Minion("蔬菜沙拉", 3, "健康的蔬菜組合，恢復生命", Rarity.COMMON, 2, 3));
     }
     
     /**
      * 初始化法術卡
      */
     private static void initializeSpells() {
-        // 保持空方法但不再添加法術卡
+        // 添加幾張基本法術卡
+        addSpell(new SpellCard("烹飪指南", 1, "抽一張卡牌", Rarity.COMMON, SpellType.DRAW));
+        addSpell(new SpellCard("食材採購", 3, "抽兩張卡牌", Rarity.COMMON, SpellType.DRAW));
+        addSpell(new SpellCard("美食評論", 2, "對目標造成2點傷害", Rarity.COMMON, SpellType.DAMAGE));
     }
     
     /**
@@ -163,14 +177,29 @@ public class CardLibrary {
     public static void showLibrary() {
         Scanner scanner = new Scanner(System.in);
         
+        // 檢查圖鑑是否為空
+        if (allCards.isEmpty()) {
+            System.out.println("卡牌圖鑑為空，正在初始化...");
+            initialize();
+            
+            // 檢查初始化後的狀態
+            if (allCards.isEmpty()) {
+                System.out.println("錯誤：無法初始化卡牌圖鑑！");
+                System.out.println("按Enter返回...");
+                scanner.nextLine();
+                return;
+            }
+        }
+        
         while (true) {
             System.out.println("\n======= 卡牌圖鑑 =======");
-            System.out.println("1. 瀏覽所有隨從卡");
-            System.out.println("2. 瀏覽所有法術卡");
-            System.out.println("3. 瀏覽所有角色卡");
-            System.out.println("4. 瀏覽所有烹飪技術卡");
+            System.out.println("卡牌總數: " + allCards.size() + " 張");
+            System.out.println("1. 瀏覽所有隨從卡 (" + allMinions.size() + " 張)");
+            System.out.println("2. 瀏覽所有法術卡 (" + allSpells.size() + " 張)");
+            System.out.println("3. 瀏覽所有角色卡 (" + allCharacters.size() + " 張)");
+            System.out.println("4. 瀏覽所有烹飪技術卡 (" + allTechniques.size() + " 張)");
             System.out.println("5. 搜尋卡牌");
-            System.out.println("6. 查看場上隨從詳情");
+            System.out.println("6. 查看場上角色詳情");
             System.out.println("7. 查看玩家手牌");
             System.out.println("0. 返回");
             System.out.print("請選擇: ");
@@ -214,6 +243,13 @@ public class CardLibrary {
     private static void browseMinions() {
         Scanner scanner = new Scanner(System.in);
         
+        if (allMinions.isEmpty()) {
+            System.out.println("\n目前沒有隨從卡可供瀏覽");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
+        
         while (true) {
             System.out.println("\n隨從卡列表 (共 " + allMinions.size() + " 張):");
             for (int i = 0; i < allMinions.size(); i++) {
@@ -248,6 +284,13 @@ public class CardLibrary {
     private static void browseSpells() {
         Scanner scanner = new Scanner(System.in);
         
+        if (allSpells.isEmpty()) {
+            System.out.println("\n目前沒有法術卡可供瀏覽");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
+        
         while (true) {
             System.out.println("\n法術卡列表 (共 " + allSpells.size() + " 張):");
             for (int i = 0; i < allSpells.size(); i++) {
@@ -280,6 +323,13 @@ public class CardLibrary {
      */
     private static void browseCharacters() {
         Scanner scanner = new Scanner(System.in);
+        
+        if (allCharacters.isEmpty()) {
+            System.out.println("\n目前沒有角色卡可供瀏覽");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
         
         while (true) {
             System.out.println("\n角色卡列表 (共 " + allCharacters.size() + " 張):");
@@ -314,6 +364,13 @@ public class CardLibrary {
      */
     private static void browseTechniques() {
         Scanner scanner = new Scanner(System.in);
+        
+        if (allTechniques.isEmpty()) {
+            System.out.println("\n目前沒有烹飪技術卡可供瀏覽");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
         
         while (true) {
             System.out.println("\n烹飪技術卡列表 (共 " + allTechniques.size() + " 張):");
