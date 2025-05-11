@@ -1,16 +1,16 @@
 package com.example;
 
-import com.example.game.GameEngine;
+import com.example.game.FOODGameEngine;
 
 /**
- * TCG卡牌遊戲主程式
+ * F.O.O.D TCG 食物擬人對戰卡牌遊戲主程式
  */
 public class App 
 {
     public static void main( String[] args )
     {
-        System.out.println( "啟動卡牌遊戲引擎..." );
-        GameEngine gameEngine = new GameEngine();
+        System.out.println( "啟動 F.O.O.D TCG 遊戲引擎..." );
+        FOODGameEngine gameEngine = new FOODGameEngine();
         gameEngine.start();
     }
 }

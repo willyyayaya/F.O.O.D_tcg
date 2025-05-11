@@ -21,25 +21,25 @@ public class Deck {
      */
     public void initialize() {
         // 從卡牌圖鑑中獲取所有可用卡牌
-        List<Minion> allMinions = CardLibrary.getAllMinions();
-        List<SpellCard> allSpells = CardLibrary.getAllSpells();
+        List<CharacterCard> allCharacters = CardLibrary.getAllCharacters();
+        List<TechniqueCard> allTechniques = CardLibrary.getAllTechniques();
         
-        if (allMinions.isEmpty() && allSpells.isEmpty()) {
+        if (allCharacters.isEmpty() && allTechniques.isEmpty()) {
             System.out.println("卡牌圖鑑尚未初始化，使用隨機生成的卡牌");
             initializeRandom();
             return;
         }
         
-        // 從卡牌圖鑑中選擇20張隨從卡
-        int minionCount = Math.min(20, allMinions.size());
-        for (int i = 0; i < minionCount; i++) {
-            cards.add(copyCard(allMinions.get(i % allMinions.size())));
+        // 從卡牌圖鑑中選擇20張角色卡
+        int characterCount = Math.min(20, allCharacters.size());
+        for (int i = 0; i < characterCount; i++) {
+            cards.add(copyCard(allCharacters.get(i % allCharacters.size())));
         }
         
-        // 從卡牌圖鑑中選擇10張法術卡
-        int spellCount = Math.min(10, allSpells.size());
-        for (int i = 0; i < spellCount; i++) {
-            cards.add(copyCard(allSpells.get(i % allSpells.size())));
+        // 從卡牌圖鑑中選擇10張烹飪技術卡
+        int techniqueCount = Math.min(10, allTechniques.size());
+        for (int i = 0; i < techniqueCount; i++) {
+            cards.add(copyCard(allTechniques.get(i % allTechniques.size())));
         }
         
         System.out.println("牌組初始化完成，共有 " + cards.size() + " 張卡牌");
@@ -49,16 +49,18 @@ public class Deck {
      * 初始化隨機牌組，用於卡牌圖鑑尚未初始化的情況
      */
     private void initializeRandom() {
-        // 在這裡，我們簡單地生成一些隨機卡牌
+        // 在這裡，我們生成一些隨機卡牌
         // 實際遊戲中，牌組應該是預設的或由玩家構建的
         
         Random random = new Random();
         
-        // 生成一些隨從卡
+        // 生成角色卡
         for (int i = 0; i < 20; i++) {
             int cost = random.nextInt(10) + 1; // 1-10費
             int attack = cost + random.nextInt(3) - 1; // 費用±1的攻擊力
-            int health = cost + random.nextInt(3) - 1; // 費用±1的生命值
+            int defense = random.nextInt(3); // 0-2的防禦力
+            int health = cost + random.nextInt(3); // 費用+0到2的生命值
+            boolean isOffensive = random.nextBoolean(); // 隨機決定是否為進攻型
             
             Rarity rarity;
             double rarityRoll = random.nextDouble();
@@ -72,31 +74,22 @@ public class Deck {
                 rarity = Rarity.LEGENDARY;
             }
             
-            Minion minion = new Minion(
-                    "隨從 #" + (i+1), 
+            CharacterCard character = new CharacterCard(
+                    "食物角色 #" + (i+1), 
                     cost, 
-                    "一個普通的隨從", 
+                    "一個隨機生成的食物角色", 
                     rarity, 
-                    attack, 
-                    health);
+                    attack,
+                    defense,
+                    health,
+                    isOffensive);
             
-            // 隨機添加特效
-            if (random.nextDouble() < 0.2) {
-                minion.setTaunt(true);
-            }
-            if (random.nextDouble() < 0.15) {
-                minion.setDivineShield(true);
-            }
-            if (random.nextDouble() < 0.1) {
-                minion.setCharge(true);
-            }
-            
-            cards.add(minion);
+            cards.add(character);
         }
         
-        // 生成一些法術卡
+        // 生成烹飪技術卡
         for (int i = 0; i < 10; i++) {
-            int cost = random.nextInt(10) + 1; // 1-10費
+            int cost = random.nextInt(8) + 1; // 1-8費
             
             Rarity rarity;
             double rarityRoll = random.nextDouble();
@@ -104,20 +97,29 @@ public class Deck {
                 rarity = Rarity.COMMON;
             } else if (rarityRoll < 0.85) {
                 rarity = Rarity.RARE;
-            } else if (rarityRoll < 0.97) {
-                rarity = Rarity.EPIC;
             } else {
-                rarity = Rarity.LEGENDARY;
+                rarity = Rarity.EPIC;
             }
             
-            SpellCard spell = new SpellCard(
-                    "法術 #" + (i+1), 
-                    cost, 
-                    "一個普通的法術", 
-                    rarity,
-                    SpellType.DAMAGE); // 簡化處理，默認為傷害型法術
+            // 隨機選擇技術類型
+            TechniqueType[] types = TechniqueType.values();
+            TechniqueType techniqueType = types[random.nextInt(types.length)];
             
-            cards.add(spell);
+            int effectValue = cost + random.nextInt(3); // 效果值基於費用
+            int duration = (techniqueType == TechniqueType.BOOST_ATTACK || 
+                           techniqueType == TechniqueType.BOOST_DEFENSE) ? 
+                           random.nextInt(3) + 1 : 0; // 僅增益效果有持續時間
+            
+            TechniqueCard technique = new TechniqueCard(
+                    "烹飪技術 #" + (i+1), 
+                    cost, 
+                    "一個隨機生成的烹飪技術", 
+                    rarity,
+                    techniqueType,
+                    effectValue,
+                    duration);
+            
+            cards.add(technique);
         }
         
         System.out.println("牌組隨機初始化完成，共有 " + cards.size() + " 張卡牌");
@@ -131,7 +133,7 @@ public class Deck {
             Minion originalMinion = (Minion) original;
             Minion copy = new Minion(
                     originalMinion.getName(),
-                    originalMinion.getManaCost(),
+                    originalMinion.getTokenCost(),
                     originalMinion.getDescription(),
                     originalMinion.getRarity(),
                     originalMinion.getAttack(),
@@ -147,10 +149,35 @@ public class Deck {
             SpellCard originalSpell = (SpellCard) original;
             return new SpellCard(
                     originalSpell.getName(),
-                    originalSpell.getManaCost(),
+                    originalSpell.getTokenCost(),
                     originalSpell.getDescription(),
                     originalSpell.getRarity(),
                     originalSpell.getSpellType()
+            );
+        } else if (original instanceof CharacterCard) {
+            // 支持新的CharacterCard類型
+            CharacterCard originalChar = (CharacterCard) original;
+            return new CharacterCard(
+                    originalChar.getName(),
+                    originalChar.getTokenCost(),
+                    originalChar.getDescription(),
+                    originalChar.getRarity(),
+                    originalChar.getAttack(),
+                    originalChar.getDefense(),
+                    originalChar.getMaxHealth(),
+                    originalChar.isOffensive()
+            );
+        } else if (original instanceof TechniqueCard) {
+            // 支持新的TechniqueCard類型
+            TechniqueCard originalTech = (TechniqueCard) original;
+            return new TechniqueCard(
+                    originalTech.getName(),
+                    originalTech.getTokenCost(),
+                    originalTech.getDescription(),
+                    originalTech.getRarity(),
+                    originalTech.getTechniqueType(),
+                    originalTech.getEffectValue(),
+                    originalTech.getDuration()
             );
         }
         

@@ -4,6 +4,7 @@ import com.example.game.player.Player;
 
 /**
  * 隨從卡 - 可以放置在場上作戰的卡牌
+ * 注意：此類在F.O.O.D TCG系統中被CharacterCard替代，但保留兼容性
  */
 public class Minion extends Card {
     private int attack;
@@ -14,9 +15,9 @@ public class Minion extends Card {
     private boolean hasDivineShield;
     private boolean hasCharge;
     
-    public Minion(String name, int manaCost, String description, Rarity rarity, 
+    public Minion(String name, int tokenCost, String description, Rarity rarity, 
                  int attack, int health) {
-        super(name, manaCost, description, rarity);
+        super(name, tokenCost, description, rarity, CardType.CHARACTER);
         this.attack = attack;
         this.health = health;
         this.maxHealth = health;
@@ -133,8 +134,8 @@ public class Minion extends Card {
         
         System.out.println(name + " 攻擊玩家 " + player.getName() + "!");
         
-        // 直接對玩家造成傷害，並標記傷害來源
-        player.takeDamage(attack, this.name);
+        // 直接對玩家造成傷害
+        player.takeDamage(attack);
         
         // 設置已攻擊狀態
         canAttack = false;
@@ -185,6 +186,21 @@ public class Minion extends Card {
         this.health = health;
     }
     
+    public int getDefense() {
+        // 為了與CharacterCard一致，提供defense的getter
+        return 0; // 隨從沒有防禦值概念，默認為0
+    }
+    
+    public int getCurrentHealth() {
+        // 為了與CharacterCard一致，提供getCurrentHealth的getter
+        return health;
+    }
+    
+    public int getMaxHealth() {
+        // 為了與CharacterCard一致，提供getMaxHealth的getter
+        return maxHealth;
+    }
+    
     public boolean hasTaunt() {
         return hasTaunt;
     }
@@ -218,5 +234,10 @@ public class Minion extends Card {
      */
     public boolean canAttack() {
         return canAttack;
+    }
+    
+    // 兼容性方法，支援新舊系統轉換
+    public int getManaCost() {
+        return getTokenCost();
     }
 } 

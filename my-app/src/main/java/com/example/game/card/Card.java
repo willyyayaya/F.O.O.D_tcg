@@ -3,19 +3,21 @@ package com.example.game.card;
 import com.example.game.player.Player;
 
 /**
- * 卡牌基類 - 所有卡牌的父類
+ * 卡牌基類 - 所有F.O.O.D TCG卡牌的父類
  */
 public abstract class Card {
     protected String name;
-    protected int manaCost;
+    protected int tokenCost;     // 變更為Token消耗而非魔力消耗
     protected String description;
     protected Rarity rarity;
+    protected CardType type;     // 添加卡牌類型
     
-    public Card(String name, int manaCost, String description, Rarity rarity) {
+    public Card(String name, int tokenCost, String description, Rarity rarity, CardType type) {
         this.name = name;
-        this.manaCost = manaCost;
+        this.tokenCost = tokenCost;
         this.description = description;
         this.rarity = rarity;
+        this.type = type;
     }
     
     /**
@@ -28,8 +30,8 @@ public abstract class Card {
         return name;
     }
     
-    public int getManaCost() {
-        return manaCost;
+    public int getTokenCost() {
+        return tokenCost;
     }
     
     public String getDescription() {
@@ -40,13 +42,18 @@ public abstract class Card {
         return rarity;
     }
     
+    public CardType getType() {
+        return type;
+    }
+    
     /**
      * 顯示卡牌詳細資訊
      */
     public void displayCardDetails() {
         System.out.println("======= 卡牌資訊 =======");
         System.out.println("名稱: " + name);
-        System.out.println("費用: " + manaCost + " 點魔力");
+        System.out.println("類型: " + getCardTypeText(type));
+        System.out.println("費用: " + tokenCost + " 個Token");
         System.out.println("稀有度: " + getRarityText(rarity));
         System.out.println("描述: " + description);
         displaySpecificDetails();
@@ -73,6 +80,24 @@ public abstract class Card {
                 return "史詩";
             case LEGENDARY:
                 return "傳說";
+            default:
+                return "未知";
+        }
+    }
+    
+    /**
+     * 獲取卡牌類型的中文文本
+     */
+    private String getCardTypeText(CardType type) {
+        switch (type) {
+            case CHARACTER:
+                return "角色";
+            case TECHNIQUE:
+                return "烹飪技術";
+            case TOOL:
+                return "料理工具";
+            case QUEST:
+                return "任務";
             default:
                 return "未知";
         }
