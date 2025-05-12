@@ -92,10 +92,8 @@ public abstract class Card {
         switch (type) {
             case CHARACTER:
                 return "角色";
-            case TECHNIQUE:
-                return "烹飪技術";
-            case TOOL:
-                return "料理工具";
+            case FIELD:
+                return "場地";
             case QUEST:
                 return "任務";
             default:

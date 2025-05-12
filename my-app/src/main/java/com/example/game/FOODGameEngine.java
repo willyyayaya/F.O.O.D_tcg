@@ -69,13 +69,13 @@ public class FOODGameEngine {
         
         // 驗證初始化結果
         int totalCards = CardLibrary.getAllCharacters().size() + 
-                         CardLibrary.getAllTechniques().size() + 
+                         CardLibrary.getAllFieldCards().size() + 
                          CardLibrary.getAllMinions().size() + 
                          CardLibrary.getAllSpells().size();
         
         System.out.println("F.O.O.D TCG卡牌圖鑑初始化完成，共有 " + totalCards + " 張卡牌");
         System.out.println("- 角色卡: " + CardLibrary.getAllCharacters().size() + " 張");
-        System.out.println("- 技術卡: " + CardLibrary.getAllTechniques().size() + " 張");
+        System.out.println("- 場地卡: " + CardLibrary.getAllFieldCards().size() + " 張");
         System.out.println("- 隨從卡: " + CardLibrary.getAllMinions().size() + " 張");
         System.out.println("- 法術卡: " + CardLibrary.getAllSpells().size() + " 張");
     }

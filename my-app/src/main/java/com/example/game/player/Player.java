@@ -10,9 +10,8 @@ import com.example.game.board.ResourceZone;
 import com.example.game.card.Card;
 import com.example.game.card.CharacterCard;
 import com.example.game.card.Deck;
+import com.example.game.card.FieldCard;
 import com.example.game.card.Rarity;
-import com.example.game.card.TechniqueCard;
-import com.example.game.card.ToolCard;
 
 /**
  * 玩家類 - 代表F.O.O.D TCG遊戲參與者
@@ -181,25 +180,14 @@ public class Player {
                     return false;
                 }
                 break;
-            case TECHNIQUE:
-                // 烹飪技術卡添加到戰場
-                TechniqueCard techniqueCard = (TechniqueCard) card;
-                if (battlefieldZone.addTechnique(techniqueCard, areaType)) {
-                    System.out.println(name + " 使用烹飪技術: " + techniqueCard.getName() + " 到" + areaName);
-                    techniqueCard.play(this);
-                } else {
-                    System.out.println(areaName + "烹飪技術位置已滿!");
-                    return false;
-                }
-                break;
-            case TOOL:
-                // 料理工具卡添加到戰場
-                ToolCard toolCard = (ToolCard) card;
-                if (battlefieldZone.addTool(toolCard, areaType)) {
-                    System.out.println(name + " 裝備料理工具: " + toolCard.getName() + " 到" + areaName);
-                    toolCard.play(this);
-                } else {
-                    System.out.println(areaName + "料理工具位置已滿!");
+            case FIELD:
+                // 場地卡添加到戰場
+                FieldCard fieldCard = (FieldCard) card;
+                if (battlefieldZone.addFieldCard(fieldCard, areaType)) {
+                    System.out.println(name + " 啟用場地: " + fieldCard.getName() + " 到" + areaName);
+                    fieldCard.play(this);
+            } else {
+                    System.out.println(areaName + "場地位置已滿!");
                     return false;
                 }
                 break;
@@ -207,7 +195,7 @@ public class Player {
                 // 任務卡添加到資源區
                 System.out.println(name + " 接受任務: " + card.getName());
                 resourceZone.addQuestCard(card);
-                card.play(this);
+            card.play(this);
                 break;
         }
         
@@ -379,14 +367,21 @@ public class Player {
                                              character.getAttack(), 
                                              character.getDefense(), 
                                              character.getCurrentHealth());
-                } else if (card instanceof TechniqueCard) {
-                    cardType = "技術";
-                    TechniqueCard technique = (TechniqueCard) card;
-                    extraInfo = String.format("類型:%s 效果值:%d", 
-                                            technique.getTechniqueType(), 
-                                            technique.getEffectValue());
-                } else if (card instanceof ToolCard) {
-                    cardType = "工具";
+                } else if (card instanceof FieldCard) {
+                    FieldCard field = (FieldCard) card;
+                    cardType = "場地";
+                    
+                    switch (field.getFieldType()) {
+                        case COOKING_TECHNIQUE:
+                            extraInfo = "類型:烹飪技術";
+                            break;
+                        case COOKING_TOOL:
+                            extraInfo = "類型:料理工具";
+                            break;
+                        case ENVIRONMENT:
+                            extraInfo = "類型:環境";
+                            break;
+                    }
                 }
                 
                 System.out.printf("%2d. %-15s [費用:%d] [%s] %s %s\n", 

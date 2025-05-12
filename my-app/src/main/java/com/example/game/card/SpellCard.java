@@ -4,14 +4,14 @@ import com.example.game.player.Player;
 
 /**
  * 法術卡 - 一次性效果的卡牌
- * 注意：此類在F.O.O.D TCG系統中被TechniqueCard替代，但保留兼容性
+ * 注意：此類在F.O.O.D TCG系統中被FieldCard替代，但保留兼容性
  */
 public class SpellCard extends Card {
     private SpellType spellType;
     private int value; // 效果值，如傷害量、治療量等
     
     public SpellCard(String name, int tokenCost, String description, Rarity rarity, SpellType spellType) {
-        super(name, tokenCost, description, rarity, CardType.TECHNIQUE);
+        super(name, tokenCost, description, rarity, CardType.FIELD);
         this.spellType = spellType;
         
         // 根據費用生成效果值，通常費用越高效果越強
@@ -55,7 +55,7 @@ public class SpellCard extends Card {
     private void applyDamage(Player player) {
         System.out.println("造成 " + value + " 點傷害");
         // 由於FOODGameEngine處理邏輯不同，我們簡化處理
-        System.out.println("目標選擇功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("目標選擇功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     private void applyHealing(Player player) {
@@ -76,27 +76,27 @@ public class SpellCard extends Card {
     
     private void applyAOE(Player player) {
         System.out.println("對所有敵方角色造成 " + value + " 點傷害");
-        System.out.println("此功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("此功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     private void applyBuff(Player player) {
         System.out.println("使一個友方角色獲得+" + value + "/+" + value);
-        System.out.println("此功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("此功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     private void applyDebuff(Player player) {
         System.out.println("使一個敵方角色獲得-" + value + "/-" + value);
-        System.out.println("此功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("此功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     private void applyTransform(Player player) {
         System.out.println("變形法術效果");
-        System.out.println("此功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("此功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     private void applySummon(Player player) {
         System.out.println("召喚 " + value + " 個角色");
-        System.out.println("此功能已由F.O.O.D TCG系統的TechniqueCard替代");
+        System.out.println("此功能已由F.O.O.D TCG系統的FieldCard替代");
     }
     
     @Override

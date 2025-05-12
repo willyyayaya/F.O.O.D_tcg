@@ -14,7 +14,7 @@ public class CardLibrary {
     private static List<Minion> allMinions = new ArrayList<>();
     private static List<SpellCard> allSpells = new ArrayList<>();
     private static List<CharacterCard> allCharacters = new ArrayList<>();
-    private static List<TechniqueCard> allTechniques = new ArrayList<>();
+    private static List<FieldCard> allFieldCards = new ArrayList<>();
     
     /**
      * 初始化卡牌圖鑑
@@ -25,16 +25,16 @@ public class CardLibrary {
         allMinions.clear();
         allSpells.clear();
         allCharacters.clear();
-        allTechniques.clear();
+        allFieldCards.clear();
         
         // 初始化一些預設卡牌
         initializeMinions();
         initializeSpells();
         initializeCharacters();
-        initializeTechniques();
+        initializeFieldCards();
         
         System.out.println("卡牌圖鑑初始化完成，共 " + allCards.size() + " 張卡牌。");
-        System.out.println("其中角色卡: " + allCharacters.size() + " 張，技術卡: " + allTechniques.size() + " 張");
+        System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張");
     }
     
     /**
@@ -93,50 +93,57 @@ public class CardLibrary {
     }
     
     /**
-     * 初始化烹飪技術卡
+     * 初始化場地卡（整合原烹飪技術卡和料理工具卡）
      */
-    private static void initializeTechniques() {
-        // 基本烹飪技術
-        addTechnique(new TechniqueCard("切丁技巧", 1, "將食材切成均勻小塊，提升角色攻擊力", Rarity.COMMON, 
-                                   TechniqueType.BOOST_ATTACK, 2, 2));
-        addTechnique(new TechniqueCard("攪拌手法", 2, "均勻混合所有食材，提升團隊協作", Rarity.COMMON,
-                                   TechniqueType.BOOST_DEFENSE, 2, 2));
+    private static void initializeFieldCards() {
+        // 烹飪技術類場地卡
+        addFieldCard(FieldCard.createTechniqueField("切丁技巧", 1, "將食材切成均勻小塊，提升角色攻擊力", Rarity.COMMON, 
+                                   FieldEffectType.BOOST_ATTACK, 2, 2));
+        addFieldCard(FieldCard.createTechniqueField("攪拌手法", 2, "均勻混合所有食材，提升團隊協作", Rarity.COMMON,
+                                   FieldEffectType.BOOST_DEFENSE, 2, 2));
         
-        // 熱處理技術
-        addTechnique(new TechniqueCard("火烤技術", 3, "用明火烤製食材，大幅提升攻擊力", Rarity.COMMON, 
-                                   TechniqueType.BOOST_ATTACK, 3, 3));
-        addTechnique(new TechniqueCard("油炸方法", 4, "高溫油炸，形成酥脆外殼，增加防禦力", Rarity.COMMON,
-                                   TechniqueType.BOOST_DEFENSE, 4, 2));
-        addTechnique(new TechniqueCard("燉煮技術", 4, "慢火燉煮，釋放食材精華，回復生命值", Rarity.COMMON,
-                                  TechniqueType.HEAL, 5, 0));
+        // 熱處理技術類場地卡
+        addFieldCard(FieldCard.createTechniqueField("火烤技術", 3, "用明火烤製食材，大幅提升攻擊力", Rarity.COMMON, 
+                                   FieldEffectType.BOOST_ATTACK, 3, 3));
+        addFieldCard(FieldCard.createTechniqueField("油炸方法", 4, "高溫油炸，形成酥脆外殼，增加防禦力", Rarity.COMMON,
+                                   FieldEffectType.BOOST_DEFENSE, 4, 2));
+        addFieldCard(FieldCard.createTechniqueField("燉煮技術", 4, "慢火燉煮，釋放食材精華，回復生命值", Rarity.COMMON,
+                                  FieldEffectType.HEAL, 5, 0));
         
-        // 冷處理技術
-        addTechnique(new TechniqueCard("醃漬技術", 3, "冷藏醃製食材，增加防禦力和保存時間", Rarity.COMMON,
-                                   TechniqueType.BOOST_DEFENSE, 3, 4));
-        addTechnique(new TechniqueCard("冰鎮手法", 2, "急速冷卻，保持食材新鮮度，回復生命", Rarity.COMMON,
-                                  TechniqueType.HEAL, 3, 0));
+        // 冷處理技術類場地卡
+        addFieldCard(FieldCard.createTechniqueField("醃漬技術", 3, "冷藏醃製食材，增加防禦力和保存時間", Rarity.COMMON,
+                                   FieldEffectType.BOOST_DEFENSE, 3, 4));
+        addFieldCard(FieldCard.createTechniqueField("冰鎮手法", 2, "急速冷卻，保持食材新鮮度，回復生命", Rarity.COMMON,
+                                  FieldEffectType.HEAL, 3, 0));
         
-        // 攻擊性技術
-        addTechnique(new TechniqueCard("刀工切片", 3, "精準切片技術，對敵方角色造成傷害", Rarity.RARE,
-                                  TechniqueType.DAMAGE, 4, 0));
-        addTechnique(new TechniqueCard("壓榨技術", 4, "擠壓出食材精華，造成範圍傷害", Rarity.RARE,
-                                  TechniqueType.DAMAGE, 3, 0));
+        // 攻擊性技術類場地卡
+        addFieldCard(FieldCard.createTechniqueField("刀工切片", 3, "精準切片技術，對敵方角色造成傷害", Rarity.RARE,
+                                  FieldEffectType.DAMAGE, 4, 0));
+        addFieldCard(FieldCard.createTechniqueField("壓榨技術", 4, "擠壓出食材精華，造成範圍傷害", Rarity.RARE,
+                                  FieldEffectType.DAMAGE, 3, 0));
         
-        // 特殊技術
-        addTechnique(new TechniqueCard("調味技巧", 1, "精確調味，強化食材風味，抽取卡牌", Rarity.RARE,
-                                  TechniqueType.DRAW, 2, 0));
-        addTechnique(new TechniqueCard("擺盤藝術", 2, "美觀的料理呈現，吸引目光，抽取卡牌", Rarity.RARE,
-                                  TechniqueType.DRAW, 1, 0));
+        // 料理工具類場地卡 - 使用新的FieldEffectType
+        addFieldCard(FieldCard.createToolField("鋒利菜刀", 3, "專業主廚用刀，提高攻擊力", Rarity.COMMON, 
+                                   FieldEffectType.OFFENSIVE, 3, 2));
+        addFieldCard(FieldCard.createToolField("不鏽鋼鍋", 4, "耐用的烹飪鍋具，提高防禦力", Rarity.COMMON,
+                                   FieldEffectType.DEFENSIVE, 4, 3));
+        addFieldCard(FieldCard.createToolField("多功能攪拌機", 5, "現代廚房的必備工具，有多種用途", Rarity.RARE,
+                                   FieldEffectType.UTILITY, 3, 4));
         
-        // 高級技術
-        addTechnique(new TechniqueCard("分子料理", 7, "運用科學原理改變食材形態，產生特殊效果", Rarity.EPIC,
-                                  TechniqueType.SPECIAL, 0, 2));
-        addTechnique(new TechniqueCard("真空低溫烹調", 6, "精確控溫烹飪，完美保留食材精華，全方位增強", Rarity.EPIC,
-                                  TechniqueType.SPECIAL, 0, 3));
+        // 新增幾張使用擴展效果類型的場地卡
+        addFieldCard(FieldCard.createToolField("教學烹飪書", 2, "詳細的烹飪指南，輔助新手廚師", Rarity.COMMON,
+                                   FieldEffectType.SUPPORTIVE, 4, 2));
+        addFieldCard(FieldCard.createToolField("辣椒調味料", 3, "使敵方角色暫時失去味覺", Rarity.RARE,
+                                   FieldEffectType.DISRUPTIVE, 2, 3));
+        addFieldCard(FieldCard.createToolField("食材儲藏櫃", 4, "儲存額外的食材以備不時之需", Rarity.RARE,
+                                   FieldEffectType.ECONOMIC, 5, 2));
+        addFieldCard(FieldCard.createToolField("食譜筆記本", 3, "記錄各種秘方，提供多樣化策略", Rarity.EPIC,
+                                   FieldEffectType.STRATEGIC, 3, 3));
         
-        // 傳說技術
-        addTechnique(new TechniqueCard("米其林三星技法", 8, "只有頂級主廚才能掌握的烹飪秘技，強大全場效果", Rarity.LEGENDARY,
-                                  TechniqueType.SPECIAL, 0, 3));
+        // 環境類場地卡
+        addFieldCard(FieldCard.createEnvironmentField("專業廚房", 5, "設備齊全的現代廚房，提高所有角色能力", Rarity.RARE, 3));
+        addFieldCard(FieldCard.createEnvironmentField("露營烹飪", 3, "戶外料理場地，增加角色韌性", Rarity.COMMON, 2));
+        addFieldCard(FieldCard.createEnvironmentField("高級餐廳", 6, "正式的烹飪環境，提供細緻的料理體驗", Rarity.EPIC, 4));
     }
     
     /**
@@ -164,11 +171,11 @@ public class CardLibrary {
     }
     
     /**
-     * 添加烹飪技術卡到圖鑑
+     * 添加場地卡到圖鑑
      */
-    private static void addTechnique(TechniqueCard technique) {
-        allCards.put(technique.getName(), technique);
-        allTechniques.add(technique);
+    private static void addFieldCard(FieldCard fieldCard) {
+        allCards.put(fieldCard.getName(), fieldCard);
+        allFieldCards.add(fieldCard);
     }
     
     /**
@@ -197,7 +204,7 @@ public class CardLibrary {
             System.out.println("1. 瀏覽所有隨從卡 (" + allMinions.size() + " 張)");
             System.out.println("2. 瀏覽所有法術卡 (" + allSpells.size() + " 張)");
             System.out.println("3. 瀏覽所有角色卡 (" + allCharacters.size() + " 張)");
-            System.out.println("4. 瀏覽所有烹飪技術卡 (" + allTechniques.size() + " 張)");
+            System.out.println("4. 瀏覽所有場地卡 (" + allFieldCards.size() + " 張)");
             System.out.println("5. 搜尋卡牌");
             System.out.println("6. 查看場上角色詳情");
             System.out.println("7. 查看玩家手牌");
@@ -220,7 +227,7 @@ public class CardLibrary {
                     browseCharacters();
                     break;
                 case 4:
-                    browseTechniques();
+                    browseFieldCards();
                     break;
                 case 5:
                     searchCard(scanner);
@@ -360,42 +367,53 @@ public class CardLibrary {
     }
     
     /**
-     * 瀏覽所有烹飪技術卡
+     * 瀏覽所有場地卡
      */
-    private static void browseTechniques() {
+    private static void browseFieldCards() {
         Scanner scanner = new Scanner(System.in);
         
-        if (allTechniques.isEmpty()) {
-            System.out.println("\n目前沒有烹飪技術卡可供瀏覽");
+        if (allFieldCards.isEmpty()) {
+            System.out.println("場地卡列表為空!");
             System.out.println("按Enter返回...");
             scanner.nextLine();
             return;
         }
         
-        while (true) {
-            System.out.println("\n烹飪技術卡列表 (共 " + allTechniques.size() + " 張):");
-            for (int i = 0; i < allTechniques.size(); i++) {
-                TechniqueCard technique = allTechniques.get(i);
-                System.out.printf("%2d. %-15s [費用:%d] %s\n", 
-                        i+1, technique.getName(), technique.getTokenCost(), 
-                        getRaritySymbol(technique.getRarity()));
+        System.out.println("\n===== 場地卡列表 =====");
+        for (int i = 0; i < allFieldCards.size(); i++) {
+            FieldCard card = allFieldCards.get(i);
+            
+            String fieldTypeInfo = "";
+            switch (card.getFieldType()) {
+                case COOKING_TECHNIQUE:
+                    fieldTypeInfo = "[烹飪技術]";
+                    break;
+                case COOKING_TOOL:
+                    fieldTypeInfo = "[料理工具]";
+                    break;
+                case ENVIRONMENT:
+                    fieldTypeInfo = "[環境]";
+                    break;
             }
             
-            System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
-            int choice = scanner.nextInt();
+            System.out.printf("%2d. %-18s [費用:%d] %s %s\n", 
+                    i+1, card.getName(), card.getTokenCost(), 
+                    fieldTypeInfo, getRaritySymbol(card.getRarity()));
+        }
+        
+        System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
+        int choice;
+        try {
+            choice = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
             
-            if (choice == 0) {
-                return;
-            } else if (choice > 0 && choice <= allTechniques.size()) {
-                allTechniques.get(choice-1).displayCardDetails();
-                
-                // 查看完後暫停一下
-                System.out.println("按Enter繼續...");
-                scanner.nextLine(); // 消耗前面的數字
-                scanner.nextLine(); // 等待Enter
-            } else {
-                System.out.println("無效的選擇!");
+            if (choice > 0 && choice <= allFieldCards.size()) {
+                allFieldCards.get(choice-1).displayCardDetails();
+                System.out.println("\n按Enter繼續...");
+                scanner.nextLine();
             }
+        } catch (Exception e) {
+            System.out.println("請輸入有效的數字!");
         }
     }
     
@@ -596,10 +614,10 @@ public class CardLibrary {
     }
     
     /**
-     * 獲取所有烹飪技術卡
+     * 獲取所有場地卡
      */
-    public static List<TechniqueCard> getAllTechniques() {
-        return allTechniques;
+    public static List<FieldCard> getAllFieldCards() {
+        return allFieldCards;
     }
     
     /**
@@ -676,11 +694,23 @@ public class CardLibrary {
                             i+1, character.getName(), character.getTokenCost(), 
                             character.getAttack(), character.getCurrentHealth(), 
                             getRaritySymbol(character.getRarity()));
-                } else if (card instanceof TechniqueCard) {
-                    TechniqueCard technique = (TechniqueCard) card;
-                    System.out.printf("%2d. %-15s [費用:%d] (技術) %s\n", 
-                            i+1, technique.getName(), technique.getTokenCost(), 
-                            getRaritySymbol(technique.getRarity()));
+                } else if (card instanceof FieldCard) {
+                    FieldCard fieldCard = (FieldCard) card;
+                    String fieldTypeInfo = "";
+                    switch (fieldCard.getFieldType()) {
+                        case COOKING_TECHNIQUE:
+                            fieldTypeInfo = "[烹飪技術]";
+                            break;
+                        case COOKING_TOOL:
+                            fieldTypeInfo = "[料理工具]";
+                            break;
+                        case ENVIRONMENT:
+                            fieldTypeInfo = "[環境]";
+                            break;
+                    }
+                    System.out.printf("%2d. %-15s [費用:%d] %s %s\n", 
+                            i+1, fieldCard.getName(), fieldCard.getTokenCost(), 
+                            fieldTypeInfo, getRaritySymbol(fieldCard.getRarity()));
                 }
             }
             

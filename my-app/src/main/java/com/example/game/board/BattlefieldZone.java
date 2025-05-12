@@ -3,12 +3,12 @@ package com.example.game.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.game.card.Card;
 import com.example.game.card.CharacterCard;
-import com.example.game.card.TechniqueCard;
-import com.example.game.card.ToolCard;
+import com.example.game.card.FieldCard;
 
 /**
- * 戰場區 (Battlefield) - 擺放角色卡（進攻與防禦）、料理工具與烹飪技術
+ * 戰場區 (Battlefield) - 擺放角色卡（進攻與防禦）和場地卡
  * 分為三個子區域：抽牌區、法力區、出牌區
  */
 public class BattlefieldZone {
@@ -28,19 +28,16 @@ public class BattlefieldZone {
     public static class BattlefieldArea {
         private String name;
         private List<CharacterCard> characters;  // 角色卡
-        private List<ToolCard> cookingTools;     // 料理工具卡
-        private List<TechniqueCard> techniques;  // 烹飪技術卡
+        private List<FieldCard> fieldCards;      // 場地卡
         
         // 各類卡牌的最大數量限制
         private static final int MAX_CHARACTERS = 2;
-        private static final int MAX_TOOLS = 1;
-        private static final int MAX_TECHNIQUES = 1;
+        private static final int MAX_FIELD_CARDS = 2;  // 每個區域最多2張場地卡
         
         public BattlefieldArea(String name) {
             this.name = name;
             this.characters = new ArrayList<>();
-            this.cookingTools = new ArrayList<>();
-            this.techniques = new ArrayList<>();
+            this.fieldCards = new ArrayList<>();
         }
         
         public String getName() {
@@ -59,25 +56,14 @@ public class BattlefieldZone {
         }
         
         /**
-         * 添加料理工具卡到戰場區域
+         * 添加場地卡到戰場區域
          */
-        public boolean addTool(ToolCard card) {
-            if (cookingTools.size() < MAX_TOOLS) {
-                cookingTools.add(card);
+        public boolean addFieldCard(FieldCard card) {
+            if (fieldCards.size() < MAX_FIELD_CARDS) {
+                fieldCards.add(card);
                 return true;
             }
-            return false; // 料理工具卡已滿
-        }
-        
-        /**
-         * 添加烹飪技術卡到戰場區域
-         */
-        public boolean addTechnique(TechniqueCard card) {
-            if (techniques.size() < MAX_TECHNIQUES) {
-                techniques.add(card);
-                return true;
-            }
-            return false; // 烹飪技術卡已滿
+            return false; // 場地卡已滿
         }
         
         /**
@@ -91,21 +77,11 @@ public class BattlefieldZone {
         }
         
         /**
-         * 移除料理工具卡
+         * 移除場地卡
          */
-        public ToolCard removeTool(int index) {
-            if (index >= 0 && index < cookingTools.size()) {
-                return cookingTools.remove(index);
-            }
-            return null;
-        }
-        
-        /**
-         * 移除烹飪技術卡
-         */
-        public TechniqueCard removeTechnique(int index) {
-            if (index >= 0 && index < techniques.size()) {
-                return techniques.remove(index);
+        public FieldCard removeFieldCard(int index) {
+            if (index >= 0 && index < fieldCards.size()) {
+                return fieldCards.remove(index);
             }
             return null;
         }
@@ -118,17 +94,10 @@ public class BattlefieldZone {
         }
         
         /**
-         * 獲取所有料理工具卡
+         * 獲取所有場地卡
          */
-        public List<ToolCard> getTools() {
-            return cookingTools;
-        }
-        
-        /**
-         * 獲取所有烹飪技術卡
-         */
-        public List<TechniqueCard> getTechniques() {
-            return techniques;
+        public List<FieldCard> getFieldCards() {
+            return fieldCards;
         }
         
         /**
@@ -147,25 +116,28 @@ public class BattlefieldZone {
                 }
             }
             
-            // 顯示料理工具卡
-            System.out.println("料理工具 (" + cookingTools.size() + "/" + MAX_TOOLS + "):");
-            if (cookingTools.isEmpty()) {
+            // 顯示場地卡
+            System.out.println("場地卡 (" + fieldCards.size() + "/" + MAX_FIELD_CARDS + "):");
+            if (fieldCards.isEmpty()) {
                 System.out.println("  (無)");
             } else {
-                for (int i = 0; i < cookingTools.size(); i++) {
-                    ToolCard card = cookingTools.get(i);
-                    System.out.println("  " + (i+1) + ". " + card.getName());
-                }
-            }
-            
-            // 顯示烹飪技術卡
-            System.out.println("烹飪技術 (" + techniques.size() + "/" + MAX_TECHNIQUES + "):");
-            if (techniques.isEmpty()) {
-                System.out.println("  (無)");
-            } else {
-                for (int i = 0; i < techniques.size(); i++) {
-                    TechniqueCard card = techniques.get(i);
-                    System.out.println("  " + (i+1) + ". " + card.getName());
+                for (int i = 0; i < fieldCards.size(); i++) {
+                    FieldCard card = fieldCards.get(i);
+                    
+                    String fieldTypeInfo = "";
+                    switch (card.getFieldType()) {
+                        case COOKING_TECHNIQUE:
+                            fieldTypeInfo = "[烹飪技術]";
+                            break;
+                        case COOKING_TOOL:
+                            fieldTypeInfo = "[料理工具]";
+                            break;
+                        case ENVIRONMENT:
+                            fieldTypeInfo = "[環境]";
+                            break;
+                    }
+                    
+                    System.out.println("  " + (i+1) + ". " + card.getName() + " " + fieldTypeInfo);
                 }
             }
         }
@@ -198,17 +170,10 @@ public class BattlefieldZone {
     }
     
     /**
-     * 添加料理工具卡到指定區域
+     * 添加場地卡到指定區域
      */
-    public boolean addTool(ToolCard card, int areaType) {
-        return getAreaByType(areaType).addTool(card);
-    }
-    
-    /**
-     * 添加烹飪技術卡到指定區域
-     */
-    public boolean addTechnique(TechniqueCard card, int areaType) {
-        return getAreaByType(areaType).addTechnique(card);
+    public boolean addFieldCard(FieldCard card, int areaType) {
+        return getAreaByType(areaType).addFieldCard(card);
     }
     
     /**
@@ -218,12 +183,8 @@ public class BattlefieldZone {
         return addCharacter(card, PLAY_AREA);
     }
     
-    public boolean addTool(ToolCard card) {
-        return addTool(card, PLAY_AREA);
-    }
-    
-    public boolean addTechnique(TechniqueCard card) {
-        return addTechnique(card, PLAY_AREA);
+    public boolean addFieldCard(FieldCard card) {
+        return addFieldCard(card, PLAY_AREA);
     }
     
     /**
@@ -238,25 +199,14 @@ public class BattlefieldZone {
     }
     
     /**
-     * 獲取所有料理工具卡（所有區域的總和）
+     * 獲取所有場地卡（所有區域的總和）
      */
-    public List<ToolCard> getTools() {
-        List<ToolCard> allTools = new ArrayList<>();
-        allTools.addAll(drawArea.getTools());
-        allTools.addAll(manaArea.getTools());
-        allTools.addAll(playArea.getTools());
-        return allTools;
-    }
-    
-    /**
-     * 獲取所有烹飪技術卡（所有區域的總和）
-     */
-    public List<TechniqueCard> getTechniques() {
-        List<TechniqueCard> allTechniques = new ArrayList<>();
-        allTechniques.addAll(drawArea.getTechniques());
-        allTechniques.addAll(manaArea.getTechniques());
-        allTechniques.addAll(playArea.getTechniques());
-        return allTechniques;
+    public List<FieldCard> getFieldCards() {
+        List<FieldCard> allFieldCards = new ArrayList<>();
+        allFieldCards.addAll(drawArea.getFieldCards());
+        allFieldCards.addAll(manaArea.getFieldCards());
+        allFieldCards.addAll(playArea.getFieldCards());
+        return allFieldCards;
     }
     
     /**
@@ -281,21 +231,58 @@ public class BattlefieldZone {
     }
     
     /**
-     * 顯示戰場狀態
+     * 顯示整個戰場狀態
      */
     public void displayStatus() {
-        System.out.println("戰場區狀態:");
+        System.out.println("\n======= 戰場狀態 =======");
         
-        // 顯示抽牌區
-        System.out.println("【抽牌區】");
+        System.out.println("\n【抽牌區】");
         drawArea.displayStatus();
         
-        // 顯示法力區
         System.out.println("\n【法力區】");
         manaArea.displayStatus();
         
-        // 顯示出牌區
         System.out.println("\n【出牌區】");
         playArea.displayStatus();
+        
+        System.out.println("\n=========================");
+    }
+    
+    /**
+     * @deprecated 使用 addFieldCard 替代
+     */
+    @Deprecated
+    public boolean addTechnique(Card card, int areaType) {
+        System.out.println("警告：使用了已棄用的方法addTechnique，請改用addFieldCard");
+        // 實際上就會返回false，因為我們期望開發者使用新的API
+        return false;
+    }
+    
+    /**
+     * @deprecated 使用 addFieldCard 替代
+     */
+    @Deprecated
+    public boolean addTool(Card card, int areaType) {
+        System.out.println("警告：使用了已棄用的方法addTool，請改用addFieldCard");
+        // 實際上就會返回false，因為我們期望開發者使用新的API
+        return false;
+    }
+    
+    /**
+     * @deprecated 使用 getFieldCards 替代
+     */
+    @Deprecated
+    public List<Card> getTechniques() {
+        System.out.println("警告：使用了已棄用的方法getTechniques，請改用getFieldCards");
+        return new ArrayList<>(); // 返回空列表
+    }
+    
+    /**
+     * @deprecated 使用 getFieldCards 替代
+     */
+    @Deprecated
+    public List<Card> getTools() {
+        System.out.println("警告：使用了已棄用的方法getTools，請改用getFieldCards");
+        return new ArrayList<>(); // 返回空列表
     }
 } 

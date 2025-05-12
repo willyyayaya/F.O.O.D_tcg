@@ -22,17 +22,17 @@ public class Deck {
     public void initialize() {
         // 從卡牌圖鑑中獲取所有可用卡牌
         List<CharacterCard> allCharacters = CardLibrary.getAllCharacters();
-        List<TechniqueCard> allTechniques = CardLibrary.getAllTechniques();
+        List<FieldCard> allFields = CardLibrary.getAllFieldCards();
         
-        if (allCharacters.isEmpty() && allTechniques.isEmpty()) {
+        if (allCharacters.isEmpty() && allFields.isEmpty()) {
             System.out.println("卡牌圖鑑尚未初始化，使用隨機生成的卡牌");
             initializeRandom();
             return;
         }
         
-        // 按照7:3的比例分配角色卡和烹飪技術卡
+        // 按照7:3的比例分配角色卡和場地卡
         int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
-        int techniqueCount = DECK_SIZE - characterCount; // 30%為烹飪技術卡
+        int fieldCount = DECK_SIZE - characterCount; // 30%為場地卡
         
         // 從卡牌圖鑑中選擇角色卡
         for (int i = 0; i < characterCount; i++) {
@@ -44,13 +44,13 @@ public class Deck {
             }
         }
         
-        // 從卡牌圖鑑中選擇烹飪技術卡
-        for (int i = 0; i < techniqueCount; i++) {
-            if (!allTechniques.isEmpty()) {
-                cards.add(copyCard(allTechniques.get(i % allTechniques.size())));
+        // 從卡牌圖鑑中選擇場地卡
+        for (int i = 0; i < fieldCount; i++) {
+            if (!allFields.isEmpty()) {
+                cards.add(copyCard(allFields.get(i % allFields.size())));
             } else {
-                // 如果沒有足夠的技術卡，則生成隨機技術卡
-                cards.add(createRandomTechniqueCard(i));
+                // 如果沒有足夠的場地卡，則生成隨機場地卡
+                cards.add(createRandomFieldCard(i));
             }
         }
         
@@ -63,7 +63,7 @@ public class Deck {
                 if (Math.random() < 0.7) {
                     cards.add(createRandomCharacterCard(cards.size()));
                 } else {
-                    cards.add(createRandomTechniqueCard(cards.size()));
+                    cards.add(createRandomFieldCard(cards.size()));
                 }
             }
         }
@@ -106,9 +106,9 @@ public class Deck {
     }
     
     /**
-     * 創建一個隨機技術卡
+     * 創建一個隨機場地卡
      */
-    private TechniqueCard createRandomTechniqueCard(int index) {
+    private FieldCard createRandomFieldCard(int index) {
         Random random = new Random();
         int cost = random.nextInt(8) + 1; // 1-8費
         
@@ -122,23 +122,85 @@ public class Deck {
             rarity = Rarity.EPIC;
         }
         
-        // 隨機選擇技術類型
-        TechniqueType[] types = TechniqueType.values();
-        TechniqueType techniqueType = types[random.nextInt(types.length)];
+        // 隨機決定場地卡類型
+        FieldCard.FieldType[] fieldTypes = FieldCard.FieldType.values();
+        FieldCard.FieldType fieldType = fieldTypes[random.nextInt(fieldTypes.length)];
         
-        int effectValue = cost + random.nextInt(3); // 效果值基於費用
-        int duration = (techniqueType == TechniqueType.BOOST_ATTACK || 
-                       techniqueType == TechniqueType.BOOST_DEFENSE) ? 
-                       random.nextInt(3) + 1 : 0; // 僅增益效果有持續時間
-        
-        return new TechniqueCard(
-                "烹飪技術 #" + (index+1), 
-                cost, 
-                "一個隨機生成的烹飪技術", 
-                rarity,
-                techniqueType,
-                effectValue,
-                duration);
+        // 根據場地卡類型創建不同的場地卡
+        switch (fieldType) {
+            case COOKING_TECHNIQUE:
+                // 創建烹飪技術類場地卡
+                FieldEffectType[] techniqueEffects = {
+                    FieldEffectType.BOOST_ATTACK,
+                    FieldEffectType.BOOST_DEFENSE,
+                    FieldEffectType.HEAL,
+                    FieldEffectType.DAMAGE,
+                    FieldEffectType.DRAW,
+                    FieldEffectType.SPECIAL
+                };
+                FieldEffectType techniqueEffect = techniqueEffects[random.nextInt(techniqueEffects.length)];
+                
+                int effectValue = cost + random.nextInt(3); // 效果值基於費用
+                int duration = (techniqueEffect == FieldEffectType.BOOST_ATTACK || 
+                               techniqueEffect == FieldEffectType.BOOST_DEFENSE) ? 
+                               random.nextInt(3) + 1 : 0; // 僅增益效果有持續時間
+                
+                return FieldCard.createTechniqueField(
+                        "烹飪技術 #" + (index+1), 
+                        cost, 
+                        "一個隨機生成的烹飪技術場地", 
+                        rarity,
+                        techniqueEffect,
+                        effectValue,
+                        duration);
+                
+            case COOKING_TOOL:
+                // 創建料理工具類場地卡
+                FieldEffectType toolEffect;
+                // 70%概率使用基本工具效果，30%概率使用擴展效果
+                if (random.nextDouble() < 0.7) {
+                    FieldEffectType[] basicToolEffects = {
+                        FieldEffectType.OFFENSIVE,
+                        FieldEffectType.DEFENSIVE,
+                        FieldEffectType.UTILITY
+                    };
+                    toolEffect = basicToolEffects[random.nextInt(basicToolEffects.length)];
+                } else {
+                    // 使用擴展效果類型
+                    FieldEffectType[] extendedEffects = {
+                        FieldEffectType.SUPPORTIVE,
+                        FieldEffectType.DISRUPTIVE,
+                        FieldEffectType.ECONOMIC,
+                        FieldEffectType.STRATEGIC,
+                        FieldEffectType.ENVIRONMENTAL
+                    };
+                    toolEffect = extendedEffects[random.nextInt(extendedEffects.length)];
+                }
+                
+                int durability = cost + random.nextInt(2); // 耐久度基於費用
+                int toolEffectValue = cost + random.nextInt(2); // 效果值基於費用
+                
+                return FieldCard.createToolField(
+                        "料理工具 #" + (index+1), 
+                        cost, 
+                        "一個隨機生成的料理工具場地", 
+                        rarity,
+                        toolEffect,
+                        durability,
+                        toolEffectValue);
+                
+            case ENVIRONMENT:
+            default:
+                // 創建環境類場地卡
+                int envEffectValue = cost + random.nextInt(3); // 效果值基於費用
+                
+                return FieldCard.createEnvironmentField(
+                        "料理環境 #" + (index+1), 
+                        cost, 
+                        "一個隨機生成的料理環境場地", 
+                        rarity,
+                        envEffectValue);
+        }
     }
     
     /**
@@ -148,19 +210,22 @@ public class Deck {
         // 生成隨機牌組，確保正好有30張卡牌
         Random random = new Random();
         
-        // 按照7:3的比例分配角色卡和烹飪技術卡
+        // 按照7:2:1的比例分配角色卡、場地卡和任務卡
         int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
-        int techniqueCount = DECK_SIZE - characterCount; // 30%為烹飪技術卡
+        int fieldCount = (int)(DECK_SIZE * 0.2);     // 20%為場地卡
+        int questCount = DECK_SIZE - characterCount - fieldCount; // 10%為任務卡
         
         // 生成角色卡
         for (int i = 0; i < characterCount; i++) {
             cards.add(createRandomCharacterCard(i));
         }
         
-        // 生成烹飪技術卡
-        for (int i = 0; i < techniqueCount; i++) {
-            cards.add(createRandomTechniqueCard(i));
+        // 生成場地卡
+        for (int i = 0; i < fieldCount; i++) {
+            cards.add(createRandomFieldCard(i));
         }
+        
+        // 生成任務卡 (未實現，可以在將來添加)
         
         System.out.println("牌組隨機初始化完成，共有 " + cards.size() + " 張卡牌");
     }
@@ -207,18 +272,47 @@ public class Deck {
                     originalChar.getMaxHealth(),
                     originalChar.isOffensive()
             );
-        } else if (original instanceof TechniqueCard) {
-            // 支持新的TechniqueCard類型
-            TechniqueCard originalTech = (TechniqueCard) original;
-            return new TechniqueCard(
-                    originalTech.getName(),
-                    originalTech.getTokenCost(),
-                    originalTech.getDescription(),
-                    originalTech.getRarity(),
-                    originalTech.getTechniqueType(),
-                    originalTech.getEffectValue(),
-                    originalTech.getDuration()
-            );
+        } else if (original instanceof FieldCard) {
+            // 支持新的FieldCard類型
+            FieldCard originalField = (FieldCard) original;
+            FieldCard copy;
+            
+            switch (originalField.getFieldType()) {
+                case COOKING_TECHNIQUE:
+                    copy = FieldCard.createTechniqueField(
+                            originalField.getName(),
+                            originalField.getTokenCost(),
+                            originalField.getDescription(),
+                            originalField.getRarity(),
+                            originalField.getEffectType(),
+                            originalField.getEffectValue(),
+                            originalField.getDuration()
+                    );
+                    break;
+                case COOKING_TOOL:
+                    copy = FieldCard.createToolField(
+                            originalField.getName(),
+                            originalField.getTokenCost(),
+                            originalField.getDescription(),
+                            originalField.getRarity(),
+                            originalField.getEffectType(),
+                            originalField.getDurability(),
+                            originalField.getEffectValue()
+                    );
+                    break;
+                case ENVIRONMENT:
+                default:
+                    copy = FieldCard.createEnvironmentField(
+                            originalField.getName(),
+                            originalField.getTokenCost(),
+                            originalField.getDescription(),
+                            originalField.getRarity(),
+                            originalField.getEffectValue()
+                    );
+                    break;
+            }
+            
+            return copy;
         }
         
         return null;
