@@ -43,6 +43,9 @@ public class GameBoard {
         System.out.println("\n您的城堡區:");
         currentPlayer.getCastleZone().displayStatus();
         
+        // 更新資源區Token總數
+        currentPlayer.updateResourceTokens();
+        
         // 顯示當前玩家的資源區
         System.out.println("\n您的資源區:");
         currentPlayer.getResourceZone().displayStatus();

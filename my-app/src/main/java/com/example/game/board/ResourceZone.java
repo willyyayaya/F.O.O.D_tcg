@@ -15,7 +15,7 @@ public class ResourceZone {
     private List<Card> questCards;  // 任務牌
     
     public ResourceZone() {
-        this.tokenCount = 0;
+        this.tokenCount = 3;  // 初始時的Token總數，會根據CastleZone更新
         this.manaCounter = 0;
         this.discardPile = new ArrayList<>();
         this.questCards = new ArrayList<>();
@@ -38,6 +38,14 @@ public class ResourceZone {
         int actualAmount = Math.min(amount, tokenCount);
         tokenCount -= actualAmount;
         return actualAmount;
+    }
+    
+    /**
+     * 設置Token總數
+     * @param count 新的Token總數
+     */
+    public void setTokenCount(int count) {
+        this.tokenCount = count;
     }
     
     /**
@@ -134,7 +142,7 @@ public class ResourceZone {
      */
     public void displayStatus() {
         System.out.println("資源區狀態:");
-        System.out.println("- Token數量: " + tokenCount);
+        System.out.println("- Token總數: " + tokenCount);
         System.out.println("- 法力值: " + manaCounter);
         System.out.println("- 棄牌堆: " + discardPile.size() + " 張卡牌");
         System.out.println("- 任務牌: " + questCards.size() + " 張卡牌");

@@ -18,7 +18,7 @@ public class CastleZone {
         private String name;
         private int tokenCount;
         private int health;     // 城牆生命值
-        private static final int MAX_HEALTH = 10; // 最大生命值
+        private static final int MAX_HEALTH = 10; // 每個城牆的最大生命值為10點
         
         public Wall(String name) {
             this.name = name;
@@ -27,6 +27,7 @@ public class CastleZone {
         }
         
         public boolean addToken() {
+            // 沒有單一城牆的Token上限，只有總數量限制
             tokenCount++;
             return true;
         }
@@ -135,12 +136,15 @@ public class CastleZone {
             return false;
         }
         
+        Wall targetWall;
         switch (wallType) {
-            case 1: return drawWall.addToken();
-            case 2: return manaWall.addToken();
-            case 3: return playWall.addToken();
+            case 1: targetWall = drawWall; break;
+            case 2: targetWall = manaWall; break;
+            case 3: targetWall = playWall; break;
             default: return false;
         }
+        
+        return targetWall.addToken();
     }
     
     /**

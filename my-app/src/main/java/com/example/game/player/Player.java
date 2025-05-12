@@ -19,7 +19,6 @@ import com.example.game.card.ToolCard;
  */
 public class Player {
     private String name;
-    private int health;
     private Deck deck;
     private List<Card> hand;
     
@@ -35,7 +34,6 @@ public class Player {
     
     public Player(String name) {
         this.name = name;
-        this.health = 30; // 預設生命值
         this.hand = new ArrayList<>();
         
         // 初始化各區域
@@ -47,6 +45,9 @@ public class Player {
         this.manaPoints = 0;
         this.maxCardsToPlay = 1; // 預設每回合可出1張牌
         this.cardsPlayedThisTurn = 0;
+        
+        // 同步資源區Token
+        updateResourceTokens();
     }
     
     public void initializeDeck() {
@@ -56,16 +57,25 @@ public class Player {
         deck.shuffle();
     }
     
+    /**
+     * 從牌組中抽一張牌
+     * 如果牌組為空，則直接判定玩家失敗
+     */
     public void drawCard() {
         if (deck.isEmpty()) {
-            // 牌庫耗盡，受到疲勞傷害
-            takeFatigueDamage();
+            // 牌庫耗盡，直接判定為失敗
+            System.out.println(name + " 的牌庫已空，無法再抽牌！");
+            System.out.println(name + " 因牌庫耗盡而失敗！");
+            // 將所有城牆生命值設為0，確保會被判定為失敗
+            this.castleZone.getDrawWall().takeDamage(this.castleZone.getDrawWall().getHealth());
+            this.castleZone.getManaWall().takeDamage(this.castleZone.getManaWall().getHealth());
+            this.castleZone.getPlayWall().takeDamage(this.castleZone.getPlayWall().getHealth());
             return;
         }
         
         Card card = deck.drawCard();
         hand.add(card);
-        System.out.println(name + " 抽了一張牌: " + card.getName());
+        System.out.println(name + " 抽了一張牌: " + card.getName() + "，牌庫剩餘: " + deck.size() + " 張牌");
     }
     
     public void drawInitialHand() {
@@ -86,6 +96,9 @@ public class Player {
         this.manaPoints = 0;
         this.maxCardsToPlay = 0; // 出牌數量將由出牌區 Token 直接決定
         this.cardsPlayedThisTurn = 0;
+        
+        // 確保資源區Token與城堡區Token同步
+        updateResourceTokens();
         
         // 刷新所有角色的攻擊狀態
         for (CharacterCard character : battlefieldZone.getCharacters()) {
@@ -114,10 +127,10 @@ public class Player {
     /**
      * 打出手牌
      * @param handIndex 手牌索引
-     * @param wallType 不再使用，保留參數以維持兼容性
+     * @param areaType 戰場區域 (1=抽牌區, 2=法力區, 3=出牌區)
      * @return 成功出牌返回true，否則返回false
      */
-    public boolean playCard(int handIndex, int wallType) {
+    public boolean playCard(int handIndex, int areaType) {
         if (handIndex < 0 || handIndex >= hand.size()) {
             System.out.println("無效的手牌索引!");
             return false;
@@ -146,38 +159,47 @@ public class Player {
         // 從手牌中移除
         hand.remove(handIndex);
         
+        // 區域名稱
+        String areaName;
+        switch (areaType) {
+            case BattlefieldZone.DRAW_AREA: areaName = "抽牌區"; break;
+            case BattlefieldZone.MANA_AREA: areaName = "法力區"; break;
+            case BattlefieldZone.PLAY_AREA: areaName = "出牌區"; break;
+            default: areaName = "未知區域"; break;
+        }
+        
         // 根據卡牌類型處理
         switch (card.getType()) {
             case CHARACTER:
                 // 角色卡添加到戰場
                 CharacterCard characterCard = (CharacterCard) card;
-                if (battlefieldZone.addCharacter(characterCard)) {
-                    System.out.println(name + " 派出角色: " + characterCard.getName());
+                if (battlefieldZone.addCharacter(characterCard, areaType)) {
+                    System.out.println(name + " 派出角色: " + characterCard.getName() + " 到" + areaName);
                     characterCard.play(this);
                 } else {
-                    System.out.println("戰場角色位置已滿!");
+                    System.out.println(areaName + "角色位置已滿!");
                     return false;
                 }
                 break;
             case TECHNIQUE:
                 // 烹飪技術卡添加到戰場
                 TechniqueCard techniqueCard = (TechniqueCard) card;
-                if (battlefieldZone.addTechnique(techniqueCard)) {
-                    System.out.println(name + " 使用烹飪技術: " + techniqueCard.getName());
+                if (battlefieldZone.addTechnique(techniqueCard, areaType)) {
+                    System.out.println(name + " 使用烹飪技術: " + techniqueCard.getName() + " 到" + areaName);
                     techniqueCard.play(this);
-            } else {
-                    System.out.println("戰場烹飪技術位置已滿!");
+                } else {
+                    System.out.println(areaName + "烹飪技術位置已滿!");
                     return false;
                 }
                 break;
             case TOOL:
                 // 料理工具卡添加到戰場
                 ToolCard toolCard = (ToolCard) card;
-                if (battlefieldZone.addTool(toolCard)) {
-                    System.out.println(name + " 裝備料理工具: " + toolCard.getName());
+                if (battlefieldZone.addTool(toolCard, areaType)) {
+                    System.out.println(name + " 裝備料理工具: " + toolCard.getName() + " 到" + areaName);
                     toolCard.play(this);
-        } else {
-                    System.out.println("戰場料理工具位置已滿!");
+                } else {
+                    System.out.println(areaName + "料理工具位置已滿!");
                     return false;
                 }
                 break;
@@ -185,7 +207,7 @@ public class Player {
                 // 任務卡添加到資源區
                 System.out.println(name + " 接受任務: " + card.getName());
                 resourceZone.addQuestCard(card);
-            card.play(this);
+                card.play(this);
                 break;
         }
         
@@ -193,6 +215,12 @@ public class Player {
         System.out.println(name + " 剩餘法力值: " + manaPoints + ", 出牌次數: " + cardsPlayedThisTurn + "/" + maxCardsToPlay);
         
         return true;
+    }
+    
+    // 為了保持向後兼容，提供舊的playCard方法，預設放在出牌區
+    public boolean playCard(int handIndex, int wallType, boolean oldVersion) {
+        // 注意：wallType 參數已不再使用，僅為保持兼容而保留
+        return playCard(handIndex, BattlefieldZone.PLAY_AREA);
     }
     
     /**
@@ -210,6 +238,9 @@ public class Player {
                 case 3: wallName = "出牌區"; break;
             }
             System.out.println(name + " 將新Token放置在 " + wallName);
+            
+            // 同步資源區Token
+            updateResourceTokens();
         } else {
             System.out.println("該城牆Token已達上限!");
         }
@@ -217,19 +248,20 @@ public class Player {
     }
     
     public void takeDamage(int amount) {
-        health -= amount;
-        System.out.println(name + " 受到 " + amount + " 點傷害，剩餘生命值: " + health);
-    }
-    
-    private void takeFatigueDamage() {
-        // 牌庫耗盡時受到的疲勞傷害，每次+1
-        int fatigueDamage = battlefieldZone.getCharacters().size() + 1; // 簡單計算疲勞傷害
-        takeDamage(fatigueDamage);
+        // 生命值由三個城牆的生命值組成，不再單獨跟蹤玩家生命值
+        System.out.println(name + " 受到 " + amount + " 點傷害");
     }
     
     public void heal(int amount) {
-        health = Math.min(health + amount, 30); // 最大生命值為30
-        System.out.println(name + " 恢復 " + amount + " 點生命值，目前生命值: " + health);
+        // 治療會均勻分配到三個城牆
+        int amountPerWall = amount / 3;
+        int remainder = amount % 3;
+        
+        castleZone.getDrawWall().heal(amountPerWall + (remainder > 0 ? 1 : 0));
+        castleZone.getManaWall().heal(amountPerWall + (remainder > 1 ? 1 : 0));
+        castleZone.getPlayWall().heal(amountPerWall);
+        
+        System.out.println(name + " 治療 " + amount + " 點生命值，分配到三個城牆");
     }
     
     public void displayHand() {
@@ -298,6 +330,25 @@ public class Player {
      */
     public boolean isDefeated() {
         return castleZone.areAllWallsDestroyed();
+    }
+    
+    /**
+     * 獲取玩家當前生命值（三個城牆生命值的總和）
+     */
+    public int getHealth() {
+        int drawWallHealth = castleZone.getDrawWall().getHealth();
+        int manaWallHealth = castleZone.getManaWall().getHealth();
+        int playWallHealth = castleZone.getPlayWall().getHealth();
+        
+        return drawWallHealth + manaWallHealth + playWallHealth;
+    }
+    
+    /**
+     * 獲取玩家最大生命值（三個城牆最大生命值的總和）
+     */
+    public int getMaxHealth() {
+        int maxWallHealth = castleZone.getDrawWall().getMaxHealth();
+        return maxWallHealth * 3; // 三個城牆各10點，總共30點
     }
     
     /**
@@ -384,10 +435,6 @@ public class Player {
         return name;
     }
     
-    public int getHealth() {
-        return health;
-    }
-    
     public List<Card> getHand() {
         return hand;
     }
@@ -414,5 +461,20 @@ public class Player {
     
     public int getCardsPlayedThisTurn() {
         return cardsPlayedThisTurn;
+    }
+    
+    /**
+     * 更新資源區的Token總數（根據城堡區三個區域的token總和）
+     */
+    public void updateResourceTokens() {
+        int totalCastleTokens = castleZone.getTotalTokenCount();
+        resourceZone.setTokenCount(totalCastleTokens);
+    }
+    
+    /**
+     * 獲取玩家的牌組
+     */
+    public Deck getDeck() {
+        return deck;
     }
 } 
