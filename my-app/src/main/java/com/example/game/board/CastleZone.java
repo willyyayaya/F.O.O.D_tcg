@@ -1,5 +1,7 @@
 package com.example.game.board;
 
+import com.example.game.card.CastleCard;
+
 /**
  * 城堡區 (Castle Zone) - 代表玩家的防禦核心
  * 包含三面城牆：抽牌區、法力區、出牌區
@@ -8,8 +10,14 @@ public class CastleZone {
     private Wall drawWall;      // 抽牌區
     private Wall manaWall;      // 法力區
     private Wall playWall;      // 出牌區
+    private CastleCard castleCard; // 城堡卡
     
     private static final int MAX_TOTAL_TOKENS = 10; // 所有牆的最大Token總數
+    
+    // 城牆類型常量
+    public static final int DRAW_WALL = 1;
+    public static final int MANA_WALL = 2;
+    public static final int PLAY_WALL = 3;
     
     /**
      * 城牆 - 每個城牆是一個獨立的戰場
@@ -181,5 +189,63 @@ public class CastleZone {
                           ", 生命值: " + manaWall.getHealth() + "/" + manaWall.getMaxHealth());
         System.out.println("- " + playWall.getName() + ": " + playWall.getTokenCount() + " 個Token" + 
                           ", 生命值: " + playWall.getHealth() + "/" + playWall.getMaxHealth());
+    }
+    
+    /**
+     * 檢查指定城牆是否被摧毀
+     * @param wallType 城牆類型 (DRAW_WALL, MANA_WALL, PLAY_WALL)
+     * @return 城牆是否被摧毀
+     */
+    public boolean isWallDestroyed(int wallType) {
+        switch (wallType) {
+            case DRAW_WALL: return drawWall.isDestroyed();
+            case MANA_WALL: return manaWall.isDestroyed();
+            case PLAY_WALL: return playWall.isDestroyed();
+            default: return false;
+        }
+    }
+    
+    /**
+     * 獲取指定城牆的當前生命值
+     * @param wallType 城牆類型 (DRAW_WALL, MANA_WALL, PLAY_WALL)
+     * @return 城牆當前生命值
+     */
+    public int getWallHealth(int wallType) {
+        switch (wallType) {
+            case DRAW_WALL: return drawWall.getHealth();
+            case MANA_WALL: return manaWall.getHealth();
+            case PLAY_WALL: return playWall.getHealth();
+            default: return 0;
+        }
+    }
+    
+    /**
+     * 獲取指定城牆的最大生命值
+     * @param wallType 城牆類型 (DRAW_WALL, MANA_WALL, PLAY_WALL)
+     * @return 城牆最大生命值
+     */
+    public int getWallMaxHealth(int wallType) {
+        switch (wallType) {
+            case DRAW_WALL: return drawWall.getMaxHealth();
+            case MANA_WALL: return manaWall.getMaxHealth();
+            case PLAY_WALL: return playWall.getMaxHealth();
+            default: return 0;
+        }
+    }
+    
+    /**
+     * 獲取城堡卡
+     * @return 城堡卡
+     */
+    public CastleCard getCastleCard() {
+        return castleCard;
+    }
+    
+    /**
+     * 設置城堡卡
+     * @param card 城堡卡
+     */
+    public void setCastleCard(CastleCard card) {
+        this.castleCard = card;
     }
 } 

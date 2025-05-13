@@ -1053,4 +1053,96 @@ public class FOODGameEngine {
             default: return "未知區域";
         }
     }
+
+    /**
+     * 為GUI模式準備遊戲，但不啟動控制台循環
+     */
+    public void prepareGame() {
+        System.out.println("正在準備 F.O.O.D TCG 遊戲...");
+        
+        // 初始化卡牌圖鑑
+        initializeCardLibrary();
+        
+        // 初始化玩家
+        initializePlayersForGUI();
+        
+        // 設置當前回合玩家
+        currentPlayer = Math.random() > 0.5 ? player1 : player2;
+        
+        System.out.println("遊戲準備就緒，等待GUI介面控制...");
+    }
+
+    /**
+     * 為GUI模式初始化玩家
+     */
+    private void initializePlayersForGUI() {
+        // 創建玩家1（默認使用火辣王國陣營）
+        player1 = new Player("玩家1");
+        player1.setFaction(com.example.game.card.Faction.SPICY_KINGDOM);
+        
+        // 創建玩家2（默認使用健康綠洲陣營）
+        player2 = new Player("玩家2");
+        player2.setFaction(com.example.game.card.Faction.HEALTHY_OASIS);
+        
+        // 初始化城堡卡
+        setupCastleForGUI(player1, com.example.game.card.Faction.SPICY_KINGDOM);
+        setupCastleForGUI(player2, com.example.game.card.Faction.HEALTHY_OASIS);
+        
+        // 初始化牌組
+        player1.initializeDeck();
+        player2.initializeDeck();
+        
+        // 抽初始手牌
+        player1.drawInitialHand();
+        player2.drawInitialHand();
+        
+        System.out.println(player1.getName() + " 使用火辣王國陣營");
+        System.out.println(player2.getName() + " 使用健康綠洲陣營");
+        System.out.println(currentPlayer.getName() + " 將先手進行遊戲");
+    }
+
+    /**
+     * 為GUI模式設置玩家城堡
+     */
+    private void setupCastleForGUI(Player player, com.example.game.card.Faction faction) {
+        // 獲取陣營的第一個城堡卡
+        com.example.game.card.CastleCard castle = com.example.game.card.CardLibrary.getCastleCards(faction).get(0);
+        player.setCastleCard(castle);
+        
+        // 默認放在抽牌區
+        castle.hideInZone(com.example.game.card.CastleCardZone.DECK);
+        
+        // 啟用城堡效果
+        castle.activateEffect(player);
+    }
+
+    /**
+     * 執行玩家回合結束
+     */
+    public void endPlayerTurn() {
+        // 執行回合結束邏輯
+        endTurn();
+        
+        // 開始新回合
+        startTurn();
+    }
+
+    /**
+     * 嘗試在指定區域放置Token
+     * @param areaType 區域類型（DRAW_AREA, MANA_AREA, PLAY_AREA）
+     * @return 是否成功放置
+     */
+    public boolean placeTokenInArea(int areaType) {
+        if (hasPlacedTokenThisTurn) {
+            return false;
+        }
+        
+        // 放置Token到指定區域
+        if (currentPlayer.placeNewToken(areaType)) {
+            hasPlacedTokenThisTurn = true;
+            return true;
+        }
+        
+        return false;
+    }
 } 

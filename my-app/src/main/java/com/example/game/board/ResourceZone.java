@@ -14,11 +14,28 @@ public class ResourceZone {
     private List<Card> discardPile; // 棄牌堆
     private List<Card> questCards;  // 任務牌
     
+    // 資源區常量定義
+    public static final int DRAW_AREA = 1;
+    public static final int MANA_AREA = 2;
+    public static final int PLAY_AREA = 3;
+    
     public ResourceZone() {
         this.tokenCount = 3;  // 初始時的Token總數，會根據CastleZone更新
         this.manaCounter = 0;
         this.discardPile = new ArrayList<>();
         this.questCards = new ArrayList<>();
+    }
+    
+    /**
+     * 獲取指定區域的Token數量
+     * @param areaType 區域類型（DRAW_AREA, MANA_AREA, PLAY_AREA）
+     * @return 該區域的Token數量
+     */
+    public int getTokens(int areaType) {
+        // 從玩家的CastleZone獲取實際的Token數量
+        // 在真實實現中，應該通過Player引用獲取CastleZone
+        // 這裡暫時返回總數，具體邏輯需在GameBoardController中處理
+        return tokenCount / 3; // 暫時假設平均分配
     }
     
     /**

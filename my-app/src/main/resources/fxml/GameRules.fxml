@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.game.ui.GameRulesController"
+            prefHeight="600.0" prefWidth="800.0"
+            fitToWidth="true">
+    
+    <stylesheets>
+        <String fx:value="/styles/main.css" />
+    </stylesheets>
+    
+    <content>
+        <VBox styleClass="rules-container" spacing="15.0">
+            <padding>
+                <Insets top="20.0" right="20.0" bottom="20.0" left="20.0" />
+            </padding>
+            
+            <Label text="F.O.O.D TCG 遊戲規則" styleClass="rules-title" />
+            
+            <Label text="遊戲簡介" styleClass="rules-section" />
+            <Label text="F.O.O.D TCG是一款食物擬人對戰卡牌遊戲，玩家將扮演食物角色進行策略性對戰。遊戲結合了資源管理、卡牌收集和戰略對決等元素，為玩家提供豐富有趣的遊戲體驗。" styleClass="rules-text" wrapText="true" />
+            
+            <Label text="遊戲區域" styleClass="rules-section" />
+            <VBox spacing="5">
+                <Label text="1. 城堡區 (Castle Zone): 每位玩家的核心區域，包含三面城牆。" styleClass="rules-text" />
+                <Label text="   - 抽牌區: 影響每回合額外抽牌數量。" styleClass="rules-text" />
+                <Label text="   - 法力區: 影響每回合可用法力值。" styleClass="rules-text" />
+                <Label text="   - 出牌區: 影響每回合出牌上限。" styleClass="rules-text" />
+                <Label text="2. 戰場區 (Battlefield): 玩家放置角色卡和場地卡的區域。" styleClass="rules-text" />
+                <Label text="3. 資源區 (Resource Zone): 管理Token和其他資源的區域。" styleClass="rules-text" />
+            </VBox>
+            
+            <Label text="卡牌類型" styleClass="rules-section" />
+            <VBox spacing="5">
+                <Label text="1. 角色卡 (Character Card): 主要進行戰鬥的卡牌，具有攻擊力、防禦力和生命值。" styleClass="rules-text" />
+                <Label text="2. 場地卡 (Field Card): 提供各種效果的環境卡牌。" styleClass="rules-text" />
+                <Label text="   - 烹飪技術卡: 提供持續性效果。" styleClass="rules-text" />
+                <Label text="   - 料理工具卡: 提供輔助性能力。" styleClass="rules-text" />
+                <Label text="3. 城堡卡 (Castle Card): 代表玩家的核心陣地，提供特殊能力。" styleClass="rules-text" />
+            </VBox>
+            
+            <Label text="遊戲流程" styleClass="rules-section" />
+            <VBox spacing="5">
+                <Label text="1. 遊戲開始: 雙方選擇陣營和城堡卡，並抽取起始手牌。" styleClass="rules-text" />
+                <Label text="2. 回合進行:" styleClass="rules-text" />
+                <Label text="   - 放置Token: 每回合開始時放置一個Token到城牆上。" styleClass="rules-text" />
+                <Label text="   - 抽牌階段: 根據抽牌區Token數量抽牌。" styleClass="rules-text" />
+                <Label text="   - 出牌階段: 使用法力值出牌，數量受出牌區Token限制。" styleClass="rules-text" />
+                <Label text="   - 戰鬥階段: 使用角色卡攻擊對手的角色或城牆。" styleClass="rules-text" />
+                <Label text="   - 結束回合: 清理階段，回合結束。" styleClass="rules-text" />
+                <Label text="3. 勝利條件: 摧毀對手的所有城牆、減少對手生命值至零或使對手牌庫耗盡。" styleClass="rules-text" />
+            </VBox>
+            
+            <Label text="陣營介紹" styleClass="rules-section" />
+            <VBox spacing="5">
+                <Label text="1. 火辣王國 (Spicy Kingdom): 擅長強力攻擊和爆發傷害，角色多為辣味食物。" styleClass="rules-text" />
+                <Label text="2. 健康綠洲 (Healthy Oasis): 注重防禦和恢復，角色多為健康蔬果。" styleClass="rules-text" />
+                <Label text="3. 速食工會 (Fast Food Guild): 快速出牌和連鎖效果，角色多為快餐食品。" styleClass="rules-text" />
+                <Label text="4. 甜點聯盟 (Dessert Union): 擅長特殊效果和控制，角色多為甜點糕點。" styleClass="rules-text" />
+                <Label text="5. 中立陣營 (Neutral): 通用型角色，可與任何陣營搭配。" styleClass="rules-text" />
+            </VBox>
+            
+            <Button fx:id="backButton" text="返回主選單" onAction="#handleBackButton" styleClass="menu-button">
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin>
+            </Button>
+        </VBox>
+    </content>
+</ScrollPane> 

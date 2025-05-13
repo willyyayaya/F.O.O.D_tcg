@@ -301,4 +301,12 @@ public class BattlefieldZone {
         System.out.println("警告：使用了已棄用的方法getTools，請改用getFieldCards");
         return new ArrayList<>(); // 返回空列表
     }
+    
+    /**
+     * 獲取所有角色卡
+     * @return 所有角色卡列表
+     */
+    public List<CharacterCard> getAllCharacters() {
+        return getCharacters();
+    }
 } 

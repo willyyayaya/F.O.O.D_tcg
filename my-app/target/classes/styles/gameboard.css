@@ -1,0 +1,208 @@
+/* 遊戲棋盤整體背景 */
+.game-board-background {
+    -fx-background-color: linear-gradient(to bottom, #2c3e50, #1a2530);
+}
+
+/* 區域標題樣式 */
+.zone-title {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #ecf0f1;
+    -fx-padding: 5 0 5 0;
+}
+
+/* 玩家信息面板 */
+.player-info-panel {
+    -fx-background-color: rgba(52, 73, 94, 0.7);
+    -fx-background-radius: 5;
+    -fx-padding: 8;
+}
+
+.player-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-text-fill: #f1c40f;
+}
+
+.health-value {
+    -fx-font-weight: bold;
+    -fx-text-fill: #e74c3c;
+}
+
+.mana-value {
+    -fx-font-weight: bold;
+    -fx-text-fill: #3498db;
+}
+
+/* 城堡區域樣式 */
+.castle-zone {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #7f8c8d;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.castle-grid {
+    -fx-background-color: rgba(52, 73, 94, 0.5);
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+}
+
+/* 戰場區域樣式 */
+.battlefield-zone {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #7f8c8d;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.battlefield-container {
+    -fx-background-color: rgba(52, 73, 94, 0.5);
+    -fx-background-radius: 5;
+    -fx-padding: 10;
+    -fx-min-height: 150;
+}
+
+/* 資源區域樣式 */
+.resource-zone {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-border-color: #7f8c8d;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+}
+
+.resource-info {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+.token-count {
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-text-fill: #f1c40f;
+}
+
+/* 遊戲日誌區域 */
+.game-log-container {
+    -fx-background-color: transparent;
+}
+
+.game-log {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-text-fill: #ecf0f1;
+    -fx-font-family: "Consolas", "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
+/* 場地卡區域樣式 */
+.field-cards-zone {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+/* 手牌區域樣式 */
+.hand-cards-zone {
+    -fx-background-color: rgba(44, 62, 80, 0.7);
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+}
+
+/* 按鈕樣式 */
+.action-button {
+    -fx-background-color: #2980b9;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-min-width: 100;
+    -fx-cursor: hand;
+}
+
+.action-button:hover {
+    -fx-background-color: #3498db;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.0, 0.0, 1.0);
+}
+
+.action-button:pressed {
+    -fx-background-color: #1c638e;
+}
+
+.end-turn-button {
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-min-width: 100;
+    -fx-cursor: hand;
+}
+
+.end-turn-button:hover {
+    -fx-background-color: #2ecc71;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 5, 0.0, 0.0, 1.0);
+}
+
+.end-turn-button:pressed {
+    -fx-background-color: #1e8449;
+}
+
+/* 卡牌樣式 */
+.game-card {
+    -fx-background-color: white;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0.0, 0.0, 1.0);
+    -fx-cursor: hand;
+    -fx-min-width: 80;
+    -fx-max-width: 80;
+    -fx-min-height: 110;
+    -fx-max-height: 110;
+    -fx-padding: 5;
+}
+
+.game-card:hover {
+    -fx-effect: dropshadow(gaussian, rgba(241, 196, 15, 0.8), 10, 0.3, 0.0, 0.0);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.game-card .card-name {
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-text-fill: #2c3e50;
+}
+
+.game-card .card-stats {
+    -fx-font-size: 9px;
+    -fx-text-fill: #7f8c8d;
+}
+
+/* 城牆元素樣式 */
+.wall-element {
+    -fx-background-color: #7f8c8d;
+    -fx-background-radius: 5;
+    -fx-min-width: 50;
+    -fx-min-height: 50;
+    -fx-max-width: 50;
+    -fx-max-height: 50;
+    -fx-alignment: center;
+    -fx-padding: 5;
+}
+
+.wall-element.damaged {
+    -fx-background-color: #e74c3c;
+}
+
+.wall-element.destroyed {
+    -fx-background-color: #7f8c8d;
+    -fx-opacity: 0.4;
+}
+
+.wall-label {
+    -fx-font-weight: bold;
+    -fx-font-size: 10px;
+    -fx-text-fill: white;
+} 

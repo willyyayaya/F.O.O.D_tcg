@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.game.ui.GameBoardController"
+            prefHeight="768.0" prefWidth="1024.0"
+            styleClass="game-board-background">
+    
+    <stylesheets>
+        <String fx:value="/styles/main.css" />
+        <String fx:value="/styles/gameboard.css" />
+    </stylesheets>
+    
+    <!-- 頂部區域 - 對手信息和棋盤 -->
+    <top>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="20" bottom="10" left="20" />
+            </padding>
+            
+            <!-- 對手信息 -->
+            <HBox styleClass="player-info-panel" alignment="CENTER_LEFT" spacing="15">
+                <Label fx:id="opponentNameLabel" text="對手: 玩家2" styleClass="player-name" />
+                <Label text="生命值:" />
+                <Label fx:id="opponentHealthLabel" text="30" styleClass="health-value" />
+                <Label text="手牌:" />
+                <Label fx:id="opponentHandCountLabel" text="5" />
+                <Label text="牌庫:" />
+                <Label fx:id="opponentDeckCountLabel" text="25" />
+                
+                <HBox HBox.hgrow="ALWAYS" />
+                
+                <Button fx:id="menuButton" text="選單" styleClass="menu-button" />
+                <Button fx:id="endTurnButton" text="結束回合" styleClass="end-turn-button" />
+            </HBox>
+            
+            <!-- 對手的城堡和戰場區 -->
+            <HBox alignment="CENTER" spacing="20">
+                <!-- 對手城堡區 -->
+                <VBox styleClass="castle-zone" prefWidth="200">
+                    <Label text="對手城堡區" styleClass="zone-title" />
+                    <GridPane fx:id="opponentCastleGrid" styleClass="castle-grid" alignment="CENTER" hgap="5" vgap="5">
+                        <!-- 城牆將在控制器中動態添加 -->
+                    </GridPane>
+                </VBox>
+                
+                <!-- 對手戰場區 -->
+                <VBox styleClass="battlefield-zone" HBox.hgrow="ALWAYS">
+                    <Label text="對手戰場區" styleClass="zone-title" />
+                    <HBox fx:id="opponentBattlefieldBox" styleClass="battlefield-container" alignment="CENTER" spacing="10">
+                        <!-- 角色卡將在控制器中動態添加 -->
+                    </HBox>
+                </VBox>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <!-- 中間區域 - 遊戲訊息和場地卡 -->
+    <center>
+        <VBox alignment="CENTER" spacing="10">
+            <padding>
+                <Insets top="5" right="20" bottom="5" left="20" />
+            </padding>
+            
+            <!-- 遊戲訊息區 -->
+            <ScrollPane styleClass="game-log-container" fitToWidth="true" prefHeight="100">
+                <TextArea fx:id="gameLogArea" styleClass="game-log" editable="false" wrapText="true" />
+            </ScrollPane>
+            
+            <!-- 場地卡區域 -->
+            <HBox styleClass="field-cards-zone" alignment="CENTER" spacing="20">
+                <Label text="場地卡:" />
+                <HBox fx:id="fieldCardsBox" spacing="10" alignment="CENTER">
+                    <!-- 場地卡將在控制器中動態添加 -->
+                </HBox>
+            </HBox>
+        </VBox>
+    </center>
+    
+    <!-- 底部區域 - 玩家信息和棋盤 -->
+    <bottom>
+        <VBox spacing="10">
+            <padding>
+                <Insets top="10" right="20" bottom="20" left="20" />
+            </padding>
+            
+            <!-- 玩家的戰場和城堡區 -->
+            <HBox alignment="CENTER" spacing="20">
+                <!-- 玩家戰場區 -->
+                <VBox styleClass="battlefield-zone" HBox.hgrow="ALWAYS">
+                    <Label text="我的戰場區" styleClass="zone-title" />
+                    <HBox fx:id="playerBattlefieldBox" styleClass="battlefield-container" alignment="CENTER" spacing="10">
+                        <!-- 角色卡將在控制器中動態添加 -->
+                    </HBox>
+                </VBox>
+                
+                <!-- 玩家城堡區 -->
+                <VBox styleClass="castle-zone" prefWidth="200">
+                    <Label text="我的城堡區" styleClass="zone-title" />
+                    <GridPane fx:id="playerCastleGrid" styleClass="castle-grid" alignment="CENTER" hgap="5" vgap="5">
+                        <!-- 城牆將在控制器中動態添加 -->
+                    </GridPane>
+                </VBox>
+            </HBox>
+            
+            <!-- 玩家資源區和手牌 -->
+            <HBox alignment="CENTER" spacing="15">
+                <!-- 資源區 -->
+                <VBox styleClass="resource-zone" prefWidth="200">
+                    <Label text="資源區" styleClass="zone-title" />
+                    <HBox spacing="10" alignment="CENTER">
+                        <VBox alignment="CENTER">
+                            <Label text="抽牌區" />
+                            <Label fx:id="drawAreaTokensLabel" text="0" styleClass="token-count" />
+                        </VBox>
+                        <VBox alignment="CENTER">
+                            <Label text="法力區" />
+                            <Label fx:id="manaAreaTokensLabel" text="0" styleClass="token-count" />
+                        </VBox>
+                        <VBox alignment="CENTER">
+                            <Label text="出牌區" />
+                            <Label fx:id="playAreaTokensLabel" text="0" styleClass="token-count" />
+                        </VBox>
+                    </HBox>
+                </VBox>
+                
+                <!-- 玩家信息 -->
+                <VBox styleClass="player-info-panel" alignment="CENTER">
+                    <Label fx:id="playerNameLabel" text="玩家1" styleClass="player-name" />
+                    <HBox spacing="10" alignment="CENTER">
+                        <Label text="生命值:" />
+                        <Label fx:id="playerHealthLabel" text="30" styleClass="health-value" />
+                        <Label text="牌庫:" />
+                        <Label fx:id="playerDeckCountLabel" text="25" />
+                    </HBox>
+                </VBox>
+                
+                <!-- 可用資源 -->
+                <VBox styleClass="resource-info" alignment="CENTER">
+                    <Label text="可用資源" />
+                    <Label fx:id="availableManaLabel" text="0/0" styleClass="mana-value" />
+                </VBox>
+                
+                <!-- 功能按鈕 -->
+                <VBox spacing="5" alignment="CENTER">
+                    <Button fx:id="placeTokenButton" text="放置Token" styleClass="action-button" />
+                    <Button fx:id="battleButton" text="戰鬥" styleClass="action-button" />
+                </VBox>
+            </HBox>
+            
+            <!-- 手牌區域 -->
+            <HBox styleClass="hand-cards-zone" alignment="CENTER">
+                <Label text="手牌:" styleClass="zone-title" />
+                <ScrollPane fitToWidth="true" hbarPolicy="ALWAYS" vbarPolicy="NEVER" prefHeight="120">
+                    <HBox fx:id="handCardsBox" spacing="5" alignment="CENTER">
+                        <!-- 手牌將在控制器中動態添加 -->
+                    </HBox>
+                </ScrollPane>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane> 

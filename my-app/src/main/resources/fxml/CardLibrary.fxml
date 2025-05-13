@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.*?>
+<?import java.lang.String?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.game.ui.CardLibraryController"
+            prefHeight="700.0" prefWidth="900.0">
+    
+    <stylesheets>
+        <String fx:value="/styles/main.css" />
+    </stylesheets>
+    
+    <top>
+        <VBox alignment="CENTER" spacing="10.0">
+            <padding>
+                <Insets top="15.0" right="15.0" bottom="15.0" left="15.0" />
+            </padding>
+            
+            <Label text="F.O.O.D TCG 卡牌圖鑑" styleClass="rules-title" />
+            
+            <HBox spacing="10.0" alignment="CENTER">
+                <Label text="陣營：" />
+                <ComboBox fx:id="factionComboBox" prefWidth="150.0" />
+                
+                <Label text="類型：" >
+                    <HBox.margin>
+                        <Insets left="20.0" />
+                    </HBox.margin>
+                </Label>
+                <ComboBox fx:id="cardTypeComboBox" prefWidth="150.0" />
+                
+                <Button fx:id="searchButton" text="搜尋" onAction="#handleSearch">
+                    <HBox.margin>
+                        <Insets left="20.0" />
+                    </HBox.margin>
+                </Button>
+                
+                <Button fx:id="resetButton" text="重置" onAction="#handleReset">
+                    <HBox.margin>
+                        <Insets left="10.0" />
+                    </HBox.margin>
+                </Button>
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <content>
+                <GridPane fx:id="cardGrid" styleClass="card-grid" hgap="15.0" vgap="15.0">
+                    <padding>
+                        <Insets top="15.0" right="15.0" bottom="15.0" left="15.0" />
+                    </padding>
+                    <!-- 卡牌將在控制器中動態添加 -->
+                </GridPane>
+            </content>
+        </ScrollPane>
+    </center>
+    
+    <bottom>
+        <HBox alignment="CENTER" spacing="10.0">
+            <padding>
+                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0" />
+            </padding>
+            
+            <Button fx:id="backButton" text="返回主選單" onAction="#handleBackButton" styleClass="menu-button" />
+            
+            <Label fx:id="cardCountLabel" text="載入中..." >
+                <HBox.margin>
+                    <Insets left="30.0" />
+                </HBox.margin>
+            </Label>
+        </HBox>
+    </bottom>
+</BorderPane> 

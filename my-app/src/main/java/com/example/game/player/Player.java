@@ -8,12 +8,12 @@ import com.example.game.board.BattlefieldZone;
 import com.example.game.board.CastleZone;
 import com.example.game.board.ResourceZone;
 import com.example.game.card.Card;
-import com.example.game.card.CharacterCard;
 import com.example.game.card.CastleCard;
+import com.example.game.card.CharacterCard;
 import com.example.game.card.Deck;
+import com.example.game.card.Faction;
 import com.example.game.card.FieldCard;
 import com.example.game.card.Rarity;
-import com.example.game.card.Faction;
 
 /**
  * 玩家類 - 代表F.O.O.D TCG遊戲參與者
@@ -456,6 +456,20 @@ public class Player {
         return manaPoints;
     }
     
+    /**
+     * 獲取當前可用法力值
+     */
+    public int getCurrentMana() {
+        return manaPoints;
+    }
+    
+    /**
+     * 獲取最大法力值
+     */
+    public int getMaxMana() {
+        return castleZone.getManaWall().getTokenCount();
+    }
+    
     public int getMaxCardsToPlay() {
         return maxCardsToPlay;
     }
@@ -477,6 +491,27 @@ public class Player {
      */
     public Deck getDeck() {
         return deck;
+    }
+    
+    /**
+     * 獲取牌庫中卡牌數量
+     */
+    public int getDeckSize() {
+        return deck.size();
+    }
+    
+    /**
+     * 獲取手牌中卡牌數量
+     */
+    public int getHandSize() {
+        return hand.size();
+    }
+    
+    /**
+     * 獲取場地卡列表
+     */
+    public List<FieldCard> getFieldCards() {
+        return battlefieldZone.getFieldCards();
     }
     
     /**

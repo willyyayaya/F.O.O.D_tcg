@@ -40,6 +40,13 @@ public abstract class Card {
         return tokenCost;
     }
     
+    /**
+     * 獲取卡牌費用（作為getTokenCost的別名）
+     */
+    public int getCost() {
+        return tokenCost;
+    }
+    
     public String getDescription() {
         return description;
     }
