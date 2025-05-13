@@ -12,5 +12,6 @@ public enum SpellType {
     DEBUFF,      // 減益型法術
     TRANSFORM,   // 變形法術
     SUMMON,      // 召喚型法術
-    SPECIAL      // 特殊效果法術
+    SPECIAL,     // 特殊效果法術
+    ECONOMIC     // 經濟型法術，影響費用和資源
 } 

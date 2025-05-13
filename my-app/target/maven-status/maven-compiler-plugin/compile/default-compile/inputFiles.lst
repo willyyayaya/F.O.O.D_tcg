@@ -1,3 +1,4 @@
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CastleCardZone.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/board/CastleZone.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/Deck.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CardLibrary.java
@@ -6,13 +7,18 @@
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/board/ResourceZone.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/FieldCard.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CardType.java
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CastleEffect.java
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CastleCard.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/FieldEffectType.java
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/player/AIPlayer.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/Minion.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CharacterCard.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/SpellType.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/board/BattlefieldZone.java
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/CastleEffectImpl.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/player/Player.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/SpellCard.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/App.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/Rarity.java
+/Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/card/Faction.java
 /Users/willy/Desktop/未命名檔案夾 2/F.O.O.D_tcg/F.O.O.D_tcg/my-app/src/main/java/com/example/game/board/GameBoard.java

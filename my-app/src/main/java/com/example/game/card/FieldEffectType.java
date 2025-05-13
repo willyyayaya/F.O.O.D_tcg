@@ -17,6 +17,7 @@ public enum FieldEffectType {
     DAMAGE,        // 傷害效果
     DRAW,          // 抽牌效果
     SPECIAL,       // 特殊效果
+    SUMMON,        // 召喚效果
     
     // 新增的場地效果類型
     SUPPORTIVE,    // 輔助型，增強友方能力
@@ -30,7 +31,7 @@ public enum FieldEffectType {
      */
     public boolean isTechniqueEffect() {
         return this == BOOST_ATTACK || this == BOOST_DEFENSE || 
-               this == HEAL || this == DAMAGE || this == DRAW || this == SPECIAL;
+               this == HEAL || this == DAMAGE || this == DRAW || this == SPECIAL || this == SUMMON;
     }
     
     /**
@@ -57,6 +58,7 @@ public enum FieldEffectType {
             case DAMAGE: return "傷害";
             case DRAW: return "抽牌";
             case SPECIAL: return "特殊";
+            case SUMMON: return "召喚";
             
             // 新類型描述
             case SUPPORTIVE: return "輔助型";
