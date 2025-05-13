@@ -11,5 +11,6 @@ public enum SpellType {
     BUFF,        // 增益型法術
     DEBUFF,      // 減益型法術
     TRANSFORM,   // 變形法術
-    SUMMON       // 召喚型法術
+    SUMMON,      // 召喚型法術
+    SPECIAL      // 特殊效果法術
 } 

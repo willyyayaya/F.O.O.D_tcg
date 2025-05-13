@@ -25,12 +25,20 @@ public class FieldCard extends Card {
      */
     public static FieldCard createTechniqueField(String name, int tokenCost, String description, 
             Rarity rarity, FieldEffectType effectType, int effectValue, int duration) {
+        return createTechniqueField(name, tokenCost, description, rarity, effectType, effectValue, duration, Faction.NEUTRAL);
+    }
+
+    /**
+     * 創建指定陣營的烹飪技術類場地卡
+     */
+    public static FieldCard createTechniqueField(String name, int tokenCost, String description, 
+            Rarity rarity, FieldEffectType effectType, int effectValue, int duration, Faction faction) {
         
         if (!effectType.isTechniqueEffect()) {
             throw new IllegalArgumentException("必須使用技術類型的效果");
         }
         
-        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.COOKING_TECHNIQUE);
+        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.COOKING_TECHNIQUE, faction);
         card.effectType = effectType;
         card.effectValue = effectValue;
         card.duration = duration;
@@ -42,8 +50,16 @@ public class FieldCard extends Card {
      */
     public static FieldCard createToolField(String name, int tokenCost, String description, 
             Rarity rarity, FieldEffectType effectType, int durability, int effectValue) {
+        return createToolField(name, tokenCost, description, rarity, effectType, durability, effectValue, Faction.NEUTRAL);
+    }
+
+    /**
+     * 創建指定陣營的料理工具類場地卡
+     */
+    public static FieldCard createToolField(String name, int tokenCost, String description, 
+            Rarity rarity, FieldEffectType effectType, int durability, int effectValue, Faction faction) {
         
-        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.COOKING_TOOL);
+        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.COOKING_TOOL, faction);
         card.effectType = effectType;
         card.durability = durability;
         card.currentDurability = durability;
@@ -56,21 +72,33 @@ public class FieldCard extends Card {
      */
     public static FieldCard createEnvironmentField(String name, int tokenCost, String description, 
             Rarity rarity, int effectValue) {
+        return createEnvironmentField(name, tokenCost, description, rarity, effectValue, Faction.NEUTRAL);
+    }
+
+    /**
+     * 創建指定陣營的環境類場地卡
+     */
+    public static FieldCard createEnvironmentField(String name, int tokenCost, String description, 
+            Rarity rarity, int effectValue, Faction faction) {
         
-        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.ENVIRONMENT);
+        FieldCard card = new FieldCard(name, tokenCost, description, rarity, FieldType.ENVIRONMENT, faction);
         card.effectType = FieldEffectType.ENVIRONMENTAL; // 使用環境類型
         card.effectValue = effectValue;
         return card;
     }
     
     private FieldCard(String name, int tokenCost, String description, Rarity rarity, FieldType fieldType) {
-        super(name, tokenCost, description, rarity, CardType.FIELD);
+        this(name, tokenCost, description, rarity, fieldType, Faction.NEUTRAL);
+    }
+
+    private FieldCard(String name, int tokenCost, String description, Rarity rarity, FieldType fieldType, Faction faction) {
+        super(name, tokenCost, description, rarity, CardType.FIELD, faction);
         this.fieldType = fieldType;
     }
     
     @Override
     public void play(Player player) {
-        System.out.println(player.getName() + " 使用了場地卡: " + name + "!");
+        System.out.println(player.getName() + " 使用了場地卡: " + name + "! (" + getFaction().getLocalizedName() + ")");
         
         // 根據場地類型執行不同效果
         switch (fieldType) {

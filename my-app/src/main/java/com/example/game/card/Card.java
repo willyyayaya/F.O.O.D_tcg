@@ -11,13 +11,19 @@ public abstract class Card {
     protected String description;
     protected Rarity rarity;
     protected CardType type;     // 添加卡牌類型
+    protected Faction faction;   // 添加陣營屬性
     
     public Card(String name, int tokenCost, String description, Rarity rarity, CardType type) {
+        this(name, tokenCost, description, rarity, type, Faction.NEUTRAL); // 預設為中立陣營
+    }
+    
+    public Card(String name, int tokenCost, String description, Rarity rarity, CardType type, Faction faction) {
         this.name = name;
         this.tokenCost = tokenCost;
         this.description = description;
         this.rarity = rarity;
         this.type = type;
+        this.faction = faction;
     }
     
     /**
@@ -46,6 +52,10 @@ public abstract class Card {
         return type;
     }
     
+    public Faction getFaction() {
+        return faction;
+    }
+    
     /**
      * 顯示卡牌詳細資訊
      */
@@ -53,6 +63,7 @@ public abstract class Card {
         System.out.println("======= 卡牌資訊 =======");
         System.out.println("名稱: " + name);
         System.out.println("類型: " + getCardTypeText(type));
+        System.out.println("陣營: " + getFactionText());
         System.out.println("費用: " + tokenCost + " 個Token");
         System.out.println("稀有度: " + getRarityText(rarity));
         System.out.println("描述: " + description);
@@ -99,5 +110,12 @@ public abstract class Card {
             default:
                 return "未知";
         }
+    }
+    
+    /**
+     * 獲取陣營的文本描述
+     */
+    private String getFactionText() {
+        return faction.getLocalizedName() + " (" + faction.getEnglishName() + ")";
     }
 } 

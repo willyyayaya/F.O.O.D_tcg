@@ -15,7 +15,12 @@ public class CharacterCard extends Card {
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
                         int attack, int defense, int maxHealth, boolean isOffensive) {
-        super(name, tokenCost, description, rarity, CardType.CHARACTER);
+        this(name, tokenCost, description, rarity, attack, defense, maxHealth, isOffensive, Faction.NEUTRAL);
+    }
+    
+    public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
+                        int attack, int defense, int maxHealth, boolean isOffensive, Faction faction) {
+        super(name, tokenCost, description, rarity, CardType.CHARACTER, faction);
         this.attack = attack;
         this.defense = defense;
         this.maxHealth = maxHealth;
@@ -27,7 +32,7 @@ public class CharacterCard extends Card {
     @Override
     public void play(Player player) {
         // 出牌時的效果，可能包括戰吼效果等
-        System.out.println(player.getName() + " 派出了 " + name + " 角色!");
+        System.out.println(player.getName() + " 派出了 " + name + " 角色! (" + getFaction().getLocalizedName() + ")");
     }
     
     /**

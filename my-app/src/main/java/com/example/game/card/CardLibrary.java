@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 /**
  * 卡牌圖鑑 - 管理所有可用的卡牌
@@ -27,123 +28,445 @@ public class CardLibrary {
         allCharacters.clear();
         allFieldCards.clear();
         
-        // 初始化一些預設卡牌
-        initializeMinions();
-        initializeSpells();
-        initializeCharacters();
-        initializeFieldCards();
+        // 注意：移除舊的初始化方法調用，因為這些卡牌沒有明確的陣營
+        // initializeMinions();
+        // initializeSpells();
+        // initializeCharacters();
+        // initializeFieldCards();
         
+        // 只保留已明確設置陣營的卡牌
+        
+        // 火辣王國卡牌
+        CharacterCard spicyChicken = new CharacterCard(
+            "辣雞將軍", 5, "【開胃】：對敵方隨機角色造成2點傷害。【嗆辣】：每回合結束損失一點生命值。", 
+            Rarity.RARE, 5, 3, 5, true, Faction.SPICY_KINGDOM);
+        allCards.put(spicyChicken.getName(), spicyChicken);
+        allCharacters.add(spicyChicken);
+
+        CharacterCard chiliPepper = new CharacterCard(
+            "辣椒騎士", 3, "【開胃】：獲得+1攻擊力。【回味】：使一個友方角色獲得+1攻擊力。", 
+            Rarity.COMMON, 3, 2, 4, true, Faction.SPICY_KINGDOM);
+        allCards.put(chiliPepper.getName(), chiliPepper);
+        allCharacters.add(chiliPepper);
+
+        FieldCard spicySauce = FieldCard.createToolField(
+            "魔鬼辣醬", 2, "使一個友方角色獲得+2攻擊力，但附加【嗆辣】效果。", 
+            Rarity.COMMON, FieldEffectType.OFFENSIVE, 3, 2, Faction.SPICY_KINGDOM);
+        allCards.put(spicySauce.getName(), spicySauce);
+        allFieldCards.add(spicySauce);
+        
+        // 添加更多火辣王國卡牌
+        CharacterCard hotPot = new CharacterCard(
+            "麻辣火鍋", 6, "【開胃】：對所有敵方角色造成1點傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            Rarity.EPIC, 4, 4, 6, true, Faction.SPICY_KINGDOM);
+        allCards.put(hotPot.getName(), hotPot);
+        allCharacters.add(hotPot);
+        
+        CharacterCard kimchi = new CharacterCard(
+            "泡菜大師", 4, "【回味】：對敵方生命值最低的角色造成2點傷害。【彈牙】：每回合可攻擊 2 次。", 
+            Rarity.RARE, 3, 3, 4, true, Faction.SPICY_KINGDOM);
+        allCards.put(kimchi.getName(), kimchi);
+        allCharacters.add(kimchi);
+        
+        FieldCard chilliOil = FieldCard.createTechniqueField(
+            "紅油潑灑", 3, "給一個友方角色添加【爆炒】效果：可在戰鬥階段直接消滅一個生命值低於3的敵方單位。", 
+            Rarity.RARE, FieldEffectType.BOOST_ATTACK, 1, 3, Faction.SPICY_KINGDOM);
+        allCards.put(chilliOil.getName(), chilliOil);
+        allFieldCards.add(chilliOil);
+        
+        // 新增火辣王國卡牌
+        CharacterCard sichuanChef = new CharacterCard(
+            "川菜大廚", 4, "【開胃】：使一個敵方角色獲得【嗆辣】效果。【爆炒】：當攻擊時，有25%機率直接消滅目標。", 
+            Rarity.EPIC, 3, 5, 4, true, Faction.SPICY_KINGDOM);
+        allCards.put(sichuanChef.getName(), sichuanChef);
+        allCharacters.add(sichuanChef);
+
+        CharacterCard curryWarrior = new CharacterCard(
+            "咖哩武士", 3, "【彈牙】：每回合可攻擊 2 次。【酥脆】：減免1點傷害。", 
+            Rarity.COMMON, 2, 3, 3, true, Faction.SPICY_KINGDOM);
+        allCards.put(curryWarrior.getName(), curryWarrior);
+        allCharacters.add(curryWarrior);
+
+        // 新增火辣王國法術卡
+        SpellCard spicyExplosion = new SpellCard(
+            "麻辣爆破", 3, "對所有敵方角色造成2點傷害，並使其獲得【嗆辣】效果。", 
+            Rarity.RARE, SpellType.AOE, Faction.SPICY_KINGDOM);
+        allCards.put(spicyExplosion.getName(), spicyExplosion);
+        allSpells.add(spicyExplosion);
+
+        SpellCard hotPotFeast = new SpellCard(
+            "火鍋盛宴", 5, "使所有友方角色獲得+1/+1和【爆炒】效果。", 
+            Rarity.EPIC, SpellType.BUFF, Faction.SPICY_KINGDOM);
+        allCards.put(hotPotFeast.getName(), hotPotFeast);
+        allSpells.add(hotPotFeast);
+
+        // 火辣王國傳說卡牌
+        CharacterCard spicyEmperor = new CharacterCard(
+            "辣味皇帝", 8, "【開胃】：對所有敵方角色造成3點傷害並施加【嗆辣】效果。【爆炒】：攻擊時有50%機率摧毀目標，每回合只能發動一次。【回味】：對敵方英雄造成5點傷害。", 
+            Rarity.LEGENDARY, 6, 5, 8, true, Faction.SPICY_KINGDOM);
+        allCards.put(spicyEmperor.getName(), spicyEmperor);
+        allCharacters.add(spicyEmperor);
+        
+        // 火辣王國特殊場地卡
+        FieldCard volcanicKitchen = FieldCard.createEnvironmentField(
+            "火山廚房", 5, "每回合開始時，對所有敵方角色造成1點傷害。友方火辣王國角色獲得【爆炒】效果，攻擊時有15%機率直接消滅目標。", 
+            Rarity.EPIC, 4, Faction.SPICY_KINGDOM);
+        allCards.put(volcanicKitchen.getName(), volcanicKitchen);
+        allFieldCards.add(volcanicKitchen);
+
+        // 健康綠洲卡牌
+        CharacterCard avocadoGuardian = new CharacterCard(
+            "酪梨守衛", 4, "【滋補】：回合結束時恢復全滿血量。【酥脆】：減免2點傷害。", 
+            Rarity.RARE, 3, 5, 6, false, Faction.HEALTHY_OASIS);
+        allCards.put(avocadoGuardian.getName(), avocadoGuardian);
+        allCharacters.add(avocadoGuardian);
+
+        CharacterCard broccoliMage = new CharacterCard(
+            "花椰菜法師", 2, "【開胃】：為一個友方角色恢復3點生命值。【清淡】：滿血時無法攻擊。", 
+            Rarity.COMMON, 2, 2, 3, false, Faction.HEALTHY_OASIS);
+        allCards.put(broccoliMage.getName(), broccoliMage);
+        allCharacters.add(broccoliMage);
+
+        FieldCard greenSmoothie = FieldCard.createTechniqueField(
+            "綠色能量昔", 3, "為所有友方角色添加【滋補】效果，持續3回合。", 
+            Rarity.RARE, FieldEffectType.HEAL, 2, 3, Faction.HEALTHY_OASIS);
+        allCards.put(greenSmoothie.getName(), greenSmoothie);
+        allFieldCards.add(greenSmoothie);
+        
+        // 添加更多健康綠洲卡牌
+        CharacterCard quinoaKnight = new CharacterCard(
+            "藜麥騎士", 3, "【開胃】：獲得+0/+3。【清淡】：滿血時無法攻擊，但獲得額外2點防禦力。", 
+            Rarity.COMMON, 2, 2, 4, false, Faction.HEALTHY_OASIS);
+        allCards.put(quinoaKnight.getName(), quinoaKnight);
+        allCharacters.add(quinoaKnight);
+        
+        CharacterCard saladMaster = new CharacterCard(
+            "沙拉大師", 5, "【拼盤】：當你控制3個或更多健康綠洲角色時，可免費打出「田園沙拉拼盤」卡。", 
+            Rarity.EPIC, 3, 3, 7, false, Faction.HEALTHY_OASIS);
+        allCards.put(saladMaster.getName(), saladMaster);
+        allCharacters.add(saladMaster);
+        
+        FieldCard organicGarden = FieldCard.createEnvironmentField(
+            "有機農場", 4, "每回合開始時，為所有友方角色恢復1點生命值，並給予一個隨機友方角色【滋補】效果。", 
+            Rarity.RARE, 4, Faction.HEALTHY_OASIS);
+        allCards.put(organicGarden.getName(), organicGarden);
+        allFieldCards.add(organicGarden);
+        
+        // 新增健康綠洲卡牌
+        CharacterCard kaleDefender = new CharacterCard(
+            "羽衣甘藍防衛者", 3, "【酥脆】：減免3點傷害。【清淡】：滿血時無法攻擊，但為相鄰友方角色提供【酥脆】效果。", 
+            Rarity.RARE, 1, 6, 5, false, Faction.HEALTHY_OASIS);
+        allCards.put(kaleDefender.getName(), kaleDefender);
+        allCharacters.add(kaleDefender);
+
+        CharacterCard fruitHarvester = new CharacterCard(
+            "果實採集者", 4, "【開胃】：從牌庫抽一張卡牌。【回味】：為所有友方角色恢復2點生命值。", 
+            Rarity.COMMON, 3, 3, 4, false, Faction.HEALTHY_OASIS);
+        allCards.put(fruitHarvester.getName(), fruitHarvester);
+        allCharacters.add(fruitHarvester);
+
+        // 新增健康綠洲法術卡
+        SpellCard organicHealing = new SpellCard(
+            "有機療癒", 2, "為一個友方角色恢復全部生命值並給予【滋補】效果。", 
+            Rarity.COMMON, SpellType.HEALING, Faction.HEALTHY_OASIS);
+        allCards.put(organicHealing.getName(), organicHealing);
+        allSpells.add(organicHealing);
+
+        SpellCard naturalBarrier = new SpellCard(
+            "自然屏障", 4, "使所有友方角色獲得【酥脆】效果，減免2點傷害，持續2回合。", 
+            Rarity.RARE, SpellType.BUFF, Faction.HEALTHY_OASIS);
+        allCards.put(naturalBarrier.getName(), naturalBarrier);
+        allSpells.add(naturalBarrier);
+
+        // 健康綠洲傳說卡牌
+        CharacterCard holisticHealer = new CharacterCard(
+            "全息療愈師", 8, "【開胃】：為所有友方角色恢復全部生命值。【滋補】：每回合結束時，所有友方角色恢復2點生命值。【酥脆】：減免所有傷害的50%。", 
+            Rarity.LEGENDARY, 3, 8, 10, false, Faction.HEALTHY_OASIS);
+        allCards.put(holisticHealer.getName(), holisticHealer);
+        allCharacters.add(holisticHealer);
+        
+        // 健康綠洲特殊場地卡
+        FieldCard botanicalGarden = FieldCard.createEnvironmentField(
+            "植物花園", 4, "每回合結束時，為生命值最低的友方角色恢復3點生命值。場上的健康綠洲角色獲得【清淡】效果，滿血時無法攻擊，但獲得+0/+3。", 
+            Rarity.EPIC, 5, Faction.HEALTHY_OASIS);
+        allCards.put(botanicalGarden.getName(), botanicalGarden);
+        allFieldCards.add(botanicalGarden);
+
+        // 速食工會卡牌
+        CharacterCard burgerBoss = new CharacterCard(
+            "漢堡老闆", 4, "【開胃】：若你控制另一個速食工會角色，抽一張牌。【油膩】：每回合攻擊力減少 1。", 
+            Rarity.RARE, 4, 4, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(burgerBoss.getName(), burgerBoss);
+        allCharacters.add(burgerBoss);
+
+        CharacterCard friesWarrior = new CharacterCard(
+            "薯條戰士", 1, "【現炸】：進場當回合即可攻擊。【開胃】：下一張速食工會卡牌費用-1。", 
+            Rarity.COMMON, 2, 1, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(friesWarrior.getName(), friesWarrior);
+        allCharacters.add(friesWarrior);
+
+        FieldCard driveThru = FieldCard.createEnvironmentField(
+            "得來速車道", 3, "每當你打出一張速食工會卡牌，有30%機率獲得【現炸】效果。", 
+            Rarity.EPIC, 3, Faction.FAST_FOOD_GUILD);
+        allCards.put(driveThru.getName(), driveThru);
+        allFieldCards.add(driveThru);
+        
+        // 添加更多速食工會卡牌
+        CharacterCard pizzaDeliverer = new CharacterCard(
+            "披薩快遞員", 3, "【現炸】：進場當回合即可攻擊。【擺盤】：敵人必須優先攻擊這個單位。", 
+            Rarity.COMMON, 3, 1, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(pizzaDeliverer.getName(), pizzaDeliverer);
+        allCharacters.add(pizzaDeliverer);
+        
+        CharacterCard chickenNuggets = new CharacterCard(
+            "雞塊部隊", 2, "【開胃】：生成2個1/1的雞塊小兵。【油膩】：每回合攻擊力減少 1，但獲得1點生命值。", 
+            Rarity.RARE, 2, 2, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(chickenNuggets.getName(), chickenNuggets);
+        allCharacters.add(chickenNuggets);
+        
+        FieldCard fastFoodKitchen = FieldCard.createToolField(
+            "速食廚房", 4, "每回合可以使一張手牌獲得【現炸】效果，並且費用-2。", 
+            Rarity.RARE, FieldEffectType.ECONOMIC, 4, 3, Faction.FAST_FOOD_GUILD);
+        allCards.put(fastFoodKitchen.getName(), fastFoodKitchen);
+        allFieldCards.add(fastFoodKitchen);
+        
+        // 新增速食工會卡牌
+        CharacterCard sodaDispenser = new CharacterCard(
+            "汽水供應器", 2, "【開胃】：使一個友方角色獲得+1攻擊力。【彈牙】：每回合可攻擊 2 次。", 
+            Rarity.COMMON, 2, 1, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(sodaDispenser.getName(), sodaDispenser);
+        allCharacters.add(sodaDispenser);
+
+        CharacterCard fastFoodManager = new CharacterCard(
+            "速食店經理", 5, "【擺盤】：敵人必須優先攻擊這個單位。【現炸】：進場當回合即可攻擊。每次攻擊時，隨機生成一個1/1的小食品。", 
+            Rarity.EPIC, 4, 3, 5, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(fastFoodManager.getName(), fastFoodManager);
+        allCharacters.add(fastFoodManager);
+
+        // 新增速食工會法術卡
+        SpellCard quickService = new SpellCard(
+            "快速服務", 1, "使一個友方角色獲得【現炸】效果，並且可以攻擊兩次。", 
+            Rarity.COMMON, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
+        allCards.put(quickService.getName(), quickService);
+        allSpells.add(quickService);
+
+        SpellCard massProduction = new SpellCard(
+            "大量生產", 4, "召喚3個2/2的速食小兵，並使其獲得【油膩】效果。", 
+            Rarity.RARE, SpellType.SUMMON, Faction.FAST_FOOD_GUILD);
+        allCards.put(massProduction.getName(), massProduction);
+        allSpells.add(massProduction);
+
+        // 速食工會傳說卡牌
+        CharacterCard fastFoodTycoon = new CharacterCard(
+            "速食大亨", 7, "【現炸】：進場後立即可以攻擊。【開胃】：召喚3個2/2的速食小兵。每當你打出一張速食工會卡牌時，所有友方角色獲得+1攻擊力。", 
+            Rarity.LEGENDARY, 5, 4, 7, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(fastFoodTycoon.getName(), fastFoodTycoon);
+        allCharacters.add(fastFoodTycoon);
+        
+        // 速食工會特殊場地卡
+        FieldCard fastFoodEmpire = FieldCard.createEnvironmentField(
+            "速食帝國", 5, "友方速食工會角色費用-1。每當打出一張速食工會卡牌，有20%機率生成一個1/1的食品小兵，並具有【現炸】效果。", 
+            Rarity.EPIC, 4, Faction.FAST_FOOD_GUILD);
+        allCards.put(fastFoodEmpire.getName(), fastFoodEmpire);
+        allFieldCards.add(fastFoodEmpire);
+
+        // 甜點聯盟卡牌
+        CharacterCard cakeMaestro = new CharacterCard(
+            "蛋糕大師", 5, "【糖霜】：抵擋一次攻擊。【開胃】：當對手打出一張卡牌，有20%機率將其退回手牌。", 
+            Rarity.EPIC, 3, 6, 5, false, Faction.DESSERT_UNION);
+        allCards.put(cakeMaestro.getName(), cakeMaestro);
+        allCharacters.add(cakeMaestro);
+
+        CharacterCard candyCrusher = new CharacterCard(
+            "糖果粉碎者", 3, "【糖爆】：可選擇糖爆行動代替攻擊，使一個敵方角色攻擊力-2，持續2回合，但下回合無法攻擊。", 
+            Rarity.COMMON, 3, 3, 4, true, Faction.DESSERT_UNION);
+        allCards.put(candyCrusher.getName(), candyCrusher);
+        allCharacters.add(candyCrusher);
+
+        FieldCard sugarRush = FieldCard.createTechniqueField(
+            "糖分衝擊", 4, "使所有友方角色獲得【糖爆】效果，持續2回合。", 
+            Rarity.RARE, FieldEffectType.SPECIAL, 0, 2, Faction.DESSERT_UNION);
+        allCards.put(sugarRush.getName(), sugarRush);
+        allFieldCards.add(sugarRush);
+        
+        // 添加更多甜點聯盟卡牌
+        CharacterCard chocolateArcher = new CharacterCard(
+            "巧克力射手", 2, "【彈牙】：每回合可攻擊 2 次。【開胃】：可以攻擊對手的後排角色。", 
+            Rarity.COMMON, 3, 1, 2, true, Faction.DESSERT_UNION);
+        allCards.put(chocolateArcher.getName(), chocolateArcher);
+        allCharacters.add(chocolateArcher);
+        
+        CharacterCard iceCreamWizard = new CharacterCard(
+            "冰淇淋法師", 4, "【糖霜】：抵擋一次攻擊。【開胃】：凍結一個敵方角色一回合（無法攻擊）。", 
+            Rarity.RARE, 2, 3, 4, false, Faction.DESSERT_UNION);
+        allCards.put(iceCreamWizard.getName(), iceCreamWizard);
+        allCharacters.add(iceCreamWizard);
+        
+        FieldCard bakery = FieldCard.createToolField(
+            "甜點烘焙坊", 3, "每回合結束時，生成一個1/1的餅乾小兵，並給予【糖霜】效果。", 
+            Rarity.RARE, FieldEffectType.STRATEGIC, 3, 4, Faction.DESSERT_UNION);
+        allCards.put(bakery.getName(), bakery);
+        allFieldCards.add(bakery);
+        
+        // 新增甜點聯盟卡牌
+        CharacterCard macaronDancer = new CharacterCard(
+            "馬卡龍舞者", 3, "【開胃】：其他友方角色獲得+1/+1。【糖霜】：抵擋一次攻擊，受到攻擊後生成一個1/1的甜點小兵。", 
+            Rarity.RARE, 2, 4, 3, false, Faction.DESSERT_UNION);
+        allCards.put(macaronDancer.getName(), macaronDancer);
+        allCharacters.add(macaronDancer);
+
+        CharacterCard cupcakeCommander = new CharacterCard(
+            "杯子蛋糕指揮官", 4, "【開胃】：抽一張牌。【回味】：為玩家恢復3點生命值，生成一個2/2的甜點小兵。", 
+            Rarity.COMMON, 3, 2, 4, true, Faction.DESSERT_UNION);
+        allCards.put(cupcakeCommander.getName(), cupcakeCommander);
+        allCharacters.add(cupcakeCommander);
+
+        // 新增甜點聯盟法術卡
+        SpellCard sugarCoating = new SpellCard(
+            "糖衣保護", 2, "使一個友方角色獲得【糖霜】效果，抵擋下兩次攻擊。", 
+            Rarity.COMMON, SpellType.BUFF, Faction.DESSERT_UNION);
+        allCards.put(sugarCoating.getName(), sugarCoating);
+        allSpells.add(sugarCoating);
+
+        SpellCard dessertParty = new SpellCard(
+            "甜點派對", 5, "召喚三個不同的甜點小兵（1/3餅乾、3/1巧克力和2/2蛋糕），這些小兵具有【糖爆】效果。", 
+            Rarity.EPIC, SpellType.SUMMON, Faction.DESSERT_UNION);
+        allCards.put(dessertParty.getName(), dessertParty);
+        allSpells.add(dessertParty);
+
+        // 甜點聯盟傳說卡牌
+        CharacterCard sugarOverlord = new CharacterCard(
+            "糖霜霸王", 8, "【糖霜】：抵擋首次受到的所有傷害。【糖爆】：每回合可使敵方隨機角色攻擊力-3，持續2回合。【開胃】：對敵方所有角色施加【糖爆】效果。", 
+            Rarity.LEGENDARY, 5, 6, 8, false, Faction.DESSERT_UNION);
+        allCards.put(sugarOverlord.getName(), sugarOverlord);
+        allCharacters.add(sugarOverlord);
+        
+        // 甜點聯盟特殊場地卡
+        FieldCard sugarPalace = FieldCard.createEnvironmentField(
+            "甜點宮殿", 5, "友方甜點聯盟角色獲得【糖霜】效果。每回合結束時，隨機對一個敵方角色施加【糖爆】效果，使其攻擊力-2，持續1回合。", 
+            Rarity.EPIC, 4, Faction.DESSERT_UNION);
+        allCards.put(sugarPalace.getName(), sugarPalace);
+        allFieldCards.add(sugarPalace);
+
+        // 中立卡牌
+        CharacterCard waterServant = new CharacterCard(
+            "水之侍者", 2, "【開胃】：若你的牌組中有至少兩個不同陣營的卡牌，獲得+1/+1。【酥脆】：減免1點傷害。", 
+            Rarity.COMMON, 2, 2, 3, true, Faction.NEUTRAL);
+        allCards.put(waterServant.getName(), waterServant);
+        allCharacters.add(waterServant);
+
+        CharacterCard saltSage = new CharacterCard(
+            "鹽之賢者", 4, "【開胃】：在打出時，你可以選擇一個陣營，視為該陣營的角色。【回味】：使一個友方角色獲得+1/+1。", 
+            Rarity.RARE, 3, 4, 4, false, Faction.NEUTRAL);
+        allCards.put(saltSage.getName(), saltSage);
+        allCharacters.add(saltSage);
+
+        FieldCard marketPlace = FieldCard.createEnvironmentField(
+            "美食市集", 5, "【拼盤】：每回合可以將一張手牌與牌庫頂的一張牌交換，如果抽到的是'拼盤'卡牌，則費用-2。", 
+            Rarity.EPIC, 5, Faction.NEUTRAL);
+        allCards.put(marketPlace.getName(), marketPlace);
+        allFieldCards.add(marketPlace);
+        
+        // 添加更多中立卡牌
+        CharacterCard foodCritic = new CharacterCard(
+            "美食評論家", 3, "【開胃】：查看你牌庫頂的三張牌，選擇一張加入手牌。【擺盤】：敵人必須優先攻擊這個單位。", 
+            Rarity.RARE, 2, 3, 3, false, Faction.NEUTRAL);
+        allCards.put(foodCritic.getName(), foodCritic);
+        allCharacters.add(foodCritic);
+        
+        CharacterCard chefApprentice = new CharacterCard(
+            "廚師學徒", 1, "【彈牙】：每回合可攻擊 2 次。【開胃】：隨機生成一張費用為1的卡牌。", 
+            Rarity.COMMON, 1, 1, 2, true, Faction.NEUTRAL);
+        allCards.put(chefApprentice.getName(), chefApprentice);
+        allCharacters.add(chefApprentice);
+        
+        FieldCard diningTable = FieldCard.createEnvironmentField(
+            "用餐餐桌", 2, "【拼盤】：當符合打出條件時，有機會生成特殊融合料理卡；當你的角色受到致命傷害時，有30%機率存活並保留1點生命值。", 
+            Rarity.COMMON, 2, Faction.NEUTRAL);
+        allCards.put(diningTable.getName(), diningTable);
+        allFieldCards.add(diningTable);
+        
+        // 新增中立卡牌
+        CharacterCard masterChef = new CharacterCard(
+            "名廚大師", 5, "【開胃】：為所有友方角色恢復1點生命值。【拼盤】：當你控制3個不同陣營的卡牌時，可免費打出「豪華拼盤」卡。", 
+            Rarity.EPIC, 4, 3, 5, false, Faction.NEUTRAL);
+        allCards.put(masterChef.getName(), masterChef);
+        allCharacters.add(masterChef);
+
+        CharacterCard umamiFlavor = new CharacterCard(
+            "鮮味精華", 3, "【開胃】：使一個友方角色獲得+1/+1。【回味】：從牌庫中抽取一張你選擇陣營的卡牌。", 
+            Rarity.RARE, 2, 3, 3, true, Faction.NEUTRAL);
+        allCards.put(umamiFlavor.getName(), umamiFlavor);
+        allCharacters.add(umamiFlavor);
+
+        // 新增中立法術卡
+        SpellCard perfectionPlate = new SpellCard(
+            "完美料理", 4, "使一個友方角色獲得+2/+2和一個你選擇的關鍵字效果。", 
+            Rarity.RARE, SpellType.BUFF, Faction.NEUTRAL);
+        allCards.put(perfectionPlate.getName(), perfectionPlate);
+        allSpells.add(perfectionPlate);
+
+        SpellCard culinaryInspiration = new SpellCard(
+            "料理靈感", 2, "抽兩張牌，如果這些牌屬於不同陣營，則費用-1。", 
+            Rarity.COMMON, SpellType.DRAW, Faction.NEUTRAL);
+        allCards.put(culinaryInspiration.getName(), culinaryInspiration);
+        allSpells.add(culinaryInspiration);
+        
+        // 新增特殊中立場地卡
+        FieldCard internationalFoodFest = FieldCard.createEnvironmentField(
+            "國際美食節", 6, "【拼盤】：每回合結束時，從場上收集一種關鍵字效果。當收集到5種不同效果時，生成「美食終極盛宴」卡牌。", 
+            Rarity.LEGENDARY, 5, Faction.NEUTRAL);
+        allCards.put(internationalFoodFest.getName(), internationalFoodFest);
+        allFieldCards.add(internationalFoodFest);
+
+        // 中立傳說卡牌
+        CharacterCard gastronomyLegend = new CharacterCard(
+            "美食傳奇", 9, "【開胃】：從牌庫中抽取每個陣營的一張卡牌。【拼盤】：當控制4個不同陣營的卡牌時，使所有友方角色獲得+2/+2和其所屬陣營的一個特殊效果。", 
+            Rarity.LEGENDARY, 6, 6, 9, false, Faction.NEUTRAL);
+        allCards.put(gastronomyLegend.getName(), gastronomyLegend);
+        allCharacters.add(gastronomyLegend);
+        
+        // 傳說法術卡
+        SpellCard culinaryMasterpiece = new SpellCard(
+            "料理傑作", 10, "使所有友方角色獲得+3/+3，並賦予其所有通用關鍵字效果。從牌庫或手牌中選擇一張費用不大於5的卡牌，免費打出它。", 
+            Rarity.LEGENDARY, SpellType.SPECIAL, Faction.NEUTRAL);
+        allCards.put(culinaryMasterpiece.getName(), culinaryMasterpiece);
+        allSpells.add(culinaryMasterpiece);
+
         System.out.println("卡牌圖鑑初始化完成，共 " + allCards.size() + " 張卡牌。");
-        System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張");
+        System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張，法術卡: " + allSpells.size() + " 張");
     }
     
     /**
      * 初始化隨從卡
+     * 已移除 - 這些卡牌沒有明確的陣營
      */
     private static void initializeMinions() {
-        // 這裡可以添加一些基本的隨從卡（如果需要）
-        addMinion(new Minion("小麵包", 1, "基礎隨從，適合新手使用", Rarity.COMMON, 1, 2));
-        addMinion(new Minion("奶油餅乾", 2, "香甜可口的餅乾隨從", Rarity.COMMON, 2, 2));
-        addMinion(new Minion("蔬菜沙拉", 3, "健康的蔬菜組合，恢復生命", Rarity.COMMON, 2, 3));
+        // 已移除 - 這些卡牌沒有明確的陣營
     }
     
     /**
      * 初始化法術卡
+     * 已移除 - 這些卡牌沒有明確的陣營
      */
     private static void initializeSpells() {
-        // 添加幾張基本法術卡
-        addSpell(new SpellCard("烹飪指南", 1, "抽一張卡牌", Rarity.COMMON, SpellType.DRAW));
-        addSpell(new SpellCard("食材採購", 3, "抽兩張卡牌", Rarity.COMMON, SpellType.DRAW));
-        addSpell(new SpellCard("美食評論", 2, "對目標造成2點傷害", Rarity.COMMON, SpellType.DAMAGE));
+        // 已移除 - 這些卡牌沒有明確的陣營
     }
     
     /**
      * 初始化角色卡
+     * 已移除 - 這些卡牌沒有明確的陣營
      */
     private static void initializeCharacters() {
-        // 主食類角色
-        addCharacter(new CharacterCard("白飯戰士", 2, "能量充沛的基本主食，可以搭配各種料理", Rarity.COMMON, 2, 2, 3, true));
-        addCharacter(new CharacterCard("全麥麵包", 3, "富含纖維的健康選擇，防禦力特別高", Rarity.COMMON, 1, 4, 4, false));
-        addCharacter(new CharacterCard("義大利麵", 4, "彈性十足的面條，攻防均衡", Rarity.COMMON, 3, 2, 4, true));
-        
-        // 肉類角色
-        addCharacter(new CharacterCard("牛排勇士", 5, "高蛋白質的肌肉型角色，攻擊力驚人", Rarity.RARE, 5, 1, 4, true));
-        addCharacter(new CharacterCard("雞腿騎士", 4, "靈活多變的家禽，速度快且攻擊優秀", Rarity.RARE, 4, 1, 3, true));
-        addCharacter(new CharacterCard("豬肉劍士", 4, "全能型角色，攻防均衡", Rarity.RARE, 3, 3, 4, true));
-        
-        // 海鮮類角色
-        addCharacter(new CharacterCard("鮭魚刺客", 6, "富含omega-3的高級食材，特殊攻擊能力強", Rarity.EPIC, 5, 1, 4, true));
-        addCharacter(new CharacterCard("龍蝦將軍", 7, "堅硬外殼的高級食材，防禦力極高", Rarity.EPIC, 4, 6, 6, false));
-        addCharacter(new CharacterCard("章魚智者", 6, "多觸手生物，能同時執行多種技能", Rarity.EPIC, 3, 3, 5, false));
-        
-        // 蔬菜類角色
-        addCharacter(new CharacterCard("青椒射手", 2, "富含維他命C的綠色蔬菜，遠程攻擊專家", Rarity.COMMON, 3, 0, 2, true));
-        addCharacter(new CharacterCard("洋蔥衛士", 3, "層層防護的蔬菜，防禦特化", Rarity.COMMON, 1, 5, 3, false));
-        addCharacter(new CharacterCard("胡蘿蔔刺客", 3, "視力絕佳的橙色根莖，精準打擊", Rarity.COMMON, 4, 0, 2, true));
-        
-        // 水果類角色
-        addCharacter(new CharacterCard("蘋果法師", 4, "每日一蘋果，醫生遠離我，具有治療能力", Rarity.RARE, 2, 2, 4, false));
-        addCharacter(new CharacterCard("香蕉戰士", 3, "彎曲的黃色水果，靈活的戰鬥風格", Rarity.COMMON, 3, 1, 3, true));
-        addCharacter(new CharacterCard("西瓜守衛", 5, "厚實外殼的大型水果，極高生命值", Rarity.RARE, 2, 3, 7, false));
-        
-        // 傳說級角色
-        addCharacter(new CharacterCard("松露皇帝", 8, "珍稀名貴的食材之王，全能型最強角色", Rarity.LEGENDARY, 7, 5, 8, true));
-        addCharacter(new CharacterCard("神級壽司", 8, "集合多種頂級食材的完美組合，均衡型傳說角色", Rarity.LEGENDARY, 6, 6, 7, true));
-        addCharacter(new CharacterCard("和牛統帥", 9, "油花分佈完美的頂級牛肉，強力攻擊型", Rarity.LEGENDARY, 9, 2, 6, true));
+        // 已移除 - 這些卡牌沒有明確的陣營
     }
     
     /**
      * 初始化場地卡（整合原烹飪技術卡和料理工具卡）
+     * 已移除 - 這些卡牌沒有明確的陣營
      */
     private static void initializeFieldCards() {
-        // 烹飪技術類場地卡
-        addFieldCard(FieldCard.createTechniqueField("切丁技巧", 1, "將食材切成均勻小塊，提升角色攻擊力", Rarity.COMMON, 
-                                   FieldEffectType.BOOST_ATTACK, 2, 2));
-        addFieldCard(FieldCard.createTechniqueField("攪拌手法", 2, "均勻混合所有食材，提升團隊協作", Rarity.COMMON,
-                                   FieldEffectType.BOOST_DEFENSE, 2, 2));
-        
-        // 熱處理技術類場地卡
-        addFieldCard(FieldCard.createTechniqueField("火烤技術", 3, "用明火烤製食材，大幅提升攻擊力", Rarity.COMMON, 
-                                   FieldEffectType.BOOST_ATTACK, 3, 3));
-        addFieldCard(FieldCard.createTechniqueField("油炸方法", 4, "高溫油炸，形成酥脆外殼，增加防禦力", Rarity.COMMON,
-                                   FieldEffectType.BOOST_DEFENSE, 4, 2));
-        addFieldCard(FieldCard.createTechniqueField("燉煮技術", 4, "慢火燉煮，釋放食材精華，回復生命值", Rarity.COMMON,
-                                  FieldEffectType.HEAL, 5, 0));
-        
-        // 冷處理技術類場地卡
-        addFieldCard(FieldCard.createTechniqueField("醃漬技術", 3, "冷藏醃製食材，增加防禦力和保存時間", Rarity.COMMON,
-                                   FieldEffectType.BOOST_DEFENSE, 3, 4));
-        addFieldCard(FieldCard.createTechniqueField("冰鎮手法", 2, "急速冷卻，保持食材新鮮度，回復生命", Rarity.COMMON,
-                                  FieldEffectType.HEAL, 3, 0));
-        
-        // 攻擊性技術類場地卡
-        addFieldCard(FieldCard.createTechniqueField("刀工切片", 3, "精準切片技術，對敵方角色造成傷害", Rarity.RARE,
-                                  FieldEffectType.DAMAGE, 4, 0));
-        addFieldCard(FieldCard.createTechniqueField("壓榨技術", 4, "擠壓出食材精華，造成範圍傷害", Rarity.RARE,
-                                  FieldEffectType.DAMAGE, 3, 0));
-        
-        // 料理工具類場地卡 - 使用新的FieldEffectType
-        addFieldCard(FieldCard.createToolField("鋒利菜刀", 3, "專業主廚用刀，提高攻擊力", Rarity.COMMON, 
-                                   FieldEffectType.OFFENSIVE, 3, 2));
-        addFieldCard(FieldCard.createToolField("不鏽鋼鍋", 4, "耐用的烹飪鍋具，提高防禦力", Rarity.COMMON,
-                                   FieldEffectType.DEFENSIVE, 4, 3));
-        addFieldCard(FieldCard.createToolField("多功能攪拌機", 5, "現代廚房的必備工具，有多種用途", Rarity.RARE,
-                                   FieldEffectType.UTILITY, 3, 4));
-        
-        // 新增幾張使用擴展效果類型的場地卡
-        addFieldCard(FieldCard.createToolField("教學烹飪書", 2, "詳細的烹飪指南，輔助新手廚師", Rarity.COMMON,
-                                   FieldEffectType.SUPPORTIVE, 4, 2));
-        addFieldCard(FieldCard.createToolField("辣椒調味料", 3, "使敵方角色暫時失去味覺", Rarity.RARE,
-                                   FieldEffectType.DISRUPTIVE, 2, 3));
-        addFieldCard(FieldCard.createToolField("食材儲藏櫃", 4, "儲存額外的食材以備不時之需", Rarity.RARE,
-                                   FieldEffectType.ECONOMIC, 5, 2));
-        addFieldCard(FieldCard.createToolField("食譜筆記本", 3, "記錄各種秘方，提供多樣化策略", Rarity.EPIC,
-                                   FieldEffectType.STRATEGIC, 3, 3));
-        
-        // 環境類場地卡
-        addFieldCard(FieldCard.createEnvironmentField("專業廚房", 5, "設備齊全的現代廚房，提高所有角色能力", Rarity.RARE, 3));
-        addFieldCard(FieldCard.createEnvironmentField("露營烹飪", 3, "戶外料理場地，增加角色韌性", Rarity.COMMON, 2));
-        addFieldCard(FieldCard.createEnvironmentField("高級餐廳", 6, "正式的烹飪環境，提供細緻的料理體驗", Rarity.EPIC, 4));
+        // 已移除 - 這些卡牌沒有明確的陣營
     }
     
     /**
@@ -201,12 +524,12 @@ public class CardLibrary {
         while (true) {
             System.out.println("\n======= 卡牌圖鑑 =======");
             System.out.println("卡牌總數: " + allCards.size() + " 張");
-            System.out.println("1. 瀏覽所有隨從卡 (" + allMinions.size() + " 張)");
-            System.out.println("2. 瀏覽所有法術卡 (" + allSpells.size() + " 張)");
-            System.out.println("3. 瀏覽所有角色卡 (" + allCharacters.size() + " 張)");
-            System.out.println("4. 瀏覽所有場地卡 (" + allFieldCards.size() + " 張)");
-            System.out.println("5. 搜尋卡牌");
-            System.out.println("6. 查看場上角色詳情");
+            System.out.println("1. 瀏覽所有法術卡 (" + allSpells.size() + " 張)");
+            System.out.println("2. 瀏覽所有角色卡 (" + allCharacters.size() + " 張)");
+            System.out.println("3. 瀏覽所有場地卡 (" + allFieldCards.size() + " 張)");
+            System.out.println("4. 按陣營瀏覽卡牌");
+            System.out.println("5. 按關鍵字瀏覽卡牌");
+            System.out.println("6. 搜尋卡牌");
             System.out.println("7. 查看玩家手牌");
             System.out.println("0. 返回");
             System.out.print("請選擇: ");
@@ -218,22 +541,22 @@ public class CardLibrary {
                 case 0:
                     return;
                 case 1:
-                    browseMinions();
-                    break;
-                case 2:
                     browseSpells();
                     break;
-                case 3:
+                case 2:
                     browseCharacters();
                     break;
-                case 4:
+                case 3:
                     browseFieldCards();
                     break;
+                case 4:
+                    browseFactions(scanner);
+                    break;
                 case 5:
-                    searchCard(scanner);
+                    browseByKeywords(scanner);
                     break;
                 case 6:
-                    showBattlefieldMinions();
+                    searchCard(scanner);
                     break;
                 case 7:
                     showPlayerHands();
@@ -245,44 +568,289 @@ public class CardLibrary {
     }
     
     /**
-     * 瀏覽所有隨從卡
+     * 按陣營瀏覽卡牌
      */
-    private static void browseMinions() {
-        Scanner scanner = new Scanner(System.in);
+    private static void browseFactions(Scanner scanner) {
+        while (true) {
+            System.out.println("\n======= 選擇陣營 =======");
+            System.out.println("1. 火辣王國 (Spicy Kingdom)");
+            System.out.println("2. 健康綠洲 (Healthy Oasis)");
+            System.out.println("3. 速食工會 (Fast Food Guild)");
+            System.out.println("4. 甜點聯盟 (Dessert Union)");
+            System.out.println("5. 中立 (Neutral)");
+            System.out.println("0. 返回");
+            System.out.print("請選擇陣營: ");
+            
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
+            
+            if (choice == 0) {
+                return;
+            }
+            
+            Faction selectedFaction = null;
+            switch (choice) {
+                case 1:
+                    selectedFaction = Faction.SPICY_KINGDOM;
+                    break;
+                case 2:
+                    selectedFaction = Faction.HEALTHY_OASIS;
+                    break;
+                case 3:
+                    selectedFaction = Faction.FAST_FOOD_GUILD;
+                    break;
+                case 4:
+                    selectedFaction = Faction.DESSERT_UNION;
+                    break;
+                case 5:
+                    selectedFaction = Faction.NEUTRAL;
+                    break;
+                default:
+                    System.out.println("無效的選擇!");
+                    continue;
+            }
+            
+            browseByFaction(selectedFaction, scanner);
+        }
+    }
+    
+    /**
+     * 瀏覽特定陣營的卡牌
+     */
+    private static void browseByFaction(Faction faction, Scanner scanner) {
+        // 獲取指定陣營的所有卡牌
+        List<Card> factionCards = allCards.values().stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList());
         
-        if (allMinions.isEmpty()) {
-            System.out.println("\n目前沒有隨從卡可供瀏覽");
+        if (factionCards.isEmpty()) {
+            System.out.println("\n該陣營沒有卡牌!");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
+        
+        // 分類該陣營的卡牌
+        List<CharacterCard> characters = factionCards.stream()
+                .filter(card -> card instanceof CharacterCard)
+                .map(card -> (CharacterCard) card)
+                .collect(Collectors.toList());
+        
+        List<FieldCard> fields = factionCards.stream()
+                .filter(card -> card instanceof FieldCard)
+                .map(card -> (FieldCard) card)
+                .collect(Collectors.toList());
+        
+        List<SpellCard> spells = factionCards.stream()
+                .filter(card -> card instanceof SpellCard)
+                .map(card -> (SpellCard) card)
+                .collect(Collectors.toList());
+        
+        while (true) {
+            System.out.println("\n======= " + faction.getLocalizedName() + " (" + faction.getEnglishName() + ") =======");
+            System.out.println("該陣營卡牌總數: " + factionCards.size() + " 張");
+            System.out.println("1. 瀏覽角色卡 (" + characters.size() + " 張)");
+            System.out.println("2. 瀏覽場地卡 (" + fields.size() + " 張)");
+            System.out.println("3. 瀏覽法術卡 (" + spells.size() + " 張)");
+            System.out.println("0. 返回");
+            System.out.print("請選擇: ");
+            
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
+            
+            if (choice == 0) {
+                return;
+            }
+            
+            switch (choice) {
+                case 1:
+                    browseCardList(characters, "角色卡", scanner);
+                    break;
+                case 2:
+                    browseCardList(fields, "場地卡", scanner);
+                    break;
+                case 3:
+                    browseCardList(spells, "法術卡", scanner);
+                    break;
+                default:
+                    System.out.println("無效的選擇!");
+            }
+        }
+    }
+    
+    /**
+     * 按關鍵字瀏覽卡牌
+     */
+    private static void browseByKeywords(Scanner scanner) {
+        while (true) {
+            System.out.println("\n======= 選擇關鍵字 =======");
+            System.out.println("通用關鍵字:");
+            System.out.println("1. 開胃 (Appetizer) - 進場時發動效果");
+            System.out.println("2. 回味 (Aftertaste) - 死亡後觸發效果");
+            System.out.println("3. 拼盤 (Platter) - 符合條件時可免費打出融合卡");
+            System.out.println("4. 彈牙 (Chewy Bite) - 每回合可攻擊 2 次");
+            System.out.println("5. 酥脆 (Crispy) - 護甲，減免傷害");
+            System.out.println("6. 擺盤 (Garnished) - 敵人必須優先攻擊此單位");
+            
+            System.out.println("\n陣營特定關鍵字:");
+            System.out.println("7. 現炸 (Fresh-Fried) - 速食工會：進場當回合即可攻擊");
+            System.out.println("8. 油膩 (Glossy) - 速食工會：每回合攻擊力減少 1");
+            System.out.println("9. 糖霜 (Frosted) - 甜點聯盟：抵擋一次攻擊");
+            System.out.println("10. 糖爆 (Sugar Crash) - 甜點聯盟：有特殊攻擊效果，下回合無法攻擊");
+            System.out.println("11. 滋補 (Nourishing) - 健康綠洲：回合結束時恢復全滿血量");
+            System.out.println("12. 清淡 (Bland) - 健康綠洲：滿血時無法攻擊");
+            System.out.println("13. 爆炒 (Overheat) - 火辣王國：直接消滅一個單位");
+            System.out.println("14. 嗆辣 (Spicy) - 火辣王國：每回合結束損失一點生命值");
+            System.out.println("0. 返回");
+            System.out.print("請選擇關鍵字: ");
+            
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
+            
+            if (choice == 0) {
+                return;
+            }
+            
+            String keyword = getKeywordByChoice(choice);
+            if (keyword == null) {
+                System.out.println("無效的選擇!");
+                continue;
+            }
+            
+            // 查找含有特定關鍵字的卡牌
+            List<Card> keywordCards = allCards.values().stream()
+                    .filter(card -> card.getDescription().contains(keyword))
+                    .collect(Collectors.toList());
+            
+            browseCardList(keywordCards, "含有 [" + keyword + "] 關鍵字的卡牌", scanner);
+        }
+    }
+    
+    /**
+     * 根據選擇獲取關鍵字
+     */
+    private static String getKeywordByChoice(int choice) {
+        switch (choice) {
+            case 1: return "【開胃】";
+            case 2: return "【回味】";
+            case 3: return "【拼盤】";
+            case 4: return "【彈牙】";
+            case 5: return "【酥脆】";
+            case 6: return "【擺盤】";
+            case 7: return "【現炸】";
+            case 8: return "【油膩】";
+            case 9: return "【糖霜】";
+            case 10: return "【糖爆】";
+            case 11: return "【滋補】";
+            case 12: return "【清淡】";
+            case 13: return "【爆炒】";
+            case 14: return "【嗆辣】";
+            default: return null;
+        }
+    }
+    
+    /**
+     * 瀏覽卡牌列表
+     */
+    private static <T extends Card> void browseCardList(List<T> cards, String title, Scanner scanner) {
+        if (cards.isEmpty()) {
+            System.out.println("\n沒有" + title + "可以瀏覽!");
             System.out.println("按Enter返回...");
             scanner.nextLine();
             return;
         }
         
         while (true) {
-            System.out.println("\n隨從卡列表 (共 " + allMinions.size() + " 張):");
-            for (int i = 0; i < allMinions.size(); i++) {
-                Minion minion = allMinions.get(i);
-                System.out.printf("%2d. %-15s [費用:%d, 攻擊力:%d, 生命值:%d] %s\n", 
-                        i+1, minion.getName(), minion.getTokenCost(), 
-                        minion.getAttack(), minion.getHealth(), 
-                        getRaritySymbol(minion.getRarity()));
+            System.out.println("\n======= " + title + " (共 " + cards.size() + " 張) =======");
+            
+            for (int i = 0; i < cards.size(); i++) {
+                Card card = cards.get(i);
+                String cardInfo = String.format("%2d. %-20s [費用:%d", (i + 1), card.getName(), card.getTokenCost());
+                
+                if (card instanceof CharacterCard) {
+                    CharacterCard character = (CharacterCard) card;
+                    cardInfo += String.format(", 攻:%d, 防:%d, 生命:%d", 
+                            character.getAttack(), character.getDefense(), character.getCurrentHealth());
+                }
+                
+                cardInfo += String.format("] %s - %s", 
+                        getRaritySymbol(card.getRarity()), card.getFaction().getLocalizedName());
+                
+                System.out.println(cardInfo);
             }
             
             System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
             int choice = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
             
             if (choice == 0) {
                 return;
-            } else if (choice > 0 && choice <= allMinions.size()) {
-                allMinions.get(choice-1).displayCardDetails();
+            } else if (choice > 0 && choice <= cards.size()) {
+                cards.get(choice - 1).displayCardDetails();
+                
+                // 提取並顯示關鍵字
+                displayKeywords(cards.get(choice - 1).getDescription());
                 
                 // 查看完後暫停一下
-                System.out.println("按Enter繼續...");
-                scanner.nextLine(); // 消耗前面的數字
-                scanner.nextLine(); // 等待Enter
+                System.out.println("\n按Enter繼續...");
+                scanner.nextLine();
             } else {
                 System.out.println("無效的選擇!");
             }
         }
+    }
+    
+    /**
+     * 提取並顯示關鍵字及其效果
+     */
+    private static void displayKeywords(String description) {
+        System.out.println("\n------ 關鍵字效果 ------");
+        
+        // 檢查並顯示各種關鍵字
+        if (description.contains("【開胃】")) {
+            System.out.println("【開胃】(Appetizer): 進場時發動效果");
+        }
+        if (description.contains("【回味】")) {
+            System.out.println("【回味】(Aftertaste): 死亡後觸發效果");
+        }
+        if (description.contains("【拼盤】")) {
+            System.out.println("【拼盤】(Platter): 符合條件時可免費打出融合卡");
+        }
+        if (description.contains("【彈牙】")) {
+            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次");
+        }
+        if (description.contains("【酥脆】")) {
+            System.out.println("【酥脆】(Crispy): 護甲，減免傷害");
+        }
+        if (description.contains("【擺盤】")) {
+            System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊此單位");
+        }
+        if (description.contains("【現炸】")) {
+            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊");
+        }
+        if (description.contains("【油膩】")) {
+            System.out.println("【油膩】(Glossy): 每回合攻擊力減少 1");
+        }
+        if (description.contains("【糖霜】")) {
+            System.out.println("【糖霜】(Frosted): 抵擋一次攻擊");
+        }
+        if (description.contains("【糖爆】")) {
+            System.out.println("【糖爆】(Sugar Crash): 有特殊攻擊效果，下回合無法攻擊");
+        }
+        if (description.contains("【滋補】")) {
+            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量");
+        }
+        if (description.contains("【清淡】")) {
+            System.out.println("【清淡】(Bland): 滿血時無法攻擊");
+        }
+        if (description.contains("【爆炒】")) {
+            System.out.println("【爆炒】(Overheat): 直接消滅一個單位");
+        }
+        if (description.contains("【嗆辣】")) {
+            System.out.println("【嗆辣】(Spicy): 每回合結束損失一點生命值");
+        }
+        
+        System.out.println("-------------------------");
     }
     
     /**
@@ -298,31 +866,7 @@ public class CardLibrary {
             return;
         }
         
-        while (true) {
-            System.out.println("\n法術卡列表 (共 " + allSpells.size() + " 張):");
-            for (int i = 0; i < allSpells.size(); i++) {
-                SpellCard spell = allSpells.get(i);
-                System.out.printf("%2d. %-15s [費用:%d] %s\n", 
-                        i+1, spell.getName(), spell.getTokenCost(), 
-                        getRaritySymbol(spell.getRarity()));
-            }
-            
-            System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
-            int choice = scanner.nextInt();
-            
-            if (choice == 0) {
-                return;
-            } else if (choice > 0 && choice <= allSpells.size()) {
-                allSpells.get(choice-1).displayCardDetails();
-                
-                // 查看完後暫停一下
-                System.out.println("按Enter繼續...");
-                scanner.nextLine(); // 消耗前面的數字
-                scanner.nextLine(); // 等待Enter
-            } else {
-                System.out.println("無效的選擇!");
-            }
-        }
+        browseCardList(allSpells, "法術卡", scanner);
     }
     
     /**
@@ -338,32 +882,7 @@ public class CardLibrary {
             return;
         }
         
-        while (true) {
-            System.out.println("\n角色卡列表 (共 " + allCharacters.size() + " 張):");
-            for (int i = 0; i < allCharacters.size(); i++) {
-                CharacterCard character = allCharacters.get(i);
-                System.out.printf("%2d. %-15s [費用:%d, 攻擊力:%d, 生命值:%d] %s\n", 
-                        i+1, character.getName(), character.getTokenCost(), 
-                        character.getAttack(), character.getCurrentHealth(), 
-                        getRaritySymbol(character.getRarity()));
-            }
-            
-            System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
-            int choice = scanner.nextInt();
-            
-            if (choice == 0) {
-                return;
-            } else if (choice > 0 && choice <= allCharacters.size()) {
-                allCharacters.get(choice-1).displayCardDetails();
-                
-                // 查看完後暫停一下
-                System.out.println("按Enter繼續...");
-                scanner.nextLine(); // 消耗前面的數字
-                scanner.nextLine(); // 等待Enter
-            } else {
-                System.out.println("無效的選擇!");
-            }
-        }
+        browseCardList(allCharacters, "角色卡", scanner);
     }
     
     /**
@@ -379,95 +898,7 @@ public class CardLibrary {
             return;
         }
         
-        System.out.println("\n===== 場地卡列表 =====");
-        for (int i = 0; i < allFieldCards.size(); i++) {
-            FieldCard card = allFieldCards.get(i);
-            
-            String fieldTypeInfo = "";
-            switch (card.getFieldType()) {
-                case COOKING_TECHNIQUE:
-                    fieldTypeInfo = "[烹飪技術]";
-                    break;
-                case COOKING_TOOL:
-                    fieldTypeInfo = "[料理工具]";
-                    break;
-                case ENVIRONMENT:
-                    fieldTypeInfo = "[環境]";
-                    break;
-            }
-            
-            System.out.printf("%2d. %-18s [費用:%d] %s %s\n", 
-                    i+1, card.getName(), card.getTokenCost(), 
-                    fieldTypeInfo, getRaritySymbol(card.getRarity()));
-        }
-        
-        System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
-        int choice;
-        try {
-            choice = scanner.nextInt();
-            scanner.nextLine(); // 清除輸入緩衝
-            
-            if (choice > 0 && choice <= allFieldCards.size()) {
-                allFieldCards.get(choice-1).displayCardDetails();
-                System.out.println("\n按Enter繼續...");
-                scanner.nextLine();
-            }
-        } catch (Exception e) {
-            System.out.println("請輸入有效的數字!");
-        }
-    }
-    
-    /**
-     * 搜尋卡牌
-     */
-    private static void searchCard(Scanner scanner) {
-        System.out.print("請輸入卡牌名稱關鍵字: ");
-        String keyword = scanner.nextLine().trim();
-        
-        if (keyword.isEmpty()) {
-            System.out.println("搜尋關鍵字不能為空!");
-            return;
-        }
-        
-        List<Card> results = new ArrayList<>();
-        
-        // 搜尋含有關鍵字的卡牌
-        for (Card card : allCards.values()) {
-            if (card.getName().toLowerCase().contains(keyword.toLowerCase())) {
-                results.add(card);
-            }
-        }
-        
-        if (results.isEmpty()) {
-            System.out.println("沒有找到含有「" + keyword + "」的卡牌!");
-            return;
-        }
-        
-        while (true) {
-            System.out.println("\n搜尋結果 (共 " + results.size() + " 張):");
-            for (int i = 0; i < results.size(); i++) {
-                Card card = results.get(i);
-                System.out.printf("%2d. %-15s [費用:%d] %s\n", 
-                        i+1, card.getName(), card.getTokenCost(), 
-                        getRaritySymbol(card.getRarity()));
-            }
-            
-            System.out.println("\n輸入卡牌編號查看詳情，或輸入0返回: ");
-            int choice = scanner.nextInt();
-            
-            if (choice == 0) {
-                return;
-            } else if (choice > 0 && choice <= results.size()) {
-                results.get(choice-1).displayCardDetails();
-                
-                // 查看完後暫停一下
-                System.out.println("按Enter繼續...");
-                scanner.nextLine(); // 消耗前面的數字
-                scanner.nextLine(); // 等待Enter
-            } else {
-                System.out.println("無效的選擇!");
-            }
-        }
+        browseCardList(allFieldCards, "場地卡", scanner);
     }
     
     /**
@@ -730,5 +1161,34 @@ public class CardLibrary {
                 System.out.println("無效的選擇!");
             }
         }
+    }
+    
+    /**
+     * 搜尋卡牌
+     */
+    private static void searchCard(Scanner scanner) {
+        System.out.println("\n======= 搜尋卡牌 =======");
+        System.out.println("請輸入要搜尋的卡牌名稱或關鍵字（輸入空白返回）：");
+        
+        String query = scanner.nextLine().trim();
+        if (query.isEmpty()) {
+            return;
+        }
+        
+        // 搜尋符合條件的卡牌
+        List<Card> matchedCards = allCards.values().stream()
+                .filter(card -> card.getName().contains(query) || card.getDescription().contains(query))
+                .collect(Collectors.toList());
+        
+        if (matchedCards.isEmpty()) {
+            System.out.println("沒有找到符合 '" + query + "' 的卡牌");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
+        
+        // 顯示搜尋結果
+        System.out.println("\n找到 " + matchedCards.size() + " 張符合 '" + query + "' 的卡牌：");
+        browseCardList(matchedCards, "搜尋結果", scanner);
     }
 } 
