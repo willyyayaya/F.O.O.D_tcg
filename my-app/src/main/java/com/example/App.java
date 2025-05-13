@@ -9,7 +9,10 @@ public class App
 {
     public static void main( String[] args )
     {
-        System.out.println( "啟動 F.O.O.D TCG 遊戲引擎..." );
+        System.out.println( "歡迎來到 F.O.O.D TCG 食物擬人對戰卡牌遊戲!" );
+        System.out.println( "正在啟動遊戲引擎..." );
+        
+        // 實例化並啟動遊戲引擎
         FOODGameEngine gameEngine = new FOODGameEngine();
         gameEngine.start();
     }

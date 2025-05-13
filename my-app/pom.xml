@@ -8,14 +8,14 @@
   <artifactId>my-app</artifactId>
   <version>1.0-SNAPSHOT</version>
 
-  <name>my-app</name>
+  <name>F.O.O.D TCG</name>
   <!-- FIXME change it to the project's website -->
   <url>http://www.example.com</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -55,6 +55,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
+                <classpathPrefix>lib/</classpathPrefix>
                 <mainClass>com.example.App</mainClass>
               </manifest>
             </archive>
@@ -80,6 +81,71 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <!-- 添加Maven Shade插件創建胖JAR文件 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>com.example.App</mainClass>
+                </transformer>
+              </transformers>
+              <finalName>F.O.O.D-tcg-executable</finalName>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
+      <!-- 添加Launch4j插件將JAR轉換為EXE -->
+      <plugin>
+        <groupId>com.akathist.maven.plugins.launch4j</groupId>
+        <artifactId>launch4j-maven-plugin</artifactId>
+        <version>2.1.3</version>
+        <executions>
+          <execution>
+            <id>l4j-clui</id>
+            <phase>package</phase>
+            <goals>
+              <goal>launch4j</goal>
+            </goals>
+            <configuration>
+              <headerType>console</headerType>
+              <jar>${project.build.directory}/F.O.O.D-tcg-executable.jar</jar>
+              <outfile>${project.build.directory}/F.O.O.D-tcg.exe</outfile>
+              <downloadUrl>http://java.com/download</downloadUrl>
+              <classPath>
+                <mainClass>com.example.App</mainClass>
+                <preCp>anything</preCp>
+              </classPath>
+              <jre>
+                <minVersion>11.0.0</minVersion>
+                <jdkPreference>preferJre</jdkPreference>
+              </jre>
+              <versionInfo>
+                <fileVersion>1.0.0.0</fileVersion>
+                <txtFileVersion>${project.version}</txtFileVersion>
+                <fileDescription>F.O.O.D TCG 食物擬人對戰卡牌遊戲</fileDescription>
+                <copyright>Copyright © 2023</copyright>
+                <productVersion>1.0.0.0</productVersion>
+                <txtProductVersion>1.0.0.0</txtProductVersion>
+                <productName>F.O.O.D TCG</productName>
+                <companyName>F.O.O.D TCG</companyName>
+                <internalName>F.O.O.D-tcg</internalName>
+                <originalFilename>F.O.O.D-tcg.exe</originalFilename>
+              </versionInfo>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>

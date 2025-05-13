@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+
 import com.example.game.player.Player;
 
 /**
@@ -1323,7 +1324,7 @@ public class CardLibrary {
                     selectedFaction = Faction.NEUTRAL;
                     break;
                 default:
-                    System.out.println("無效的選擇!");
+                System.out.println("無效的選擇!");
                     continue;
             }
             
@@ -1390,7 +1391,7 @@ public class CardLibrary {
                     browseCardList(spells, "法術卡", scanner);
                     break;
                 default:
-                    System.out.println("無效的選擇!");
+                System.out.println("無效的選擇!");
             }
         }
     }
@@ -1425,9 +1426,9 @@ public class CardLibrary {
             scanner.nextLine(); // 清除輸入緩衝
             
             if (choice == 0) {
-                return;
-            }
-            
+            return;
+        }
+        
             String keyword = getKeywordByChoice(choice);
             if (keyword == null) {
                 System.out.println("無效的選擇!");

@@ -1,7 +1,7 @@
 package com.example.game;
 
-import java.util.Scanner;
 import java.util.List;
+import java.util.Scanner;
 
 import com.example.game.board.GameBoard;
 import com.example.game.card.Card;
@@ -563,13 +563,14 @@ public class FOODGameEngine {
     
     private void battle() {
         Scanner scanner = new Scanner(System.in);
-        Player opponent = (currentPlayer == player1) ? player2 : player1;
+        Player currentPlayerRef = currentPlayer; // 保存當前玩家引用以避免混淆
+        Player opponentRef = (currentPlayerRef == player1) ? player2 : player1; // 獲取對手引用
         
         System.out.println("\n======= 戰鬥階段 =======");
         System.out.println("選擇進行戰鬥的角色:");
         
         // 獲取當前玩家的戰場
-        com.example.game.board.BattlefieldZone battlefield = currentPlayer.getBattlefieldZone();
+        com.example.game.board.BattlefieldZone battlefield = currentPlayerRef.getBattlefieldZone();
         List<CharacterCard> characters = battlefield.getCharacters();
         
         if (characters.isEmpty()) {
@@ -613,8 +614,55 @@ public class FOODGameEngine {
             if (targetType == 0) return;
             
             if (targetType == 1) {
-                // 選擇對手角色進行攻擊
-                // ...此部分代碼保持不變...
+                // 攻擊對手角色
+                List<CharacterCard> opponentCharacters = opponentRef.getBattlefieldZone().getCharacters();
+                
+                if (opponentCharacters.isEmpty()) {
+                    System.out.println(currentPlayerRef.getName() + " 想要攻擊角色，但對手沒有角色可以攻擊！");
+                    return;
+                }
+                
+                // 顯示可攻擊的角色
+                System.out.println("選擇要攻擊的角色:");
+                for (int i = 0; i < opponentCharacters.size(); i++) {
+                    CharacterCard target = opponentCharacters.get(i);
+                    System.out.printf("%d. %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
+                        i + 1, target.getName(), target.getAttack(), 
+                        target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
+                }
+                
+                int targetIndex;
+                try {
+                    targetIndex = scanner.nextInt();
+                    if (targetIndex < 1 || targetIndex > opponentCharacters.size()) {
+                        System.out.println("無效的選擇!");
+                        return;
+                    }
+                } catch (Exception e) {
+                    System.out.println("輸入錯誤!");
+                    scanner.nextLine(); // 清除輸入緩衝
+                    return;
+                }
+                
+                CharacterCard target = opponentCharacters.get(targetIndex - 1);
+                
+                // 執行攻擊
+                int damage = Math.max(0, attacker.getAttack() - target.getDefense());
+                target.takeDamage(damage);
+                
+                // 設置為已攻擊狀態
+                attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
+                attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
+                
+                System.out.println(currentPlayerRef.getName() + " 使用 " + attacker.getName() + 
+                                   " 攻擊了 " + opponentRef.getName() + " 的 " + 
+                                   target.getName() + "，造成 " + damage + " 點傷害!");
+                
+                // 檢查目標是否死亡
+                if (target.getCurrentHealth() <= 0) {
+                    System.out.println(opponentRef.getName() + " 的 " + target.getName() + " 被擊敗了!");
+                    opponentRef.getBattlefieldZone().removeCharacter(target);
+                }
             } else if (targetType == 2) {
                 // 選擇對手城牆進行攻擊
                 System.out.println("選擇要攻擊的城牆:");
@@ -629,12 +677,12 @@ public class FOODGameEngine {
                 }
                 
                 // 使用修改後的攻擊方法，會檢查城堡卡
-                attackWall(opponent, wallChoice, attacker.getAttack());
+                attackWall(opponentRef, wallChoice, attacker.getAttack());
                 
                 // 設置為已攻擊狀態
                 attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
                 attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
-                System.out.println(attacker.getName() + " 攻擊了 " + opponent.getName() + " 的城牆!");
+                System.out.println(attacker.getName() + " 攻擊了 " + opponentRef.getName() + " 的城牆!");
             }
         } catch (Exception e) {
             System.out.println("輸入錯誤!");
@@ -912,13 +960,43 @@ public class FOODGameEngine {
             List<CharacterCard> aiCharacters = aiPlayer.getBattlefieldZone().getCharacters();
             if (attackerIndex >= 0 && attackerIndex < aiCharacters.size()) {
                 CharacterCard attacker = aiCharacters.get(attackerIndex);
+                Player opponent = (aiPlayer == player1) ? player2 : player1;
                 
                 if (targetType == 1) {
-                    // 攻擊對手角色 (目前未實現)
-                    System.out.println(aiPlayer.getName() + " 選擇使用 " + attacker.getName() + " 攻擊對手角色！");
+                    // 攻擊對手角色
+                    List<CharacterCard> opponentCharacters = opponent.getBattlefieldZone().getCharacters();
+                    
+                    if (opponentCharacters.isEmpty()) {
+                        System.out.println(aiPlayer.getName() + " 想要攻擊角色，但對手沒有角色可以攻擊！");
+                        break;
+                    }
+                    
+                    // 如果targetIndex超出範圍，選擇第一個角色
+                    if (targetIndex < 0 || targetIndex >= opponentCharacters.size()) {
+                        targetIndex = 0;
+                    }
+                    
+                    CharacterCard target = opponentCharacters.get(targetIndex);
+                    
+                    // 執行攻擊
+                    int damage = Math.max(0, attacker.getAttack() - target.getDefense());
+                    target.takeDamage(damage);
+                    
+                    // 設置為已攻擊狀態
+                    attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
+                    attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
+                    
+                    System.out.println(aiPlayer.getName() + " 使用 " + attacker.getName() + 
+                                       " 攻擊了 " + opponent.getName() + " 的 " + 
+                                       target.getName() + "，造成 " + damage + " 點傷害!");
+                    
+                    // 檢查目標是否死亡
+                    if (target.getCurrentHealth() <= 0) {
+                        System.out.println(opponent.getName() + " 的 " + target.getName() + " 被擊敗了!");
+                        opponent.getBattlefieldZone().removeCharacter(target);
+                    }
                 } else {
                     // 攻擊對手城牆
-                    Player opponent = (aiPlayer == player1) ? player2 : player1;
                     String wallName = getWallName(targetIndex);
                     
                     System.out.println(aiPlayer.getName() + " 選擇使用 " + attacker.getName() + 

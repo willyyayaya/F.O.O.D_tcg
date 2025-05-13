@@ -2,6 +2,7 @@ package com.example.game.player;
 
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import com.example.game.card.Card;
 import com.example.game.card.CardLibrary;
@@ -323,7 +324,7 @@ public class AIPlayer extends Player {
         List<Card> playableCards = hand.stream()
             .filter(card -> card.getTokenCost() <= availableMana)
             .sorted((c1, c2) -> Integer.compare(c2.getTokenCost(), c1.getTokenCost())) // 優先選擇高費卡牌
-            .toList();
+            .collect(Collectors.toList());
         
         if (playableCards.isEmpty()) {
             return null; // 沒有可出的牌
@@ -421,7 +422,7 @@ public class AIPlayer extends Player {
         List<CharacterCard> characters = getBattlefieldZone().getCharacters();
         List<CharacterCard> canAttack = characters.stream()
             .filter(CharacterCard::canAttack)
-            .toList();
+            .collect(Collectors.toList());
         
         if (canAttack.isEmpty()) {
             return null; // 沒有可攻擊的角色

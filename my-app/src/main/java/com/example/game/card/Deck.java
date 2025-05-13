@@ -163,24 +163,24 @@ public class Deck {
      */
     private CharacterCard createRandomCharacterCard(int index, Faction faction) {
         Random random = new Random();
-        int cost = random.nextInt(10) + 1; // 1-10費
-        int attack = cost + random.nextInt(3) - 1; // 費用±1的攻擊力
+            int cost = random.nextInt(10) + 1; // 1-10費
+            int attack = cost + random.nextInt(3) - 1; // 費用±1的攻擊力
         int defense = random.nextInt(3); // 0-2的防禦力
         int health = cost + random.nextInt(3); // 費用+0到2的生命值
         boolean isOffensive = random.nextBoolean(); // 隨機決定是否為進攻型
-        
-        Rarity rarity;
-        double rarityRoll = random.nextDouble();
-        if (rarityRoll < 0.6) {
-            rarity = Rarity.COMMON;
-        } else if (rarityRoll < 0.85) {
-            rarity = Rarity.RARE;
-        } else if (rarityRoll < 0.97) {
-            rarity = Rarity.EPIC;
-        } else {
-            rarity = Rarity.LEGENDARY;
-        }
-        
+            
+            Rarity rarity;
+            double rarityRoll = random.nextDouble();
+            if (rarityRoll < 0.6) {
+                rarity = Rarity.COMMON;
+            } else if (rarityRoll < 0.85) {
+                rarity = Rarity.RARE;
+            } else if (rarityRoll < 0.97) {
+                rarity = Rarity.EPIC;
+            } else {
+                rarity = Rarity.LEGENDARY;
+            }
+            
         // 根據陣營生成名稱
         String namePrefix = "";
         switch (faction) {
@@ -203,10 +203,10 @@ public class Deck {
         
         return new CharacterCard(
                 namePrefix + "食物角色 #" + (index+1), 
-                cost, 
+                    cost, 
                 "一個隨機生成的" + faction.getLocalizedName() + "陣營食物角色", 
-                rarity, 
-                attack, 
+                    rarity, 
+                    attack, 
                 defense,
                 health,
                 isOffensive,
@@ -226,19 +226,19 @@ public class Deck {
     private FieldCard createRandomFieldCard(int index, Faction faction) {
         Random random = new Random();
         int cost = random.nextInt(7) + 1; // 1-7費
-        
-        Rarity rarity;
-        double rarityRoll = random.nextDouble();
-        if (rarityRoll < 0.6) {
-            rarity = Rarity.COMMON;
-        } else if (rarityRoll < 0.85) {
-            rarity = Rarity.RARE;
-        } else if (rarityRoll < 0.97) {
-            rarity = Rarity.EPIC;
-        } else {
-            rarity = Rarity.LEGENDARY;
-        }
-        
+            
+            Rarity rarity;
+            double rarityRoll = random.nextDouble();
+            if (rarityRoll < 0.6) {
+                rarity = Rarity.COMMON;
+            } else if (rarityRoll < 0.85) {
+                rarity = Rarity.RARE;
+            } else if (rarityRoll < 0.97) {
+                rarity = Rarity.EPIC;
+            } else {
+                rarity = Rarity.LEGENDARY;
+            }
+            
         // 根據陣營生成名稱
         String namePrefix = "";
         switch (faction) {
@@ -313,9 +313,9 @@ public class Deck {
                 
                 return FieldCard.createEnvironmentField(
                         namePrefix + "料理環境 #" + (index+1), 
-                        cost, 
+                    cost, 
                         "一個隨機生成的" + faction.getLocalizedName() + "陣營料理環境場地", 
-                        rarity,
+                    rarity,
                         envEffectValue,
                         faction);
         }

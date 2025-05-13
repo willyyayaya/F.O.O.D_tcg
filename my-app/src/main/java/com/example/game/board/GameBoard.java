@@ -165,7 +165,7 @@ public class GameBoard {
                     scanner.nextLine();
                 } else {
                     System.out.println("無效的選擇!");
-                }
+            }
             } catch (Exception e) {
                 System.out.println("請輸入有效的數字!");
                 scanner.nextLine(); // 清除輸入緩衝

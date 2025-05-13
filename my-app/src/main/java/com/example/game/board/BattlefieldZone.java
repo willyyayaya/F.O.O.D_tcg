@@ -231,6 +231,22 @@ public class BattlefieldZone {
     }
     
     /**
+     * 移除指定角色卡
+     */
+    public boolean removeCharacter(CharacterCard card) {
+        // 嘗試從所有區域尋找並移除卡牌
+        for (BattlefieldArea area : new BattlefieldArea[]{drawArea, manaArea, playArea}) {
+            List<CharacterCard> characters = area.getCharacters();
+            int index = characters.indexOf(card);
+            if (index != -1) {
+                area.removeCharacter(index);
+                return true;
+            }
+        }
+        return false; // 未找到指定卡牌
+    }
+    
+    /**
      * 顯示整個戰場狀態
      */
     public void displayStatus() {
