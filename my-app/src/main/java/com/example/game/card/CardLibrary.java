@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import com.example.game.player.Player;
 
 /**
  * 卡牌圖鑑 - 管理所有可用的卡牌
@@ -16,6 +17,7 @@ public class CardLibrary {
     private static List<SpellCard> allSpells = new ArrayList<>();
     private static List<CharacterCard> allCharacters = new ArrayList<>();
     private static List<FieldCard> allFieldCards = new ArrayList<>();
+    private static List<CastleCard> allCastles = new ArrayList<>(); // 添加城堡卡列表
     
     /**
      * 初始化卡牌圖鑑
@@ -27,12 +29,16 @@ public class CardLibrary {
         allSpells.clear();
         allCharacters.clear();
         allFieldCards.clear();
+        allCastles.clear(); // 清空城堡卡列表
         
         // 注意：移除舊的初始化方法調用，因為這些卡牌沒有明確的陣營
         // initializeMinions();
         // initializeSpells();
         // initializeCharacters();
         // initializeFieldCards();
+        
+        // 初始化各陣營的城堡卡
+        initializeCastleCards();
         
         // 只保留已明確設置陣營的卡牌
         
@@ -434,7 +440,7 @@ public class CardLibrary {
         allSpells.add(culinaryMasterpiece);
 
         System.out.println("卡牌圖鑑初始化完成，共 " + allCards.size() + " 張卡牌。");
-        System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張，法術卡: " + allSpells.size() + " 張");
+        System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張，法術卡: " + allSpells.size() + " 張，城堡卡: " + allCastles.size() + " 張");
     }
     
     /**
@@ -531,6 +537,7 @@ public class CardLibrary {
             System.out.println("5. 按關鍵字瀏覽卡牌");
             System.out.println("6. 搜尋卡牌");
             System.out.println("7. 查看玩家手牌");
+            System.out.println("8. 瀏覽所有城堡卡 (" + allCastles.size() + " 張)");
             System.out.println("0. 返回");
             System.out.print("請選擇: ");
             
@@ -561,6 +568,9 @@ public class CardLibrary {
                 case 7:
                     showPlayerHands();
                     break;
+                case 8:
+                    browseCastleCards();
+                    break;
                 default:
                     System.out.println("無效的選擇!");
             }
@@ -578,6 +588,7 @@ public class CardLibrary {
             System.out.println("3. 速食工會 (Fast Food Guild)");
             System.out.println("4. 甜點聯盟 (Dessert Union)");
             System.out.println("5. 中立 (Neutral)");
+            System.out.println("6. 顯示所有陣營的城堡卡");
             System.out.println("0. 返回");
             System.out.print("請選擇陣營: ");
             
@@ -586,6 +597,10 @@ public class CardLibrary {
             
             if (choice == 0) {
                 return;
+            } else if (choice == 6) {
+                // 顯示所有陣營的城堡卡
+                browseCastleCards();
+                continue;
             }
             
             Faction selectedFaction = null;
@@ -1190,5 +1205,171 @@ public class CardLibrary {
         // 顯示搜尋結果
         System.out.println("\n找到 " + matchedCards.size() + " 張符合 '" + query + "' 的卡牌：");
         browseCardList(matchedCards, "搜尋結果", scanner);
+    }
+    
+    /**
+     * 初始化城堡卡
+     */
+    private static void initializeCastleCards() {
+        // 火辣王國城堡卡
+        CastleCard spicyCastle = new CastleCard(
+            "辣椒城堡", 0, "【城堡效果】：所有友方角色攻擊力+2，對敵方角色造成的傷害+1。", 
+            Rarity.EPIC, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(2));
+        addCastle(spicyCastle);
+        
+        // 健康綠洲城堡卡
+        CastleCard healthyCastle = new CastleCard(
+            "果蔬城堡", 0, "【城堡效果】：所有友方角色生命值+3，每回合結束時恢復1點生命值。", 
+            Rarity.EPIC, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(3));
+        addCastle(healthyCastle);
+        
+        // 速食工會城堡卡
+        CastleCard fastFoodCastle = new CastleCard(
+            "速食城堡", 0, "【城堡效果】：所有友方角色費用-1，30%機率獲得【現炸】效果。", 
+            Rarity.EPIC, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(1));
+        addCastle(fastFoodCastle);
+        
+        // 甜點聯盟城堡卡
+        CastleCard dessertCastle = new CastleCard(
+            "糖霜城堡", 0, "【城堡效果】：所有友方角色獲得+2防禦，25%機率獲得【糖霜】效果。", 
+            Rarity.EPIC, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(2));
+        addCastle(dessertCastle);
+        
+        // 中立城堡卡
+        CastleCard neutralCastle = new CastleCard(
+            "美食城堡", 0, "【城堡效果】：每回合開始時有30%機率額外抽一張牌，所有友方角色獲得+1/+1。", 
+            Rarity.EPIC, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(3));
+        addCastle(neutralCastle);
+        
+        // 傳說級城堡卡
+        CastleCard culinaryFortress = new CastleCard(
+            "美食堡壘", 0, "【城堡效果】：所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果。", 
+            Rarity.LEGENDARY, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(5) {
+                @Override
+                public String getEffectDescription() {
+                    return "所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果";
+                }
+                
+                @Override
+                public void applyEffect(Player player) {
+                    System.out.println("美食堡壘效果：所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果");
+                }
+            });
+        addCastle(culinaryFortress);
+    }
+    
+    /**
+     * 添加城堡卡到圖鑑
+     */
+    private static void addCastle(CastleCard castle) {
+        allCards.put(castle.getName(), castle);
+        allCastles.add(castle);
+    }
+    
+    /**
+     * 瀏覽所有城堡卡
+     */
+    private static void browseCastleCards() {
+        Scanner scanner = new Scanner(System.in);
+        
+        if (allCastles.isEmpty()) {
+            System.out.println("\n目前沒有城堡卡可供瀏覽");
+            System.out.println("按Enter返回...");
+            scanner.nextLine();
+            return;
+        }
+        
+        browseCardList(allCastles, "城堡卡", scanner);
+    }
+    
+    /**
+     * 獲取所有城堡卡
+     */
+    public static List<CastleCard> getAllCastles() {
+        return allCastles;
+    }
+    
+    /**
+     * 獲取特定陣營的城堡卡
+     */
+    public static List<CastleCard> getCastleCards(Faction faction) {
+        return allCastles.stream()
+                .filter(castle -> castle.getFaction() == faction || castle.getFaction() == Faction.NEUTRAL)
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * 城堡卡選擇介面
+     */
+    public static CastleCard chooseCastleCard(Scanner scanner, Faction faction) {
+        List<CastleCard> availableCastles = allCastles.stream()
+                .filter(castle -> castle.getFaction() == faction || castle.getFaction() == Faction.NEUTRAL)
+                .collect(Collectors.toList());
+        
+        if (availableCastles.isEmpty()) {
+            System.out.println("沒有適合你陣營的城堡卡可選！");
+            return null;
+        }
+        
+        System.out.println("\n======= 選擇你的城堡卡 =======");
+        System.out.println("可選城堡卡：");
+        
+        for (int i = 0; i < availableCastles.size(); i++) {
+            CastleCard castle = availableCastles.get(i);
+            System.out.printf("%d. %s [%s] - %s\n", 
+                    i + 1, castle.getName(), castle.getFaction().getLocalizedName(), castle.getDescription());
+        }
+        
+        System.out.print("請選擇城堡卡(1-" + availableCastles.size() + "): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // 清除輸入緩衝
+        
+        if (choice < 1 || choice > availableCastles.size()) {
+            System.out.println("無效的選擇！默認選擇第一個城堡卡");
+            return availableCastles.get(0);
+        }
+        
+        return availableCastles.get(choice - 1);
+    }
+    
+    /**
+     * 城堡區域選擇介面
+     */
+    public static CastleCardZone chooseCastleZone(Scanner scanner, CastleCard castle) {
+        System.out.println("\n======= 選擇城堡隱藏區域 =======");
+        System.out.println("你選擇了: " + castle.getName());
+        System.out.println("請選擇將城堡卡隱藏在哪個區域：");
+        System.out.println("1. 出牌區 (Play Zone)");
+        System.out.println("2. 法力區 (Mana Zone)");
+        System.out.println("3. 抽牌區 (Deck Zone)");
+        
+        System.out.print("請選擇(1-3): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // 清除輸入緩衝
+        
+        switch (choice) {
+            case 1:
+                return CastleCardZone.PLAY;
+            case 2:
+                return CastleCardZone.MANA;
+            case 3:
+                return CastleCardZone.DECK;
+            default:
+                System.out.println("無效的選擇！默認選擇出牌區");
+                return CastleCardZone.PLAY;
+        }
+    }
+    
+    /**
+     * 檢查區域是否被摧毀，並處理城堡卡效果
+     */
+    public static void checkZoneDestroyed(Player player, CastleCardZone zone) {
+        CastleCard castle = player.getCastleCard();
+        if (castle != null) {
+            if (castle.checkZoneDestroyed(zone)) {
+                System.out.println(player.getName() + " 的城堡被摧毀了！");
+                System.out.println("城堡效果 [" + castle.getDescription() + "] 已消失！");
+            }
+        }
     }
 } 

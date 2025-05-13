@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * 牌組類 - 管理玩家的卡牌集合
@@ -72,9 +73,95 @@ public class Deck {
     }
     
     /**
+     * 初始化特定陣營的牌組
+     * @param faction 卡牌陣營
+     */
+    public void initialize(Faction faction) {
+        System.out.println("初始化 " + faction.getLocalizedName() + " 陣營牌組...");
+        
+        // 從卡牌圖鑑中獲取所有可用卡牌
+        List<CharacterCard> allCharacters = CardLibrary.getAllCharacters();
+        List<FieldCard> allFields = CardLibrary.getAllFieldCards();
+        
+        if (allCharacters.isEmpty() && allFields.isEmpty()) {
+            System.out.println("卡牌圖鑑尚未初始化，使用隨機生成的陣營卡牌");
+            initializeRandomWithFaction(faction);
+            return;
+        }
+        
+        // 按照7:3的比例分配角色卡和場地卡
+        int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
+        int fieldCount = DECK_SIZE - characterCount; // 30%為場地卡
+        
+        // 從卡牌圖鑑中選擇指定陣營的角色卡
+        List<CharacterCard> factionCharacters = allCharacters.stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList());
+        
+        // 如果該陣營的角色卡不足，加入一些中立陣營的卡牌
+        List<CharacterCard> neutralCharacters = allCharacters.stream()
+                .filter(card -> card.getFaction() == Faction.NEUTRAL)
+                .collect(Collectors.toList());
+        
+        // 從卡牌圖鑑中選擇指定陣營的場地卡
+        List<FieldCard> factionFields = allFields.stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList());
+        
+        // 如果該陣營的場地卡不足，加入一些中立陣營的卡牌
+        List<FieldCard> neutralFields = allFields.stream()
+                .filter(card -> card.getFaction() == Faction.NEUTRAL)
+                .collect(Collectors.toList());
+                
+        // 優先選擇陣營卡牌，然後是中立卡牌
+        for (int i = 0; i < characterCount; i++) {
+            if (!factionCharacters.isEmpty()) {
+                cards.add(copyCard(factionCharacters.get(i % factionCharacters.size())));
+            } else if (!neutralCharacters.isEmpty()) {
+                cards.add(copyCard(neutralCharacters.get(i % neutralCharacters.size())));
+            } else {
+                cards.add(createRandomCharacterCard(i, faction));
+            }
+        }
+        
+        for (int i = 0; i < fieldCount; i++) {
+            if (!factionFields.isEmpty()) {
+                cards.add(copyCard(factionFields.get(i % factionFields.size())));
+            } else if (!neutralFields.isEmpty()) {
+                cards.add(copyCard(neutralFields.get(i % neutralFields.size())));
+            } else {
+                cards.add(createRandomFieldCard(i, faction));
+            }
+        }
+        
+        // 確保牌組大小為30張
+        if (cards.size() > DECK_SIZE) {
+            cards = cards.subList(0, DECK_SIZE);
+        } else if (cards.size() < DECK_SIZE) {
+            // 不足30張時補充隨機卡牌
+            while (cards.size() < DECK_SIZE) {
+                if (Math.random() < 0.7) {
+                    cards.add(createRandomCharacterCard(cards.size(), faction));
+                } else {
+                    cards.add(createRandomFieldCard(cards.size(), faction));
+                }
+            }
+        }
+        
+        System.out.println(faction.getLocalizedName() + " 牌組初始化完成，共有 " + cards.size() + " 張卡牌");
+    }
+    
+    /**
      * 創建一個隨機角色卡
      */
     private CharacterCard createRandomCharacterCard(int index) {
+        return createRandomCharacterCard(index, Faction.NEUTRAL);
+    }
+    
+    /**
+     * 創建一個特定陣營的隨機角色卡
+     */
+    private CharacterCard createRandomCharacterCard(int index, Faction faction) {
         Random random = new Random();
         int cost = random.nextInt(10) + 1; // 1-10費
         int attack = cost + random.nextInt(3) - 1; // 費用±1的攻擊力
@@ -94,23 +181,51 @@ public class Deck {
             rarity = Rarity.LEGENDARY;
         }
         
+        // 根據陣營生成名稱
+        String namePrefix = "";
+        switch (faction) {
+            case SPICY_KINGDOM:
+                namePrefix = "辣味";
+                break;
+            case HEALTHY_OASIS:
+                namePrefix = "健康";
+                break;
+            case FAST_FOOD_GUILD:
+                namePrefix = "速食";
+                break;
+            case DESSERT_UNION:
+                namePrefix = "甜點";
+                break;
+            default:
+                namePrefix = "中立";
+                break;
+        }
+        
         return new CharacterCard(
-                "食物角色 #" + (index+1), 
+                namePrefix + "食物角色 #" + (index+1), 
                 cost, 
-                "一個隨機生成的食物角色", 
+                "一個隨機生成的" + faction.getLocalizedName() + "陣營食物角色", 
                 rarity, 
                 attack, 
                 defense,
                 health,
-                isOffensive);
+                isOffensive,
+                faction);
     }
     
     /**
      * 創建一個隨機場地卡
      */
     private FieldCard createRandomFieldCard(int index) {
+        return createRandomFieldCard(index, Faction.NEUTRAL);
+    }
+    
+    /**
+     * 創建一個特定陣營的隨機場地卡
+     */
+    private FieldCard createRandomFieldCard(int index, Faction faction) {
         Random random = new Random();
-        int cost = random.nextInt(8) + 1; // 1-8費
+        int cost = random.nextInt(7) + 1; // 1-7費
         
         Rarity rarity;
         double rarityRoll = random.nextDouble();
@@ -118,88 +233,91 @@ public class Deck {
             rarity = Rarity.COMMON;
         } else if (rarityRoll < 0.85) {
             rarity = Rarity.RARE;
-        } else {
+        } else if (rarityRoll < 0.97) {
             rarity = Rarity.EPIC;
+        } else {
+            rarity = Rarity.LEGENDARY;
+        }
+        
+        // 根據陣營生成名稱
+        String namePrefix = "";
+        switch (faction) {
+            case SPICY_KINGDOM:
+                namePrefix = "辣味";
+                break;
+            case HEALTHY_OASIS:
+                namePrefix = "健康";
+                break;
+            case FAST_FOOD_GUILD:
+                namePrefix = "速食";
+                break;
+            case DESSERT_UNION:
+                namePrefix = "甜點";
+                break;
+            default:
+                namePrefix = "中立";
+                break;
         }
         
         // 隨機決定場地卡類型
-        FieldCard.FieldType[] fieldTypes = FieldCard.FieldType.values();
-        FieldCard.FieldType fieldType = fieldTypes[random.nextInt(fieldTypes.length)];
-        
-        // 根據場地卡類型創建不同的場地卡
-        switch (fieldType) {
-            case COOKING_TECHNIQUE:
+        switch(random.nextInt(3)) {
+            case 0:
                 // 創建烹飪技術類場地卡
-                FieldEffectType[] techniqueEffects = {
-                    FieldEffectType.BOOST_ATTACK,
-                    FieldEffectType.BOOST_DEFENSE,
-                    FieldEffectType.HEAL,
-                    FieldEffectType.DAMAGE,
-                    FieldEffectType.DRAW,
-                    FieldEffectType.SPECIAL
-                };
-                FieldEffectType techniqueEffect = techniqueEffects[random.nextInt(techniqueEffects.length)];
-                
-                int effectValue = cost + random.nextInt(3); // 效果值基於費用
-                int duration = (techniqueEffect == FieldEffectType.BOOST_ATTACK || 
-                               techniqueEffect == FieldEffectType.BOOST_DEFENSE) ? 
-                               random.nextInt(3) + 1 : 0; // 僅增益效果有持續時間
-                
-                return FieldCard.createTechniqueField(
-                        "烹飪技術 #" + (index+1), 
-                        cost, 
-                        "一個隨機生成的烹飪技術場地", 
-                        rarity,
-                        techniqueEffect,
-                        effectValue,
-                        duration);
-                
-            case COOKING_TOOL:
-                // 創建料理工具類場地卡
-                FieldEffectType toolEffect;
-                // 70%概率使用基本工具效果，30%概率使用擴展效果
-                if (random.nextDouble() < 0.7) {
-                    FieldEffectType[] basicToolEffects = {
-                        FieldEffectType.OFFENSIVE,
-                        FieldEffectType.DEFENSIVE,
-                        FieldEffectType.UTILITY
-                    };
-                    toolEffect = basicToolEffects[random.nextInt(basicToolEffects.length)];
-                } else {
-                    // 使用擴展效果類型
-                    FieldEffectType[] extendedEffects = {
-                        FieldEffectType.SUPPORTIVE,
-                        FieldEffectType.DISRUPTIVE,
-                        FieldEffectType.ECONOMIC,
-                        FieldEffectType.STRATEGIC,
-                        FieldEffectType.ENVIRONMENTAL
-                    };
-                    toolEffect = extendedEffects[random.nextInt(extendedEffects.length)];
+                FieldEffectType techEffectType = null;
+                switch(random.nextInt(5)) {
+                    case 0: techEffectType = FieldEffectType.BOOST_ATTACK; break;
+                    case 1: techEffectType = FieldEffectType.BOOST_DEFENSE; break;
+                    case 2: techEffectType = FieldEffectType.HEAL; break;
+                    case 3: techEffectType = FieldEffectType.DAMAGE; break;
+                    case 4: techEffectType = FieldEffectType.DRAW; break;
                 }
                 
-                int durability = cost + random.nextInt(2); // 耐久度基於費用
+                int techEffectValue = cost + random.nextInt(3); // 效果值基於費用
+                int duration = random.nextInt(3) + 1; // 1-3回合持續時間
+                
+                return FieldCard.createTechniqueField(
+                        namePrefix + "烹飪技術 #" + (index+1), 
+                        cost, 
+                        "一個隨機生成的" + faction.getLocalizedName() + "陣營烹飪技術場地", 
+                        rarity,
+                        techEffectType,
+                        techEffectValue,
+                        duration,
+                        faction);
+                
+            case 1:
+                // 創建料理工具類場地卡
+                FieldEffectType toolEffectType = null;
+                switch(random.nextInt(3)) {
+                    case 0: toolEffectType = FieldEffectType.OFFENSIVE; break;
+                    case 1: toolEffectType = FieldEffectType.DEFENSIVE; break;
+                    case 2: toolEffectType = FieldEffectType.UTILITY; break;
+                }
+                
+                int durability = random.nextInt(3) + 2; // 2-4點耐久度
                 int toolEffectValue = cost + random.nextInt(2); // 效果值基於費用
                 
                 return FieldCard.createToolField(
-                        "料理工具 #" + (index+1), 
+                        namePrefix + "料理工具 #" + (index+1), 
                         cost, 
-                        "一個隨機生成的料理工具場地", 
+                        "一個隨機生成的" + faction.getLocalizedName() + "陣營料理工具場地", 
                         rarity,
-                        toolEffect,
+                        toolEffectType,
                         durability,
-                        toolEffectValue);
+                        toolEffectValue,
+                        faction);
                 
-            case ENVIRONMENT:
             default:
                 // 創建環境類場地卡
                 int envEffectValue = cost + random.nextInt(3); // 效果值基於費用
                 
                 return FieldCard.createEnvironmentField(
-                        "料理環境 #" + (index+1), 
+                        namePrefix + "料理環境 #" + (index+1), 
                         cost, 
-                        "一個隨機生成的料理環境場地", 
+                        "一個隨機生成的" + faction.getLocalizedName() + "陣營料理環境場地", 
                         rarity,
-                        envEffectValue);
+                        envEffectValue,
+                        faction);
         }
     }
     
@@ -207,6 +325,13 @@ public class Deck {
      * 初始化隨機牌組，用於卡牌圖鑑尚未初始化的情況
      */
     private void initializeRandom() {
+        initializeRandomWithFaction(Faction.NEUTRAL);
+    }
+    
+    /**
+     * 初始化特定陣營的隨機牌組
+     */
+    private void initializeRandomWithFaction(Faction faction) {
         // 生成隨機牌組，確保正好有30張卡牌
         Random random = new Random();
         
@@ -215,19 +340,19 @@ public class Deck {
         int fieldCount = (int)(DECK_SIZE * 0.2);     // 20%為場地卡
         int questCount = DECK_SIZE - characterCount - fieldCount; // 10%為任務卡
         
-        // 生成角色卡
+        // 生成指定陣營的角色卡
         for (int i = 0; i < characterCount; i++) {
-            cards.add(createRandomCharacterCard(i));
+            cards.add(createRandomCharacterCard(i, faction));
         }
         
-        // 生成場地卡
+        // 生成指定陣營的場地卡
         for (int i = 0; i < fieldCount; i++) {
-            cards.add(createRandomFieldCard(i));
+            cards.add(createRandomFieldCard(i, faction));
         }
         
         // 生成任務卡 (未實現，可以在將來添加)
         
-        System.out.println("牌組隨機初始化完成，共有 " + cards.size() + " 張卡牌");
+        System.out.println(faction.getLocalizedName() + " 陣營牌組隨機初始化完成，共有 " + cards.size() + " 張卡牌");
     }
     
     /**
@@ -270,7 +395,8 @@ public class Deck {
                     originalChar.getAttack(),
                     originalChar.getDefense(),
                     originalChar.getMaxHealth(),
-                    originalChar.isOffensive()
+                    originalChar.isOffensive(),
+                    originalChar.getFaction()
             );
         } else if (original instanceof FieldCard) {
             // 支持新的FieldCard類型
@@ -286,7 +412,8 @@ public class Deck {
                             originalField.getRarity(),
                             originalField.getEffectType(),
                             originalField.getEffectValue(),
-                            originalField.getDuration()
+                            originalField.getDuration(),
+                            originalField.getFaction()
                     );
                     break;
                 case COOKING_TOOL:
@@ -297,7 +424,8 @@ public class Deck {
                             originalField.getRarity(),
                             originalField.getEffectType(),
                             originalField.getDurability(),
-                            originalField.getEffectValue()
+                            originalField.getEffectValue(),
+                            originalField.getFaction()
                     );
                     break;
                 case ENVIRONMENT:
@@ -307,7 +435,8 @@ public class Deck {
                             originalField.getTokenCost(),
                             originalField.getDescription(),
                             originalField.getRarity(),
-                            originalField.getEffectValue()
+                            originalField.getEffectValue(),
+                            originalField.getFaction()
                     );
                     break;
             }

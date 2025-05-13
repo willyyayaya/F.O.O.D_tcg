@@ -1,6 +1,7 @@
 package com.example.game;
 
 import java.util.Scanner;
+import java.util.List;
 
 import com.example.game.board.GameBoard;
 import com.example.game.card.Card;
@@ -81,10 +82,94 @@ public class FOODGameEngine {
     }
     
     private void initializePlayers() {
-        // 簡單模擬，實際上會讀取玩家數據或讓玩家選擇牌組
-        player1 = new Player("玩家1");
-        player2 = new Player("玩家2");
+        Scanner scanner = new Scanner(System.in);
         
+        // 選擇遊戲模式
+        System.out.println("\n===== 選擇遊戲模式 =====");
+        System.out.println("1. 玩家對戰玩家");
+        System.out.println("2. 玩家對戰AI");
+        
+        int gameMode = 1; // 預設為玩家對戰玩家
+        boolean vsAI = false;
+        
+        try {
+            System.out.print("請選擇遊戲模式: ");
+            gameMode = scanner.nextInt();
+            scanner.nextLine(); // 清除輸入緩衝
+            
+            if (gameMode == 2) {
+                vsAI = true;
+                System.out.println("您選擇了玩家對戰AI模式!");
+            } else {
+                System.out.println("您選擇了玩家對戰玩家模式!");
+            }
+        } catch (Exception e) {
+            System.out.println("輸入無效，預設使用玩家對戰玩家模式!");
+            scanner.nextLine(); // 清除輸入緩衝
+        }
+        
+        // 創建玩家1
+        player1 = new Player("玩家1");
+        
+        // 創建玩家2 或 AI對手
+        if (vsAI) {
+            // 選擇AI難度
+            System.out.println("\n===== 選擇AI難度 =====");
+            System.out.println("1. 簡單 - AI會做出隨機決策");
+            System.out.println("2. 中等 - AI會有基本策略");
+            System.out.println("3. 困難 - AI會有複雜策略");
+            
+            int difficulty = 1; // 預設為簡單難度
+            
+            try {
+                System.out.print("請選擇AI難度: ");
+                difficulty = scanner.nextInt();
+                scanner.nextLine(); // 清除輸入緩衝
+                
+                if (difficulty < 1 || difficulty > 3) {
+                    difficulty = 1;
+                    System.out.println("輸入無效，預設使用簡單難度!");
+                }
+            } catch (Exception e) {
+                System.out.println("輸入無效，預設使用簡單難度!");
+                scanner.nextLine(); // 清除輸入緩衝
+            }
+            
+            // 創建AI對手
+            player2 = new com.example.game.player.AIPlayer("AI對手", difficulty);
+            System.out.println("AI對手已準備就緒，難度為: " + getAIDifficultyName(difficulty));
+        } else {
+            // 創建人類玩家2
+            player2 = new Player("玩家2");
+        }
+        
+        // 玩家選擇陣營
+        System.out.println("\n" + player1.getName() + " 請選擇你的陣營:");
+        com.example.game.card.Faction faction1 = chooseFaction(scanner);
+        player1.setFaction(faction1);
+        
+        // 如果是AI對手，自動選擇陣營
+        if (vsAI) {
+            System.out.println("\n" + player2.getName() + " 正在選擇陣營...");
+            com.example.game.card.Faction aiFaction = ((com.example.game.player.AIPlayer)player2).chooseAIFaction();
+            System.out.println(player2.getName() + " 選擇了 " + aiFaction.getLocalizedName() + " 陣營!");
+        } else {
+            System.out.println("\n" + player2.getName() + " 請選擇你的陣營:");
+            com.example.game.card.Faction faction2 = chooseFaction(scanner);
+            player2.setFaction(faction2);
+        }
+        
+        // 玩家選擇城堡卡並決定放置區域
+        setupPlayerCastle(player1);
+        
+        // 如果是AI對手，自動選擇城堡卡
+        if (vsAI) {
+            setupAICastle((com.example.game.player.AIPlayer)player2);
+        } else {
+            setupPlayerCastle(player2);
+        }
+        
+        // 初始化牌組 - 現在會根據玩家選擇的陣營
         player1.initializeDeck();
         player2.initializeDeck();
         
@@ -96,65 +181,127 @@ public class FOODGameEngine {
         System.out.println(currentPlayer.getName() + " 將先手進行遊戲");
     }
     
+    /**
+     * 設置AI的城堡卡
+     */
+    private void setupAICastle(com.example.game.player.AIPlayer aiPlayer) {
+        System.out.println("\n" + aiPlayer.getName() + " 正在選擇城堡卡和區域...");
+        
+        // 讓AI選擇城堡卡
+        com.example.game.card.CastleCard castle = aiPlayer.chooseAICastle();
+        if (castle != null) {
+            aiPlayer.setCastleCard(castle);
+            
+            // 讓AI選擇放置區域
+            com.example.game.card.CastleCardZone zone = aiPlayer.chooseAICastleZone();
+            castle.hideInZone(zone);
+            
+            // 啟用城堡效果
+            castle.activateEffect(aiPlayer);
+            
+            System.out.println(aiPlayer.getName() + " 的城堡卡設置完成!");
+        } else {
+            System.out.println("警告: AI無法選擇城堡卡!");
+        }
+    }
+    
+    /**
+     * 獲取AI難度的名稱
+     */
+    private String getAIDifficultyName(int difficulty) {
+        switch (difficulty) {
+            case 1: return "簡單";
+            case 2: return "中等";
+            case 3: return "困難";
+            default: return "未知";
+        }
+    }
+    
+    /**
+     * 讓玩家選擇陣營
+     */
+    private com.example.game.card.Faction chooseFaction(Scanner scanner) {
+        System.out.println("請選擇你的陣營:");
+        System.out.println("1. 火辣王國 - 辛辣料理, 擅長爆發和控場");
+        System.out.println("2. 健康綠洲 - 有機食材, 擅長防禦和回復");
+        System.out.println("3. 速食工會 - 快速料理, 擅長快速節奏和低費卡牌");
+        System.out.println("4. 甜點聯盟 - 甜點烘焙, 擅長增益和特殊效果");
+        System.out.println("5. 中立陣營 - 多樣食材, 擁有多樣的效果和高適應性");
+        
+        while (true) {
+            try {
+                int choice = scanner.nextInt();
+                scanner.nextLine(); // 清除輸入緩衝
+                
+                switch (choice) {
+                    case 1: 
+                        System.out.println("你選擇了火辣王國陣營!");
+                        return com.example.game.card.Faction.SPICY_KINGDOM;
+                    case 2: 
+                        System.out.println("你選擇了健康綠洲陣營!");
+                        return com.example.game.card.Faction.HEALTHY_OASIS;
+                    case 3: 
+                        System.out.println("你選擇了速食工會陣營!");
+                        return com.example.game.card.Faction.FAST_FOOD_GUILD;
+                    case 4: 
+                        System.out.println("你選擇了甜點聯盟陣營!");
+                        return com.example.game.card.Faction.DESSERT_UNION;
+                    case 5: 
+                        System.out.println("你選擇了中立陣營!");
+                        return com.example.game.card.Faction.NEUTRAL;
+                    default:
+                        System.out.println("無效選擇，請輸入1-5!");
+                }
+            } catch (Exception e) {
+                System.out.println("輸入錯誤，請輸入數字!");
+                scanner.nextLine(); // 清除輸入緩衝
+            }
+        }
+    }
+    
+    /**
+     * 為玩家設置城堡卡
+     */
+    private void setupPlayerCastle(Player player) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n" + player.getName() + " 請選擇你的城堡卡:");
+        
+        // 使用玩家選擇的陣營
+        com.example.game.card.Faction playerFaction = player.getFaction();
+        
+        // 選擇城堡卡
+        com.example.game.card.CastleCard castle = CardLibrary.chooseCastleCard(scanner, playerFaction);
+        if (castle != null) {
+            player.setCastleCard(castle);
+            
+            // 選擇放置區域
+            com.example.game.card.CastleCardZone zone = CardLibrary.chooseCastleZone(scanner, castle);
+            castle.hideInZone(zone);
+            
+            // 啟用城堡效果
+            castle.activateEffect(player);
+            
+            System.out.println(player.getName() + " 的城堡卡設置完成!");
+        } else {
+            System.out.println("警告: 無法選擇城堡卡!");
+        }
+    }
+    
     private void gameLoop() {
         Scanner scanner = new Scanner(System.in);
         
         while (!gameOver) {
             startTurn();
             
-            while (true) {
-                displayGameState();
-                System.out.println(currentPlayer.getName() + " 的回合。請選擇操作:");
-                
-                // 根據是否已放置Token調整選單選項
-                if (!hasPlacedTokenThisTurn) {
-                    System.out.println("1.放置新Token 7.結束回合");
-                } else {
-                    System.out.println("1.(已放置Token) 2.出牌 3.戰鬥 4.查看手牌 5.查看卡牌圖鑑 6.查看場上角色 7.結束回合");
-                }
-                
-                try {
-                    int choice = scanner.nextInt();
-                    
-                    if (!hasPlacedTokenThisTurn && (choice > 1 && choice < 7)) {
-                        System.out.println("您必須先放置新Token才能進行其他操作!");
-                        continue;
-                    }
-                    
-                    switch (choice) {
-                        case 1:
-                            placeNewToken();
-                            break;
-                        case 2:
-                            playCardsPhase(currentPlayer, scanner);
-                            break;
-                        case 3:
-                            battle();
-                            break;
-                        case 4:
-                            currentPlayer.displayHandDetailed();
-                            break;
-                        case 5:
-                            CardLibrary.showLibrary();
-                            break;
-                        case 6:
-                            gameBoard.displayBattlefieldDetails(player1, player2, currentPlayer);
-                            break;
-                        case 7:
-                            // 結束回合
-                            break;
-                        default:
-                            System.out.println("無效的選擇，請重新輸入!");
-                            continue;
-                    }
-                    
-                    if (choice == 7) {
-                        break; // 結束當前回合
-                    }
-                } catch (Exception e) {
-                    System.out.println("輸入錯誤! 請輸入有效的數字選項");
-                    scanner.nextLine(); // 清除輸入緩衝
-                }
+            // 檢查當前玩家是否為AI
+            boolean isAITurn = currentPlayer instanceof com.example.game.player.AIPlayer;
+            
+            if (isAITurn) {
+                // 如果是AI玩家，自動執行回合
+                executeAITurn();
+            } else {
+                // 如果是人類玩家，正常執行回合
+                executePlayerTurn(scanner);
             }
             
             endTurn();
@@ -206,8 +353,8 @@ public class FOODGameEngine {
                     // 顯示當前Token分配
                     System.out.println("\n當前Token分配情況:");
                     System.out.println("抽牌區: " + currentPlayer.getCastleZone().getDrawWall().getTokenCount() + " 個Token");
-                    System.out.println("法力區: " + currentPlayer.getCastleZone().getManaWall().getTokenCount() + " 個Token");
-                    System.out.println("出牌區: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + " 個Token");
+                    System.out.println("法力區: " + currentPlayer.getCastleZone().getManaWall().getTokenCount() + " 個 Token");
+                    System.out.println("出牌區: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + " 個 Token");
                     System.out.println("總數: " + totalTokens + "/" + maxTokens);
                 }
                 
@@ -416,87 +563,81 @@ public class FOODGameEngine {
     
     private void battle() {
         Scanner scanner = new Scanner(System.in);
-        
-        // 檢查是否有角色可以攻擊
-        var characters = currentPlayer.getBattlefieldZone().getCharacters();
-        if (characters.isEmpty()) {
-            System.out.println("您沒有角色可以進行戰鬥!");
-            return;
-        }
-        
-        // 檢查對手是否有角色可以攻擊
         Player opponent = (currentPlayer == player1) ? player2 : player1;
-        var enemyCharacters = opponent.getBattlefieldZone().getCharacters();
-        if (enemyCharacters.isEmpty()) {
-            System.out.println("對手沒有角色可以攻擊!");
+        
+        System.out.println("\n======= 戰鬥階段 =======");
+        System.out.println("選擇進行戰鬥的角色:");
+        
+        // 獲取當前玩家的戰場
+        com.example.game.board.BattlefieldZone battlefield = currentPlayer.getBattlefieldZone();
+        List<CharacterCard> characters = battlefield.getCharacters();
+        
+        if (characters.isEmpty()) {
+            System.out.println("你沒有角色可以進行戰鬥!");
             return;
         }
         
-        // 顯示可攻擊的角色
-        System.out.println("選擇進行攻擊的角色:");
+        // 顯示可進行戰鬥的角色
         for (int i = 0; i < characters.size(); i++) {
             CharacterCard character = characters.get(i);
-            System.out.println((i+1) + ". " + character.getName() + 
-                   " [攻擊:" + character.getAttack() + ", 生命:" + character.getCurrentHealth() + 
-                   (character.canAttack() ? ", 可攻擊" : ", 不可攻擊") + "]");
+            String status = character.canAttack() ? "[可攻擊]" : "[已消耗]";
+            System.out.printf("%d. %s [ATK:%d] %s\n", i + 1, character.getName(), 
+                            character.getAttack(), status);
         }
-        System.out.println("0. 取消");
+        
+        System.out.println("0. 返回");
         
         try {
-            int attackerIndex = scanner.nextInt() - 1; // 轉為0-索引
+            int choice = scanner.nextInt();
+            if (choice == 0) return;
             
-            if (attackerIndex == -1) {
-                System.out.println("取消攻擊");
+            if (choice < 1 || choice > characters.size()) {
+                System.out.println("無效的選擇!");
                 return;
             }
             
-            if (attackerIndex < 0 || attackerIndex >= characters.size()) {
-                System.out.println("無效的角色選擇!");
-                return;
-            }
-            
-            CharacterCard attacker = characters.get(attackerIndex);
+            CharacterCard attacker = characters.get(choice - 1);
             
             if (!attacker.canAttack()) {
-                System.out.println("該角色本回合不能攻擊!");
+                System.out.println("這個角色已經攻擊過或不能攻擊!");
                 return;
             }
             
-            // 顯示可攻擊的敵方角色
             System.out.println("選擇攻擊目標:");
-            for (int i = 0; i < enemyCharacters.size(); i++) {
-                CharacterCard enemy = enemyCharacters.get(i);
-                System.out.println((i+1) + ". " + enemy.getName() + 
-                       " [防禦:" + enemy.getDefense() + ", 生命:" + enemy.getCurrentHealth() + "]");
+            System.out.println("1. 攻擊對手角色");
+            System.out.println("2. 攻擊對手城牆");
+            System.out.println("0. 返回");
+            
+            int targetType = scanner.nextInt();
+            
+            if (targetType == 0) return;
+            
+            if (targetType == 1) {
+                // 選擇對手角色進行攻擊
+                // ...此部分代碼保持不變...
+            } else if (targetType == 2) {
+                // 選擇對手城牆進行攻擊
+                System.out.println("選擇要攻擊的城牆:");
+                System.out.println("1. 抽牌區");
+                System.out.println("2. 法力區");
+                System.out.println("3. 出牌區");
+                
+                int wallChoice = scanner.nextInt();
+                if (wallChoice < 1 || wallChoice > 3) {
+                    System.out.println("無效的選擇!");
+                    return;
+                }
+                
+                // 使用修改後的攻擊方法，會檢查城堡卡
+                attackWall(opponent, wallChoice, attacker.getAttack());
+                
+                // 設置為已攻擊狀態
+                attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
+                attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
+                System.out.println(attacker.getName() + " 攻擊了 " + opponent.getName() + " 的城牆!");
             }
-            System.out.println("0. 取消");
-            
-            int targetIndex = scanner.nextInt() - 1; // 轉為0-索引
-            
-            if (targetIndex == -1) {
-                System.out.println("取消攻擊");
-                return;
-            }
-            
-            if (targetIndex < 0 || targetIndex >= enemyCharacters.size()) {
-                System.out.println("無效的目標選擇!");
-                return;
-            }
-            
-            CharacterCard target = enemyCharacters.get(targetIndex);
-            
-            // 執行攻擊
-            int damage = attacker.attack(target);
-            gameBoard.displayBattleAnimation(attacker.getName(), target.getName(), damage);
-            
-            // 檢查目標是否死亡
-            if (target.getCurrentHealth() <= 0) {
-                System.out.println(target.getName() + " 被擊敗了!");
-                enemyCharacters.remove(targetIndex);
-            }
-            
         } catch (Exception e) {
-            System.out.println("輸入錯誤! 請輸入有效的數字選項");
+            System.out.println("輸入錯誤!");
             scanner.nextLine(); // 清除輸入緩衝
         }
     }
@@ -563,5 +704,275 @@ public class FOODGameEngine {
         System.out.println("\n======= 遊戲結束 =======");
         System.out.println(winner.getName() + " 獲勝!");
         System.out.println("========================\n");
+    }
+
+    /**
+     * 攻擊指定玩家的指定城牆
+     * @param target 目標玩家
+     * @param wallType 城牆類型 (1=抽牌區, 2=法力區, 3=出牌區)
+     * @param damage 傷害量
+     * @return 該城牆是否被摧毀
+     */
+    public boolean attackWall(Player target, int wallType, int damage) {
+        boolean wallDestroyed = target.attackWall(wallType, damage);
+        
+        // 檢查城牆被摧毀時，是否有城堡卡在此區域
+        if (wallDestroyed) {
+            com.example.game.card.CastleCardZone zone;
+            switch (wallType) {
+                case 1: zone = com.example.game.card.CastleCardZone.DECK; break;
+                case 2: zone = com.example.game.card.CastleCardZone.MANA; break;
+                case 3: zone = com.example.game.card.CastleCardZone.PLAY; break;
+                default: return wallDestroyed;
+            }
+            
+            // 檢查並處理城堡卡
+            CardLibrary.checkZoneDestroyed(target, zone);
+        }
+        
+        return wallDestroyed;
+    }
+
+    /**
+     * 人類玩家回合執行
+     */
+    private void executePlayerTurn(Scanner scanner) {
+        while (true) {
+            displayGameState();
+            System.out.println(currentPlayer.getName() + " 的回合。請選擇操作:");
+            
+            // 根據是否已放置Token調整選單選項
+            if (!hasPlacedTokenThisTurn) {
+                System.out.println("1.放置新Token 7.結束回合");
+            } else {
+                System.out.println("1.(已放置Token) 2.出牌 3.戰鬥 4.查看手牌 5.查看卡牌圖鑑 6.查看場上角色 7.結束回合");
+            }
+            
+            try {
+                int choice = scanner.nextInt();
+                
+                if (!hasPlacedTokenThisTurn && (choice > 1 && choice < 7)) {
+                    System.out.println("您必須先放置新Token才能進行其他操作!");
+                    continue;
+                }
+                
+                switch (choice) {
+                    case 1:
+                        placeNewToken();
+                        break;
+                    case 2:
+                        playCardsPhase(currentPlayer, scanner);
+                        break;
+                    case 3:
+                        battle();
+                        break;
+                    case 4:
+                        currentPlayer.displayHandDetailed();
+                        break;
+                    case 5:
+                        CardLibrary.showLibrary();
+                        break;
+                    case 6:
+                        gameBoard.displayBattlefieldDetails(player1, player2, currentPlayer);
+                        break;
+                    case 7:
+                        // 結束回合
+                        break;
+                    default:
+                        System.out.println("無效的選擇，請重新輸入!");
+                        continue;
+                }
+                
+                if (choice == 7) {
+                    break; // 結束當前回合
+                }
+            } catch (Exception e) {
+                System.out.println("輸入錯誤! 請輸入有效的數字選項");
+                scanner.nextLine(); // 清除輸入緩衝
+            }
+        }
+    }
+    
+    /**
+     * AI玩家回合執行
+     */
+    private void executeAITurn() {
+        com.example.game.player.AIPlayer aiPlayer = (com.example.game.player.AIPlayer) currentPlayer;
+        displayGameState();
+        System.out.println(aiPlayer.getName() + " 正在思考...");
+        
+        // 模擬AI思考時間
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // 1. 放置新Token
+        if (!hasPlacedTokenThisTurn) {
+            int wallType = aiPlayer.chooseTokenPlacement();
+            System.out.println(aiPlayer.getName() + " 選擇放置Token到 " + getWallName(wallType));
+            
+            // 放置Token並更新資源
+            boolean placed = aiPlayer.placeNewToken(wallType);
+            if (placed) {
+                hasPlacedTokenThisTurn = true;
+                
+                // 根據抽牌區的Token數量抽牌
+                int drawAmount = aiPlayer.getCastleZone().getDrawWall().getTokenCount();
+                System.out.println(aiPlayer.getName() + " 根據抽牌區的 " + drawAmount + " 個Token抽 " + drawAmount + " 張牌");
+                for (int i = 0; i < drawAmount; i++) {
+                    aiPlayer.drawCard();
+                }
+                
+                // 根據法力區Token更新法力值
+                int manaTokens = aiPlayer.getCastleZone().getManaWall().getTokenCount();
+                aiPlayer.updateManaPoints(manaTokens);
+                
+                // 根據出牌區Token更新最大出牌數
+                int playTokens = aiPlayer.getCastleZone().getPlayWall().getTokenCount();
+                aiPlayer.updateMaxCardsToPlay(playTokens);
+            } else {
+                System.out.println(aiPlayer.getName() + " 不能放置更多Token了!");
+            }
+        }
+        
+        // 模擬AI思考時間
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // 2. 出牌階段
+        while (true) {
+            // 檢查是否還能出牌
+            if (aiPlayer.getCardsPlayedThisTurn() >= aiPlayer.getMaxCardsToPlay()) {
+                System.out.println(aiPlayer.getName() + " 已達本回合出牌上限。");
+                break;
+            }
+            
+            // 讓AI選擇卡牌
+            int[] cardChoice = aiPlayer.chooseCardToPlay();
+            if (cardChoice == null) {
+                System.out.println(aiPlayer.getName() + " 沒有可出的卡牌了。");
+                break;
+            }
+            
+            int cardIndex = cardChoice[0];
+            int areaIndex = cardChoice[1];
+            
+            // 如果手牌索引有效
+            if (cardIndex >= 0 && cardIndex < aiPlayer.getHand().size()) {
+                Card selectedCard = aiPlayer.getHand().get(cardIndex);
+                String areaName = getAreaName(areaIndex);
+                
+                System.out.println(aiPlayer.getName() + " 選擇出牌: " + selectedCard.getName() + " 到 " + areaName);
+                
+                // 出牌
+                boolean played = aiPlayer.playCard(cardIndex, areaIndex);
+                if (!played) {
+                    System.out.println(aiPlayer.getName() + " 出牌失敗!");
+                    break;
+                }
+                
+                // 模擬AI思考時間
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            } else {
+                System.out.println(aiPlayer.getName() + " 選擇了無效的卡牌!");
+                break;
+            }
+        }
+        
+        // 模擬AI思考時間
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        
+        // 3. 戰鬥階段
+        System.out.println(aiPlayer.getName() + " 進入戰鬥階段...");
+        
+        while (true) {
+            int[] attackChoice = aiPlayer.chooseAttackTarget();
+            if (attackChoice == null) {
+                System.out.println(aiPlayer.getName() + " 沒有可攻擊的角色了。");
+                break;
+            }
+            
+            int attackerIndex = attackChoice[0];
+            int targetType = attackChoice[1];
+            int targetIndex = attackChoice[2];
+            
+            List<CharacterCard> aiCharacters = aiPlayer.getBattlefieldZone().getCharacters();
+            if (attackerIndex >= 0 && attackerIndex < aiCharacters.size()) {
+                CharacterCard attacker = aiCharacters.get(attackerIndex);
+                
+                if (targetType == 1) {
+                    // 攻擊對手角色 (目前未實現)
+                    System.out.println(aiPlayer.getName() + " 選擇使用 " + attacker.getName() + " 攻擊對手角色！");
+                } else {
+                    // 攻擊對手城牆
+                    Player opponent = (aiPlayer == player1) ? player2 : player1;
+                    String wallName = getWallName(targetIndex);
+                    
+                    System.out.println(aiPlayer.getName() + " 選擇使用 " + attacker.getName() + 
+                                     " (攻擊力:" + attacker.getAttack() + ") 攻擊 " + 
+                                     opponent.getName() + " 的 " + wallName);
+                    
+                    // 執行攻擊
+                    boolean wallDestroyed = attackWall(opponent, targetIndex, attacker.getAttack());
+                    
+                    // 設置為已攻擊狀態
+                    attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
+                    attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
+                    
+                    if (wallDestroyed) {
+                        System.out.println(opponent.getName() + " 的 " + wallName + " 被摧毀了!");
+                    }
+                }
+                
+                // 模擬AI思考時間
+                try {
+                    Thread.sleep(700);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                }
+            } else {
+                System.out.println(aiPlayer.getName() + " 選擇了無效的攻擊者!");
+                break;
+            }
+        }
+        
+        System.out.println(aiPlayer.getName() + " 的回合結束。");
+    }
+    
+    /**
+     * 獲取區域名稱
+     */
+    private String getAreaName(int areaIndex) {
+        switch (areaIndex) {
+            case 1: return "抽牌區";
+            case 2: return "法力區";
+            case 3: return "出牌區";
+            default: return "未知區域";
+        }
+    }
+    
+    /**
+     * 獲取城牆名稱
+     */
+    private String getWallName(int wallType) {
+        switch (wallType) {
+            case 1: return "抽牌區";
+            case 2: return "法力區";
+            case 3: return "出牌區";
+            default: return "未知區域";
+        }
     }
 } 

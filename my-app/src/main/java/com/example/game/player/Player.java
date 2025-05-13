@@ -9,9 +9,11 @@ import com.example.game.board.CastleZone;
 import com.example.game.board.ResourceZone;
 import com.example.game.card.Card;
 import com.example.game.card.CharacterCard;
+import com.example.game.card.CastleCard;
 import com.example.game.card.Deck;
 import com.example.game.card.FieldCard;
 import com.example.game.card.Rarity;
+import com.example.game.card.Faction;
 
 /**
  * 玩家類 - 代表F.O.O.D TCG遊戲參與者
@@ -20,6 +22,8 @@ public class Player {
     private String name;
     private Deck deck;
     private List<Card> hand;
+    private CastleCard castleCard; // 玩家選擇的城堡卡
+    private Faction faction; // 玩家選擇的陣營
     
     // 新增資源相關屬性
     private int manaPoints;        // 當前法力值
@@ -34,6 +38,8 @@ public class Player {
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
+        this.castleCard = null; // 初始化為空
+        this.faction = Faction.NEUTRAL; // 預設為中立陣營
         
         // 初始化各區域
         this.castleZone = new CastleZone();
@@ -50,9 +56,9 @@ public class Player {
     }
     
     public void initializeDeck() {
-        // 初始化牌組，這裡簡單模擬
+        // 初始化牌組，根據玩家選擇的陣營生成對應牌組
         this.deck = new Deck();
-        deck.initialize();
+        deck.initialize(faction); // 傳入陣營參數
         deck.shuffle();
     }
     
@@ -471,5 +477,37 @@ public class Player {
      */
     public Deck getDeck() {
         return deck;
+    }
+    
+    /**
+     * 獲取玩家的城堡卡
+     */
+    public CastleCard getCastleCard() {
+        return castleCard;
+    }
+    
+    /**
+     * 設置玩家的城堡卡
+     */
+    public void setCastleCard(CastleCard castle) {
+        this.castleCard = castle;
+        if (castle != null) {
+            System.out.println(name + " 選擇了城堡卡: " + castle.getName());
+        }
+    }
+    
+    /**
+     * 獲取玩家的陣營
+     */
+    public Faction getFaction() {
+        return faction;
+    }
+    
+    /**
+     * 設置玩家的陣營
+     */
+    public void setFaction(Faction faction) {
+        this.faction = faction;
+        System.out.println(name + " 選擇了陣營: " + faction.getLocalizedName());
     }
 } 
