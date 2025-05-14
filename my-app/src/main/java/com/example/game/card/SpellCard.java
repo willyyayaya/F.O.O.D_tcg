@@ -4,7 +4,6 @@ import com.example.game.player.Player;
 
 /**
  * 法術卡 - 一次性效果的卡牌
- * 注意：此類在F.O.O.D TCG系統中被FieldCard替代，但保留兼容性
  */
 public class SpellCard extends Card {
     private SpellType spellType;

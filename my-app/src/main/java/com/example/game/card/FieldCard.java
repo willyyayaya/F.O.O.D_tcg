@@ -4,7 +4,6 @@ import com.example.game.player.Player;
 
 /**
  * 場地卡 - 代表F.O.O.D TCG中的場地效果
- * 此類整合了原來的料理工具卡和烹飪技術卡的功能
  */
 public class FieldCard extends Card {
     public enum FieldType {
