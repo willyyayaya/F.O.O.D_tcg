@@ -10,6 +10,7 @@ import com.example.game.card.FieldCard;
 /**
  * 戰場區 (Battlefield) - 擺放角色卡（進攻與防禦）和場地卡
  * 分為三個子區域：抽牌區、法力區、出牌區
+ * 每個區域都是獨立的戰場，有各自的角色卡和場地卡限制
  */
 public class BattlefieldZone {
     // 新的區域結構
@@ -24,6 +25,7 @@ public class BattlefieldZone {
     
     /**
      * 戰場子區域類，代表三個不同區域中的一個
+     * 每個子區域是一個獨立的戰場，有自己的角色卡和場地卡限制
      */
     public static class BattlefieldArea {
         private String name;
@@ -77,6 +79,13 @@ public class BattlefieldZone {
         }
         
         /**
+         * 移除特定角色卡
+         */
+        public boolean removeCharacter(CharacterCard card) {
+            return characters.remove(card);
+        }
+        
+        /**
          * 移除場地卡
          */
         public FieldCard removeFieldCard(int index) {
@@ -84,6 +93,13 @@ public class BattlefieldZone {
                 return fieldCards.remove(index);
             }
             return null;
+        }
+        
+        /**
+         * 移除特定場地卡
+         */
+        public boolean removeFieldCard(FieldCard card) {
+            return fieldCards.remove(card);
         }
         
         /**
@@ -98,6 +114,28 @@ public class BattlefieldZone {
          */
         public List<FieldCard> getFieldCards() {
             return fieldCards;
+        }
+        
+        /**
+         * 區域是否包含特定角色卡
+         */
+        public boolean containsCharacter(CharacterCard card) {
+            return characters.contains(card);
+        }
+        
+        /**
+         * 區域是否包含特定場地卡
+         */
+        public boolean containsFieldCard(FieldCard card) {
+            return fieldCards.contains(card);
+        }
+        
+        /**
+         * 清空區域中的所有卡牌
+         */
+        public void clear() {
+            characters.clear();
+            fieldCards.clear();
         }
         
         /**
@@ -189,7 +227,9 @@ public class BattlefieldZone {
     
     /**
      * 獲取所有角色卡（所有區域的總和）
+     * @deprecated 請使用 getAreaByType(areaType).getCharacters() 獲取特定區域的角色卡
      */
+    @Deprecated
     public List<CharacterCard> getCharacters() {
         List<CharacterCard> allCharacters = new ArrayList<>();
         allCharacters.addAll(drawArea.getCharacters());
@@ -200,7 +240,9 @@ public class BattlefieldZone {
     
     /**
      * 獲取所有場地卡（所有區域的總和）
+     * @deprecated 請使用 getAreaByType(areaType).getFieldCards() 獲取特定區域的場地卡
      */
+    @Deprecated
     public List<FieldCard> getFieldCards() {
         List<FieldCard> allFieldCards = new ArrayList<>();
         allFieldCards.addAll(drawArea.getFieldCards());
@@ -231,19 +273,90 @@ public class BattlefieldZone {
     }
     
     /**
-     * 移除指定角色卡
+     * 移除指定角色卡（從所有區域中尋找）
+     * @deprecated 請使用 getAreaByType(areaType).removeCharacter(card) 從特定區域移除卡牌
      */
+    @Deprecated
     public boolean removeCharacter(CharacterCard card) {
         // 嘗試從所有區域尋找並移除卡牌
         for (BattlefieldArea area : new BattlefieldArea[]{drawArea, manaArea, playArea}) {
-            List<CharacterCard> characters = area.getCharacters();
-            int index = characters.indexOf(card);
-            if (index != -1) {
-                area.removeCharacter(index);
+            if (area.removeCharacter(card)) {
                 return true;
             }
         }
         return false; // 未找到指定卡牌
+    }
+    
+    /**
+     * 移除指定場地卡（從所有區域中尋找）
+     * @param card 要移除的場地卡
+     * @return 是否成功移除
+     */
+    public boolean removeFieldCard(FieldCard card) {
+        // 嘗試從所有區域尋找並移除卡牌
+        for (BattlefieldArea area : new BattlefieldArea[]{drawArea, manaArea, playArea}) {
+            if (area.removeFieldCard(card)) {
+                return true;
+            }
+        }
+        return false; // 未找到指定卡牌
+    }
+    
+    /**
+     * 從指定區域移除角色卡
+     * @param card 要移除的角色卡
+     * @param areaType 區域類型
+     * @return 是否成功移除
+     */
+    public boolean removeCharacter(CharacterCard card, int areaType) {
+        return getAreaByType(areaType).removeCharacter(card);
+    }
+    
+    /**
+     * 從指定區域移除場地卡
+     * @param card 要移除的場地卡
+     * @param areaType 區域類型
+     * @return 是否成功移除
+     */
+    public boolean removeFieldCard(FieldCard card, int areaType) {
+        return getAreaByType(areaType).removeFieldCard(card);
+    }
+    
+    /**
+     * 清空所有區域的卡牌
+     */
+    public void clearAll() {
+        drawArea.clear();
+        manaArea.clear();
+        playArea.clear();
+    }
+    
+    /**
+     * 清空指定區域的卡牌
+     * @param areaType 區域類型
+     */
+    public void clearArea(int areaType) {
+        getAreaByType(areaType).clear();
+    }
+    
+    /**
+     * 檢查指定區域是否包含特定角色卡
+     * @param card 要檢查的角色卡
+     * @param areaType 區域類型
+     * @return 是否包含該卡牌
+     */
+    public boolean containsCharacter(CharacterCard card, int areaType) {
+        return getAreaByType(areaType).containsCharacter(card);
+    }
+    
+    /**
+     * 檢查指定區域是否包含特定場地卡
+     * @param card 要檢查的場地卡
+     * @param areaType 區域類型
+     * @return 是否包含該卡牌
+     */
+    public boolean containsFieldCard(FieldCard card, int areaType) {
+        return getAreaByType(areaType).containsFieldCard(card);
     }
     
     /**

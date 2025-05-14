@@ -8,12 +8,12 @@ import com.example.game.board.BattlefieldZone;
 import com.example.game.board.CastleZone;
 import com.example.game.board.ResourceZone;
 import com.example.game.card.Card;
-import com.example.game.card.CharacterCard;
 import com.example.game.card.CastleCard;
+import com.example.game.card.CharacterCard;
 import com.example.game.card.Deck;
+import com.example.game.card.Faction;
 import com.example.game.card.FieldCard;
 import com.example.game.card.Rarity;
-import com.example.game.card.Faction;
 
 /**
  * 玩家類 - 代表F.O.O.D TCG遊戲參與者
