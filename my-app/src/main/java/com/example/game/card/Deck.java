@@ -359,23 +359,7 @@ public class Deck {
      * 複製卡牌，確保每張卡牌是獨立的實例
      */
     private Card copyCard(Card original) {
-        if (original instanceof Minion) {
-            Minion originalMinion = (Minion) original;
-            Minion copy = new Minion(
-                    originalMinion.getName(),
-                    originalMinion.getTokenCost(),
-                    originalMinion.getDescription(),
-                    originalMinion.getRarity(),
-                    originalMinion.getAttack(),
-                    originalMinion.getHealth()
-            );
-            
-            copy.setTaunt(originalMinion.hasTaunt());
-            copy.setDivineShield(originalMinion.hasDivineShield());
-            copy.setCharge(originalMinion.hasCharge());
-            
-            return copy;
-        } else if (original instanceof SpellCard) {
+        if (original instanceof SpellCard) {
             SpellCard originalSpell = (SpellCard) original;
             return new SpellCard(
                     originalSpell.getName(),

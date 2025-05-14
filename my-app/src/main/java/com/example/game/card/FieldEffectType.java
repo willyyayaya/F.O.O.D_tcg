@@ -35,13 +35,6 @@ public enum FieldEffectType {
     }
     
     /**
-     * 檢查是否為工具類型效果
-     */
-    public boolean isToolEffect() {
-        return this == OFFENSIVE || this == DEFENSIVE || this == UTILITY;
-    }
-    
-    /**
      * 獲取效果類型的文字描述
      */
     public String getDescription() {
