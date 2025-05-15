@@ -18,6 +18,9 @@ public class CharacterCard extends Card {
     // 效果處理器
     private static final CardEffect effectProcessor = new CardEffectImpl();
     
+    // 卡牌擁有者
+    private Player owner;
+    
     // 酥脆效果相關
     private int crispyValue;    // 當前酥脆值（護甲值）
     private int maxCrispyValue; // 最大酥脆值
@@ -133,6 +136,9 @@ public class CharacterCard extends Card {
         // 出牌時的效果，可能包括戰吼效果等
         System.out.println(player.getName() + " 派出了 " + name + " 角色! (" + getFaction().getLocalizedName() + ")");
         
+        // 設置卡牌擁有者
+        this.owner = player;
+        
         // 處理開胃效果（類似戰吼）
         if (getDescription().contains("【開胃】")) {
             effectProcessor.processAppetizerEffect(this, player, null);
@@ -147,6 +153,9 @@ public class CharacterCard extends Card {
     public void play(Player player, Player opponent) {
         // 出牌時的效果，可能包括戰吼效果等
         System.out.println(player.getName() + " 派出了 " + name + " 角色! (" + getFaction().getLocalizedName() + ")");
+        
+        // 設置卡牌擁有者
+        this.owner = player;
         
         // 處理開胃效果（類似戰吼）
         if (getDescription().contains("【開胃】")) {
@@ -243,10 +252,12 @@ public class CharacterCard extends Card {
         
         // 如果角色死亡，處理回味效果
         if (currentHealth <= 0 && getDescription().contains("【回味】")) {
-            // 獲取玩家實例（通常從上下文傳入，這裡簡化處理）
-            // Player owner = ...;
-            // effectProcessor.processAftertasteEffect(this, owner);
             System.out.println(name + " 的【回味】效果觸發！");
+            if (owner != null) {
+                effectProcessor.processAftertasteEffect(this, owner);
+            } else {
+                System.out.println("  無法確定卡牌擁有者，無法處理回味效果");
+            }
         }
         
         return currentHealth > 0;
@@ -386,5 +397,21 @@ public class CharacterCard extends Card {
     // 兼容性方法，與Minion類兼容
     public int getHealth() {
         return currentHealth;
+    }
+    
+    /**
+     * 設置卡牌擁有者
+     * @param owner 玩家
+     */
+    public void setOwner(Player owner) {
+        this.owner = owner;
+    }
+    
+    /**
+     * 獲取卡牌擁有者
+     * @return 玩家
+     */
+    public Player getOwner() {
+        return owner;
     }
 }

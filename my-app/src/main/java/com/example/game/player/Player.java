@@ -35,6 +35,9 @@ public class Player {
     private BattlefieldZone battlefieldZone;
     private ResourceZone resourceZone;
     
+    // 玩家的對手
+    private Player opponent;
+    
     public Player(String name) {
         this.name = name;
         this.hand = new ArrayList<>();
@@ -528,5 +531,21 @@ public class Player {
     public void setFaction(Faction faction) {
         this.faction = faction;
         System.out.println(name + " 選擇了陣營: " + faction.getLocalizedName());
+    }
+    
+    /**
+     * 設置玩家的對手
+     * @param opponent 對手玩家
+     */
+    public void setOpponent(Player opponent) {
+        this.opponent = opponent;
+    }
+    
+    /**
+     * 獲取玩家的對手
+     * @return 對手玩家
+     */
+    public Player getOpponent() {
+        return opponent;
     }
 } 

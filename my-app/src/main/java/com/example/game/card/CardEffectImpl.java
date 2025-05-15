@@ -1,6 +1,7 @@
 package com.example.game.card;
 
 import com.example.game.player.Player;
+import com.example.game.board.BattlefieldZone;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -290,9 +291,182 @@ public class CardEffectImpl implements CardEffect {
     @Override
     public boolean processAftertasteEffect(Card card, Player player) {
         // 處理回味效果（死亡後觸發）
-        System.out.println("處理【回味】效果: " + card.getName());
-        // 在實際遊戲邏輯中實現具體效果
+        String description = card.getDescription();
+        String cardName = card.getName();
+        System.out.println("處理【回味】效果: " + cardName);
+        
+        if (!description.contains("【回味】")) {
+            return false; // 卡牌沒有回味效果
+        }
+        
+        // 使用正則表達式提取回味效果描述
+        Pattern pattern = Pattern.compile("【回味】：([^。]+)[。]?");
+        Matcher matcher = pattern.matcher(description);
+        
+        if (matcher.find()) {
+            String effectDescription = matcher.group(1);
+            System.out.println("  回味效果描述: " + effectDescription);
+            
+            // 根據效果描述執行相應操作
+            
+            // 處理抽牌效果
+            if (effectDescription.contains("抽一張牌") || effectDescription.contains("抽牌")) {
+                System.out.println("  觸發抽牌效果");
+                player.drawCard();
+            } else if (effectDescription.matches(".*抽([0-9]+)張牌.*")) {
+                Pattern drawPattern = Pattern.compile("抽([0-9]+)張牌");
+                Matcher drawMatcher = drawPattern.matcher(effectDescription);
+                if (drawMatcher.find()) {
+                    int cardsToDraw = Integer.parseInt(drawMatcher.group(1));
+                    System.out.println("  觸發抽" + cardsToDraw + "張牌效果");
+                    for (int i = 0; i < cardsToDraw; i++) {
+                        player.drawCard();
+                    }
+                }
+            }
+            
+            // 處理召喚效果
+            if (effectDescription.contains("召喚") && effectDescription.contains("副本")) {
+                System.out.println("  觸發召喚副本效果");
+                if (card instanceof CharacterCard) {
+                    CharacterCard character = (CharacterCard) card;
+                    // 創建相同屬性但初始血量的副本
+                    CharacterCard copy = new CharacterCard(
+                        character.getName() + " 的副本", 
+                        0, // 無費用
+                        character.getDescription(), 
+                        character.getRarity(),
+                        character.getAttack(),
+                        character.getDefense(),
+                        character.getMaxHealth(),
+                        character.isOffensive(),
+                        character.getFaction()
+                    );
+                    
+                    // 添加到戰場
+                    player.getBattlefieldZone().addCharacter(copy, BattlefieldZone.PLAY_AREA);
+                    System.out.println("  召喚了 " + copy.getName() + " 到戰場");
+                }
+            }
+            
+            // 處理對敵方角色造成傷害的效果
+            if (effectDescription.contains("造成") && effectDescription.contains("點傷害")) {
+                Player opponent = player.getOpponent();
+                if (opponent != null) {
+                    // 對單一敵方角色造成傷害 (需要選擇目標)
+                    if (effectDescription.contains("對一個敵方角色造成")) {
+                        Pattern damagePattern = Pattern.compile("對一個敵方角色造成(\\d+)點傷害");
+                        Matcher damageMatcher = damagePattern.matcher(effectDescription);
+                        if (damageMatcher.find()) {
+                            int damageAmount = Integer.parseInt(damageMatcher.group(1));
+                            System.out.println("  觸發對敵方角色造成傷害效果: " + damageAmount + "點");
+                            
+                            // 使用TargetSelector選擇敵方目標
+                            CharacterCard target = TargetSelector.selectEnemyCharacter(
+                                player,
+                                opponent,
+                                "【回味】效果 - 選擇一個敵方角色造成" + damageAmount + "點傷害"
+                            );
+                            
+                            // 應用傷害效果
+                            if (target != null) {
+                                boolean survived = target.takeDamage(damageAmount);
+                                System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
+                                        " 點傷害" + (survived ? "" : "，已被摧毀！"));
+                            } else {
+                                System.out.println("  取消了傷害效果");
+                            }
+                        }
+                    }
+                    // 對所有敵方角色造成傷害
+                    else if (effectDescription.contains("對所有敵方角色")) {
+                        processDeathDamageEffect((CharacterCard)card, player, opponent, effectDescription);
+                    } else {
+                        System.out.println("  無法確定傷害目標，無法處理傷害效果");
+                    }
+                } else {
+                    System.out.println("  無法確定敵方玩家，無法處理傷害效果");
+                }
+            }
+            
+            // 處理回復生命值效果
+            if (effectDescription.contains("恢復") && effectDescription.contains("生命值")) {
+                // 為單一友方角色恢復生命值 (需要選擇目標)
+                if (effectDescription.contains("為一個友方角色恢復")) {
+                    Pattern healPattern = Pattern.compile("為一個友方角色恢復(\\d+)點生命值");
+                    Matcher healMatcher = healPattern.matcher(effectDescription);
+                    if (healMatcher.find()) {
+                        int healAmount = Integer.parseInt(healMatcher.group(1));
+                        System.out.println("  觸發為友方角色恢復生命值效果: +" + healAmount);
+                        
+                        // 使用TargetSelector選擇友方目標
+                        CharacterCard target = TargetSelector.selectFriendlyCharacter(
+                            player,
+                            card,
+                            "【回味】效果 - 選擇一個友方角色恢復" + healAmount + "點生命值"
+                        );
+                        
+                        // 應用恢復效果
+                        if (target != null) {
+                            target.heal(healAmount);
+                            System.out.println("  " + target.getName() + " 恢復了 " + healAmount + " 點生命值");
+                        } else {
+                            System.out.println("  取消了治療效果");
+                        }
+                    }
+                }
+                // 為所有友方角色恢復生命值
+                else if (effectDescription.contains("為所有友方角色恢復")) {
+                    Pattern healPattern = Pattern.compile("為所有友方角色恢復(\\d+)點生命值");
+                    Matcher healMatcher = healPattern.matcher(effectDescription);
+                    if (healMatcher.find()) {
+                        int healAmount = Integer.parseInt(healMatcher.group(1));
+                        System.out.println("  觸發為所有友方角色恢復生命值效果: +" + healAmount);
+                        
+                        List<CharacterCard> targets = TargetSelector.selectAllFriendlyCharacters(player);
+                        for (CharacterCard target : targets) {
+                            target.heal(healAmount);
+                            System.out.println("  " + target.getName() + " 恢復了 " + healAmount + " 點生命值");
+                        }
+                    }
+                } else if (effectDescription.contains("恢復") && effectDescription.contains("法力值")) {
+                    Pattern manaPattern = Pattern.compile("恢復(\\d+)點法力值");
+                    Matcher manaMatcher = manaPattern.matcher(effectDescription);
+                    if (manaMatcher.find()) {
+                        int manaAmount = Integer.parseInt(manaMatcher.group(1));
+                        System.out.println("  觸發恢復法力值效果: +" + manaAmount);
+                        player.updateManaPoints(manaAmount);
+                    }
+                }
+            }
+            
+            return true;
+        }
+        
+        // 無法解析具體效果，但仍然返回成功
+        System.out.println("  無法解析具體回味效果，請查看卡牌描述");
         return true;
+    }
+    
+    /**
+     * 處理死亡後造成傷害的效果
+     */
+    private void processDeathDamageEffect(CharacterCard sourceCard, Player player, Player opponent, String effectDescription) {
+        if (effectDescription.contains("對所有敵方角色造成")) {
+            Pattern damagePattern = Pattern.compile("對所有敵方角色造成(\\d+)點傷害");
+            Matcher damageMatcher = damagePattern.matcher(effectDescription);
+            if (damageMatcher.find()) {
+                int damageAmount = Integer.parseInt(damageMatcher.group(1));
+                System.out.println("  觸發對所有敵方角色造成傷害效果: " + damageAmount + "點");
+                
+                List<CharacterCard> targets = TargetSelector.selectAllEnemyCharacters(opponent);
+                for (CharacterCard target : targets) {
+                    boolean survived = target.takeDamage(damageAmount);
+                    System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
+                            " 點傷害" + (survived ? "" : "，已被摧毀！"));
+                }
+            }
+        }
     }
     
     @Override
