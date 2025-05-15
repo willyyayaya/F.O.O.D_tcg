@@ -124,6 +124,10 @@ public class CharacterCard extends Card {
         System.out.println(name + " 增加酥脆值: " + amount + "，現在為: " + crispyValue);
     }
     
+    /**
+     * 當卡牌被打出時執行
+     * @param player 打出此卡牌的玩家
+     */
     @Override
     public void play(Player player) {
         // 出牌時的效果，可能包括戰吼效果等
@@ -132,6 +136,21 @@ public class CharacterCard extends Card {
         // 處理開胃效果（類似戰吼）
         if (getDescription().contains("【開胃】")) {
             effectProcessor.processAppetizerEffect(this, player, null);
+        }
+    }
+    
+    /**
+     * 當卡牌被打出時執行（帶對手參數，用於處理需要敵方目標的效果）
+     * @param player 打出此卡牌的玩家
+     * @param opponent 對手玩家
+     */
+    public void play(Player player, Player opponent) {
+        // 出牌時的效果，可能包括戰吼效果等
+        System.out.println(player.getName() + " 派出了 " + name + " 角色! (" + getFaction().getLocalizedName() + ")");
+        
+        // 處理開胃效果（類似戰吼）
+        if (getDescription().contains("【開胃】")) {
+            effectProcessor.processAppetizerEffect(this, player, opponent);
         }
     }
     

@@ -4,6 +4,7 @@ import com.example.game.player.Player;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.List;
 
 /**
  * 卡牌效果實現類
@@ -22,9 +23,268 @@ public class CardEffectImpl implements CardEffect {
     @Override
     public boolean processAppetizerEffect(Card card, Player player, Object target) {
         // 根據卡牌類型和描述執行開胃效果
-        System.out.println("處理【開胃】效果: " + card.getName());
-        // 在實際遊戲邏輯中實現具體效果
+        String description = card.getDescription();
+        String cardName = card.getName();
+        System.out.println("處理【開胃】效果: " + cardName);
+        
+        if (!description.contains("【開胃】")) {
+            return false; // 卡牌沒有開胃效果
+        }
+        
+        // 使用正則表達式提取開胃效果描述
+        Pattern pattern = Pattern.compile("【開胃】：([^。]+)[。]?");
+        Matcher matcher = pattern.matcher(description);
+        
+        if (matcher.find()) {
+            String effectDescription = matcher.group(1);
+            System.out.println("  開胃效果描述: " + effectDescription);
+            
+            // 根據效果描述執行相應操作
+            if (card instanceof CharacterCard) {
+                CharacterCard character = (CharacterCard) card;
+                
+                // 處理獲得屬性加成的效果
+                if (effectDescription.contains("獲得+")) {
+                    processStatBoost(character, effectDescription);
+                }
+                
+                // 處理抽牌效果
+                if (effectDescription.contains("抽一張牌") || effectDescription.contains("抽牌")) {
+                    System.out.println("  觸發抽牌效果");
+                    player.drawCard();
+                } else if (effectDescription.matches(".*抽([0-9]+)張牌.*")) {
+                    Pattern drawPattern = Pattern.compile("抽([0-9]+)張牌");
+                    Matcher drawMatcher = drawPattern.matcher(effectDescription);
+                    if (drawMatcher.find()) {
+                        int cardsToDraw = Integer.parseInt(drawMatcher.group(1));
+                        System.out.println("  觸發抽" + cardsToDraw + "張牌效果");
+                        for (int i = 0; i < cardsToDraw; i++) {
+                            player.drawCard();
+                        }
+                    }
+                }
+                
+                // 處理生命值恢復效果
+                if (effectDescription.contains("恢復") && effectDescription.contains("生命值")) {
+                    processHealingEffect(character, player, effectDescription);
+                }
+                
+                // 處理對敵方角色造成傷害的效果
+                if (effectDescription.contains("造成") && effectDescription.contains("點傷害")) {
+                    // 需要敵方玩家信息，此處暫時無法處理
+                    // 在實際遊戲中，需要從上下文中獲取敵方玩家
+                    Player opponent = null;
+                    if (target instanceof Player) {
+                        opponent = (Player) target;
+                    } else {
+                        System.out.println("  無法確定敵方玩家，無法處理傷害效果");
+                        return true;
+                    }
+                    processDamageEffect(character, player, opponent, effectDescription);
+                }
+                
+                // 處理獲得特殊關鍵字效果
+                if (effectDescription.contains("獲得【")) {
+                    processKeywordGainEffect(character, effectDescription);
+                }
+                
+                // 處理搜索牌庫的效果
+                if (effectDescription.contains("從牌庫")) {
+                    processSearchDeckEffect(player, effectDescription);
+                }
+            }
+            
+            return true;
+        }
+        
+        // 無法解析具體效果，但仍然返回成功
+        System.out.println("  無法解析具體開胃效果，請查看卡牌描述");
         return true;
+    }
+    
+    /**
+     * 處理獲得屬性加成的效果
+     */
+    private void processStatBoost(CharacterCard character, String effectDescription) {
+        Pattern statPattern = Pattern.compile("獲得\\+(\\d+)/(\\d+)");
+        Matcher statMatcher = statPattern.matcher(effectDescription);
+        
+        if (statMatcher.find()) {
+            int attackBoost = Integer.parseInt(statMatcher.group(1));
+            int healthBoost = Integer.parseInt(statMatcher.group(2));
+            
+            System.out.println("  觸發屬性加成效果: +" + attackBoost + "/+" + healthBoost);
+            character.increaseAttack(attackBoost);
+            character.increaseDefense(healthBoost);
+            
+            return;
+        }
+        
+        // 檢查單獨的攻擊力加成
+        Pattern attackPattern = Pattern.compile("獲得\\+(\\d+)攻擊力");
+        Matcher attackMatcher = attackPattern.matcher(effectDescription);
+        if (attackMatcher.find()) {
+            int attackBoost = Integer.parseInt(attackMatcher.group(1));
+            System.out.println("  觸發攻擊力加成效果: +" + attackBoost);
+            character.increaseAttack(attackBoost);
+            return;
+        }
+        
+        // 檢查單獨的生命值/防禦力加成
+        Pattern healthPattern = Pattern.compile("獲得\\+(\\d+)/\\+(\\d+)");
+        Matcher healthMatcher = healthPattern.matcher(effectDescription);
+        if (healthMatcher.find()) {
+            int attackBoost = Integer.parseInt(healthMatcher.group(1));
+            int healthBoost = Integer.parseInt(healthMatcher.group(2));
+            System.out.println("  觸發屬性加成效果: +" + attackBoost + "/+" + healthBoost);
+            character.increaseAttack(attackBoost);
+            character.increaseDefense(healthBoost);
+        }
+    }
+    
+    /**
+     * 處理生命值恢復效果
+     */
+    private void processHealingEffect(CharacterCard sourceCard, Player player, String effectDescription) {
+        // 為自身恢復生命值
+        if (effectDescription.contains("恢復") && !effectDescription.contains("為") && !effectDescription.contains("所有")) {
+            Pattern healPattern = Pattern.compile("恢復(\\d+)點生命值");
+            Matcher healMatcher = healPattern.matcher(effectDescription);
+            if (healMatcher.find()) {
+                int healAmount = Integer.parseInt(healMatcher.group(1));
+                System.out.println("  觸發恢復生命值效果: +" + healAmount);
+                sourceCard.heal(healAmount);
+            }
+            return;
+        }
+        
+        // 為一個友方角色恢復生命值
+        if (effectDescription.contains("為一個友方角色恢復")) {
+            Pattern healPattern = Pattern.compile("為一個友方角色恢復(\\d+)點生命值");
+            Matcher healMatcher = healPattern.matcher(effectDescription);
+            if (healMatcher.find()) {
+                int healAmount = Integer.parseInt(healMatcher.group(1));
+                System.out.println("  觸發為友方角色恢復生命值效果: +" + healAmount);
+                
+                // 使用TargetSelector選擇目標
+                CharacterCard target = TargetSelector.selectFriendlyCharacter(
+                        player, 
+                        sourceCard, 
+                        "選擇一個友方角色恢復" + healAmount + "點生命值"
+                );
+                
+                // 應用恢復效果
+                if (target != null) {
+                    target.heal(healAmount);
+                    System.out.println("  " + target.getName() + " 恢復了 " + healAmount + " 點生命值");
+                } else {
+                    System.out.println("  取消了治療效果");
+                }
+            }
+        }
+        
+        // 為所有友方角色恢復生命值
+        if (effectDescription.contains("為所有友方角色恢復")) {
+            Pattern healPattern = Pattern.compile("為所有友方角色恢復(\\d+)點生命值");
+            Matcher healMatcher = healPattern.matcher(effectDescription);
+            if (healMatcher.find()) {
+                int healAmount = Integer.parseInt(healMatcher.group(1));
+                System.out.println("  觸發為所有友方角色恢復生命值效果: +" + healAmount);
+                
+                // 選擇所有友方角色
+                List<CharacterCard> targets = TargetSelector.selectAllFriendlyCharacters(player);
+                
+                // 應用恢復效果
+                for (CharacterCard target : targets) {
+                    target.heal(healAmount);
+                    System.out.println("  " + target.getName() + " 恢復了 " + healAmount + " 點生命值");
+                }
+            }
+        }
+    }
+    
+    /**
+     * 處理對敵方角色造成傷害的效果
+     */
+    private void processDamageEffect(CharacterCard sourceCard, Player player, Player opponent, String effectDescription) {
+        // 對一個敵方角色造成傷害
+        if (effectDescription.contains("對一個敵方角色造成")) {
+            Pattern damagePattern = Pattern.compile("對一個敵方角色造成(\\d+)點傷害");
+            Matcher damageMatcher = damagePattern.matcher(effectDescription);
+            if (damageMatcher.find()) {
+                int damageAmount = Integer.parseInt(damageMatcher.group(1));
+                System.out.println("  觸發對敵方角色造成傷害效果: " + damageAmount + "點");
+                
+                // 使用TargetSelector選擇目標
+                CharacterCard target = TargetSelector.selectEnemyCharacter(
+                        player, 
+                        opponent, 
+                        "選擇一個敵方角色造成" + damageAmount + "點傷害"
+                );
+                
+                // 應用傷害效果
+                if (target != null) {
+                    boolean survived = target.takeDamage(damageAmount);
+                    System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
+                            " 點傷害" + (survived ? "" : "，已被摧毀！"));
+                } else {
+                    System.out.println("  取消了傷害效果");
+                }
+            }
+        }
+        
+        // 對所有敵方角色造成傷害
+        if (effectDescription.contains("對所有敵方角色造成")) {
+            Pattern damagePattern = Pattern.compile("對所有敵方角色造成(\\d+)點傷害");
+            Matcher damageMatcher = damagePattern.matcher(effectDescription);
+            if (damageMatcher.find()) {
+                int damageAmount = Integer.parseInt(damageMatcher.group(1));
+                System.out.println("  觸發對所有敵方角色造成傷害效果: " + damageAmount + "點");
+                
+                // 選擇所有敵方角色
+                List<CharacterCard> targets = TargetSelector.selectAllEnemyCharacters(opponent);
+                
+                // 應用傷害效果
+                for (CharacterCard target : targets) {
+                    boolean survived = target.takeDamage(damageAmount);
+                    System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
+                            " 點傷害" + (survived ? "" : "，已被摧毀！"));
+                }
+            }
+        }
+    }
+    
+    /**
+     * 處理獲得特殊關鍵字效果
+     */
+    private void processKeywordGainEffect(CharacterCard character, String effectDescription) {
+        // 獲得糖霜效果
+        if (effectDescription.contains("獲得【糖霜】")) {
+            System.out.println("  觸發獲得【糖霜】效果");
+            character.addFrostedEffect();
+        }
+        
+        // 獲得其他關鍵字效果
+        Pattern keywordPattern = Pattern.compile("獲得【([^】]+)】");
+        Matcher keywordMatcher = keywordPattern.matcher(effectDescription);
+        while (keywordMatcher.find()) {
+            String keyword = keywordMatcher.group(1);
+            if (!keyword.equals("糖霜")) { // 已經處理過糖霜效果
+                System.out.println("  觸發獲得【" + keyword + "】效果");
+                // 根據不同關鍵字執行相應操作
+                // 這裡需要實現其他關鍵字的處理邏輯
+            }
+        }
+    }
+    
+    /**
+     * 處理搜索牌庫的效果
+     */
+    private void processSearchDeckEffect(Player player, String effectDescription) {
+        if (effectDescription.contains("從牌庫中抽取")) {
+            System.out.println("  觸發從牌庫搜索效果");
+            System.out.println("  (需要實現具體的牌庫搜索邏輯)");
+        }
     }
     
     @Override

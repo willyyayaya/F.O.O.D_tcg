@@ -133,9 +133,10 @@ public class Player {
      * 打出手牌
      * @param handIndex 手牌索引
      * @param areaType 戰場區域 (1=抽牌區, 2=法力區, 3=出牌區)
+     * @param opponent 對手玩家，用於處理需要選擇敵方目標的效果
      * @return 成功出牌返回true，否則返回false
      */
-    public boolean playCard(int handIndex, int areaType) {
+    public boolean playCard(int handIndex, int areaType, Player opponent) {
         if (handIndex < 0 || handIndex >= hand.size()) {
             System.out.println("無效的手牌索引!");
             return false;
@@ -180,7 +181,8 @@ public class Player {
                 CharacterCard characterCard = (CharacterCard) card;
                 if (battlefieldZone.addCharacter(characterCard, areaType)) {
                     System.out.println(name + " 派出角色: " + characterCard.getName() + " 到" + areaName);
-                    characterCard.play(this);
+                    // 使用帶對手參數的play方法
+                    characterCard.play(this, opponent);
                 } else {
                     System.out.println(areaName + "角色位置已滿!");
                     return false;
@@ -192,7 +194,7 @@ public class Player {
                 if (battlefieldZone.addFieldCard(fieldCard, areaType)) {
                     System.out.println(name + " 啟用場地: " + fieldCard.getName() + " 到" + areaName);
                     fieldCard.play(this);
-            } else {
+                } else {
                     System.out.println(areaName + "場地位置已滿!");
                     return false;
                 }
@@ -201,7 +203,7 @@ public class Player {
                 // 任務卡添加到資源區
                 System.out.println(name + " 接受任務: " + card.getName());
                 resourceZone.addQuestCard(card);
-            card.play(this);
+                card.play(this);
                 break;
         }
         
@@ -211,10 +213,27 @@ public class Player {
         return true;
     }
     
-    // 為了保持向後兼容，提供舊的playCard方法，預設放在出牌區
+    /**
+     * 打出手牌 (不需要對手參數的簡化版本)
+     * @param handIndex 手牌索引
+     * @param areaType 戰場區域 (1=抽牌區, 2=法力區, 3=出牌區)
+     * @return 成功出牌返回true，否則返回false
+     */
+    public boolean playCard(int handIndex, int areaType) {
+        // 調用帶對手參數的版本，但傳入null作為對手
+        return playCard(handIndex, areaType, null);
+    }
+    
+    /**
+     * 為了保持向後兼容，提供舊的playCard方法，預設放在出牌區
+     * @param handIndex 手牌索引
+     * @param wallType 城牆類型 (已不再使用)
+     * @param oldVersion 僅為標示是舊版API
+     * @return 成功出牌返回true，否則返回false
+     */
     public boolean playCard(int handIndex, int wallType, boolean oldVersion) {
         // 注意：wallType 參數已不再使用，僅為保持兼容而保留
-        return playCard(handIndex, BattlefieldZone.PLAY_AREA);
+        return playCard(handIndex, BattlefieldZone.PLAY_AREA, null);
     }
     
     /**
