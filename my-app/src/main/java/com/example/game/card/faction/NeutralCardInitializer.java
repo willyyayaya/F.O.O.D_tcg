@@ -27,7 +27,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
     ) {
         // 中立卡牌
         CharacterCard waterServant = new CharacterCard(
-            "水之侍者", 2, "【開胃】：若你的牌組中有至少兩個不同陣營的卡牌，獲得+1/+1。【酥脆】：減免1點傷害。", 
+            "水之侍者", 2, "【開胃】：若你的牌組中有至少兩個不同陣營的卡牌，獲得+1/+1。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 2, 2, 3, true, Faction.NEUTRAL);
         allCards.put(waterServant.getName(), waterServant);
         allCharacters.add(waterServant);
@@ -124,8 +124,8 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(universalIngredient);
         
         CharacterCard cuisineWanderer = new CharacterCard(
-            "料理流浪者", 3, "【開胃】：選擇一個陣營，獲得該陣營的一個隨機關鍵字效果。【酥脆】：減免1點傷害。", 
-            Rarity.COMMON, 3, 3, 3, true, Faction.NEUTRAL);
+            "料理流浪者", 3, "【開胃】：選擇一個陣營，獲得該陣營的一個隨機關鍵字效果。【酥脆(1)】：減免1點傷害。", 
+            Rarity.RARE, 3, 3, 3, true, Faction.NEUTRAL);
         allCards.put(cuisineWanderer.getName(), cuisineWanderer);
         allCharacters.add(cuisineWanderer);
         

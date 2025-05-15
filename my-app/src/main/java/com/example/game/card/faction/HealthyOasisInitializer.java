@@ -40,7 +40,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
     private void initializeCharacterCards(Map<String, Card> allCards, List<CharacterCard> allCharacters) {
         // 基礎角色卡
         CharacterCard avocadoGuardian = new CharacterCard(
-            "酪梨守衛", 4, "【滋補】：回合結束時恢復全滿血量。【酥脆】：減免2點傷害。", 
+            "酪梨守衛", 4, "【滋補】：回合結束時恢復全滿血量。【酥脆(2)】：減免2點傷害。", 
             Rarity.RARE, 3, 5, 6, false, Faction.HEALTHY_OASIS);
         allCards.put(avocadoGuardian.getName(), avocadoGuardian);
         allCharacters.add(avocadoGuardian);
@@ -64,7 +64,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allCharacters.add(saladMaster);
         
         CharacterCard kaleDefender = new CharacterCard(
-            "羽衣甘藍防衛者", 3, "【酥脆】：減免3點傷害。【清淡】：滿血時無法攻擊，但為相鄰友方角色提供【酥脆】效果。", 
+            "羽衣甘藍防衛者", 3, "【酥脆(3)】：減免3點傷害。【清淡】：滿血時無法攻擊，但為相鄰友方角色提供【酥脆(1)】效果。", 
             Rarity.RARE, 1, 6, 5, false, Faction.HEALTHY_OASIS);
         allCards.put(kaleDefender.getName(), kaleDefender);
         allCharacters.add(kaleDefender);
@@ -77,7 +77,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         
         // 傳說角色卡
         CharacterCard holisticHealer = new CharacterCard(
-            "全息療愈師", 8, "【開胃】：為所有友方角色恢復全部生命值。【滋補】：每回合結束時，所有友方角色恢復2點生命值。【酥脆】：減免所有傷害的50%。", 
+            "全息療愈師", 8, "【開胃】：為所有友方角色恢復全部生命值。【滋補】：每回合結束時，所有友方角色恢復2點生命值。【酥脆(3)】：減免所有傷害的50%。", 
             Rarity.LEGENDARY, 4, 6, 8, false, Faction.HEALTHY_OASIS);
         allCards.put(holisticHealer.getName(), holisticHealer);
         allCharacters.add(holisticHealer);
@@ -114,7 +114,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allCharacters.add(tofuMaster);
         
         CharacterCard nutHealers = new CharacterCard(
-            "堅果治癒師", 2, "【開胃】：為一個友方角色恢復2點生命值。【酥脆】：減免1點傷害。", 
+            "堅果治癒師", 2, "【開胃】：為一個友方角色恢復2點生命值。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 2, 3, false, Faction.HEALTHY_OASIS);
         allCards.put(nutHealers.getName(), nutHealers);
         allCharacters.add(nutHealers);
@@ -138,7 +138,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allCharacters.add(vegetableDruid);
         
         CharacterCard coconutGuard = new CharacterCard(
-            "椰子衛兵", 4, "【擺盤】：敵人必須優先攻擊這個單位。【酥脆】：減免3點傷害。",
+            "椰子衛兵", 4, "【擺盤】：敵人必須優先攻擊這個單位。【酥脆(3)】：減免3點傷害。",
             Rarity.COMMON, 2, 5, 5, false, Faction.HEALTHY_OASIS);
         allCards.put(coconutGuard.getName(), coconutGuard);
         allCharacters.add(coconutGuard);
@@ -156,7 +156,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allCharacters.add(organicShaman);
         
         CharacterCard wholegrainGuardian = new CharacterCard(
-            "全穀守護者", 6, "【酥脆】：減免2點傷害。【清淡】：滿血時，友方城牆耐久度+2。", 
+            "全穀守護者", 6, "【酥脆(2)】：減免2點傷害。【清淡】：滿血時，友方城牆耐久度+2。", 
             Rarity.EPIC, 4, 4, 7, false, Faction.HEALTHY_OASIS);
         allCards.put(wholegrainGuardian.getName(), wholegrainGuardian);
         allCharacters.add(wholegrainGuardian);
@@ -171,7 +171,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allSpells.add(organicHealing);
 
         SpellCard naturalBarrier = new SpellCard(
-            "自然屏障", 4, "使所有友方角色獲得【酥脆】效果，減免2點傷害，持續2回合。", 
+            "自然屏障", 4, "使所有友方角色獲得【酥脆(2)】效果，持續2回合。", 
             Rarity.RARE, SpellType.BUFF, Faction.HEALTHY_OASIS);
         allCards.put(naturalBarrier.getName(), naturalBarrier);
         allSpells.add(naturalBarrier);
@@ -214,13 +214,13 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allSpells.add(revitalizingDew);
         
         SpellCard vegetablePlate = new SpellCard(
-            "蔬菜拼盤", 4, "使所有友方角色獲得+0/+2和【酥脆】效果，減免1點傷害。", 
+            "蔬菜拼盤", 4, "使所有友方角色獲得+0/+2和【酥脆(1)】效果。", 
             Rarity.COMMON, SpellType.BUFF, Faction.HEALTHY_OASIS);
         allCards.put(vegetablePlate.getName(), vegetablePlate);
         allSpells.add(vegetablePlate);
         
         SpellCard naturalDefense = new SpellCard(
-            "自然防禦", 2, "使一個友方角色獲得【酥脆】效果，減免所有傷害的50%，持續一回合。", 
+            "自然防禦", 2, "使一個友方角色獲得【酥脆(2)】效果，持續一回合。", 
             Rarity.RARE, SpellType.BUFF, Faction.HEALTHY_OASIS);
         allCards.put(naturalDefense.getName(), naturalDefense);
         allSpells.add(naturalDefense);
@@ -280,7 +280,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allSpells.add(renewalCycle);
         
         SpellCard vitalityInfusion = new SpellCard(
-            "活力灌注", 4, "使一個友方角色獲得【滋補】和【酥脆】效果，並抽一張牌。", 
+            "活力灌注", 4, "使一個友方角色獲得【滋補】和【酥脆(2)】效果，並抽一張牌。", 
             Rarity.EPIC, SpellType.BUFF, Faction.HEALTHY_OASIS);
         allCards.put(vitalityInfusion.getName(), vitalityInfusion);
         allSpells.add(vitalityInfusion);
@@ -308,7 +308,7 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
         allFieldCards.add(vegetableGarden);
         
         FieldCard naturalPresservation = FieldCard.createTechniqueField(
-            "自然保存", 2, "使一個友方角色獲得【酥脆】效果：受到傷害時，第一次傷害減半(向下取整)。", 
+            "自然保存", 2, "使一個友方角色獲得【酥脆(1)】效果：受到傷害時，第一次傷害減半(向下取整)。", 
             Rarity.COMMON, FieldEffectType.SPECIAL, 2, 3, Faction.HEALTHY_OASIS);
         allCards.put(naturalPresservation.getName(), naturalPresservation);
         allFieldCards.add(naturalPresservation);

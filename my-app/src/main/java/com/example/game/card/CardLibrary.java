@@ -252,16 +252,16 @@ public class CardLibrary {
             System.out.println("通用關鍵字:");
             System.out.println("1. 開胃 (Appetizer) - 進場時發動效果");
             System.out.println("2. 回味 (Aftertaste) - 死亡後觸發效果");
-            System.out.println("3. 拼盤 (Platter) - 符合條件時可免費打出融合卡");
+            System.out.println("3. 拼盤 (Platter) - 符合條件的卡片都在場時，可免費打出融合卡");
             System.out.println("4. 彈牙 (Chewy Bite) - 每回合可攻擊 2 次");
-            System.out.println("5. 酥脆 (Crispy) - 護甲，減免傷害");
+            System.out.println("5. 酥脆 (Crispy) - 護甲值，減免相應點數的傷害");
             System.out.println("6. 擺盤 (Garnished) - 敵人必須優先攻擊此單位");
             
             System.out.println("\n陣營特定關鍵字:");
             System.out.println("7. 現炸 (Fresh-Fried) - 速食工會：進場當回合即可攻擊");
-            System.out.println("8. 油膩 (Glossy) - 速食工會：每回合攻擊力減少 1");
+            System.out.println("8. 油膩 (Glossy) - 速食工會：每回合攻擊力減少 1（最低降至 1）");
             System.out.println("9. 糖霜 (Frosted) - 甜點聯盟：抵擋一次攻擊");
-            System.out.println("10. 糖爆 (Sugar Crash) - 甜點聯盟：有特殊攻擊效果，下回合無法攻擊");
+            System.out.println("10. 糖爆 (Sugar Crash) - 甜點聯盟：可選糖爆的行動代替攻擊，但下回合無法攻擊或使用技能");
             System.out.println("11. 滋補 (Nourishing) - 健康綠洲：回合結束時恢復全滿血量");
             System.out.println("12. 清淡 (Bland) - 健康綠洲：滿血時無法攻擊");
             System.out.println("13. 爆炒 (Overheat) - 火辣王國：直接消滅一個單位");
@@ -373,37 +373,58 @@ public class CardLibrary {
         
         // 檢查並顯示各種關鍵字
         if (description.contains("【開胃】")) {
-            System.out.println("【開胃】(Appetizer): 進場時發動效果");
+            System.out.println("【開胃】(Appetizer): 進場時發動效果（類似戰吼）");
         }
         if (description.contains("【回味】")) {
-            System.out.println("【回味】(Aftertaste): 死亡後觸發效果");
+            System.out.println("【回味】(Aftertaste): 死亡後觸發效果（類似死亡之聲）");
         }
         if (description.contains("【拼盤】")) {
-            System.out.println("【拼盤】(Platter): 符合條件時可免費打出融合卡");
+            System.out.println("【拼盤】(Platter): 符合條件的卡片都在場時，可免費打出融合卡（但還是算出一張牌）");
         }
         if (description.contains("【彈牙】")) {
-            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次");
+            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次（類似雙重攻擊）");
         }
         if (description.contains("【酥脆】")) {
-            System.out.println("【酥脆】(Crispy): 護甲，減免傷害");
+            // 從卡片描述中提取護甲值
+            String armorValueStr = "";
+            int armorValue = 1; // 預設護甲值
+            if (description.matches(".*【酥脆】\\s*\\((\\d+)\\).*")) {
+                armorValueStr = description.replaceAll(".*【酥脆】\\s*\\((\\d+)\\).*", "$1");
+                try {
+                    armorValue = Integer.parseInt(armorValueStr);
+                } catch (NumberFormatException e) {
+                    // 解析失敗時使用預設值
+                }
+            }
+            System.out.println("【酥脆】(Crispy): 護甲值" + armorValue + "，減免" + armorValue + "點傷害");
         }
         if (description.contains("【擺盤】")) {
-            System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊此單位");
+            System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊這個單位（類似嘲諷）");
         }
         if (description.contains("【現炸】")) {
-            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊");
+            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊（類似衝鋒）");
         }
         if (description.contains("【油膩】")) {
-            System.out.println("【油膩】(Glossy): 每回合攻擊力減少 1");
+            System.out.println("【油膩】(Glossy): 每回合攻擊力減少 1（最低降至 1）");
         }
         if (description.contains("【糖霜】")) {
-            System.out.println("【糖霜】(Frosted): 抵擋一次攻擊");
+            System.out.println("【糖霜】(Frosted): 抵擋一次攻擊（類似聖盾）");
         }
         if (description.contains("【糖爆】")) {
-            System.out.println("【糖爆】(Sugar Crash): 有特殊攻擊效果，下回合無法攻擊");
+            String damageStr = "";
+            int damage = 1; // 預設傷害值
+            if (description.matches(".*【糖爆】\\s*\\((\\d+)\\).*")) {
+                damageStr = description.replaceAll(".*【糖爆】\\s*\\((\\d+)\\).*", "$1");
+                try {
+                    damage = Integer.parseInt(damageStr);
+                } catch (NumberFormatException e) {
+                    // 解析失敗時使用預設值
+                }
+            }
+            System.out.println("【糖爆】(Sugar Crash): 可選糖爆的行動代替攻擊造成" + damage + "點傷害，但下回合無法攻擊或使用技能");
         }
         if (description.contains("【滋補】")) {
-            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量");
+            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量（類似再生）");
         }
         if (description.contains("【清淡】")) {
             System.out.println("【清淡】(Bland): 滿血時無法攻擊");

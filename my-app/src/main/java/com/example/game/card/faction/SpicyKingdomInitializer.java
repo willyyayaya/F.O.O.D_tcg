@@ -64,8 +64,8 @@ public class SpicyKingdomInitializer implements FactionCardInitializer {
         allCharacters.add(sichuanChef);
 
         CharacterCard curryWarrior = new CharacterCard(
-            "咖哩武士", 3, "【彈牙】：每回合可攻擊 2 次。【酥脆】：減免1點傷害。", 
-            Rarity.COMMON, 2, 3, 3, true, Faction.SPICY_KINGDOM);
+            "咖哩武士", 3, "【彈牙】：每回合可攻擊 2 次。【酥脆(1)】：減免1點傷害。", 
+            Rarity.COMMON, 4, 1, 3, true, Faction.SPICY_KINGDOM);
         allCards.put(curryWarrior.getName(), curryWarrior);
         allCharacters.add(curryWarrior);
         
@@ -89,11 +89,11 @@ public class SpicyKingdomInitializer implements FactionCardInitializer {
         allCards.put(wasabiNinja.getName(), wasabiNinja);
         allCharacters.add(wasabiNinja);
         
-        CharacterCard sriracharGuard = new CharacterCard(
-            "是拉差守衛", 4, "【嗆辣】：每回合結束時，對對手造成1點傷害。【酥脆】：減免1點傷害。", 
-            Rarity.COMMON, 3, 4, 5, false, Faction.SPICY_KINGDOM);
-        allCards.put(sriracharGuard.getName(), sriracharGuard);
-        allCharacters.add(sriracharGuard);
+        CharacterCard srirachaGuard = new CharacterCard(
+            "是拉差守衛", 4, "【嗆辣】：每回合結束時，對對手造成1點傷害。【酥脆(1)】：減免1點傷害。", 
+            Rarity.COMMON, 2, 2, 4, true, Faction.SPICY_KINGDOM);
+        allCards.put(srirachaGuard.getName(), srirachaGuard);
+        allCharacters.add(srirachaGuard);
         
         CharacterCard tabascoBerserk = new CharacterCard(
             "塔巴斯科狂戰士", 5, "【開胃】：自身攻擊力+2。【嗆辣】：每次攻擊後，自身生命值-1，攻擊力+1。", 

@@ -114,7 +114,7 @@ public class DessertUnionInitializer implements FactionCardInitializer {
         allCharacters.add(macronMaiden);
         
         CharacterCard donutDuelist = new CharacterCard(
-            "甜甜圈決鬥者", 3, "【開胃】：抽一張牌。【環型】：當受到傷害時，有50%機率只受到1點傷害。", 
+            "甜甜圈決鬥者", 3, "【開胃】：抽一張牌。【環型】：當受到傷害時，有50%機率只受到1點傷害。【糖爆(2)】：可選糖爆的行動代替攻擊，但下回合無法攻擊。", 
             Rarity.COMMON, 3, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(donutDuelist.getName(), donutDuelist);
         allCharacters.add(donutDuelist);
@@ -126,7 +126,7 @@ public class DessertUnionInitializer implements FactionCardInitializer {
         allCharacters.add(waffleMage);
         
         CharacterCard sugarRushBerserker = new CharacterCard(
-            "糖分狂戰士", 4, "【開胃】：獲得+2攻擊力。【虛弱】：每回合結束時，攻擊力-1。【甜膩】：使用甜點聯盟卡時，攻擊力+1。", 
+            "糖分狂戰士", 4, "【開胃】：獲得+2攻擊力。【虛弱】：每回合結束時，攻擊力-1。【甜膩】：使用甜點聯盟卡時，攻擊力+1。【糖爆(3)】：可選糖爆的行動代替攻擊，但下回合無法攻擊。", 
             Rarity.RARE, 4, 1, 5, true, Faction.DESSERT_UNION);
         allCards.put(sugarRushBerserker.getName(), sugarRushBerserker);
         allCharacters.add(sugarRushBerserker);
@@ -177,7 +177,7 @@ public class DessertUnionInitializer implements FactionCardInitializer {
     private void initializeSpellCards(Map<String, Card> allCards, List<SpellCard> allSpells) {
         // 基礎法術卡
         SpellCard sugarRush = new SpellCard(
-            "糖分衝擊", 2, "使一個友方角色獲得+3攻擊力，持續1回合。", 
+            "糖分衝擊", 2, "使一個友方角色獲得+3攻擊力，持續1回合。如果該角色有【糖爆】效果，還獲得+1/+1。", 
             Rarity.COMMON, SpellType.BUFF, Faction.DESSERT_UNION);
         allCards.put(sugarRush.getName(), sugarRush);
         allSpells.add(sugarRush);
@@ -296,6 +296,12 @@ public class DessertUnionInitializer implements FactionCardInitializer {
             Rarity.EPIC, SpellType.BUFF, Faction.DESSERT_UNION);
         allCards.put(layeredCake.getName(), layeredCake);
         allSpells.add(layeredCake);
+        
+        SpellCard sweetBomb = new SpellCard(
+            "甜蜜炸彈", 3, "對一個敵方角色造成3點傷害，並使其獲得【糖爆(1)】效果。", 
+            Rarity.RARE, SpellType.DAMAGE, Faction.DESSERT_UNION);
+        allCards.put(sweetBomb.getName(), sweetBomb);
+        allSpells.add(sweetBomb);
     }
     
     private void initializeFieldCards(Map<String, Card> allCards, List<FieldCard> allFieldCards) {
@@ -376,8 +382,8 @@ public class DessertUnionInitializer implements FactionCardInitializer {
         addToCollection(iceCreamFortress, allCards, allCastles);
         
         CastleCard chocolateTower = new CastleCard(
-            "巧克力塔樓", 0, "【城堡效果】：所有友方角色獲得+2/+0和【漸融】效果。每回合結束時抽一張牌。", 
-            Rarity.RARE, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(2));
+            "巧克力高塔", 0, "【城堡效果】：所有友方【糖爆】效果傷害+1，並增加10%觸發機率。", 
+            Rarity.EPIC, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(3));
         addToCollection(chocolateTower, allCards, allCastles);
         
         CastleCard candyCastle = new CastleCard(
