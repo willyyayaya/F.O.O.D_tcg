@@ -1,8 +1,9 @@
 package com.example.game.card;
 
-import com.example.game.player.Player;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.example.game.player.Player;
 
 /**
  * 角色卡 - 代表F.O.O.D TCG中的食物擬人角色
@@ -30,6 +31,10 @@ public class CharacterCard extends Card {
     private boolean hasFrostedEffect = false;   // 是否有糖霜效果
     private boolean sugarCrashUsed = false;     // 是否使用過糖爆
     private boolean cannotAttackNextTurn = false; // 下回合無法攻擊的標記（糖爆效果）
+    
+    // 彈牙效果相關
+    private boolean attackedOnce = false;       // 是否已經攻擊過一次
+    private boolean usedChewBiteEffect = false; // 是否已使用彈牙效果
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
                         int attack, int defense, int maxHealth, boolean isOffensive) {
@@ -190,6 +195,9 @@ public class CharacterCard extends Card {
         // 設置為已攻擊狀態
         this.canAttack = false;
         
+        // 標記已經攻擊過一次（用於彈牙效果）
+        this.attackedOnce = true;
+        
         System.out.println(name + " 攻擊了 " + target.getName() + "，造成 " + damage + " 點傷害!");
         
         // 檢查爆炒效果（有機率直接消滅目標）
@@ -285,6 +293,10 @@ public class CharacterCard extends Card {
             // 新回合開始時，可以再次攻擊
             this.canAttack = true;
         }
+        
+        // 重置彈牙效果狀態
+        this.attackedOnce = false;
+        this.usedChewBiteEffect = false;
         
         // 處理油膩效果（每回合攻擊力減少）
         int attackReduction = effectProcessor.processGlossyEffect(this);
@@ -413,5 +425,32 @@ public class CharacterCard extends Card {
      */
     public Player getOwner() {
         return owner;
+    }
+    
+    /**
+     * 檢查是否具有彈牙效果，並在攻擊後處理
+     */
+    public boolean checkChewBiteEffect() {
+        if (getDescription().contains("【彈牙】") && attackedOnce && !usedChewBiteEffect) {
+            return effectProcessor.processChewBiteEffect(this, owner);
+        }
+        return false;
+    }
+    
+    // 彈牙效果相關的getter和setter
+    public boolean hasAttackedOnce() {
+        return attackedOnce;
+    }
+    
+    public boolean hasUsedChewBiteEffect() {
+        return usedChewBiteEffect;
+    }
+    
+    public void setUsedChewBiteEffect(boolean usedChewBiteEffect) {
+        this.usedChewBiteEffect = usedChewBiteEffect;
+    }
+    
+    public void setCanAttack(boolean canAttack) {
+        this.canAttack = canAttack;
     }
 }

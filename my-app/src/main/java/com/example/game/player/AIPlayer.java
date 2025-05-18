@@ -462,24 +462,55 @@ public class AIPlayer extends Player {
         
         // 困難模式：優先攻擊較弱的城牆
         if (difficulty == 3) {
-            // 需要獲取對手城牆信息 (假設可以通過某種方式獲取)
-            int weakestWall = findWeakestWall();
-            if (weakestWall != -1) {
-                return new int[] {attackerIndex, 2, weakestWall};
+            // 獲取對手城牆生命值信息
+            Player opponent = getOpponent();
+            if (opponent != null) {
+                int drawWallHealth = opponent.getCastleZone().getDrawWall().getHealth();
+                int manaWallHealth = opponent.getCastleZone().getManaWall().getHealth();
+                int playWallHealth = opponent.getCastleZone().getPlayWall().getHealth();
+                
+                // 找出生命值最低的城牆
+                int minHealth = Math.min(Math.min(drawWallHealth, manaWallHealth), playWallHealth);
+                int targetWallType = 1; // 預設為抽牌區
+                
+                if (minHealth == manaWallHealth) {
+                    targetWallType = 2;
+                } else if (minHealth == playWallHealth) {
+                    targetWallType = 3;
+                }
+                
+                // 有50%的機率攻擊最弱的城牆，50%的機率攻擊角色
+                if (random.nextDouble() < 0.5) {
+                    return new int[] {attackerIndex, 2, targetWallType};
+                }
             }
         }
         
-        // 如果不是困難模式或沒找到明顯較弱的城牆，就攻擊出牌區
-        return new int[] {attackerIndex, 2, 3}; // 攻擊出牌區
+        // 如果沒有特殊策略，預設攻擊敵方第一個角色
+        return new int[] {attackerIndex, 1, 0};
     }
     
     /**
-     * 找出對手最弱的城牆
+     * 處理AI角色的彈牙效果，決定是否使用第二次攻擊
+     * @param attacker 具有彈牙效果的攻擊者
+     * @return 是否應該使用彈牙效果
      */
-    private int findWeakestWall() {
-        // 這裡應該從遊戲引擎獲取對手城牆信息
-        // 簡化實現：返回隨機城牆
-        return random.nextInt(3) + 1;
+    public boolean shouldUseChewBiteEffect(CharacterCard attacker) {
+        // 檢查是否有彈牙效果可用
+        if (attacker.getDescription().contains("【彈牙】") && attacker.hasAttackedOnce() && !attacker.hasUsedChewBiteEffect()) {
+            // 根據AI難度決定使用機率
+            double useChance = 0.8; // 簡單模式下80%機率使用
+            
+            if (difficulty == 2) {
+                useChance = 0.9; // 中等難度下90%機率使用
+            } else if (difficulty == 3) {
+                useChance = 1.0; // 困難模式下100%使用
+            }
+            
+            return random.nextDouble() < useChance;
+        }
+        
+        return false;
     }
     
     /**

@@ -600,8 +600,32 @@ public class CardEffectImpl implements CardEffect {
     @Override
     public boolean processChewBiteEffect(Card card, Player player) {
         // 處理彈牙效果（每回合可攻擊2次）
-        System.out.println("處理【彈牙】效果: " + card.getName());
-        return card.getDescription().contains("【彈牙】");
+        String description = card.getDescription();
+        
+        if (!description.contains("【彈牙】")) {
+            return false; // 卡牌沒有彈牙效果
+        }
+        
+        if (card instanceof CharacterCard) {
+            CharacterCard character = (CharacterCard) card;
+            
+            if (!character.hasAttackedOnce()) {
+                // 第一次攻擊，不需要特殊處理
+                return false;
+            } else if (!character.hasUsedChewBiteEffect()) {
+                // 已經攻擊過一次，但還沒使用彈牙效果
+                System.out.println(character.getName() + " 的【彈牙】效果觸發，可以再次攻擊！");
+                character.setUsedChewBiteEffect(true);
+                character.setCanAttack(true); // 重新設為可攻擊
+                return true;
+            } else {
+                // 已經使用過彈牙效果
+                System.out.println(character.getName() + " 已經用過【彈牙】效果，本回合不能再攻擊了");
+                return false;
+            }
+        }
+        
+        return false;
     }
     
     @Override
