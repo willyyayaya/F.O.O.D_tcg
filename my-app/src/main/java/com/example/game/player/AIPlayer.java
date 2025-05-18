@@ -1,15 +1,18 @@
 package com.example.game.player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+import com.example.game.board.BattlefieldZone;
 import com.example.game.card.Card;
 import com.example.game.card.CardLibrary;
 import com.example.game.card.CastleCard;
 import com.example.game.card.CastleCardZone;
 import com.example.game.card.CharacterCard;
 import com.example.game.card.Faction;
+import com.example.game.card.TargetSelector;
 
 /**
  * AI玩家類 - 實現AI對手的自動決策行為
@@ -428,30 +431,39 @@ public class AIPlayer extends Player {
             return null; // 沒有可攻擊的角色
         }
         
+        // 獲取對手玩家
+        Player opponent = getOpponent();
+        if (opponent == null) {
+            return null; // 未知對手
+        }
+        
+        // 獲取對手角色列表
+        List<CharacterCard> opponentCharacters = new ArrayList<>();
+        opponentCharacters.addAll(opponent.getBattlefieldZone().getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
+        opponentCharacters.addAll(opponent.getBattlefieldZone().getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
+        opponentCharacters.addAll(opponent.getBattlefieldZone().getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
+        
+        if (opponentCharacters.isEmpty()) {
+            // 攻擊城牆
+            CharacterCard attacker = canAttack.get(random.nextInt(canAttack.size()));
+            int attackerIndex = characters.indexOf(attacker);
+            int targetIndex = random.nextInt(3) + 1; // 隨機選擇城牆（1-3）
+            return new int[] {attackerIndex, 2, targetIndex};
+        }
+        
+        // 篩選合法攻擊目標（考慮擺盤效果）
+        List<CharacterCard> validTargets = TargetSelector.getValidAttackTargets(opponent, opponentCharacters);
+        
         // 簡單模式：隨機選擇攻擊者和目標
         if (difficulty == 1) {
             CharacterCard attacker = canAttack.get(random.nextInt(canAttack.size()));
             int attackerIndex = characters.indexOf(attacker);
             
-            // 隨機選擇攻擊角色或城牆
-            int targetType = random.nextBoolean() ? 1 : 2;
-            int targetIndex = 0;
-            
-            if (targetType == 2) {
-                // 攻擊城牆，選擇1-3之間的值
-                targetIndex = random.nextInt(3) + 1;
-            } else {
-                // 攻擊角色，此處需要遊戲引擎提供對手角色信息
-                // 簡化實現：返回0表示攻擊對手所有角色中的第一個
-                targetIndex = 0;
-            }
-            
-            return new int[] {attackerIndex, targetType, targetIndex};
+            // 攻擊角色，必須從有效目標中選擇
+            return new int[] {attackerIndex, 1, validTargets.isEmpty() ? 0 : 0}; // 0表示在遊戲引擎中會列出可選目標
         }
         
         // 中等和困難模式：根據策略選擇目標
-        // 實際遊戲中需要遊戲引擎提供更多信息，例如對手的角色和城牆狀態
-        // 這裡簡化實現
         
         // 選擇攻擊力最高的角色作為攻擊者
         CharacterCard bestAttacker = canAttack.stream()
@@ -460,34 +472,8 @@ public class AIPlayer extends Player {
         
         int attackerIndex = characters.indexOf(bestAttacker);
         
-        // 困難模式：優先攻擊較弱的城牆
-        if (difficulty == 3) {
-            // 獲取對手城牆生命值信息
-            Player opponent = getOpponent();
-            if (opponent != null) {
-                int drawWallHealth = opponent.getCastleZone().getDrawWall().getHealth();
-                int manaWallHealth = opponent.getCastleZone().getManaWall().getHealth();
-                int playWallHealth = opponent.getCastleZone().getPlayWall().getHealth();
-                
-                // 找出生命值最低的城牆
-                int minHealth = Math.min(Math.min(drawWallHealth, manaWallHealth), playWallHealth);
-                int targetWallType = 1; // 預設為抽牌區
-                
-                if (minHealth == manaWallHealth) {
-                    targetWallType = 2;
-                } else if (minHealth == playWallHealth) {
-                    targetWallType = 3;
-                }
-                
-                // 有50%的機率攻擊最弱的城牆，50%的機率攻擊角色
-                if (random.nextDouble() < 0.5) {
-                    return new int[] {attackerIndex, 2, targetWallType};
-                }
-            }
-        }
-        
-        // 如果沒有特殊策略，預設攻擊敵方第一個角色
-        return new int[] {attackerIndex, 1, 0};
+        // 攻擊角色，從有效目標中選擇
+        return new int[] {attackerIndex, 1, validTargets.isEmpty() ? 0 : 0}; // 0表示在遊戲引擎中會列出可選目標
     }
     
     /**

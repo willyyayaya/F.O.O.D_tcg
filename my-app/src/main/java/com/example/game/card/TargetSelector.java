@@ -2,8 +2,8 @@ package com.example.game.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Random;
+import java.util.Scanner;
 
 import com.example.game.board.BattlefieldZone;
 import com.example.game.player.Player;
@@ -27,6 +27,34 @@ public class TargetSelector {
         allCharacters.addAll(battlefield.getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
         allCharacters.addAll(battlefield.getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
         return allCharacters;
+    }
+    
+    /**
+     * 根據「擺盤」效果篩選可攻擊的目標
+     * 如果對方戰場上有擺盤效果的角色，則只能攻擊擁有擺盤效果的角色
+     * @param opponent 對手玩家
+     * @param opponentCharacters 對手角色列表
+     * @return 可攻擊的目標列表
+     */
+    public static List<CharacterCard> getValidAttackTargets(Player opponent, List<CharacterCard> opponentCharacters) {
+        // 篩選出擁有擺盤效果的角色
+        List<CharacterCard> garnishedCharacters = new ArrayList<>();
+        CardEffect cardEffect = new CardEffectImpl();
+        
+        for (CharacterCard character : opponentCharacters) {
+            if (cardEffect.processGarnishedEffect(character)) {
+                garnishedCharacters.add(character);
+            }
+        }
+        
+        // 如果存在擺盤效果的角色，則只能攻擊這些角色
+        if (!garnishedCharacters.isEmpty()) {
+            System.out.println("對方存在具有【擺盤】效果的角色，必須優先攻擊這些角色!");
+            return garnishedCharacters;
+        }
+        
+        // 否則可以攻擊所有角色
+        return new ArrayList<>(opponentCharacters);
     }
     
     /**

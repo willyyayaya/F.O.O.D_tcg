@@ -2,6 +2,7 @@ package com.example.game;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 import com.example.game.board.BattlefieldZone;
@@ -10,6 +11,7 @@ import com.example.game.card.Card;
 import com.example.game.card.CardLibrary;
 import com.example.game.card.CardType;
 import com.example.game.card.CharacterCard;
+import com.example.game.helper.TargetSelector;
 import com.example.game.player.Player;
 
 /**
@@ -29,6 +31,8 @@ public class FOODGameEngine {
     // 新增變數追蹤玩家是否已放置Token
     private boolean hasPlacedTokenThisTurn;
     
+    private Random random;
+    
     public FOODGameEngine() {
         this.gameBoard = new GameBoard();
         this.gameOver = false;
@@ -38,6 +42,8 @@ public class FOODGameEngine {
         
         // 初始化卡牌圖鑑
         initializeCardLibrary();
+        
+        random = new Random();
     }
     
     // 靜態方法獲取當前玩家1
@@ -651,29 +657,24 @@ public class FOODGameEngine {
                         continue;
                     }
                     
+                    // 篩選合法攻擊目標（考慮擺盤效果）
+                    List<CharacterCard> validTargets = TargetSelector.getValidAttackTargets(opponentRef, opponentCharacters);
+                    
                     // 顯示可攻擊的角色
-                    System.out.println("選擇要攻擊的角色:");
-                    for (int i = 0; i < opponentCharacters.size(); i++) {
-                        CharacterCard target = opponentCharacters.get(i);
-                        System.out.printf("%d. %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
-                            i + 1, target.getName(), target.getAttack(), 
+                    System.out.println("AI 選擇要攻擊的角色:");
+                    for (int i = 0; i < validTargets.size(); i++) {
+                        CharacterCard target = validTargets.get(i);
+                        String garnishedMark = target.getDescription().contains("【擺盤】") ? "[擺盤]" : "";
+                        System.out.printf("%d. %s %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
+                            i + 1, target.getName(), garnishedMark, target.getAttack(), 
                             target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
                     }
                     
-                    int targetIndex;
-                    try {
-                        targetIndex = scanner.nextInt();
-                        if (targetIndex < 1 || targetIndex > opponentCharacters.size()) {
-                            System.out.println("無效的選擇!");
-                            continue;
-                        }
-                    } catch (Exception e) {
-                        System.out.println("輸入錯誤!");
-                        scanner.nextLine(); // 清除輸入緩衝
-                        continue;
-                    }
+                    // AI 自動選擇目標（隨機選擇一個有效目標）
+                    int aiTargetIndex = random.nextInt(validTargets.size());
+                    CharacterCard target = validTargets.get(aiTargetIndex);
                     
-                    CharacterCard target = opponentCharacters.get(targetIndex - 1);
+                    System.out.println(currentPlayerRef.getName() + " 選擇了目標: " + target.getName());
                     
                     // 執行攻擊
                     attacker.attack(target);
@@ -1034,12 +1035,24 @@ public class FOODGameEngine {
                         break;
                     }
                     
-                    // 如果targetIndex超出範圍，選擇第一個角色
-                    if (targetIndex < 0 || targetIndex >= opponentCharacters.size()) {
-                        targetIndex = 0;
+                    // 篩選合法攻擊目標（考慮擺盤效果）
+                    List<CharacterCard> validTargets = TargetSelector.getValidAttackTargets(opponent, opponentCharacters);
+                    
+                    // 顯示可攻擊的角色
+                    System.out.println("AI 選擇要攻擊的角色:");
+                    for (int i = 0; i < validTargets.size(); i++) {
+                        CharacterCard target = validTargets.get(i);
+                        String garnishedMark = target.getDescription().contains("【擺盤】") ? "[擺盤]" : "";
+                        System.out.printf("%d. %s %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
+                            i + 1, target.getName(), garnishedMark, target.getAttack(), 
+                            target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
                     }
                     
-                    CharacterCard target = opponentCharacters.get(targetIndex);
+                    // AI 自動選擇目標（隨機選擇一個有效目標）
+                    int aiTargetIndex = random.nextInt(validTargets.size());
+                    CharacterCard target = validTargets.get(aiTargetIndex);
+                    
+                    System.out.println(aiPlayer.getName() + " 選擇了目標: " + target.getName());
                     
                     // 執行攻擊
                     attacker.attack(target);
@@ -1073,7 +1086,7 @@ public class FOODGameEngine {
                                 int newTargetIndex;
                                 do {
                                     newTargetIndex = (int)(Math.random() * opponentCharacters.size());
-                                } while (newTargetIndex == targetIndex && opponentCharacters.size() > 1);
+                                } while (newTargetIndex == aiTargetIndex && opponentCharacters.size() > 1);
                                 
                                 target = opponentCharacters.get(newTargetIndex);
                             }

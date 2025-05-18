@@ -51,6 +51,7 @@ public interface CardEffect {
     
     /**
      * 處理擺盤效果（嘲諷）
+     * 如果對方戰場上有擺盤效果的角色，則必須優先攻擊該角色
      * @param card 卡牌
      * @return 是否具有嘲諷效果
      */
