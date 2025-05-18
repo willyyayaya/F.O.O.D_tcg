@@ -1,5 +1,6 @@
 package com.example.game.card;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
@@ -464,8 +465,135 @@ public class CardEffectImpl implements CardEffect {
     @Override
     public boolean processPlatterEffect(Card card, Player player) {
         // 檢查是否滿足拼盤條件
-        System.out.println("檢查【拼盤】條件: " + card.getName());
-        // 在實際遊戲邏輯中實現條件檢查
+        String description = card.getDescription();
+        String cardName = card.getName();
+        System.out.println("檢查【拼盤】條件: " + cardName);
+        
+        if (!description.contains("【拼盤】")) {
+            return false; // 卡牌沒有拼盤效果
+        }
+        
+        // 使用正則表達式提取拼盤效果描述
+        Pattern pattern = Pattern.compile("【拼盤】：([^。]+)[。]?");
+        Matcher matcher = pattern.matcher(description);
+        
+        if (matcher.find()) {
+            String effectDescription = matcher.group(1);
+            System.out.println("  拼盤效果描述: " + effectDescription);
+            
+            // 提取需要的卡片名稱
+            List<String> requiredCards = new ArrayList<>();
+            
+            // 分割描述，處理不同格式的拼盤需求
+            // 例如「需要A、B和C」或「A+B+C」或「A、B、C」等格式
+            String[] parts;
+            if (effectDescription.contains("、")) {
+                parts = effectDescription.replaceAll("需要|和", "").split("、");
+            } else if (effectDescription.contains("+")) {
+                parts = effectDescription.split("\\+");
+            } else if (effectDescription.contains("，")) {
+                parts = effectDescription.replaceAll("需要|和", "").split("，");
+            } else {
+                parts = new String[]{effectDescription}; // 假設只需要一張卡
+            }
+            
+            for (String part : parts) {
+                String cardRequirement = part.trim();
+                if (!cardRequirement.isEmpty()) {
+                    requiredCards.add(cardRequirement);
+                }
+            }
+            
+            System.out.println("  需要的卡片: " + String.join(", ", requiredCards));
+            
+            // 檢查戰場上是否有所需的卡片
+            BattlefieldZone battlefield = player.getBattlefieldZone();
+            boolean allRequirementsMet = true;
+            
+            for (String requiredCard : requiredCards) {
+                boolean found = false;
+                
+                // 在所有區域中檢查角色卡
+                // 抽牌區
+                for (CharacterCard character : battlefield.getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters()) {
+                    if (character.getName().equals(requiredCard)) {
+                        found = true;
+                        System.out.println("  在抽牌區找到需要的卡片: " + requiredCard);
+                        break;
+                    }
+                }
+                
+                // 如果在抽牌區沒找到，繼續檢查法力區
+                if (!found) {
+                    for (CharacterCard character : battlefield.getAreaByType(BattlefieldZone.MANA_AREA).getCharacters()) {
+                        if (character.getName().equals(requiredCard)) {
+                            found = true;
+                            System.out.println("  在法力區找到需要的卡片: " + requiredCard);
+                            break;
+                        }
+                    }
+                }
+                
+                // 如果在法力區沒找到，最後檢查出牌區
+                if (!found) {
+                    for (CharacterCard character : battlefield.getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters()) {
+                        if (character.getName().equals(requiredCard)) {
+                            found = true;
+                            System.out.println("  在出牌區找到需要的卡片: " + requiredCard);
+                            break;
+                        }
+                    }
+                }
+                
+                // 如果還是沒找到，檢查場地卡
+                if (!found) {
+                    // 檢查抽牌區場地卡
+                    for (FieldCard field : battlefield.getAreaByType(BattlefieldZone.DRAW_AREA).getFieldCards()) {
+                        if (field.getName().equals(requiredCard)) {
+                            found = true;
+                            System.out.println("  在抽牌區找到需要的場地卡: " + requiredCard);
+                            break;
+                        }
+                    }
+                }
+                
+                // 檢查法力區場地卡
+                if (!found) {
+                    for (FieldCard field : battlefield.getAreaByType(BattlefieldZone.MANA_AREA).getFieldCards()) {
+                        if (field.getName().equals(requiredCard)) {
+                            found = true;
+                            System.out.println("  在法力區找到需要的場地卡: " + requiredCard);
+                            break;
+                        }
+                    }
+                }
+                
+                // 檢查出牌區場地卡
+                if (!found) {
+                    for (FieldCard field : battlefield.getAreaByType(BattlefieldZone.PLAY_AREA).getFieldCards()) {
+                        if (field.getName().equals(requiredCard)) {
+                            found = true;
+                            System.out.println("  在出牌區找到需要的場地卡: " + requiredCard);
+                            break;
+                        }
+                    }
+                }
+                
+                // 如果沒找到任何一張所需的卡片，拼盤條件不滿足
+                if (!found) {
+                    allRequirementsMet = false;
+                    System.out.println("  未找到需要的卡片: " + requiredCard + "，拼盤條件不滿足");
+                    break;
+                }
+            }
+            
+            if (allRequirementsMet) {
+                System.out.println("  滿足所有拼盤條件，可以無需法力消耗打出");
+                return true;
+            }
+        }
+        
+        System.out.println("  不滿足拼盤條件，需要正常消耗法力打出");
         return false;
     }
     

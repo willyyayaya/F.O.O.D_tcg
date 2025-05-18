@@ -8,6 +8,8 @@ import com.example.game.board.BattlefieldZone;
 import com.example.game.board.CastleZone;
 import com.example.game.board.ResourceZone;
 import com.example.game.card.Card;
+import com.example.game.card.CardEffect;
+import com.example.game.card.CardEffectImpl;
 import com.example.game.card.CastleCard;
 import com.example.game.card.CharacterCard;
 import com.example.game.card.Deck;
@@ -153,14 +155,23 @@ public class Player {
         
         Card card = hand.get(handIndex);
         
-        // 檢查法力是否足夠
-        if (card.getTokenCost() > manaPoints) {
-            System.out.println("法力值不足! 需要: " + card.getTokenCost() + ", 實際有: " + manaPoints);
-            return false;
-        }
+        // 先檢查是否滿足拼盤條件，是否可以無需法力消耗打出
+        CardEffect cardEffect = new CardEffectImpl();
+        boolean freeFromPlatterEffect = cardEffect.processPlatterEffect(card, this);
         
-        // 消耗法力值
-        manaPoints -= card.getTokenCost();
+        // 如果不滿足拼盤條件，則檢查法力是否足夠
+        if (!freeFromPlatterEffect) {
+            if (card.getTokenCost() > manaPoints) {
+                System.out.println("法力值不足! 需要: " + card.getTokenCost() + ", 實際有: " + manaPoints);
+                return false;
+            }
+            
+            // 消耗法力值
+            manaPoints -= card.getTokenCost();
+            System.out.println(name + " 消耗了 " + card.getTokenCost() + " 點法力值");
+        } else {
+            System.out.println(name + " 透過【拼盤】效果免費打出 " + card.getName());
+        }
         
         // 增加出牌計數
         cardsPlayedThisTurn++;
