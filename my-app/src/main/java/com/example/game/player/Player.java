@@ -149,7 +149,7 @@ public class Player {
         
         // 檢查出牌次數限制
         if (cardsPlayedThisTurn >= maxCardsToPlay) {
-            System.out.println("本回合出牌次數已達上限! (" + cardsPlayedThisTurn + "/" + maxCardsToPlay + ")");
+            System.out.println("本回合出牌次數已達上限! (已用: " + cardsPlayedThisTurn + "/" + maxCardsToPlay + ")");
             return false;
         }
         
@@ -222,7 +222,9 @@ public class Player {
         }
         
         // 顯示剩餘資源
-        System.out.println(name + " 剩餘法力值: " + manaPoints + ", 出牌次數: " + cardsPlayedThisTurn + "/" + maxCardsToPlay);
+        int remainingPlays = maxCardsToPlay - cardsPlayedThisTurn;
+        System.out.println(name + " 剩餘法力值: " + manaPoints + ", 已用出牌次數: " + cardsPlayedThisTurn + "/" + maxCardsToPlay + 
+                           " (剩餘: " + remainingPlays + ")");
         
         return true;
     }
@@ -383,7 +385,9 @@ public class Player {
      */
     public void displayHandDetailed() {
         System.out.println("\n======= " + name + " 的手牌詳情 =======");
-        System.out.println("當前法力值: " + getManaPoints() + ", 出牌次數: " + getCardsPlayedThisTurn() + "/" + getMaxCardsToPlay());
+        int remainingPlays = maxCardsToPlay - cardsPlayedThisTurn;
+        System.out.println("當前法力值: " + getManaPoints() + ", 已用出牌次數: " + getCardsPlayedThisTurn() + "/" + getMaxCardsToPlay() + 
+                           " (剩餘: " + remainingPlays + ")");
         
         if (hand.isEmpty()) {
             System.out.println("  (沒有手牌)");

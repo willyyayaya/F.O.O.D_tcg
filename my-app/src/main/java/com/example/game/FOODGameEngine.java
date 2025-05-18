@@ -499,7 +499,8 @@ public class FOODGameEngine {
                         }
                         
                         if (player.getCardsPlayedThisTurn() >= player.getMaxCardsToPlay()) {
-                            System.out.println("本回合出牌次數已用完! (" + player.getCardsPlayedThisTurn() + "/" + player.getMaxCardsToPlay() + ")");
+                            int remaining = player.getMaxCardsToPlay() - player.getCardsPlayedThisTurn();
+                            System.out.println("本回合出牌次數已用完! (已用: " + player.getCardsPlayedThisTurn() + "/" + player.getMaxCardsToPlay() + ", 剩餘: " + remaining + ")");
                             continue;
                         }
                         
