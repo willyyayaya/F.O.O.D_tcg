@@ -1,11 +1,12 @@
 package com.example.game.card;
 
-import com.example.game.player.Player;
-import com.example.game.board.BattlefieldZone;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.List;
+
+import com.example.game.board.BattlefieldZone;
+import com.example.game.player.Player;
 
 /**
  * 卡牌效果實現類
@@ -378,9 +379,21 @@ public class CardEffectImpl implements CardEffect {
                             }
                         }
                     }
-                    // 對所有敵方角色造成傷害
-                    else if (effectDescription.contains("對所有敵方角色")) {
-                        processDeathDamageEffect((CharacterCard)card, player, opponent, effectDescription);
+                    // 對所有敵方角色造成傷害 (直接整合 processDeathDamageEffect 方法的功能)
+                    else if (effectDescription.contains("對所有敵方角色造成")) {
+                        Pattern damagePattern = Pattern.compile("對所有敵方角色造成(\\d+)點傷害");
+                        Matcher damageMatcher = damagePattern.matcher(effectDescription);
+                        if (damageMatcher.find()) {
+                            int damageAmount = Integer.parseInt(damageMatcher.group(1));
+                            System.out.println("  觸發對所有敵方角色造成傷害效果: " + damageAmount + "點");
+                            
+                            List<CharacterCard> targets = TargetSelector.selectAllEnemyCharacters(opponent);
+                            for (CharacterCard target : targets) {
+                                boolean survived = target.takeDamage(damageAmount);
+                                System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
+                                        " 點傷害" + (survived ? "" : "，已被摧毀！"));
+                            }
+                        }
                     } else {
                         System.out.println("  無法確定傷害目標，無法處理傷害效果");
                     }
@@ -446,27 +459,6 @@ public class CardEffectImpl implements CardEffect {
         // 無法解析具體效果，但仍然返回成功
         System.out.println("  無法解析具體回味效果，請查看卡牌描述");
         return true;
-    }
-    
-    /**
-     * 處理死亡後造成傷害的效果
-     */
-    private void processDeathDamageEffect(CharacterCard sourceCard, Player player, Player opponent, String effectDescription) {
-        if (effectDescription.contains("對所有敵方角色造成")) {
-            Pattern damagePattern = Pattern.compile("對所有敵方角色造成(\\d+)點傷害");
-            Matcher damageMatcher = damagePattern.matcher(effectDescription);
-            if (damageMatcher.find()) {
-                int damageAmount = Integer.parseInt(damageMatcher.group(1));
-                System.out.println("  觸發對所有敵方角色造成傷害效果: " + damageAmount + "點");
-                
-                List<CharacterCard> targets = TargetSelector.selectAllEnemyCharacters(opponent);
-                for (CharacterCard target : targets) {
-                    boolean survived = target.takeDamage(damageAmount);
-                    System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
-                            " 點傷害" + (survived ? "" : "，已被摧毀！"));
-                }
-            }
-        }
     }
     
     @Override
