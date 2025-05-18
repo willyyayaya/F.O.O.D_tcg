@@ -11,7 +11,7 @@ import com.example.game.card.Card;
 import com.example.game.card.CardLibrary;
 import com.example.game.card.CardType;
 import com.example.game.card.CharacterCard;
-import com.example.game.helper.TargetSelector;
+import com.example.game.helper.TargetSelectorHelper;
 import com.example.game.player.Player;
 
 /**
@@ -581,31 +581,31 @@ public class FOODGameEngine {
         boolean continueBattlePhase = true;
         
         while (continueBattlePhase) {
-            System.out.println("選擇進行戰鬥的角色:");
-            
-            // 獲取當前玩家的戰場
-            com.example.game.board.BattlefieldZone battlefield = currentPlayerRef.getBattlefieldZone();
+        System.out.println("選擇進行戰鬥的角色:");
+        
+        // 獲取當前玩家的戰場
+        com.example.game.board.BattlefieldZone battlefield = currentPlayerRef.getBattlefieldZone();
             
             // 獲取所有區域的角色卡並合併
             List<CharacterCard> characters = new ArrayList<>();
             characters.addAll(battlefield.getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
             characters.addAll(battlefield.getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
             characters.addAll(battlefield.getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
-            
-            if (characters.isEmpty()) {
-                System.out.println("你沒有角色可以進行戰鬥!");
-                return;
-            }
+        
+        if (characters.isEmpty()) {
+            System.out.println("你沒有角色可以進行戰鬥!");
+            return;
+        }
             
             // 標記是否有至少一個角色可以攻擊
             boolean hasAttackableCharacter = false;
-            
-            // 顯示可進行戰鬥的角色
-            for (int i = 0; i < characters.size(); i++) {
-                CharacterCard character = characters.get(i);
-                String status = character.canAttack() ? "[可攻擊]" : "[已消耗]";
-                System.out.printf("%d. %s [ATK:%d] %s\n", i + 1, character.getName(), 
-                                character.getAttack(), status);
+        
+        // 顯示可進行戰鬥的角色
+        for (int i = 0; i < characters.size(); i++) {
+            CharacterCard character = characters.get(i);
+            String status = character.canAttack() ? "[可攻擊]" : "[已消耗]";
+            System.out.printf("%d. %s [ATK:%d] %s\n", i + 1, character.getName(), 
+                            character.getAttack(), status);
                 
                 if (character.canAttack()) {
                     hasAttackableCharacter = true;
@@ -616,122 +616,137 @@ public class FOODGameEngine {
             if (!hasAttackableCharacter) {
                 System.out.println("你沒有可攻擊的角色了!");
                 return;
+        }
+        
+        System.out.println("0. 返回");
+        
+        try {
+            int choice = scanner.nextInt();
+            if (choice == 0) return;
+            
+            if (choice < 1 || choice > characters.size()) {
+                System.out.println("無效的選擇!");
+                    continue;
             }
             
+            CharacterCard attacker = characters.get(choice - 1);
+            
+            if (!attacker.canAttack()) {
+                System.out.println("這個角色已經攻擊過或不能攻擊!");
+                    continue;
+            }
+            
+            System.out.println("選擇攻擊目標:");
+            System.out.println("1. 攻擊對手角色");
+            System.out.println("2. 攻擊對手城牆");
             System.out.println("0. 返回");
             
-            try {
-                int choice = scanner.nextInt();
-                if (choice == 0) return;
-                
-                if (choice < 1 || choice > characters.size()) {
-                    System.out.println("無效的選擇!");
-                    continue;
-                }
-                
-                CharacterCard attacker = characters.get(choice - 1);
-                
-                if (!attacker.canAttack()) {
-                    System.out.println("這個角色已經攻擊過或不能攻擊!");
-                    continue;
-                }
-                
-                System.out.println("選擇攻擊目標:");
-                System.out.println("1. 攻擊對手角色");
-                System.out.println("2. 攻擊對手城牆");
-                System.out.println("0. 返回");
-                
-                int targetType = scanner.nextInt();
-                
+            int targetType = scanner.nextInt();
+            
                 if (targetType == 0) continue;
-                
-                if (targetType == 1) {
+            
+            if (targetType == 1) {
                     // 攻擊對手角色 - 獲取所有區域的角色卡並合併
                     List<CharacterCard> opponentCharacters = new ArrayList<>();
                     opponentCharacters.addAll(opponentRef.getBattlefieldZone().getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
                     opponentCharacters.addAll(opponentRef.getBattlefieldZone().getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
                     opponentCharacters.addAll(opponentRef.getBattlefieldZone().getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
-                    
-                    if (opponentCharacters.isEmpty()) {
-                        System.out.println(currentPlayerRef.getName() + " 想要攻擊角色，但對手沒有角色可以攻擊！");
+                
+                if (opponentCharacters.isEmpty()) {
+                    System.out.println(currentPlayerRef.getName() + " 想要攻擊角色，但對手沒有角色可以攻擊！");
                         continue;
-                    }
+                }
                     
                     // 篩選合法攻擊目標（考慮擺盤效果）
-                    List<CharacterCard> validTargets = TargetSelector.getValidAttackTargets(opponentRef, opponentCharacters);
-                    
-                    // 顯示可攻擊的角色
+                    List<CharacterCard> validTargets = TargetSelectorHelper.getValidAttackTargets(opponentRef, opponentCharacters);
+                
+                // 顯示可攻擊的角色
                     System.out.println("AI 選擇要攻擊的角色:");
                     for (int i = 0; i < validTargets.size(); i++) {
                         CharacterCard target = validTargets.get(i);
                         String garnishedMark = target.getDescription().contains("【擺盤】") ? "[擺盤]" : "";
                         System.out.printf("%d. %s %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
                             i + 1, target.getName(), garnishedMark, target.getAttack(), 
-                            target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
-                    }
-                    
+                        target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
+                }
+                
                     // AI 自動選擇目標（隨機選擇一個有效目標）
                     int aiTargetIndex = random.nextInt(validTargets.size());
                     CharacterCard target = validTargets.get(aiTargetIndex);
                     
                     System.out.println(currentPlayerRef.getName() + " 選擇了目標: " + target.getName());
-                    
-                    // 執行攻擊
+                
+                // 執行攻擊
                     attacker.attack(target);
+                
+                // 檢查目標是否死亡
+                if (target.getCurrentHealth() <= 0) {
+                    System.out.println(opponentRef.getName() + " 的 " + target.getName() + " 被擊敗了!");
+                    // 找出角色所在的區域然後移除
+                    BattlefieldZone opponentBattlefield = opponentRef.getBattlefieldZone();
+                    boolean removed = false;
                     
-                    // 檢查目標是否死亡
-                    if (target.getCurrentHealth() <= 0) {
-                        System.out.println(opponentRef.getName() + " 的 " + target.getName() + " 被擊敗了!");
-                        opponentRef.getBattlefieldZone().removeCharacter(target);
-                    }
-                    
-                    // 檢查是否有彈牙效果可用
-                    if (attacker.checkChewBiteEffect()) {
-                        System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
-                        // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
-                    } else {
-                        // 檢查是否還有其他角色可以攻擊
-                        if (!hasOtherAttackableCharacters(characters, attacker)) {
-                            System.out.println("沒有其他角色可以攻擊，戰鬥階段結束");
-                            continueBattlePhase = false;
+                    // 依次檢查三個區域
+                    for (int areaType : new int[] {BattlefieldZone.DRAW_AREA, BattlefieldZone.MANA_AREA, BattlefieldZone.PLAY_AREA}) {
+                        if (opponentBattlefield.containsCharacter(target, areaType)) {
+                            opponentBattlefield.removeCharacter(target, areaType);
+                            removed = true;
+                            break;
                         }
                     }
-                } else if (targetType == 2) {
-                    // 選擇對手城牆進行攻擊
-                    System.out.println("選擇要攻擊的城牆:");
-                    System.out.println("1. 抽牌區");
-                    System.out.println("2. 法力區");
-                    System.out.println("3. 出牌區");
                     
-                    int wallChoice = scanner.nextInt();
-                    if (wallChoice < 1 || wallChoice > 3) {
-                        System.out.println("無效的選擇!");
-                        continue;
-                    }
-                    
-                    // 使用修改後的攻擊方法，會檢查城堡卡
-                    attackWall(opponentRef, wallChoice, attacker.getAttack());
-                    
-                    // 設置為已攻擊狀態
-                    attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
-                    attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
-                    System.out.println(attacker.getName() + " 攻擊了 " + opponentRef.getName() + " 的城牆!");
-                    
-                    // 檢查是否有彈牙效果可用
-                    if (attacker.checkChewBiteEffect()) {
-                        System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
-                        // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
-                    } else {
-                        // 檢查是否還有其他角色可以攻擊
-                        if (!hasOtherAttackableCharacters(characters, attacker)) {
-                            System.out.println("沒有其他角色可以攻擊，戰鬥階段結束");
-                            continueBattlePhase = false;
-                        }
+                    if (!removed) {
+                        System.out.println("警告：找不到要移除的角色所在區域");
                     }
                 }
-            } catch (Exception e) {
-                System.out.println("輸入錯誤!");
-                scanner.nextLine(); // 清除輸入緩衝
+                    
+                    // 檢查是否有彈牙效果可用
+                    if (attacker.checkChewBiteEffect()) {
+                        System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
+                        // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
+                    } else {
+                        // 檢查是否還有其他角色可以攻擊
+                        if (!hasOtherAttackableCharacters(characters, attacker)) {
+                            System.out.println("沒有其他角色可以攻擊，戰鬥階段結束");
+                            continueBattlePhase = false;
+                        }
+                    }
+            } else if (targetType == 2) {
+                // 選擇對手城牆進行攻擊
+                System.out.println("選擇要攻擊的城牆:");
+                System.out.println("1. 抽牌區");
+                System.out.println("2. 法力區");
+                System.out.println("3. 出牌區");
+                
+                int wallChoice = scanner.nextInt();
+                if (wallChoice < 1 || wallChoice > 3) {
+                    System.out.println("無效的選擇!");
+                        continue;
+                }
+                
+                // 使用修改後的攻擊方法，會檢查城堡卡
+                attackWall(opponentRef, wallChoice, attacker.getAttack());
+                
+                // 設置為已攻擊狀態
+                attacker.refreshForNewTurn(); // 先刷新以確保可攻擊
+                attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
+                System.out.println(attacker.getName() + " 攻擊了 " + opponentRef.getName() + " 的城牆!");
+                    
+                    // 檢查是否有彈牙效果可用
+                    if (attacker.checkChewBiteEffect()) {
+                        System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
+                        // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
+                    } else {
+                        // 檢查是否還有其他角色可以攻擊
+                        if (!hasOtherAttackableCharacters(characters, attacker)) {
+                            System.out.println("沒有其他角色可以攻擊，戰鬥階段結束");
+                            continueBattlePhase = false;
+                        }
+                    }
+            }
+        } catch (Exception e) {
+            System.out.println("輸入錯誤!");
+            scanner.nextLine(); // 清除輸入緩衝
             }
         }
     }
@@ -1036,7 +1051,7 @@ public class FOODGameEngine {
                     }
                     
                     // 篩選合法攻擊目標（考慮擺盤效果）
-                    List<CharacterCard> validTargets = TargetSelector.getValidAttackTargets(opponent, opponentCharacters);
+                    List<CharacterCard> validTargets = TargetSelectorHelper.getValidAttackTargets(opponent, opponentCharacters);
                     
                     // 顯示可攻擊的角色
                     System.out.println("AI 選擇要攻擊的角色:");
@@ -1064,7 +1079,22 @@ public class FOODGameEngine {
                     // 檢查目標是否死亡
                     if (target.getCurrentHealth() <= 0) {
                         System.out.println(opponent.getName() + " 的 " + target.getName() + " 被擊敗了!");
-                        opponent.getBattlefieldZone().removeCharacter(target);
+                        // 找出角色所在的區域然後移除
+                        BattlefieldZone opponentBattlefield = opponent.getBattlefieldZone();
+                        boolean removed = false;
+                        
+                        // 依次檢查三個區域
+                        for (int areaType : new int[] {BattlefieldZone.DRAW_AREA, BattlefieldZone.MANA_AREA, BattlefieldZone.PLAY_AREA}) {
+                            if (opponentBattlefield.containsCharacter(target, areaType)) {
+                                opponentBattlefield.removeCharacter(target, areaType);
+                                removed = true;
+                                break;
+                            }
+                        }
+                        
+                        if (!removed) {
+                            System.out.println("警告：找不到要移除的角色所在區域");
+                        }
                     }
                     
                     // 檢查是否可以使用彈牙效果進行第二次攻擊
@@ -1101,7 +1131,22 @@ public class FOODGameEngine {
                             // 檢查目標是否死亡
                             if (target.getCurrentHealth() <= 0) {
                                 System.out.println(opponent.getName() + " 的 " + target.getName() + " 被擊敗了!");
-                                opponent.getBattlefieldZone().removeCharacter(target);
+                                // 找出角色所在的區域然後移除
+                                BattlefieldZone opponentBattlefield = opponent.getBattlefieldZone();
+                                boolean removed = false;
+                                
+                                // 依次檢查三個區域
+                                for (int areaType : new int[] {BattlefieldZone.DRAW_AREA, BattlefieldZone.MANA_AREA, BattlefieldZone.PLAY_AREA}) {
+                                    if (opponentBattlefield.containsCharacter(target, areaType)) {
+                                        opponentBattlefield.removeCharacter(target, areaType);
+                                        removed = true;
+                                        break;
+                                    }
+                                }
+                                
+                                if (!removed) {
+                                    System.out.println("警告：找不到要移除的角色所在區域");
+                                }
                             }
                         }
                     }
@@ -1180,7 +1225,22 @@ public class FOODGameEngine {
                                 // 檢查目標是否死亡
                                 if (target.getCurrentHealth() <= 0) {
                                     System.out.println(opponent.getName() + " 的 " + target.getName() + " 被擊敗了!");
-                                    opponent.getBattlefieldZone().removeCharacter(target);
+                                    // 找出角色所在的區域然後移除
+                                    BattlefieldZone opponentBattlefield = opponent.getBattlefieldZone();
+                                    boolean removed = false;
+                                    
+                                    // 依次檢查三個區域
+                                    for (int areaType : new int[] {BattlefieldZone.DRAW_AREA, BattlefieldZone.MANA_AREA, BattlefieldZone.PLAY_AREA}) {
+                                        if (opponentBattlefield.containsCharacter(target, areaType)) {
+                                            opponentBattlefield.removeCharacter(target, areaType);
+                                            removed = true;
+                                            break;
+                                        }
+                                    }
+                                    
+                                    if (!removed) {
+                                        System.out.println("警告：找不到要移除的角色所在區域");
+                                    }
                                 }
                             }
                         }

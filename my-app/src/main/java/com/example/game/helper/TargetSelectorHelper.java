@@ -12,7 +12,7 @@ import com.example.game.player.Player;
 /**
  * 目標選擇器 - 協助選擇合法的攻擊目標
  */
-public class TargetSelector {
+public class TargetSelectorHelper {
     private static final CardEffect cardEffect = new CardEffectImpl();
     
     /**
