@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.example.game.board.BattlefieldZone;
+import com.example.game.board.CastleZone;
 import com.example.game.card.CardEffect;
 import com.example.game.card.CardEffectImpl;
 import com.example.game.card.CharacterCard;
@@ -82,5 +83,73 @@ public class TargetSelectorHelper {
         
         // 如果有擺盤角色，目標必須是其中之一
         return garnishedTargets.contains(target);
+    }
+    
+    /**
+     * 選擇要進行操作的城牆區域
+     * @param player 當前玩家
+     * @return 選擇的城牆類型（1=抽牌區，2=法力區，3=出牌區），如果取消則返回0
+     */
+    public static int selectWallType(Player player) {
+        // 選擇生命值最低的城牆進行回復
+        if (player != null) {
+            CastleZone castleZone = player.getCastleZone();
+            
+            // 獲取三個城牆的生命值
+            int drawWallHealth = castleZone.getDrawWall().getHealth();
+            int manaWallHealth = castleZone.getManaWall().getHealth();
+            int playWallHealth = castleZone.getPlayWall().getHealth();
+            
+            // 獲取每個城牆的最大生命值
+            int maxWallHealth = castleZone.getDrawWall().getMaxHealth();
+            
+            // 如果有任何城牆已經滿血，就不考慮它們
+            if (drawWallHealth >= maxWallHealth && manaWallHealth >= maxWallHealth && playWallHealth >= maxWallHealth) {
+                // 所有城牆都滿血，隨機選一個
+                System.out.println("所有城牆都已滿血，隨機選擇一個城牆");
+                return new java.util.Random().nextInt(3) + 1;
+            }
+            
+            // 找出生命值最低且未滿血的城牆
+            int lowestHealth = Integer.MAX_VALUE;
+            int chosenWallType = 0;
+            
+            if (drawWallHealth < maxWallHealth && drawWallHealth < lowestHealth) {
+                lowestHealth = drawWallHealth;
+                chosenWallType = 1;
+            }
+            
+            if (manaWallHealth < maxWallHealth && manaWallHealth < lowestHealth) {
+                lowestHealth = manaWallHealth;
+                chosenWallType = 2;
+            }
+            
+            if (playWallHealth < maxWallHealth && playWallHealth < lowestHealth) {
+                chosenWallType = 3;
+            }
+            
+            // 如果沒有選到任何城牆（可能都滿血了），則選擇第一個
+            if (chosenWallType == 0) {
+                chosenWallType = 1;
+            }
+            
+            System.out.println("選擇生命值最低的城牆（" + getWallName(chosenWallType) + "）進行回復");
+            return chosenWallType;
+        }
+        
+        // 如果player為null，則隨機選擇
+        return new java.util.Random().nextInt(3) + 1;
+    }
+    
+    /**
+     * 獲取城牆名稱
+     */
+    private static String getWallName(int wallType) {
+        switch (wallType) {
+            case 1: return "抽牌區";
+            case 2: return "法力區";
+            case 3: return "出牌區";
+            default: return "未知區域";
+        }
     }
 } 

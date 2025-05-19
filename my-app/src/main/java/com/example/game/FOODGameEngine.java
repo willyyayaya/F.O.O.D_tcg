@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.example.game.board.BattlefieldZone;
+import com.example.game.board.CastleZone.Wall;
 import com.example.game.board.GameBoard;
 import com.example.game.card.Card;
 import com.example.game.card.CardLibrary;
@@ -44,6 +47,11 @@ public class FOODGameEngine {
         initializeCardLibrary();
         
         random = new Random();
+    }
+    
+    // 靜態方法獲取當前遊戲實例
+    public static FOODGameEngine getInstance() {
+        return currentGameInstance;
     }
     
     // 靜態方法獲取當前玩家1
@@ -1283,6 +1291,109 @@ public class FOODGameEngine {
             case 2: return "法力區";
             case 3: return "出牌區";
             default: return "未知區域";
+        }
+    }
+
+    /**
+     * 回復城堡生命值
+     * @param target 目標玩家
+     * @param wallType 城牆類型（1=抽牌區，2=法力區，3=出牌區）
+     * @param healAmount 回復量
+     * @return 是否成功回復
+     */
+    public boolean healWall(Player target, int wallType, int healAmount) {
+        if (target == null || wallType < 1 || wallType > 3) {
+            return false;
+        }
+        
+        Wall targetWall = null;
+        switch (wallType) {
+            case 1: // 抽牌區
+                targetWall = target.getCastleZone().getDrawWall();
+                break;
+            case 2: // 法力區
+                targetWall = target.getCastleZone().getManaWall();
+                break;
+            case 3: // 出牌區
+                targetWall = target.getCastleZone().getPlayWall();
+                break;
+        }
+        
+        if (targetWall != null) {
+            // 檢查是否已經是滿血
+            boolean canHeal = targetWall.getHealth() < targetWall.getMaxHealth();
+            if (canHeal) {
+                targetWall.heal(healAmount);
+                System.out.println(target.getName() + " 的 " + getWallName(wallType) + " 回復了 " + healAmount + " 點生命值");
+                return true;
+            } else {
+                System.out.println(target.getName() + " 的 " + getWallName(wallType) + " 已經是滿血，無法回復");
+                return false;
+            }
+        }
+        
+        return false;
+    }
+
+    /**
+     * 處理角色使用糖爆效果
+     * @param character 使用糖爆的角色
+     * @param target 目標角色（可為空）
+     * @param player 當前玩家
+     * @param opponent 對手玩家
+     */
+    public void handleSugarCrashEffect(CharacterCard character, CharacterCard target, Player player, Player opponent) {
+        int effectStrength = character.useSugarCrash(target);
+        if (effectStrength <= 0) {
+            return; // 糖爆效果未觸發或無效
+        }
+        
+        // 解析糖爆效果描述
+        String description = character.getDescription();
+        Pattern pattern = Pattern.compile("【糖爆】：([^。]+)[。]?");
+        Matcher matcher = pattern.matcher(description);
+        
+        if (matcher.find()) {
+            String effectDescription = matcher.group(1);
+            System.out.println("處理 " + character.getName() + " 的糖爆效果: " + effectDescription);
+            
+            // 1. 處理造成傷害的效果
+            if (effectDescription.contains("造成") && effectDescription.contains("點傷害")) {
+                if (target != null) {
+                    target.takeDamage(effectStrength);
+                    System.out.println(character.getName() + " 對 " + target.getName() + 
+                            " 造成了 " + effectStrength + " 點傷害");
+                }
+            }
+            
+            // 2. 處理回復角色生命值的效果
+            else if (effectDescription.contains("回復") && effectDescription.contains("生命值") && 
+                    !effectDescription.contains("城堡")) {
+                // 已在processHealingEffect處理
+            }
+            
+            // 3. 處理回復城堡生命值的效果
+            else if (effectDescription.contains("回復") && effectDescription.contains("城堡")) {
+                // 提取數值
+                Pattern healPattern = Pattern.compile("回復(\\d+)點");
+                Matcher healMatcher = healPattern.matcher(effectDescription);
+                
+                int healAmount = 1; // 默認回復1點
+                if (healMatcher.find()) {
+                    healAmount = Integer.parseInt(healMatcher.group(1));
+                }
+                
+                // 選擇要回復的城牆區域
+                System.out.println("選擇要回復的城牆區域：");
+                System.out.println("1. 抽牌區");
+                System.out.println("2. 法力區");
+                System.out.println("3. 出牌區");
+                
+                int wallType = TargetSelectorHelper.selectWallType(player);
+                if (wallType > 0) {
+                    healWall(player, wallType, healAmount);
+                }
+            }
         }
     }
 } 

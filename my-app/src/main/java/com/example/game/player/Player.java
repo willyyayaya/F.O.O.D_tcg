@@ -574,4 +574,19 @@ public class Player {
             System.out.println(name + " 將卡牌 " + card.getName() + " 加入手牌");
         }
     }
+    
+    /**
+     * 指定角色使用糖爆效果
+     * @param attacker 使用糖爆的角色
+     * @param target 目標角色
+     * @param opponent 對手玩家
+     */
+    public void useSugarCrashEffect(CharacterCard attacker, CharacterCard target) {
+        if (attacker != null) {
+            com.example.game.FOODGameEngine gameEngine = com.example.game.FOODGameEngine.getInstance();
+            if (gameEngine != null) {
+                gameEngine.handleSugarCrashEffect(attacker, target, this, this.opponent);
+            }
+        }
+    }
 } 

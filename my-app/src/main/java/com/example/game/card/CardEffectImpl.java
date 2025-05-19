@@ -20,8 +20,8 @@ public class CardEffectImpl implements CardEffect {
     // 酥脆效果的護甲值提取模式
     private static final Pattern CRISPY_PATTERN = Pattern.compile("【酥脆\\(([0-9]+)\\)】");
     
-    // 糖爆效果的傷害值提取模式
-    private static final Pattern SUGAR_CRASH_PATTERN = Pattern.compile("【糖爆\\(([0-9]+)\\)】");
+    // 糖爆效果的文字提取模式
+    private static final Pattern SUGAR_CRASH_PATTERN = Pattern.compile("【糖爆】：([^。]+)[。]?");
     
     @Override
     public boolean processAppetizerEffect(Card card, Player player, Object target) {
@@ -766,21 +766,138 @@ public class CardEffectImpl implements CardEffect {
     
     @Override
     public int processSugarCrashEffect(CharacterCard card, CharacterCard target) {
-        // 處理糖爆效果（特殊攻擊，下回合無法攻擊）
+        // 處理糖爆效果（執行文字效果，下回合無法攻擊與無法使用糖爆）
         String description = card.getDescription();
-        if (description.contains("【糖爆】")) {
-            Matcher matcher = SUGAR_CRASH_PATTERN.matcher(description);
-            if (matcher.find()) {
-                int damage = Integer.parseInt(matcher.group(1));
-                System.out.println("觸發【糖爆(" + damage + ")】效果，造成" + damage + "點傷害，下回合無法攻擊");
-                // 在遊戲邏輯中設置該卡牌下回合無法攻擊的標記
-                return damage;
-            } else {
-                System.out.println("觸發【糖爆】效果，造成1點傷害，下回合無法攻擊");
-                return 1; // 默認造成1點傷害
-            }
+        
+        if (!description.contains("【糖爆】")) {
+            return 0; // 卡牌沒有糖爆效果
         }
-        return 0;
+        
+        // 使用正則表達式提取糖爆效果描述
+        Matcher matcher = SUGAR_CRASH_PATTERN.matcher(description);
+        
+        if (matcher.find()) {
+            String effectDescription = matcher.group(1);
+            System.out.println("  糖爆效果描述: " + effectDescription);
+            
+            // 設置下回合無法攻擊的標記（在CharacterCard.useSugarCrash中處理）
+            System.out.println(card.getName() + " 的【糖爆】效果觸發，下回合無法攻擊");
+            
+            Player player = card.getOwner();
+            if (player == null) {
+                System.out.println("  無法確定卡牌擁有者，無法處理糖爆效果");
+                return 0;
+            }
+            
+            // 處理不同的糖爆效果
+            // 1. 抽牌效果
+            if (effectDescription.contains("抽一張牌") || effectDescription.contains("抽牌")) {
+                System.out.println("  【糖爆】觸發抽牌效果");
+                player.drawCard();
+                return 1; // 返回值表示效果強度，用於後續處理
+            }
+            
+            // 2. 造成傷害效果
+            if (effectDescription.contains("造成") && effectDescription.contains("點傷害")) {
+                Pattern damagePattern = Pattern.compile("造成(\\d+)點傷害");
+                Matcher damageMatcher = damagePattern.matcher(effectDescription);
+                
+                if (damageMatcher.find()) {
+                    int damage = Integer.parseInt(damageMatcher.group(1));
+                    System.out.println("  【糖爆】觸發造成傷害效果: " + damage + "點");
+                    
+                    if (target != null) {
+                        return damage; // 返回傷害值，實際傷害在CharacterCard.useSugarCrash中處理
+                    } else {
+                        System.out.println("  沒有指定目標，無法處理傷害效果");
+                        return 1;
+                    }
+                } else {
+                    // 默認造成1點傷害
+                    System.out.println("  【糖爆】觸發造成默認1點傷害");
+                    return 1;
+                }
+            }
+            
+            // 3. 獲得酥脆效果
+            if (effectDescription.contains("獲得") && effectDescription.contains("酥脆")) {
+                System.out.println("  【糖爆】觸發獲得酥脆效果");
+                
+                // 如果有目標指定，則為目標添加酥脆效果
+                if (target != null && target instanceof CharacterCard) {
+                    // 提取酥脆值
+                    Pattern crispyPattern = Pattern.compile("獲得(\\d+)點酥脆");
+                    Matcher crispyMatcher = crispyPattern.matcher(effectDescription);
+                    
+                    int crispyValue = 1; // 默認酥脆值
+                    if (crispyMatcher.find()) {
+                        crispyValue = Integer.parseInt(crispyMatcher.group(1));
+                    }
+                    
+                    target.increaseCrispyValue(crispyValue);
+                    System.out.println("  為 " + target.getName() + " 添加了 " + crispyValue + " 點酥脆值");
+                    return crispyValue;
+                } else {
+                    System.out.println("  沒有指定目標，無法添加酥脆效果");
+                    return 1;
+                }
+            }
+            
+            // 4. 回復城堡生命值
+            if (effectDescription.contains("回復") && effectDescription.contains("城堡")) {
+                System.out.println("  【糖爆】觸發回復城堡生命值效果");
+                
+                // 提取回復值
+                Pattern healPattern = Pattern.compile("回復(\\d+)點");
+                Matcher healMatcher = healPattern.matcher(effectDescription);
+                
+                int healAmount = 1; // 默認回復1點
+                if (healMatcher.find()) {
+                    healAmount = Integer.parseInt(healMatcher.group(1));
+                }
+                
+                // 回復玩家城堡生命值的邏輯需要在調用處實現
+                System.out.println("  回復城堡 " + healAmount + " 點生命值");
+                return healAmount;
+            }
+            
+            // 5. 回復角色生命值
+            if (effectDescription.contains("回復") && effectDescription.contains("生命值") && !effectDescription.contains("城堡")) {
+                System.out.println("  【糖爆】觸發回復角色生命值效果");
+                
+                // 提取回復值
+                Pattern healPattern = Pattern.compile("回復(\\d+)點");
+                Matcher healMatcher = healPattern.matcher(effectDescription);
+                
+                int healAmount = 1; // 默認回復1點
+                if (healMatcher.find()) {
+                    healAmount = Integer.parseInt(healMatcher.group(1));
+                }
+                
+                // 如果有目標，為目標回復生命值
+                if (target != null) {
+                    target.heal(healAmount);
+                    System.out.println("  為 " + target.getName() + " 回復了 " + healAmount + " 點生命值");
+                    return healAmount;
+                } else if (card instanceof CharacterCard) {
+                    // 沒有目標時，為自己回復生命值
+                    CharacterCard self = (CharacterCard) card;
+                    self.heal(healAmount);
+                    System.out.println("  為自己回復了 " + healAmount + " 點生命值");
+                    return healAmount;
+                } else {
+                    System.out.println("  沒有有效目標，無法回復生命值");
+                    return 1;
+                }
+            }
+            
+            // 默認返回1，表示效果已觸發但沒有匹配到具體邏輯
+            return 1;
+        }
+        
+        // 沒有找到具體的糖爆效果描述，返回默認值
+        System.out.println(card.getName() + " 的【糖爆】效果格式不正確");
+        return 1;
     }
     
     @Override

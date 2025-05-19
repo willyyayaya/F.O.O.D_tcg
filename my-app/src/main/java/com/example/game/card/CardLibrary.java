@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.example.game.card.faction.DessertUnionInitializer;
@@ -411,17 +413,15 @@ public class CardLibrary {
             System.out.println("【糖霜】(Frosted): 抵擋一次攻擊（類似聖盾）");
         }
         if (description.contains("【糖爆】")) {
-            String damageStr = "";
-            int damage = 1; // 預設傷害值
-            if (description.matches(".*【糖爆】\\s*\\((\\d+)\\).*")) {
-                damageStr = description.replaceAll(".*【糖爆】\\s*\\((\\d+)\\).*", "$1");
-                try {
-                    damage = Integer.parseInt(damageStr);
-                } catch (NumberFormatException e) {
-                    // 解析失敗時使用預設值
-                }
+            System.out.println("【糖爆】(Sugar Crash): 執行文字效果，下回合無法攻擊與無法使用糖爆");
+            
+            // 提取糖爆效果描述
+            Pattern sugarCrashPattern = Pattern.compile("【糖爆】：([^。]+)[。]?");
+            Matcher sugarCrashMatcher = sugarCrashPattern.matcher(description);
+            if (sugarCrashMatcher.find()) {
+                String effectText = sugarCrashMatcher.group(1);
+                System.out.println("  效果文字: " + effectText);
             }
-            System.out.println("【糖爆】(Sugar Crash): 可選糖爆的行動代替攻擊造成" + damage + "點傷害，但下回合無法攻擊或使用技能");
         }
         if (description.contains("【滋補】")) {
             System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量（類似再生）");

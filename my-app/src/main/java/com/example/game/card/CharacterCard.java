@@ -211,8 +211,8 @@ public class CharacterCard extends Card {
     
     /**
      * 使用糖爆效果
-     * @param target 攻擊目標
-     * @return 實際造成的傷害
+     * @param target 可選的目標角色
+     * @return 執行效果的強度
      */
     public int useSugarCrash(CharacterCard target) {
         if (!canAttack) {
@@ -221,15 +221,17 @@ public class CharacterCard extends Card {
         }
         
         // 檢查是否有糖爆效果
-        int damage = effectProcessor.processSugarCrashEffect(this, target);
-        if (damage > 0) {
-            target.takeDamage(damage);
-            this.canAttack = false;
-            this.sugarCrashUsed = true;
-            this.cannotAttackNextTurn = true;
-            return damage;
+        int effectStrength = effectProcessor.processSugarCrashEffect(this, target);
+        if (effectStrength > 0) {
+            // 設置狀態標記
+            this.canAttack = false; // 本回合不能再攻擊
+            this.sugarCrashUsed = true; // 已使用糖爆
+            this.cannotAttackNextTurn = true; // 下回合不能攻擊
+            
+            System.out.println(name + " 使用了【糖爆】效果，下回合將無法攻擊");
+            return effectStrength;
         } else {
-            System.out.println(name + " 沒有【糖爆】效果!");
+            System.out.println(name + " 沒有【糖爆】效果或效果無法執行!");
             return 0;
         }
     }
