@@ -430,7 +430,7 @@ public class CardLibrary {
             System.out.println("【清淡】(Bland): 滿血時無法攻擊");
         }
         if (description.contains("【爆炒】")) {
-            System.out.println("【爆炒】(Overheat): 直接消滅一個單位");
+            System.out.println("【爆炒】(Overheat): 消滅攻擊力低於特定值的單位");
         }
         if (description.contains("【嗆辣】")) {
             System.out.println("【嗆辣】(Spicy): 每回合結束損失一點生命值");
