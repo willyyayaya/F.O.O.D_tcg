@@ -7,13 +7,13 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import com.example.game.player.Player;
-import com.example.game.card.faction.FactionCardInitializer;
-import com.example.game.card.faction.SpicyKingdomInitializer;
-import com.example.game.card.faction.HealthyOasisInitializer;
-import com.example.game.card.faction.FastFoodGuildInitializer;
 import com.example.game.card.faction.DessertUnionInitializer;
+import com.example.game.card.faction.FactionCardInitializer;
+import com.example.game.card.faction.FastFoodGuildInitializer;
+import com.example.game.card.faction.HealthyOasisInitializer;
 import com.example.game.card.faction.NeutralCardInitializer;
+import com.example.game.card.faction.SpicyKingdomInitializer;
+import com.example.game.player.Player;
 
 /**
  * 卡牌圖鑑 - 管理所有可用的卡牌
@@ -405,7 +405,7 @@ public class CardLibrary {
             System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊（類似衝鋒）");
         }
         if (description.contains("【油膩】")) {
-            System.out.println("【油膩】(Glossy): 每回合攻擊力減少 1（最低降至 1）");
+            System.out.println("【油膩】(Glossy): 每回合開始時攻擊力減少 1（最低降至 1）");
         }
         if (description.contains("【糖霜】")) {
             System.out.println("【糖霜】(Frosted): 抵擋一次攻擊（類似聖盾）");

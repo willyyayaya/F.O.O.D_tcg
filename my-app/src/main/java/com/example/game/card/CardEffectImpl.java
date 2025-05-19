@@ -745,10 +745,10 @@ public class CardEffectImpl implements CardEffect {
     
     @Override
     public int processGlossyEffect(CharacterCard card) {
-        // 處理油膩效果（攻擊力逐漸減少）
+        // 處理油膩效果（每回合攻擊力固定減少1點）
         if (card.getDescription().contains("【油膩】")) {
             System.out.println("【油膩】效果使攻擊力-1");
-            return 1; // 減少1點攻擊力
+            return 1; // 固定減少1點攻擊力
         }
         return 0;
     }
