@@ -23,6 +23,9 @@ public class CardEffectImpl implements CardEffect {
     // 糖爆效果的文字提取模式
     private static final Pattern SUGAR_CRASH_PATTERN = Pattern.compile("【糖爆】：([^。]+)[。]?");
     
+    // 爆炒效果的正則表達式
+    private static final Pattern OVERHEAT_PATTERN = Pattern.compile("【爆炒\\(([0-9]+)\\)】");
+    
     @Override
     public boolean processAppetizerEffect(Card card, Player player, Object target) {
         // 根據卡牌類型和描述執行開胃效果
@@ -929,14 +932,28 @@ public class CardEffectImpl implements CardEffect {
     
     @Override
     public boolean processOverheatEffect(CharacterCard card, CharacterCard target) {
-        // 處理爆炒效果（直接消滅單位）
-        if (card.getDescription().contains("【爆炒】")) {
-            // 在實際遊戲中，可能需要基於概率來決定是否觸發
-            boolean triggered = random.nextDouble() <= 0.25; // 假設25%的觸發率
-            System.out.println("【爆炒】效果檢查: " + (triggered ? "觸發成功，摧毀目標" : "未觸發"));
-            return triggered;
+        // 處理爆炒效果（消滅攻擊力低於特定值的單位）
+        String description = card.getDescription();
+        
+        if (description.contains("【爆炒")) {
+            Matcher matcher = OVERHEAT_PATTERN.matcher(description);
+            if (matcher.find()) {
+                int attackThreshold = Integer.parseInt(matcher.group(1));
+                
+                // 檢查目標攻擊力是否低於閾值
+                boolean canDestroy = target.getAttack() <= attackThreshold;
+                
+                System.out.println("【爆炒(" + attackThreshold + ")】效果檢查: 目標攻擊力為" + target.getAttack() + 
+                                  (canDestroy ? "，低於或等於閾值，可以摧毀" : "，高於閾值，無法摧毀"));
+                
+                return canDestroy;
+            } else {
+                // 如果沒有找到具體數值，默認無法摧毀
+                System.out.println("【爆炒】效果格式不正確，無法處理");
+                return false;
+            }
         }
-        return false;
+        return false; // 沒有爆炒效果
     }
     
     @Override

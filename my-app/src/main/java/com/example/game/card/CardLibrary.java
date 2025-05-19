@@ -375,16 +375,16 @@ public class CardLibrary {
         
         // 檢查並顯示各種關鍵字
         if (description.contains("【開胃】")) {
-            System.out.println("【開胃】(Appetizer): 進場時發動效果（類似戰吼）");
+            System.out.println("【開胃】(Appetizer): 進場時發動效果");
         }
         if (description.contains("【回味】")) {
-            System.out.println("【回味】(Aftertaste): 死亡後觸發效果（類似死亡之聲）");
+            System.out.println("【回味】(Aftertaste): 死亡後觸發效果");
         }
         if (description.contains("【拼盤】")) {
             System.out.println("【拼盤】(Platter): 符合條件的卡片都在場時，可免費打出融合卡（但還是算出一張牌）");
         }
         if (description.contains("【彈牙】")) {
-            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次（類似雙重攻擊）");
+            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次");
         }
         if (description.contains("【酥脆】")) {
             // 從卡片描述中提取護甲值
@@ -401,16 +401,16 @@ public class CardLibrary {
             System.out.println("【酥脆】(Crispy): 護甲值" + armorValue + "，減免" + armorValue + "點傷害");
         }
         if (description.contains("【擺盤】")) {
-            System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊這個單位（類似嘲諷）");
+            System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊這個單位");
         }
         if (description.contains("【現炸】")) {
-            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊（類似衝鋒）");
+            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊");
         }
         if (description.contains("【油膩】")) {
             System.out.println("【油膩】(Glossy): 每回合開始時攻擊力減少 1（最低降至 1）");
         }
         if (description.contains("【糖霜】")) {
-            System.out.println("【糖霜】(Frosted): 抵擋一次攻擊（類似聖盾）");
+            System.out.println("【糖霜】(Frosted): 抵擋一次攻擊");
         }
         if (description.contains("【糖爆】")) {
             System.out.println("【糖爆】(Sugar Crash): 執行文字效果，下回合無法攻擊與無法使用糖爆");
@@ -424,7 +424,7 @@ public class CardLibrary {
             }
         }
         if (description.contains("【滋補】")) {
-            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量（類似再生）");
+            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量");
         }
         if (description.contains("【清淡】")) {
             System.out.println("【清淡】(Bland): 滿血時無法攻擊");
