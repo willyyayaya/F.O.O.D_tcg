@@ -278,8 +278,16 @@ public class CharacterCard extends Card {
      * @param amount 恢復量
      */
     public void heal(int amount) {
-        this.currentHealth = Math.min(currentHealth + amount, maxHealth);
+        healWithoutMessage(amount);
         System.out.println(name + " 恢復 " + amount + " 點生命值，當前生命值: " + currentHealth);
+    }
+    
+    /**
+     * 恢復生命值但不輸出訊息
+     * @param amount 恢復量
+     */
+    public void healWithoutMessage(int amount) {
+        this.currentHealth = Math.min(currentHealth + amount, maxHealth);
     }
     
     /**
@@ -319,9 +327,11 @@ public class CharacterCard extends Card {
         }
         
         // 每回合恢復部分酥脆值（如果該卡具有酥脆特性）
+        // 注意：這是獨立於滋補效果的機制
         if (maxCrispyValue > 0 && crispyValue < maxCrispyValue) {
             // 恢復1點酥脆值
             increaseCrispyValue(1);
+            System.out.println(name + " 每回合自動恢復1點酥脆值");
         }
     }
     

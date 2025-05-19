@@ -718,7 +718,7 @@ public class FOODGameEngine {
                             System.out.println("沒有其他角色可以攻擊，戰鬥階段結束");
                             continueBattlePhase = false;
                         }
-                    }
+                }
             } else if (targetType == 2) {
                 // 選擇對手城牆進行攻擊
                 System.out.println("選擇要攻擊的城牆:");

@@ -284,7 +284,7 @@ public class CardEffectImpl implements CardEffect {
      * 處理搜索牌庫的效果
      */
     private void processSearchDeckEffect(Player player, String effectDescription) {
-        System.out.println("  觸發從牌庫搜索效果");
+            System.out.println("  觸發從牌庫搜索效果");
         
         // 解析效果描述，尋找要搜索的卡牌類型或名稱
         String searchTarget = null;
@@ -774,9 +774,9 @@ public class CardEffectImpl implements CardEffect {
         }
         
         // 使用正則表達式提取糖爆效果描述
-        Matcher matcher = SUGAR_CRASH_PATTERN.matcher(description);
+            Matcher matcher = SUGAR_CRASH_PATTERN.matcher(description);
         
-        if (matcher.find()) {
+            if (matcher.find()) {
             String effectDescription = matcher.group(1);
             System.out.println("  糖爆效果描述: " + effectDescription);
             
@@ -885,7 +885,7 @@ public class CardEffectImpl implements CardEffect {
                     self.heal(healAmount);
                     System.out.println("  為自己回復了 " + healAmount + " 點生命值");
                     return healAmount;
-                } else {
+            } else {
                     System.out.println("  沒有有效目標，無法回復生命值");
                     return 1;
                 }
@@ -905,8 +905,13 @@ public class CardEffectImpl implements CardEffect {
         // 處理滋補效果（回合結束時回滿血量）
         if (card.getDescription().contains("【滋補】")) {
             int healAmount = card.getMaxHealth() - card.getCurrentHealth();
-            System.out.println("【滋補】效果恢復生命值: " + healAmount);
-            return healAmount;
+            if (healAmount > 0) {
+                System.out.println(card.getName() + " 的【滋補】效果恢復生命值: " + healAmount);
+                return healAmount;
+            } else {
+                System.out.println(card.getName() + " 的【滋補】效果觸發，但已滿血");
+                return 0;
+            }
         }
         return 0;
     }
