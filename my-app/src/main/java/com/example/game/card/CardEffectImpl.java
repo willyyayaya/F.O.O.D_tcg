@@ -757,11 +757,11 @@ public class CardEffectImpl implements CardEffect {
     public int processFrostedEffect(Card card, int damage) {
         // 處理糖霜效果（抵擋一次攻擊）
         if (card.getDescription().contains("【糖霜】")) {
-            System.out.println("【糖霜】效果抵擋一次攻擊");
-            // 需要在遊戲中記錄已使用過糖霜效果的狀態
-            return 0;
+            System.out.println("【糖霜】效果觸發，完全抵擋這次攻擊的" + damage + "點傷害");
+            // CharacterCard.takeDamage方法中已經處理了hasFrostedEffect = false的邏輯
+            return 0; // 返回0表示完全抵擋傷害
         }
-        return damage;
+        return damage; // 如果沒有糖霜效果，返回原始傷害值
     }
     
     @Override
