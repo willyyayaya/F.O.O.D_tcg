@@ -354,52 +354,11 @@ public class CardEffectImpl implements CardEffect {
             // 處理對敵方角色造成傷害的效果
             if (effectDescription.contains("造成") && effectDescription.contains("點傷害")) {
                 Player opponent = player.getOpponent();
-                if (opponent != null) {
-                    // 對單一敵方角色造成傷害 (需要選擇目標)
-                    if (effectDescription.contains("對一個敵方角色造成")) {
-                        Pattern damagePattern = Pattern.compile("對一個敵方角色造成(\\d+)點傷害");
-                        Matcher damageMatcher = damagePattern.matcher(effectDescription);
-                        if (damageMatcher.find()) {
-                            int damageAmount = Integer.parseInt(damageMatcher.group(1));
-                            System.out.println("  觸發對敵方角色造成傷害效果: " + damageAmount + "點");
-                            
-                            // 使用TargetSelector選擇敵方目標
-                            CharacterCard target = TargetSelector.selectEnemyCharacter(
-                                player,
-                                opponent,
-                                "【回味】效果 - 選擇一個敵方角色造成" + damageAmount + "點傷害"
-                            );
-                            
-                            // 應用傷害效果
-                            if (target != null) {
-                                boolean survived = target.takeDamage(damageAmount);
-                                System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
-                                        " 點傷害" + (survived ? "" : "，已被摧毀！"));
-                            } else {
-                                System.out.println("  取消了傷害效果");
-                            }
-                        }
-                    }
-                    // 對所有敵方角色造成傷害 (直接整合 processDeathDamageEffect 方法的功能)
-                    else if (effectDescription.contains("對所有敵方角色造成")) {
-                        Pattern damagePattern = Pattern.compile("對所有敵方角色造成(\\d+)點傷害");
-                        Matcher damageMatcher = damagePattern.matcher(effectDescription);
-                        if (damageMatcher.find()) {
-                            int damageAmount = Integer.parseInt(damageMatcher.group(1));
-                            System.out.println("  觸發對所有敵方角色造成傷害效果: " + damageAmount + "點");
-                            
-                            List<CharacterCard> targets = TargetSelector.selectAllEnemyCharacters(opponent);
-                            for (CharacterCard target : targets) {
-                                boolean survived = target.takeDamage(damageAmount);
-                                System.out.println("  " + target.getName() + " 受到了 " + damageAmount + 
-                                        " 點傷害" + (survived ? "" : "，已被摧毀！"));
-                            }
-                        }
-                    } else {
-                        System.out.println("  無法確定傷害目標，無法處理傷害效果");
-                    }
+                if (opponent != null && card instanceof CharacterCard) {
+                    CharacterCard character = (CharacterCard) card;
+                    processDamageEffect(character, player, opponent, effectDescription);
                 } else {
-                    System.out.println("  無法確定敵方玩家，無法處理傷害效果");
+                    System.out.println("  無法確定敵方玩家或不是角色卡，無法處理傷害效果");
                 }
             }
             
