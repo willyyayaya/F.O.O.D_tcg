@@ -284,10 +284,137 @@ public class CardEffectImpl implements CardEffect {
      * 處理搜索牌庫的效果
      */
     private void processSearchDeckEffect(Player player, String effectDescription) {
-        if (effectDescription.contains("從牌庫中抽取")) {
-            System.out.println("  觸發從牌庫搜索效果");
-            System.out.println("  (需要實現具體的牌庫搜索邏輯)");
+        System.out.println("  觸發從牌庫搜索效果");
+        
+        // 解析效果描述，尋找要搜索的卡牌類型或名稱
+        String searchTarget = null;
+        int cardCount = 1; // 預設抽取一張卡牌
+        
+        // 搜索單一卡牌類型（例如：從牌庫中抽取一張角色卡）
+        if (effectDescription.contains("從牌庫中抽取") || effectDescription.contains("從牌庫中搜索")) {
+            Pattern cardTypePattern = Pattern.compile("從牌庫中(?:抽取|搜索)(?:一張|([0-9]+)張)?(?:的)?([^，。]+)(?:卡)?");
+            Matcher cardTypeMatcher = cardTypePattern.matcher(effectDescription);
+            
+            if (cardTypeMatcher.find()) {
+                String countStr = cardTypeMatcher.group(1);
+                if (countStr != null && !countStr.isEmpty()) {
+                    cardCount = Integer.parseInt(countStr);
+                }
+                
+                searchTarget = cardTypeMatcher.group(2).trim();
+                System.out.println("  將從牌庫中尋找 " + cardCount + " 張" + searchTarget);
+                
+                // 從牌庫中搜索指定類型的卡牌
+                List<Card> foundCards = searchCardsFromDeck(player, searchTarget, cardCount);
+                
+                if (!foundCards.isEmpty()) {
+                    System.out.println("  找到了 " + foundCards.size() + " 張符合條件的卡牌");
+                    
+                    // 將找到的卡牌加入手牌
+                    for (Card card : foundCards) {
+                        player.addCardToHand(card);
+                        System.out.println("  將 " + card.getName() + " 加入手牌");
+                    }
+                } else {
+                    System.out.println("  在牌庫中未找到任何符合 '" + searchTarget + "' 的卡牌");
+                }
+            }
         }
+        
+        // 如果沒有找到任何匹配條件，則直接抽一張牌
+        if (searchTarget == null) {
+            System.out.println("  無法解析具體搜索條件，直接抽一張牌");
+            player.drawCard();
+        }
+    }
+    
+    /**
+     * 從牌庫中搜索指定類型的卡牌
+     * @param player 玩家
+     * @param searchTarget 搜索目標（類型或名稱）
+     * @param count 需要搜索的數量
+     * @return 找到的卡牌列表
+     */
+    private List<Card> searchCardsFromDeck(Player player, String searchTarget, int count) {
+        List<Card> result = new ArrayList<>();
+        List<Card> deck = player.getDeck().getCards();
+        
+        if (deck.isEmpty()) {
+            return result; // 牌庫為空
+        }
+        
+        // 搜索邏輯
+        // 1. 先根據卡牌類型過濾（角色卡、法術卡、場地卡等）
+        // 2. 如果是根據名稱搜索，則直接匹配名稱
+        // 3. 如果是根據特定效果搜索，則檢查卡牌描述
+        
+        for (Card card : deck) {
+            boolean matches = false;
+            
+            // 根據類型匹配
+            if (searchTarget.contains("角色") && card instanceof CharacterCard) {
+                matches = true;
+            } else if (searchTarget.contains("法術") && card.getType() == CardType.FIELD) {
+                matches = true;
+            } else if (searchTarget.contains("場地") && card instanceof FieldCard) {
+                matches = true;
+            } else if (searchTarget.contains("任務") && card.getType() == CardType.QUEST) {
+                matches = true;
+            } else if (searchTarget.contains("城堡") && card instanceof CastleCard) {
+                matches = true;
+            }
+            // 根據陣營匹配
+            else if (searchTarget.contains("火辣王國") && card.getFaction() == Faction.SPICY_KINGDOM) {
+                matches = true;
+            } else if (searchTarget.contains("健康綠洲") && card.getFaction() == Faction.HEALTHY_OASIS) {
+                matches = true;
+            } else if (searchTarget.contains("速食工會") && card.getFaction() == Faction.FAST_FOOD_GUILD) {
+                matches = true;
+            } else if (searchTarget.contains("甜點聯盟") && card.getFaction() == Faction.DESSERT_UNION) {
+                matches = true;
+            } else if (searchTarget.contains("中立") && card.getFaction() == Faction.NEUTRAL) {
+                matches = true;
+            }
+            // 根據稀有度匹配
+            else if (searchTarget.contains("傳說") && card.getRarity() == Rarity.LEGENDARY) {
+                matches = true;
+            } else if (searchTarget.contains("史詩") && card.getRarity() == Rarity.EPIC) {
+                matches = true;
+            } else if (searchTarget.contains("稀有") && card.getRarity() == Rarity.RARE) {
+                matches = true;
+            } else if (searchTarget.contains("普通") && card.getRarity() == Rarity.COMMON) {
+                matches = true;
+            }
+            // 根據名稱或描述匹配
+            else if (card.getName().contains(searchTarget) || 
+                     card.getDescription().contains(searchTarget)) {
+                matches = true;
+            }
+            // 根據費用匹配
+            else if (searchTarget.contains("費用") || searchTarget.contains("Token")) {
+                Pattern costPattern = Pattern.compile("(\\d+)(?:費用|Token)");
+                Matcher costMatcher = costPattern.matcher(searchTarget);
+                if (costMatcher.find()) {
+                    int cost = Integer.parseInt(costMatcher.group(1));
+                    if (card.getTokenCost() == cost) {
+                        matches = true;
+                    }
+                }
+            }
+            
+            if (matches) {
+                result.add(card);
+                // 從牌庫中移除找到的卡牌
+                player.getDeck().removeCard(card);
+                
+                // 如果已找到足夠數量的卡牌，則停止搜索
+                if (result.size() >= count) {
+                    break;
+                }
+            }
+        }
+        
+        return result;
     }
     
     @Override

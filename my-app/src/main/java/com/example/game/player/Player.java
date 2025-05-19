@@ -563,4 +563,15 @@ public class Player {
     public Player getOpponent() {
         return opponent;
     }
+    
+    /**
+     * 直接將卡牌添加到手牌中，用於搜索牌庫效果
+     * @param card 要添加的卡牌
+     */
+    public void addCardToHand(Card card) {
+        if (card != null) {
+            hand.add(card);
+            System.out.println(name + " 將卡牌 " + card.getName() + " 加入手牌");
+        }
+    }
 } 

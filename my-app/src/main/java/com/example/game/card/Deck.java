@@ -475,4 +475,21 @@ public class Deck {
         cards.add(card);
         return true;
     }
+    
+    /**
+     * 獲取牌組中的所有卡牌
+     * @return 牌組中的卡牌列表
+     */
+    public List<Card> getCards() {
+        return cards;
+    }
+    
+    /**
+     * 從牌組中移除指定卡牌
+     * @param card 要移除的卡牌
+     * @return 移除是否成功
+     */
+    public boolean removeCard(Card card) {
+        return cards.remove(card);
+    }
 } 
