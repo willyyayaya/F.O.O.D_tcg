@@ -885,7 +885,7 @@ public class CardEffectImpl implements CardEffect {
                     self.heal(healAmount);
                     System.out.println("  為自己回復了 " + healAmount + " 點生命值");
                     return healAmount;
-            } else {
+                } else {
                     System.out.println("  沒有有效目標，無法回復生命值");
                     return 1;
                 }
@@ -921,8 +921,8 @@ public class CardEffectImpl implements CardEffect {
         // 處理清淡效果（滿血時無法攻擊）
         if (card.getDescription().contains("【清淡】")) {
             boolean isFullHealth = card.getCurrentHealth() >= card.getMaxHealth();
-            System.out.println("【清淡】效果檢查: " + (isFullHealth ? "滿血，無法攻擊" : "可以攻擊"));
-            return !isFullHealth; // 滿血時返回false，表示不能攻擊
+            System.out.println("【清淡】效果檢查: " + (isFullHealth ? "滿血，無法攻擊" : "不滿血，可以攻擊"));
+            return !isFullHealth; // 滿血時返回false（不能攻擊），不滿血時返回true（可以攻擊）
         }
         return true; // 沒有清淡效果，可以攻擊
     }
