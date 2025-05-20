@@ -161,21 +161,7 @@ public class BattlefieldZone {
             } else {
                 for (int i = 0; i < fieldCards.size(); i++) {
                     FieldCard card = fieldCards.get(i);
-                    
-                    String fieldTypeInfo = "";
-                    switch (card.getFieldType()) {
-                        case COOKING_TECHNIQUE:
-                            fieldTypeInfo = "[烹飪技術]";
-                            break;
-                        case COOKING_TOOL:
-                            fieldTypeInfo = "[料理工具]";
-                            break;
-                        case ENVIRONMENT:
-                            fieldTypeInfo = "[環境]";
-                            break;
-                    }
-                    
-                    System.out.println("  " + (i+1) + ". " + card.getName() + " " + fieldTypeInfo);
+                    System.out.println("  " + (i+1) + ". " + card.getName() + " [環境]");
                 }
             }
         }

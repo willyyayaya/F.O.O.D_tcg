@@ -604,21 +604,9 @@ public class CardLibrary {
                             getRaritySymbol(character.getRarity()));
                 } else if (card instanceof FieldCard) {
                     FieldCard fieldCard = (FieldCard) card;
-                    String fieldTypeInfo = "";
-                    switch (fieldCard.getFieldType()) {
-                        case COOKING_TECHNIQUE:
-                            fieldTypeInfo = "[烹飪技術]";
-                            break;
-                        case COOKING_TOOL:
-                            fieldTypeInfo = "[料理工具]";
-                            break;
-                        case ENVIRONMENT:
-                            fieldTypeInfo = "[環境]";
-                            break;
-                    }
-                    System.out.printf("%2d. %-15s [費用:%d] %s %s\n", 
+                    System.out.printf("%2d. %-15s [費用:%d] [環境] %s\n", 
                             i+1, fieldCard.getName(), fieldCard.getTokenCost(), 
-                            fieldTypeInfo, getRaritySymbol(fieldCard.getRarity()));
+                            getRaritySymbol(fieldCard.getRarity()));
                 }
             }
             

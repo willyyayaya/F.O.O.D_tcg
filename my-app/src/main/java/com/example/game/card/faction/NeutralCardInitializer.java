@@ -479,7 +479,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allFieldCards.add(herbGarden);
 
         FieldCard spiceMarket = FieldCard.createEnvironmentField(
-            "香料市集", 4, "每回合開始時，使一個友方角色獲得【開胃】效果。", 
+            "香料市集", 4, "每回合開始時，使一個友方角色獲得+2攻擊力直到回合結束。", 
             Rarity.RARE, 3, Faction.NEUTRAL);
         allCards.put(spiceMarket.getName(), spiceMarket);
         allFieldCards.add(spiceMarket);
