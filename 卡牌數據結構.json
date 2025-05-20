@@ -1,0 +1,408 @@
+{
+  "card_template": {
+    "id": "unique_card_id",
+    "name": {
+      "zh_tw": "卡牌名稱",
+      "en_us": "Card Name"
+    },
+    "type": {
+      "zh_tw": "角色卡",
+      "en_us": "Character"
+    },
+    "rarity": "Common",
+    "point": 0,
+    "mana": 0,
+    "faction": {
+      "zh_tw": "陣營名稱",
+      "en_us": "Faction Name"
+    },
+    "sub_type": {
+      "zh_tw": "子類型",
+      "en_us": "Sub Type"
+    },
+    "detail": {
+      "zh_tw": "卡牌說明",
+      "en_us": "Card Detail"
+    },
+    "attributes": {
+      "attack": 0,
+      "life": 0
+    },
+    "keywords": [
+      {
+        "zh_tw": "關鍵字1",
+        "en_us": "Keyword1"
+      }
+    ],
+    "flavor_text": {
+      "zh_tw": "世界觀描述",
+      "en_us": "Worldview text"
+    },
+    "image_url": "path/to/image.jpg"
+  },
+  "keywords": {
+    "fresh_fried": {
+      "zh_tw": "現炸",
+      "en_us": "Fresh-Fried",
+      "description": {
+        "zh_tw": "可立即攻擊(不受召喚疲勞限制)",
+        "en_us": "Can attack immediately (ignores summoning sickness)"
+      }
+    },
+    "spicy_burn": {
+      "zh_tw": "嗆辣",
+      "en_us": "Spicy Burn",
+      "description": {
+        "zh_tw": "每回合結束損失一點生命值",
+        "en_us": "Lose 1 health at the end of each turn"
+      }
+    },
+    "overheat": {
+      "zh_tw": "爆炒",
+      "en_us": "Overheat",
+      "description": {
+        "zh_tw": "直接消滅攻擊力低於特定值的單位",
+        "en_us": "Destroy units with attack value lower than a specific threshold"
+      }
+    },
+    "frosted": {
+      "zh_tw": "糖霜",
+      "en_us": "Frosted",
+      "description": {
+        "zh_tw": "抵擋一次攻擊的所有傷害",
+        "en_us": "Block all damage from the first attack"
+      }
+    },
+    "sugar_crash": {
+      "zh_tw": "糖爆",
+      "en_us": "Sugar Crash",
+      "description": {
+        "zh_tw": "可激活特殊技能，但之後會進入疲勞狀態1回合",
+        "en_us": "Can activate special abilities, but becomes exhausted for 1 turn afterward"
+      }
+    },
+    "nourishing": {
+      "zh_tw": "滋補",
+      "en_us": "Nourishing",
+      "description": {
+        "zh_tw": "回合結束時恢復1點生命",
+        "en_us": "Heals 1 health at the end of your turn"
+      }
+    },
+    "bland": {
+      "zh_tw": "清淡",
+      "en_us": "Bland",
+      "description": {
+        "zh_tw": "若滿血狀態可攻擊兩次",
+        "en_us": "Can attack twice if at full health"
+      }
+    },
+    "garnished": {
+      "zh_tw": "擺盤",
+      "en_us": "Garnished",
+      "description": {
+        "zh_tw": "無法被敵人優先指定為攻擊目標",
+        "en_us": "Cannot be prioritized as an attack target"
+      }
+    },
+    "greasy": {
+      "zh_tw": "油膩",
+      "en_us": "Greasy",
+      "description": {
+        "zh_tw": "攻擊後使目標移動力-1",
+        "en_us": "Reduces target's movement by 1 after attacking"
+      }
+    },
+    "crispy": {
+      "zh_tw": "酥脆",
+      "en_us": "Crispy",
+      "description": {
+        "zh_tw": "可承受一次致命傷害而存活",
+        "en_us": "Can survive one lethal damage"
+      }
+    },
+    "chewy_bite": {
+      "zh_tw": "彈牙",
+      "en_us": "Chewy Bite",
+      "description": {
+        "zh_tw": "受到攻擊後立即反擊",
+        "en_us": "Counterattacks immediately when attacked"
+      }
+    },
+    "bursting": {
+      "zh_tw": "爆汁",
+      "en_us": "Bursting",
+      "description": {
+        "zh_tw": "死亡時對周圍所有單位造成1點傷害",
+        "en_us": "Deals 1 damage to all adjacent units when destroyed"
+      }
+    },
+    "aftertaste": {
+      "zh_tw": "回味",
+      "en_us": "Aftertaste",
+      "description": {
+        "zh_tw": "死亡時觸發特殊效果",
+        "en_us": "Triggers a special effect when destroyed"
+      }
+    },
+    "appetizer": {
+      "zh_tw": "開胃",
+      "en_us": "Appetizer",
+      "description": {
+        "zh_tw": "進場時觸發特殊效果",
+        "en_us": "Triggers a special effect when played"
+      }
+    },
+    "platter": {
+      "zh_tw": "拼盤",
+      "en_us": "Platter",
+      "description": {
+        "zh_tw": "可同時擁有多個食物效果",
+        "en_us": "Can have multiple food effects simultaneously"
+      }
+    }
+  },
+  "factions": {
+    "spicy_kingdom": {
+      "zh_tw": "火辣王國",
+      "en_us": "Spicy Kingdom",
+      "description": {
+        "zh_tw": "擅長攻擊性戰術，主要關鍵字為嗆辣和爆炒",
+        "en_us": "Specializes in aggressive tactics, primary keywords are Spicy Burn and Overheat"
+      },
+      "primary_keywords": ["spicy_burn", "overheat", "fresh_fried"],
+      "color_theme": "#FF5733"
+    },
+    "dessert_alliance": {
+      "zh_tw": "甜點聯盟",
+      "en_us": "Dessert Alliance",
+      "description": {
+        "zh_tw": "擅長防禦策略，主要關鍵字為糖霜和糖爆",
+        "en_us": "Specializes in defensive strategies, primary keywords are Frosted and Sugar Crash"
+      },
+      "primary_keywords": ["frosted", "sugar_crash", "garnished"],
+      "color_theme": "#FF9CEE"
+    },
+    "healthy_oasis": {
+      "zh_tw": "健康綠洲",
+      "en_us": "Healthy Oasis",
+      "description": {
+        "zh_tw": "擅長持續性效果，主要關鍵字為滋補和清淡",
+        "en_us": "Specializes in sustain effects, primary keywords are Nourishing and Bland"
+      },
+      "primary_keywords": ["nourishing", "bland", "appetizer"],
+      "color_theme": "#4CAF50"
+    },
+    "fast_food_guild": {
+      "zh_tw": "速食工會",
+      "en_us": "Fast Food Guild",
+      "description": {
+        "zh_tw": "擅長快速出擊，主要關鍵字為現炸和油膩",
+        "en_us": "Specializes in quick attacks, primary keywords are Fresh-Fried and Greasy"
+      },
+      "primary_keywords": ["fresh_fried", "greasy", "chewy_bite"],
+      "color_theme": "#FFC107"
+    },
+    "neutral": {
+      "zh_tw": "通用",
+      "en_us": "Neutral",
+      "description": {
+        "zh_tw": "可用於任何陣營的通用卡牌",
+        "en_us": "Generic cards that can be used with any faction"
+      },
+      "primary_keywords": [],
+      "color_theme": "#9E9E9E"
+    }
+  },
+  "card_types": {
+    "character": {
+      "zh_tw": "角色卡",
+      "en_us": "Character",
+      "description": {
+        "zh_tw": "可派上戰場的單位，擁有攻擊力和生命值",
+        "en_us": "Units that can be deployed on the battlefield with attack and health values"
+      }
+    },
+    "spell": {
+      "zh_tw": "法術卡",
+      "en_us": "Spell",
+      "description": {
+        "zh_tw": "產生即時效果的卡牌",
+        "en_us": "Cards that produce immediate effects"
+      }
+    },
+    "field": {
+      "zh_tw": "場地卡",
+      "en_us": "Field",
+      "description": {
+        "zh_tw": "影響整個戰場的持續性效果",
+        "en_us": "Continuous effects that affect the entire battlefield"
+      }
+    },
+    "castle": {
+      "zh_tw": "城堡卡",
+      "en_us": "Castle",
+      "description": {
+        "zh_tw": "代表玩家主堡的防禦建築",
+        "en_us": "Defensive structures representing player's main castle"
+      }
+    }
+  },
+  "rarities": {
+    "common": {
+      "zh_tw": "普通",
+      "en_us": "Common",
+      "color": "#C0C0C0",
+      "probability": 0.5
+    },
+    "rare": {
+      "zh_tw": "稀有",
+      "en_us": "Rare",
+      "color": "#0070DD",
+      "probability": 0.3
+    },
+    "epic": {
+      "zh_tw": "史詩",
+      "en_us": "Epic",
+      "color": "#A335EE",
+      "probability": 0.15
+    },
+    "legendary": {
+      "zh_tw": "傳說",
+      "en_us": "Legendary",
+      "color": "#FF8000",
+      "probability": 0.05
+    }
+  },
+  "sample_cards": [
+    {
+      "id": "SK_001",
+      "name": {
+        "zh_tw": "辣椒騎士",
+        "en_us": "Pepper Knight"
+      },
+      "type": {
+        "zh_tw": "角色卡",
+        "en_us": "Character"
+      },
+      "rarity": "Common",
+      "point": 2,
+      "mana": 2,
+      "faction": {
+        "zh_tw": "火辣王國",
+        "en_us": "Spicy Kingdom"
+      },
+      "detail": {
+        "zh_tw": "嗆辣：攻擊時對目標造成1點額外傷害",
+        "en_us": "Spicy Burn: Deals 1 extra damage when attacking"
+      },
+      "attributes": {
+        "attack": 3,
+        "life": 2
+      },
+      "keywords": [
+        {
+          "zh_tw": "嗆辣",
+          "en_us": "Spicy Burn"
+        }
+      ],
+      "flavor_text": {
+        "zh_tw": "他的劍帶著火辣辣的味道，讓敵人感到刺痛！",
+        "en_us": "His sword carries a spicy taste that stings his enemies!"
+      }
+    },
+    {
+      "id": "DA_001",
+      "name": {
+        "zh_tw": "草莓蛋糕戰士",
+        "en_us": "Strawberry Cake Warrior"
+      },
+      "type": {
+        "zh_tw": "角色卡",
+        "en_us": "Character"
+      },
+      "rarity": "Common",
+      "point": 1,
+      "mana": 1,
+      "faction": {
+        "zh_tw": "甜點聯盟",
+        "en_us": "Dessert Alliance"
+      },
+      "detail": {
+        "zh_tw": "無特殊能力",
+        "en_us": "No special abilities"
+      },
+      "attributes": {
+        "attack": 2,
+        "life": 3
+      },
+      "keywords": [],
+      "flavor_text": {
+        "zh_tw": "甜美的外表下隱藏著強大的力量！",
+        "en_us": "Great power hides beneath the sweet appearance!"
+      }
+    },
+    {
+      "id": "HO_001",
+      "name": {
+        "zh_tw": "沙拉勇者",
+        "en_us": "Salad Hero"
+      },
+      "type": {
+        "zh_tw": "角色卡",
+        "en_us": "Character"
+      },
+      "rarity": "Common",
+      "point": 1,
+      "mana": 1,
+      "faction": {
+        "zh_tw": "健康綠洲",
+        "en_us": "Healthy Oasis"
+      },
+      "detail": {
+        "zh_tw": "無特殊能力",
+        "en_us": "No special abilities"
+      },
+      "attributes": {
+        "attack": 2,
+        "life": 3
+      },
+      "keywords": [],
+      "flavor_text": {
+        "zh_tw": "蔬菜的力量賦予他強大的生命力！",
+        "en_us": "The power of vegetables gives him great vitality!"
+      }
+    },
+    {
+      "id": "FFG_001",
+      "name": {
+        "zh_tw": "漢堡小子",
+        "en_us": "Burger Kid"
+      },
+      "type": {
+        "zh_tw": "角色卡",
+        "en_us": "Character"
+      },
+      "rarity": "Common",
+      "point": 1,
+      "mana": 1,
+      "faction": {
+        "zh_tw": "速食工會",
+        "en_us": "Fast Food Guild"
+      },
+      "detail": {
+        "zh_tw": "無特殊能力",
+        "en_us": "No special abilities"
+      },
+      "attributes": {
+        "attack": 2,
+        "life": 2
+      },
+      "keywords": [],
+      "flavor_text": {
+        "zh_tw": "快速出餐，快速戰鬥！",
+        "en_us": "Quick serving, quick fighting!"
+      }
+    }
+  ]
+} 
