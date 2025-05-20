@@ -413,16 +413,6 @@ public class CharacterCard extends Card {
         }
     }
     
-    // 兼容性方法，支援舊系統
-    public int getManaCost() {
-        return getTokenCost();
-    }
-    
-    // 兼容性方法，與Minion類兼容
-    public int getHealth() {
-        return currentHealth;
-    }
-    
     /**
      * 設置卡牌擁有者
      * @param owner 玩家
