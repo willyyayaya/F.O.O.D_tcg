@@ -254,7 +254,7 @@ public class SpellCard extends Card {
     
     private void applyHealing(Player player, CharacterCard target) {
         if (target == null) {
-            // 治療自己
+        // 治療自己
             if (player.getHealth() < player.getMaxHealth()) {
                 int healAmount = value;
                 player.heal(healAmount);
