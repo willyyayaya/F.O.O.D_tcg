@@ -1,7 +1,8 @@
 package com.example.game.card;
 
-import com.example.game.player.Player;
 import java.util.List;
+
+import com.example.game.player.Player;
 
 /**
  * 法術卡 - 一次性效果的卡牌
@@ -325,7 +326,7 @@ public class SpellCard extends Card {
         
         // 增加攻擊力和防禦力
         target.increaseAttack(buffValue);
-        target.increaseDefense(buffValue);
+        target.increaseCrispyValue(buffValue);
         
         // 如果有酥脆效果，也增加酥脆值
         if (target.getCrispyValue() > 0) {
@@ -356,19 +357,14 @@ public class SpellCard extends Card {
             System.out.println("陣營克制效果：減益效果提高至 " + debuffValue);
         }
         
-        // 減少目標的攻擊力和防禦力
-        // 注意：實際修改應該檢查最小值，避免屬性變為負數
+        // 減少目標的攻擊力
         int newAttack = Math.max(1, target.getAttack() - debuffValue);
-        int newDefense = Math.max(0, target.getDefense() - debuffValue);
         int attackReduction = target.getAttack() - newAttack;
-        int defenseReduction = target.getDefense() - newDefense;
         
-        // 設置新的數值（需要在CharacterCard中添加setAttack和setDefense方法）
-        // 為簡化代碼，這裡直接使用增加負值的方式實現
+        // 設置新的數值
         target.increaseAttack(-attackReduction);
-        target.increaseDefense(-defenseReduction);
         
-        System.out.println(target.getName() + " 受到了 -" + attackReduction + "/-" + defenseReduction + " 的減益效果");
+        System.out.println(target.getName() + " 受到了 -" + attackReduction + " 攻擊力的減益效果");
         
         // 持續效果處理
         if (effectDuration > 1) {
@@ -394,7 +390,7 @@ public class SpellCard extends Card {
         
         // 更新目標屬性
         target.increaseAttack(-target.getAttack() + newAttack); // 將攻擊力設為value
-        target.increaseDefense(-target.getDefense() + newDefense); // 將防禦力設為value
+        target.increaseCrispyValue(-target.getCrispyValue() + newDefense); // 將酥脆值設為value
         
         // 生命值需要特殊處理，應避免超過最大值
         // 這裡假設有一個setCurrentHealth方法

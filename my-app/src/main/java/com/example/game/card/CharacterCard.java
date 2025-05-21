@@ -10,7 +10,6 @@ import com.example.game.player.Player;
  */
 public class CharacterCard extends Card {
     private int attack;         // 攻擊力
-    private int defense;        // 防禦力
     private int maxHealth;      // 最大生命值
     private int currentHealth;  // 當前生命值
     private boolean isOffensive; // 是否為進攻型角色
@@ -37,15 +36,14 @@ public class CharacterCard extends Card {
     private boolean usedChewBiteEffect = false; // 是否已使用彈牙效果
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
-                        int attack, int defense, int maxHealth, boolean isOffensive) {
-        this(name, tokenCost, description, rarity, attack, defense, maxHealth, isOffensive, Faction.NEUTRAL);
+                        int attack, int maxHealth, boolean isOffensive) {
+        this(name, tokenCost, description, rarity, attack, maxHealth, isOffensive, Faction.NEUTRAL);
     }
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
-                        int attack, int defense, int maxHealth, boolean isOffensive, Faction faction) {
+                        int attack, int maxHealth, boolean isOffensive, Faction faction) {
         super(name, tokenCost, description, rarity, CardType.CHARACTER, faction);
         this.attack = attack;
-        this.defense = defense;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;
         this.isOffensive = isOffensive;
@@ -186,8 +184,8 @@ public class CharacterCard extends Card {
             return 0;
         }
         
-        // 計算實際傷害，考慮目標防禦力
-        int damage = Math.max(0, this.attack - target.getDefense());
+        // 計算實際傷害
+        int damage = this.attack;
         
         // 處理攻擊
         boolean targetKilled = !target.takeDamage(damage);
@@ -345,15 +343,6 @@ public class CharacterCard extends Card {
     }
     
     /**
-     * 增加防禦力
-     * @param amount 增加量
-     */
-    public void increaseDefense(int amount) {
-        this.defense += amount;
-        System.out.println(name + " 的防禦力提升了 " + amount + "，現在為: " + defense);
-    }
-    
-    /**
      * 添加糖霜效果
      */
     public void addFrostedEffect() {
@@ -364,10 +353,6 @@ public class CharacterCard extends Card {
     // Getters
     public int getAttack() {
         return attack;
-    }
-    
-    public int getDefense() {
-        return defense;
     }
     
     public int getCurrentHealth() {
@@ -397,7 +382,6 @@ public class CharacterCard extends Card {
     @Override
     protected void displaySpecificDetails() {
         System.out.println("攻擊力: " + attack);
-        System.out.println("防禦力: " + defense);
         System.out.println("生命值: " + currentHealth + "/" + maxHealth);
         System.out.println("類別: " + (isOffensive ? "進攻型" : "防禦型"));
         
