@@ -330,6 +330,255 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCards.put(cordycepsMage.getName(), cordycepsMage);
         allCharacters.add(cordycepsMage);
 
+        // 香料類食材
+        CharacterCard blackPepperWarrior = new CharacterCard(
+            "黑胡椒戰士", 2, "無特性", 
+            Rarity.COMMON, 3, 1, 3, true, Faction.NEUTRAL);
+        allCards.put(blackPepperWarrior.getName(), blackPepperWarrior);
+        allCharacters.add(blackPepperWarrior);
+
+        CharacterCard whitePepperArcher = new CharacterCard(
+            "白胡椒弓手", 3, "【彈牙】：每回合可攻擊2次。", 
+            Rarity.COMMON, 3, 2, 3, true, Faction.NEUTRAL);
+        allCards.put(whitePepperArcher.getName(), whitePepperArcher);
+        allCharacters.add(whitePepperArcher);
+
+        CharacterCard cinnamonGuard = new CharacterCard(
+            "肉桂守衛", 3, "【擺盤】：敵人必須優先攻擊這個單位。", 
+            Rarity.COMMON, 2, 4, 3, false, Faction.NEUTRAL);
+        allCards.put(cinnamonGuard.getName(), cinnamonGuard);
+        allCharacters.add(cinnamonGuard);
+
+        CharacterCard cuminMage = new CharacterCard(
+            "孜然法師", 3, "【開胃】：使一個友方角色獲得+1/+1。", 
+            Rarity.RARE, 2, 2, 3, true, Faction.NEUTRAL);
+        allCards.put(cuminMage.getName(), cuminMage);
+        allCharacters.add(cuminMage);
+
+        CharacterCard starAniseKnight = new CharacterCard(
+            "八角騎士", 4, "【酥脆(2)】：減免2點傷害。", 
+            Rarity.RARE, 3, 3, 4, false, Faction.NEUTRAL);
+        allCards.put(starAniseKnight.getName(), starAniseKnight);
+        allCharacters.add(starAniseKnight);
+
+        CharacterCard mustardAssassin = new CharacterCard(
+            "芥末刺客", 3, "【回味】：死亡時對一個敵方單位造成2點傷害。", 
+            Rarity.RARE, 4, 1, 3, true, Faction.NEUTRAL);
+        allCards.put(mustardAssassin.getName(), mustardAssassin);
+        allCharacters.add(mustardAssassin);
+
+        CharacterCard turmericPriest = new CharacterCard(
+            "薑黃祭司", 4, "【滋補】：回合結束時恢復2點生命值。", 
+            Rarity.RARE, 2, 3, 4, false, Faction.NEUTRAL);
+        allCards.put(turmericPriest.getName(), turmericPriest);
+        allCharacters.add(turmericPriest);
+
+        CharacterCard rosemaryGuardian = new CharacterCard(
+            "迷迭香衛士", 2, "無特性", 
+            Rarity.COMMON, 2, 2, 2, false, Faction.NEUTRAL);
+        allCards.put(rosemaryGuardian.getName(), rosemaryGuardian);
+        allCharacters.add(rosemaryGuardian);
+
+        CharacterCard basilMonk = new CharacterCard(
+            "羅勒隱士", 3, "【現炸】：可以在出場的回合立即攻擊。", 
+            Rarity.RARE, 3, 2, 3, true, Faction.NEUTRAL);
+        allCards.put(basilMonk.getName(), basilMonk);
+        allCharacters.add(basilMonk);
+
+        CharacterCard herbMaster = new CharacterCard(
+            "香草大師", 5, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時抽兩張牌。", 
+            Rarity.LEGENDARY, 3, 4, 5, false, Faction.NEUTRAL);
+        allCards.put(herbMaster.getName(), herbMaster);
+        allCharacters.add(herbMaster);
+
+        // 為各類食材添加無特性角色
+
+        // 根莖類無特性角色
+        CharacterCard plainRootVegetable = new CharacterCard(
+            "紅蘿蔔士兵", 1, "無特性", 
+            Rarity.COMMON, 2, 1, 2, true, Faction.NEUTRAL);
+        allCards.put(plainRootVegetable.getName(), plainRootVegetable);
+        allCharacters.add(plainRootVegetable);
+        
+        CharacterCard plainPotato = new CharacterCard(
+            "小馬鈴薯", 1, "無特性", 
+            Rarity.COMMON, 1, 1, 3, false, Faction.NEUTRAL);
+        allCards.put(plainPotato.getName(), plainPotato);
+        allCharacters.add(plainPotato);
+        
+        CharacterCard plainYam = new CharacterCard(
+            "山藥戰兵", 2, "無特性", 
+            Rarity.COMMON, 2, 3, 2, false, Faction.NEUTRAL);
+        allCards.put(plainYam.getName(), plainYam);
+        allCharacters.add(plainYam);
+        
+        CharacterCard plainTaro = new CharacterCard(
+            "芋頭衛士", 3, "無特性", 
+            Rarity.COMMON, 3, 3, 3, false, Faction.NEUTRAL);
+        allCards.put(plainTaro.getName(), plainTaro);
+        allCharacters.add(plainTaro);
+        
+        CharacterCard plainBurdock = new CharacterCard(
+            "牛蒡大將", 5, "無特性", 
+            Rarity.RARE, 5, 5, 5, false, Faction.NEUTRAL);
+        allCards.put(plainBurdock.getName(), plainBurdock);
+        allCharacters.add(plainBurdock);
+
+        // 豆類無特性角色
+        CharacterCard plainBean = new CharacterCard(
+            "豆芽哨兵", 1, "無特性", 
+            Rarity.COMMON, 1, 2, 2, true, Faction.NEUTRAL);
+        allCards.put(plainBean.getName(), plainBean);
+        allCharacters.add(plainBean);
+        
+        CharacterCard plainPea = new CharacterCard(
+            "豌豆兵", 1, "無特性", 
+            Rarity.COMMON, 2, 0, 2, true, Faction.NEUTRAL);
+        allCards.put(plainPea.getName(), plainPea);
+        allCharacters.add(plainPea);
+        
+        CharacterCard plainSoybean = new CharacterCard(
+            "黃豆守衛", 2, "無特性", 
+            Rarity.COMMON, 1, 3, 2, false, Faction.NEUTRAL);
+        allCards.put(plainSoybean.getName(), plainSoybean);
+        allCharacters.add(plainSoybean);
+        
+        CharacterCard plainLentil = new CharacterCard(
+            "扁豆勇士", 3, "無特性", 
+            Rarity.COMMON, 3, 3, 3, true, Faction.NEUTRAL);
+        allCards.put(plainLentil.getName(), plainLentil);
+        allCharacters.add(plainLentil);
+        
+        CharacterCard plainBroadBean = new CharacterCard(
+            "蠶豆將軍", 5, "無特性", 
+            Rarity.RARE, 4, 6, 5, false, Faction.NEUTRAL);
+        allCards.put(plainBroadBean.getName(), plainBroadBean);
+        allCharacters.add(plainBroadBean);
+
+        // 葉菜類無特性角色
+        CharacterCard plainLeafVegetable = new CharacterCard(
+            "菠菜見習生", 1, "無特性", 
+            Rarity.COMMON, 2, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(plainLeafVegetable.getName(), plainLeafVegetable);
+        allCharacters.add(plainLeafVegetable);
+        
+        CharacterCard plainCabbage = new CharacterCard(
+            "高麗菜小兵", 1, "無特性", 
+            Rarity.COMMON, 1, 3, 1, false, Faction.NEUTRAL);
+        allCards.put(plainCabbage.getName(), plainCabbage);
+        allCharacters.add(plainCabbage);
+        
+        CharacterCard plainLettuce = new CharacterCard(
+            "萵苣護衛", 2, "無特性", 
+            Rarity.COMMON, 2, 2, 2, false, Faction.NEUTRAL);
+        allCards.put(plainLettuce.getName(), plainLettuce);
+        allCharacters.add(plainLettuce);
+        
+        CharacterCard plainKale = new CharacterCard(
+            "羽衣甘藍守護者", 3, "無特性", 
+            Rarity.COMMON, 2, 4, 3, false, Faction.NEUTRAL);
+        allCards.put(plainKale.getName(), plainKale);
+        allCharacters.add(plainKale);
+        
+        CharacterCard plainSpinach = new CharacterCard(
+            "菠菜巨神兵", 5, "無特性", 
+            Rarity.RARE, 3, 7, 5, false, Faction.NEUTRAL);
+        allCards.put(plainSpinach.getName(), plainSpinach);
+        allCharacters.add(plainSpinach);
+
+        // 瓜果類無特性角色
+        CharacterCard plainFruit = new CharacterCard(
+            "小番茄衛兵", 1, "無特性", 
+            Rarity.COMMON, 1, 1, 3, false, Faction.NEUTRAL);
+        allCards.put(plainFruit.getName(), plainFruit);
+        allCharacters.add(plainFruit);
+        
+        CharacterCard plainMelon = new CharacterCard(
+            "迷你哈密瓜", 1, "無特性", 
+            Rarity.COMMON, 2, 1, 2, true, Faction.NEUTRAL);
+        allCards.put(plainMelon.getName(), plainMelon);
+        allCharacters.add(plainMelon);
+        
+        CharacterCard plainCucumber = new CharacterCard(
+            "黃瓜劍士", 2, "無特性", 
+            Rarity.COMMON, 3, 1, 2, true, Faction.NEUTRAL);
+        allCards.put(plainCucumber.getName(), plainCucumber);
+        allCharacters.add(plainCucumber);
+        
+        CharacterCard plainWatermelon = new CharacterCard(
+            "西瓜重兵", 3, "無特性", 
+            Rarity.COMMON, 2, 5, 3, false, Faction.NEUTRAL);
+        allCards.put(plainWatermelon.getName(), plainWatermelon);
+        allCharacters.add(plainWatermelon);
+        
+        CharacterCard plainPumpkin = new CharacterCard(
+            "南瓜霸王", 5, "無特性", 
+            Rarity.RARE, 4, 7, 5, false, Faction.NEUTRAL);
+        allCards.put(plainPumpkin.getName(), plainPumpkin);
+        allCharacters.add(plainPumpkin);
+
+        // 菇類無特性角色
+        CharacterCard plainMushroom = new CharacterCard(
+            "小蘑菇衛士", 1, "無特性", 
+            Rarity.COMMON, 2, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(plainMushroom.getName(), plainMushroom);
+        allCharacters.add(plainMushroom);
+        
+        CharacterCard plainButtonMushroom = new CharacterCard(
+            "白蘑菇學徒", 1, "無特性", 
+            Rarity.COMMON, 1, 2, 2, false, Faction.NEUTRAL);
+        allCards.put(plainButtonMushroom.getName(), plainButtonMushroom);
+        allCharacters.add(plainButtonMushroom);
+        
+        CharacterCard plainShiitake = new CharacterCard(
+            "香菇騎兵", 2, "無特性", 
+            Rarity.COMMON, 2, 3, 2, false, Faction.NEUTRAL);
+        allCards.put(plainShiitake.getName(), plainShiitake);
+        allCharacters.add(plainShiitake);
+        
+        CharacterCard plainOysterMushroom = new CharacterCard(
+            "秀珍菇指揮官", 3, "無特性", 
+            Rarity.COMMON, 3, 4, 3, false, Faction.NEUTRAL);
+        allCards.put(plainOysterMushroom.getName(), plainOysterMushroom);
+        allCharacters.add(plainOysterMushroom);
+        
+        CharacterCard plainKingOyster = new CharacterCard(
+            "杏鮑菇統帥", 5, "無特性", 
+            Rarity.RARE, 6, 4, 5, true, Faction.NEUTRAL);
+        allCards.put(plainKingOyster.getName(), plainKingOyster);
+        allCharacters.add(plainKingOyster);
+        
+        // 香料類無特性角色
+        CharacterCard plainVanilla = new CharacterCard(
+            "香草豆莢", 1, "無特性", 
+            Rarity.COMMON, 1, 1, 3, false, Faction.NEUTRAL);
+        allCards.put(plainVanilla.getName(), plainVanilla);
+        allCharacters.add(plainVanilla);
+        
+        CharacterCard plainGarlic = new CharacterCard(
+            "大蒜衛兵", 1, "無特性", 
+            Rarity.COMMON, 2, 1, 2, true, Faction.NEUTRAL);
+        allCards.put(plainGarlic.getName(), plainGarlic);
+        allCharacters.add(plainGarlic);
+        
+        CharacterCard plainGinger = new CharacterCard(
+            "老薑爺爺", 2, "無特性", 
+            Rarity.COMMON, 1, 4, 2, false, Faction.NEUTRAL);
+        allCards.put(plainGinger.getName(), plainGinger);
+        allCharacters.add(plainGinger);
+        
+        CharacterCard plainCinnamon = new CharacterCard(
+            "肉桂戰士", 3, "無特性", 
+            Rarity.COMMON, 4, 2, 3, true, Faction.NEUTRAL);
+        allCards.put(plainCinnamon.getName(), plainCinnamon);
+        allCharacters.add(plainCinnamon);
+        
+        CharacterCard plainStarAnise = new CharacterCard(
+            "八角大使", 5, "無特性", 
+            Rarity.RARE, 5, 5, 5, true, Faction.NEUTRAL);
+        allCards.put(plainStarAnise.getName(), plainStarAnise);
+        allCharacters.add(plainStarAnise);
+
         // 城牆回血法術
         SpellCard wallRepair = new SpellCard(
             "城牆修復", 2, "為一個城牆恢復3點生命值。", 
