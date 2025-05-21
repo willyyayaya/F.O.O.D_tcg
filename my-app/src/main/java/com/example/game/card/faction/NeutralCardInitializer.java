@@ -631,70 +631,71 @@ public class NeutralCardInitializer implements FactionCardInitializer {
 
         // 其他輔助法術
         SpellCard foodSupply = new SpellCard(
-            "食物補給", 2, "抽一張牌。", 
+            "食物補給", 2, "抽一張牌。根莖類連動：如果你控制至少一個根莖類角色，則再抽一張牌。", 
             Rarity.COMMON, SpellType.DRAW);
         allCards.put(foodSupply.getName(), foodSupply);
         allSpells.add(foodSupply);
 
-        SpellCard emergencyRations = new SpellCard(
-            "緊急口糧", 3, "抽兩張牌。", 
-            Rarity.COMMON, SpellType.DRAW);
-        allCards.put(emergencyRations.getName(), emergencyRations);
-        allSpells.add(emergencyRations);
-
         SpellCard foodStorage = new SpellCard(
-            "食物儲藏", 4, "抽三張牌。", 
+            "食物儲藏", 4, "抽三張牌。菇類連動：如果你控制至少一個菇類角色，則使其獲得+0/+2。", 
             Rarity.RARE, SpellType.DRAW);
         allCards.put(foodStorage.getName(), foodStorage);
         allSpells.add(foodStorage);
 
         SpellCard foodPreservation = new SpellCard(
-            "食物保存", 2, "使一個友方角色獲得+1/+1直到回合結束。", 
+            "食物保存", 2, "使一個友方角色獲得+1/+1直到回合結束。葉菜類連動：如果目標是葉菜類角色，則效果變為+2/+2。", 
             Rarity.COMMON, SpellType.BUFF);
         allCards.put(foodPreservation.getName(), foodPreservation);
         allSpells.add(foodPreservation);
 
         SpellCard foodEnhancement = new SpellCard(
-            "食物強化", 3, "使一個友方角色獲得+2/+2直到回合結束。", 
+            "食物強化", 3, "使一個友方角色獲得+2/+2直到回合結束。香料類連動：如果你控制至少一個香料類角色，則使所有友方角色獲得+1/+0。", 
             Rarity.RARE, SpellType.BUFF);
         allCards.put(foodEnhancement.getName(), foodEnhancement);
         allSpells.add(foodEnhancement);
 
         SpellCard foodBlessing = new SpellCard(
-            "食物祝福", 4, "使所有友方角色獲得+1/+1直到回合結束。", 
+            "食物祝福", 4, "使所有友方角色獲得+1/+1直到回合結束。瓜果類連動：如果你控制至少一個瓜果類角色，則額外獲得【彈牙】效果。", 
             Rarity.RARE, SpellType.BUFF);
         allCards.put(foodBlessing.getName(), foodBlessing);
         allSpells.add(foodBlessing);
 
         SpellCard foodCurse = new SpellCard(
-            "食物詛咒", 3, "使一個敵方角色獲得-1/-1直到回合結束。", 
+            "食物詛咒", 3, "使一個敵方角色獲得-1/-1直到回合結束。根莖類連動：如果你控制至少一個根莖類角色，則目標角色無法攻擊下回合。", 
             Rarity.COMMON, SpellType.DEBUFF);
         allCards.put(foodCurse.getName(), foodCurse);
         allSpells.add(foodCurse);
 
         SpellCard foodPoison = new SpellCard(
-            "食物中毒", 4, "使一個敵方角色獲得-2/-2直到回合結束。", 
+            "食物中毒", 4, "使一個敵方角色獲得-2/-2直到回合結束。菇類連動：如果你控制至少一個菇類角色，則目標角色每回合開始時受到1點傷害。", 
             Rarity.RARE, SpellType.DEBUFF);
         allCards.put(foodPoison.getName(), foodPoison);
         allSpells.add(foodPoison);
 
         SpellCard foodPlague = new SpellCard(
-            "食物瘟疫", 5, "使所有敵方角色獲得-1/-1直到回合結束。", 
+            "食物瘟疫", 5, "使所有敵方角色獲得-1/-1直到回合結束。豆類連動：如果你控制至少一個豆類角色，則敵方角色費用+1回合。", 
             Rarity.RARE, SpellType.DEBUFF);
         allCards.put(foodPlague.getName(), foodPlague);
         allSpells.add(foodPlague);
 
         SpellCard foodMiracle = new SpellCard(
-            "食物奇蹟", 6, "使一個友方角色獲得+3/+3直到回合結束。", 
+            "食物奇蹟", 6, "使一個友方角色獲得+3/+3直到回合結束。葉菜類連動：如果你控制至少一個葉菜類角色，則目標角色獲得【酥脆(2)】效果。", 
             Rarity.LEGENDARY, SpellType.BUFF);
         allCards.put(foodMiracle.getName(), foodMiracle);
         allSpells.add(foodMiracle);
 
         SpellCard foodApocalypse = new SpellCard(
-            "食物末日", 7, "使所有敵方角色獲得-2/-2直到回合結束。", 
+            "食物末日", 7, "使所有敵方角色獲得-2/-2直到回合結束。香料類連動：如果你控制至少一個香料類角色，則所有敵方角色失去其特殊能力。", 
             Rarity.LEGENDARY, SpellType.DEBUFF);
         allCards.put(foodApocalypse.getName(), foodApocalypse);
         allSpells.add(foodApocalypse);
+
+        // 特殊法術卡
+        SpellCard chefBlessing = new SpellCard(
+            "廚神祝福", 5, "計算場上你控制的不同食材類別數量。效果隨數量增強：1類-抽1張牌；2類-為所有友方角色恢復2點生命值；3類-所有友方角色獲得+1/+1；4類-對所有敵方角色造成2點傷害；5類-隨機召喚一個費用為3的角色；6類-你獲得一個額外的回合。", 
+            Rarity.LEGENDARY, SpellType.SPECIAL);
+        allCards.put(chefBlessing.getName(), chefBlessing);
+        allSpells.add(chefBlessing);
 
         // 場地卡
         FieldCard vegetableGarden = FieldCard.createEnvironmentField(
@@ -756,6 +757,43 @@ public class NeutralCardInitializer implements FactionCardInitializer {
             Rarity.LEGENDARY, 3, Faction.NEUTRAL);
         allCards.put(sacredGrove.getName(), sacredGrove);
         allFieldCards.add(sacredGrove);
+
+        // 添加新的連動法術
+        SpellCard beanProtection = new SpellCard(
+            "豆類防護", 2, "使一個友方角色獲得【酥脆(1)】效果。豆類連動：如果目標是豆類角色，則改為獲得【酥脆(2)】效果並抽一張牌。", 
+            Rarity.COMMON, SpellType.BUFF);
+        allCards.put(beanProtection.getName(), beanProtection);
+        allSpells.add(beanProtection);
+        
+        SpellCard rootVegetableGrowth = new SpellCard(
+            "根莖生長", 3, "召喚一個1/2的根莖類食材代幣。根莖類連動：如果你控制至少兩個根莖類角色，則改為召喚一個2/3的代幣。", 
+            Rarity.COMMON, SpellType.SPECIAL);
+        allCards.put(rootVegetableGrowth.getName(), rootVegetableGrowth);
+        allSpells.add(rootVegetableGrowth);
+        
+        SpellCard leafyRegeneration = new SpellCard(
+            "葉菜再生", 3, "為所有友方角色恢復1點生命值。葉菜類連動：如果你控制至少一個葉菜類角色，則改為恢復2點生命值。", 
+            Rarity.COMMON, SpellType.HEALING);
+        allCards.put(leafyRegeneration.getName(), leafyRegeneration);
+        allSpells.add(leafyRegeneration);
+        
+        SpellCard fruitEnergy = new SpellCard(
+            "果實能量", 3, "使一個友方角色獲得+2攻擊力並可以額外攻擊一次。瓜果類連動：如果目標是瓜果類角色，則效果持續到下回合。", 
+            Rarity.RARE, SpellType.BUFF);
+        allCards.put(fruitEnergy.getName(), fruitEnergy);
+        allSpells.add(fruitEnergy);
+        
+        SpellCard mushroomSpores = new SpellCard(
+            "蘑菇孢子", 4, "召喚兩個1/1菇類食材代幣。菇類連動：如果你控制至少一個菇類角色，則使這些代幣獲得【回味】：死亡時抽一張牌。", 
+            Rarity.RARE, SpellType.SPECIAL);
+        allCards.put(mushroomSpores.getName(), mushroomSpores);
+        allSpells.add(mushroomSpores);
+        
+        SpellCard spicyFlavor = new SpellCard(
+            "香料風味", 2, "使一個友方角色獲得【現炸】效果。香料類連動：如果你控制至少一個香料類角色，則使目標角色獲得+2/+0。", 
+            Rarity.COMMON, SpellType.BUFF);
+        allCards.put(spicyFlavor.getName(), spicyFlavor);
+        allSpells.add(spicyFlavor);
     }
     
     @Override
