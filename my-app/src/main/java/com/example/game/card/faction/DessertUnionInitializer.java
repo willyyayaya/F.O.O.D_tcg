@@ -88,61 +88,61 @@ public class DessertUnionInitializer implements FactionCardInitializer {
 
         // 餅乾類角色卡
         CharacterCard chocolateChipWarrior = new CharacterCard(
-            "巧克力豆餅乾戰士", 2, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "巧克力豆餅乾戰士", 2, "【糖爆】：對所有敵方角色造成1點傷害。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(chocolateChipWarrior.getName(), chocolateChipWarrior);
         allCharacters.add(chocolateChipWarrior);
         
         CharacterCard oatmealGuard = new CharacterCard(
-            "燕麥餅乾守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            "燕麥餅乾守衛", 3, "【糖爆】：使自身獲得+0/+2直到回合結束。【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(oatmealGuard.getName(), oatmealGuard);
         allCharacters.add(oatmealGuard);
         
         CharacterCard gingerbreadArcher = new CharacterCard(
-            "薑餅射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "薑餅射手", 2, "【糖爆】：使敵方一個角色無法攻擊直到回合結束。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 2, true, Faction.DESSERT_UNION);
         allCards.put(gingerbreadArcher.getName(), gingerbreadArcher);
         allCharacters.add(gingerbreadArcher);
         
         CharacterCard fortuneCookieMage = new CharacterCard(
-            "幸運餅乾法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：抽一張牌。", 
+            "幸運餅乾法師", 4, "【糖爆】：抽一張牌。【開胃】：抽一張牌。", 
             Rarity.RARE, 3, 3, false, Faction.DESSERT_UNION);
         allCards.put(fortuneCookieMage.getName(), fortuneCookieMage);
         allCharacters.add(fortuneCookieMage);
         
         CharacterCard butterCookiePriest = new CharacterCard(
-            "奶油餅乾祭司", 3, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+1/+1。", 
+            "奶油餅乾祭司", 3, "【糖爆】：為一個友方角色恢復2點生命值。【回味】：死亡時使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 2, 4, false, Faction.DESSERT_UNION);
         allCards.put(butterCookiePriest.getName(), butterCookiePriest);
         allCharacters.add(butterCookiePriest);
         
         CharacterCard almondCookieWarrior = new CharacterCard(
-            "杏仁餅乾戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【現炸】：可以在出場的回合立即攻擊。", 
+            "杏仁餅乾戰士", 3, "【糖爆】：使自身獲得+2/+0直到回合結束。【現炸】：可以在出場的回合立即攻擊。", 
             Rarity.COMMON, 3, 3, true, Faction.DESSERT_UNION);
         allCards.put(almondCookieWarrior.getName(), almondCookieWarrior);
         allCharacters.add(almondCookieWarrior);
         
         CharacterCard coconutCookieMage = new CharacterCard(
-            "椰子餅乾法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "椰子餅乾法師", 4, "【糖爆】：使一個友方角色獲得【糖霜】效果。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(coconutCookieMage.getName(), coconutCookieMage);
         allCharacters.add(coconutCookieMage);
         
         CharacterCard peanutCookieGuard = new CharacterCard(
-            "花生餅乾守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "花生餅乾守衛", 3, "【糖爆】：對一個敵方角色造成1點傷害並使其攻擊力減少1。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(peanutCookieGuard.getName(), peanutCookieGuard);
         allCharacters.add(peanutCookieGuard);
         
         CharacterCard raisinCookieArcher = new CharacterCard(
-            "葡萄乾餅乾射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "葡萄乾餅乾射手", 2, "【糖爆】：對敵方生命值最低的角色造成2點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 2, true, Faction.DESSERT_UNION);
         allCards.put(raisinCookieArcher.getName(), raisinCookieArcher);
         allCharacters.add(raisinCookieArcher);
         
         CharacterCard macaronPriest = new CharacterCard(
-            "馬卡龍祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            "馬卡龍祭司", 5, "【糖爆】：為所有友方角色恢復1點生命值。【回味】：死亡時使一個友方角色獲得+2/+2。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(macaronPriest.getName(), macaronPriest);
         allCharacters.add(macaronPriest);
@@ -210,122 +210,122 @@ public class DessertUnionInitializer implements FactionCardInitializer {
 
         // 布丁類角色卡
         CharacterCard puddingCaramelWarrior = new CharacterCard(
-            "焦糖布丁戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "焦糖布丁戰士", 3, "【糖爆】：使自身和相鄰友方角色獲得+1/+0直到回合結束。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 2, 4, false, Faction.DESSERT_UNION);
         allCards.put(puddingCaramelWarrior.getName(), puddingCaramelWarrior);
         allCharacters.add(puddingCaramelWarrior);
         
         CharacterCard puddingChocolateGuard = new CharacterCard(
-            "巧克力布丁守衛", 4, "【糖爆】：攻擊時造成2點額外傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            "巧克力布丁守衛", 4, "【糖爆】：使所有友方角色獲得+0/+1。【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.RARE, 2, 6, false, Faction.DESSERT_UNION);
         allCards.put(puddingChocolateGuard.getName(), puddingChocolateGuard);
         allCharacters.add(puddingChocolateGuard);
         
         CharacterCard puddingStrawberryArcher = new CharacterCard(
-            "草莓布丁射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "草莓布丁射手", 2, "【糖爆】：如果目標敵方角色生命值低於3，則造成3點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(puddingStrawberryArcher.getName(), puddingStrawberryArcher);
         allCharacters.add(puddingStrawberryArcher);
         
         CharacterCard vanillaMage = new CharacterCard(
-            "香草布丁法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：為一個友方角色恢復2點生命值。", 
+            "香草布丁法師", 4, "【糖爆】：為所有友方角色恢復1點生命值。【開胃】：為一個友方角色恢復2點生命值。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(vanillaMage.getName(), vanillaMage);
         allCharacters.add(vanillaMage);
         
         CharacterCard matchaPriest = new CharacterCard(
-            "抹茶布丁祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時為所有友方角色恢復1點生命值。", 
+            "抹茶布丁祭司", 5, "【糖爆】：使一個友方角色獲得+1/+1並恢復1點生命值。【回味】：死亡時為所有友方角色恢復1點生命值。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(matchaPriest.getName(), matchaPriest);
         allCharacters.add(matchaPriest);
         
         CharacterCard coffeeWarrior = new CharacterCard(
-            "咖啡布丁戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【現炸】：可以在出場的回合立即攻擊。", 
+            "咖啡布丁戰士", 3, "【糖爆】：本回合可以再攻擊一次。【現炸】：可以在出場的回合立即攻擊。", 
             Rarity.COMMON, 3, 3, true, Faction.DESSERT_UNION);
         allCards.put(coffeeWarrior.getName(), coffeeWarrior);
         allCharacters.add(coffeeWarrior);
         
         CharacterCard mangoMage = new CharacterCard(
-            "芒果布丁法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "芒果布丁法師", 4, "【糖爆】：召喚一個1/1的布丁小兵。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(mangoMage.getName(), mangoMage);
         allCharacters.add(mangoMage);
         
         CharacterCard coconutGuard = new CharacterCard(
-            "椰子布丁守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "椰子布丁守衛", 3, "【糖爆】：為自身恢復2點生命值。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(coconutGuard.getName(), coconutGuard);
         allCharacters.add(coconutGuard);
         
         CharacterCard strawberryArcher = new CharacterCard(
-            "草莓布丁射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "草莓布丁射手", 2, "【糖爆】：使一個敵方角色本回合無法使用技能。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(strawberryArcher.getName(), strawberryArcher);
         allCharacters.add(strawberryArcher);
         
         CharacterCard taroPriest = new CharacterCard(
-            "芋頭布丁祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            "芋頭布丁祭司", 5, "【糖爆】：抽一張牌並使一個友方角色獲得+1/+1。【回味】：死亡時使一個友方角色獲得+2/+2。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(taroPriest.getName(), taroPriest);
         allCharacters.add(taroPriest);
 
         // 巧克力類角色卡
         CharacterCard darkWarrior = new CharacterCard(
-            "黑巧克力戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "黑巧克力戰士", 3, "【糖爆】：對目標敵方角色造成3點傷害，自身受到1點傷害。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 3, 4, true, Faction.DESSERT_UNION);
         allCards.put(darkWarrior.getName(), darkWarrior);
         allCharacters.add(darkWarrior);
         
         CharacterCard milkGuard = new CharacterCard(
-            "牛奶巧克力守衛", 4, "【糖爆】：攻擊時造成2點額外傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            "牛奶巧克力守衛", 4, "【糖爆】：為所有友方角色恢復1點生命值並使其獲得+0/+1。【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.RARE, 2, 6, false, Faction.DESSERT_UNION);
         allCards.put(milkGuard.getName(), milkGuard);
         allCharacters.add(milkGuard);
         
         CharacterCard whiteArcher = new CharacterCard(
-            "白巧克力射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "白巧克力射手", 2, "【糖爆】：使所有敵方角色在下個回合攻擊力降低1。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(whiteArcher.getName(), whiteArcher);
         allCharacters.add(whiteArcher);
         
         CharacterCard hazelnutMage = new CharacterCard(
-            "榛果巧克力法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+2/+0。", 
+            "榛果巧克力法師", 4, "【糖爆】：對一個敵方角色造成2點傷害並使其無法行動一回合。【開胃】：使一個友方角色獲得+2/+0。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(hazelnutMage.getName(), hazelnutMage);
         allCharacters.add(hazelnutMage);
         
         CharacterCard chocolateCaramelPriest = new CharacterCard(
-            "焦糖巧克力祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時為所有友方角色恢復1點生命值。", 
+            "焦糖巧克力祭司", 5, "【糖爆】：使一個友方角色獲得+1/+1並抽一張牌。【回味】：死亡時為所有友方角色恢復1點生命值。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(chocolateCaramelPriest.getName(), chocolateCaramelPriest);
         allCharacters.add(chocolateCaramelPriest);
         
         CharacterCard mintWarrior = new CharacterCard(
-            "薄荷巧克力戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【現炸】：可以在出場的回合立即攻擊。", 
+            "薄荷巧克力戰士", 3, "【糖爆】：使一個敵方角色凍結一回合（無法攻擊也無法使用技能）。【現炸】：可以在出場的回合立即攻擊。", 
             Rarity.COMMON, 3, 3, true, Faction.DESSERT_UNION);
         allCards.put(mintWarrior.getName(), mintWarrior);
         allCharacters.add(mintWarrior);
         
         CharacterCard orangeMage = new CharacterCard(
-            "橙味巧克力法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "橙味巧克力法師", 4, "【糖爆】：使所有友方角色獲得+1/+0直到回合結束。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(orangeMage.getName(), orangeMage);
         allCharacters.add(orangeMage);
         
         CharacterCard almondGuard = new CharacterCard(
-            "杏仁巧克力守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "杏仁巧克力守衛", 3, "【糖爆】：將一個敵方角色的攻擊目標轉向自己。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(almondGuard.getName(), almondGuard);
         allCharacters.add(almondGuard);
         
         CharacterCard coffeeArcher = new CharacterCard(
-            "咖啡巧克力射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "咖啡巧克力射手", 2, "【糖爆】：使自身攻擊力提高2點直到回合結束。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(coffeeArcher.getName(), coffeeArcher);
         allCharacters.add(coffeeArcher);
         
         CharacterCard raspberryPriest = new CharacterCard(
-            "覆盆子巧克力祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            "覆盆子巧克力祭司", 5, "【糖爆】：隨機對三個敵方角色各造成1點傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(raspberryPriest.getName(), raspberryPriest);
         allCharacters.add(raspberryPriest);
@@ -393,122 +393,122 @@ public class DessertUnionInitializer implements FactionCardInitializer {
 
         // 派類角色卡
         CharacterCard pieAppleWarrior = new CharacterCard(
-            "蘋果派戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "蘋果派戰士", 3, "【糖爆】：使自身獲得+1/+1並治癒所有負面效果。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 2, 4, false, Faction.DESSERT_UNION);
         allCards.put(pieAppleWarrior.getName(), pieAppleWarrior);
         allCharacters.add(pieAppleWarrior);
         
         CharacterCard pumpkinGuard = new CharacterCard(
-            "南瓜派守衛", 4, "【糖爆】：攻擊時造成2點額外傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            "南瓜派守衛", 4, "【糖爆】：使敵方角色本回合不能攻擊該角色。【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.RARE, 2, 6, false, Faction.DESSERT_UNION);
         allCards.put(pumpkinGuard.getName(), pumpkinGuard);
         allCharacters.add(pumpkinGuard);
         
         CharacterCard pieCherryArcher = new CharacterCard(
-            "櫻桃派射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "櫻桃派射手", 2, "【糖爆】：對敵方所有角色造成1點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(pieCherryArcher.getName(), pieCherryArcher);
         allCharacters.add(pieCherryArcher);
         
         CharacterCard chocolateMage = new CharacterCard(
-            "巧克力派法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "巧克力派法師", 4, "【糖爆】：抽兩張牌並棄一張牌。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(chocolateMage.getName(), chocolateMage);
         allCharacters.add(chocolateMage);
         
         CharacterCard lemonPriest = new CharacterCard(
-            "檸檬派祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時為所有友方角色恢復1點生命值。", 
+            "檸檬派祭司", 5, "【糖爆】：治療一個友方角色所有傷害並消除其負面效果。【回味】：死亡時為所有友方角色恢復1點生命值。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(lemonPriest.getName(), lemonPriest);
         allCharacters.add(lemonPriest);
         
         CharacterCard pieBlueberryWarrior = new CharacterCard(
-            "藍莓派戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【現炸】：可以在出場的回合立即攻擊。", 
+            "藍莓派戰士", 3, "【糖爆】：使一個友方角色獲得+1/+1並治癒其所有負面效果。【現炸】：可以在出場的回合立即攻擊。", 
             Rarity.COMMON, 3, 3, true, Faction.DESSERT_UNION);
         allCards.put(pieBlueberryWarrior.getName(), pieBlueberryWarrior);
         allCharacters.add(pieBlueberryWarrior);
         
         CharacterCard pecanMage = new CharacterCard(
-            "胡桃派法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "胡桃派法師", 4, "【糖爆】：使一個敵方角色攻擊和生命值減少1。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(pecanMage.getName(), pecanMage);
         allCharacters.add(pecanMage);
         
         CharacterCard keyLimeGuard = new CharacterCard(
-            "萊姆派守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "萊姆派守衛", 3, "【糖爆】：使周圍友方角色獲得【酥脆(1)】效果一回合。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(keyLimeGuard.getName(), keyLimeGuard);
         allCharacters.add(keyLimeGuard);
         
         CharacterCard pieStrawberryArcher = new CharacterCard(
-            "草莓派射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "草莓派射手", 2, "【糖爆】：攻擊敵方最弱的角色並造成2點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(pieStrawberryArcher.getName(), pieStrawberryArcher);
         allCharacters.add(pieStrawberryArcher);
         
         CharacterCard bananaPriest = new CharacterCard(
-            "香蕉派祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            "香蕉派祭司", 5, "【糖爆】：為所有友方角色恢復2點生命值。【回味】：死亡時使一個友方角色獲得+2/+2。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(bananaPriest.getName(), bananaPriest);
         allCharacters.add(bananaPriest);
 
         // 糖果類角色卡
         CharacterCard lollipopWarrior = new CharacterCard(
-            "棒棒糖戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "棒棒糖戰士", 3, "【糖爆】：隨機使一個敵方角色暈眩一回合（無法行動）。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 2, 4, true, Faction.DESSERT_UNION);
         allCards.put(lollipopWarrior.getName(), lollipopWarrior);
         allCharacters.add(lollipopWarrior);
         
         CharacterCard gummyGuard = new CharacterCard(
-            "軟糖守衛", 4, "【糖爆】：攻擊時造成2點額外傷害。【擺盤】：敵人必須優先攻擊這個單位。", 
+            "軟糖守衛", 4, "【糖爆】：使自身獲得+1/+3直到回合結束。【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.RARE, 2, 6, false, Faction.DESSERT_UNION);
         allCards.put(gummyGuard.getName(), gummyGuard);
         allCharacters.add(gummyGuard);
         
         CharacterCard hardCandyArcher = new CharacterCard(
-            "硬糖射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "硬糖射手", 2, "【糖爆】：對敵方生命值最高的角色造成3點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(hardCandyArcher.getName(), hardCandyArcher);
         allCharacters.add(hardCandyArcher);
         
         CharacterCard jellyBeanMage = new CharacterCard(
-            "雷根糖法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "雷根糖法師", 4, "【糖爆】：隨機使三個友方角色各獲得+1/+0。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(jellyBeanMage.getName(), jellyBeanMage);
         allCharacters.add(jellyBeanMage);
         
         CharacterCard candyCaramelPriest = new CharacterCard(
-            "焦糖祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時為所有友方角色恢復1點生命值。", 
+            "焦糖祭司", 5, "【糖爆】：使所有友方角色本回合獲得+1/+0。【回味】：死亡時為所有友方角色恢復1點生命值。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(candyCaramelPriest.getName(), candyCaramelPriest);
         allCharacters.add(candyCaramelPriest);
         
         CharacterCard chocolateWarrior = new CharacterCard(
-            "巧克力戰士", 3, "【糖爆】：攻擊時造成2點額外傷害。【現炸】：可以在出場的回合立即攻擊。", 
+            "巧克力戰士", 3, "【糖爆】：對目標敵方角色造成其當前生命值20%的傷害。【現炸】：可以在出場的回合立即攻擊。", 
             Rarity.COMMON, 3, 3, true, Faction.DESSERT_UNION);
         allCards.put(chocolateWarrior.getName(), chocolateWarrior);
         allCharacters.add(chocolateWarrior);
         
         CharacterCard marshmallowMage = new CharacterCard(
-            "棉花糖法師", 4, "【糖爆】：攻擊時造成2點額外傷害。【開胃】：使一個友方角色獲得+1/+1。", 
+            "棉花糖法師", 4, "【糖爆】：為生命值最低的友方角色恢復3點生命值。【開胃】：使一個友方角色獲得+1/+1。", 
             Rarity.RARE, 3, 4, false, Faction.DESSERT_UNION);
         allCards.put(marshmallowMage.getName(), marshmallowMage);
         allCharacters.add(marshmallowMage);
         
         CharacterCard toffeeGuard = new CharacterCard(
-            "太妃糖守衛", 3, "【糖爆】：攻擊時造成2點額外傷害。【酥脆(1)】：減免1點傷害。", 
+            "太妃糖守衛", 3, "【糖爆】：使敵方角色攻擊力降低2直到回合結束。【酥脆(1)】：減免1點傷害。", 
             Rarity.COMMON, 1, 5, false, Faction.DESSERT_UNION);
         allCards.put(toffeeGuard.getName(), toffeeGuard);
         allCharacters.add(toffeeGuard);
         
         CharacterCard licoriceArcher = new CharacterCard(
-            "甘草糖射手", 2, "【糖爆】：攻擊時造成2點額外傷害。【彈牙】：每回合可攻擊2次。", 
+            "甘草糖射手", 2, "【糖爆】：使目標敵方角色中毒（每回合受到1點傷害，持續2回合）。【彈牙】：每回合可攻擊2次。", 
             Rarity.COMMON, 2, 3, true, Faction.DESSERT_UNION);
         allCards.put(licoriceArcher.getName(), licoriceArcher);
         allCharacters.add(licoriceArcher);
         
         CharacterCard rockCandyPriest = new CharacterCard(
-            "冰糖祭司", 5, "【糖爆】：攻擊時造成2點額外傷害。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            "冰糖祭司", 5, "【糖爆】：使所有友方角色獲得【糖霜】效果直到回合結束。【回味】：死亡時使一個友方角色獲得+2/+2。", 
             Rarity.RARE, 2, 5, false, Faction.DESSERT_UNION);
         allCards.put(rockCandyPriest.getName(), rockCandyPriest);
         allCharacters.add(rockCandyPriest);
