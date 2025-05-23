@@ -454,6 +454,188 @@ public class NeutralCardInitializer implements FactionCardInitializer {
             Rarity.RARE, 4, 6, false, Faction.NEUTRAL);
         allCards.put(plainBroadBean.getName(), plainBroadBean);
         allCharacters.add(plainBroadBean);
+
+        // 葉菜類食材
+        CharacterCard spinachPaladin = new CharacterCard(
+            "菠菜鐵翠聖騎士 (Spinach Iron-Green Paladin)", 4, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：死亡時使所有友方角色獲得+1/+1。", 
+            Rarity.RARE, 2, 5, false, Faction.NEUTRAL);
+        allCards.put(spinachPaladin.getName(), spinachPaladin);
+        allCharacters.add(spinachPaladin);
+
+        CharacterCard lettuceRogue = new CharacterCard(
+            "生菜潛行盜賊 (Lettuce Stealth Rogue)", 2, "【酥脆(1)】：減免1點傷害。【開胃】：獲得+1攻擊力直到回合結束。", 
+            Rarity.COMMON, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(lettuceRogue.getName(), lettuceRogue);
+        allCharacters.add(lettuceRogue);
+
+        CharacterCard cabbageGuard = new CharacterCard(
+            "高麗菜層葉守護者 (Cabbage Layered Guardian)", 3, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：死亡時為一個友方角色恢復3點生命值。", 
+            Rarity.COMMON, 1, 5, false, Faction.NEUTRAL);
+        allCards.put(cabbageGuard.getName(), cabbageGuard);
+        allCharacters.add(cabbageGuard);
+
+        CharacterCard celeryArcher = new CharacterCard(
+            "芹菜纖維射擊手 (Celery Fiber Marksman)", 3, "【彈牙】：每回合可攻擊2次。【回味】：死亡時使一個友方角色獲得+1/+1。", 
+            Rarity.COMMON, 3, 2, true, Faction.NEUTRAL);
+        allCards.put(celeryArcher.getName(), celeryArcher);
+        allCharacters.add(celeryArcher);
+
+        CharacterCard kaleWarrior = new CharacterCard(
+            "羽衣甘藍葉刃戰士 (Kale Blade Warrior)", 4, "【開胃】：獲得+2/+2直到回合結束。【回味】：死亡時對所有敵方單位造成1點傷害。", 
+            Rarity.RARE, 3, 4, false, Faction.NEUTRAL);
+        allCards.put(kaleWarrior.getName(), kaleWarrior);
+        allCharacters.add(kaleWarrior);
+
+        CharacterCard bokChoyMage = new CharacterCard(
+            "青江菜翠心法師 (Bok Choy Emerald Heart Mage)", 3, "【開胃】：為一個友方角色恢復2點生命值。【回味】：死亡時抽一張牌。", 
+            Rarity.RARE, 2, 2, true, Faction.NEUTRAL);
+        allCards.put(bokChoyMage.getName(), bokChoyMage);
+        allCharacters.add(bokChoyMage);
+
+        CharacterCard watercressScout = new CharacterCard(
+            "西洋菜水靈斥候 (Watercress Aqua Scout)", 2, "【酥脆(1)】：減免1點傷害。【彈牙】：每回合可攻擊2次。", 
+            Rarity.COMMON, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(watercressScout.getName(), watercressScout);
+        allCharacters.add(watercressScout);
+
+        CharacterCard arugulaPriest = new CharacterCard(
+            "芝麻菜清香祭司 (Arugula Fragrant Cleric)", 4, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            Rarity.RARE, 2, 3, false, Faction.NEUTRAL);
+        allCards.put(arugulaPriest.getName(), arugulaPriest);
+        allCharacters.add(arugulaPriest);
+
+        CharacterCard mustardKnight = new CharacterCard(
+            "芥菜辛辣騎兵 (Mustard Spicy Cavalier)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【彈牙】：每回合可攻擊2次。", 
+            Rarity.RARE, 4, 4, false, Faction.NEUTRAL);
+        allCards.put(mustardKnight.getName(), mustardKnight);
+        allCharacters.add(mustardKnight);
+
+        CharacterCard chardMage = new CharacterCard(
+            "甜菜彩虹魔導師 (Swiss Chard Rainbow Archmage)", 4, "【開胃】：對一個敵方單位造成2點傷害。【回味】：死亡時使所有友方角色獲得+1/+1。", 
+            Rarity.RARE, 3, 3, false, Faction.NEUTRAL);
+        allCards.put(chardMage.getName(), chardMage);
+        allCharacters.add(chardMage);
+
+        // 瓜果類食材
+        CharacterCard pumpkinGiant = new CharacterCard(
+            "南瓜重甲巨人 (Pumpkin Heavy Armored Giant)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：死亡時對所有敵方單位造成2點傷害。", 
+            Rarity.RARE, 3, 6, false, Faction.NEUTRAL);
+        allCards.put(pumpkinGiant.getName(), pumpkinGiant);
+        allCharacters.add(pumpkinGiant);
+
+        CharacterCard cucumberArcher = new CharacterCard(
+            "黃瓜清脆弓箭手 (Cucumber Crisp Archer)", 3, "【彈牙】：每回合可攻擊2次。【回味】：死亡時抽一張牌。", 
+            Rarity.COMMON, 3, 2, true, Faction.NEUTRAL);
+        allCards.put(cucumberArcher.getName(), cucumberArcher);
+        allCharacters.add(cucumberArcher);
+
+        CharacterCard watermelonGuard = new CharacterCard(
+            "西瓜厚皮防衛官 (Watermelon Thick-Rind Defender)", 4, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：死亡時為所有友方角色恢復2點生命值。", 
+            Rarity.RARE, 2, 6, false, Faction.NEUTRAL);
+        allCards.put(watermelonGuard.getName(), watermelonGuard);
+        allCharacters.add(watermelonGuard);
+
+        CharacterCard cantaloupeWarrior = new CharacterCard(
+            "哈密瓜甜心突擊兵 (Cantaloupe Sweetheart Raider)", 4, "【開胃】：獲得+2/+2直到回合結束。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            Rarity.RARE, 3, 4, false, Faction.NEUTRAL);
+        allCards.put(cantaloupeWarrior.getName(), cantaloupeWarrior);
+        allCharacters.add(cantaloupeWarrior);
+
+        CharacterCard honeydewMage = new CharacterCard(
+            "蜜瓜蜜霧術士 (Honeydew Mist Conjurer)", 3, "【開胃】：為一個友方角色恢復2點生命值。【回味】：死亡時抽兩張牌。", 
+            Rarity.RARE, 2, 2, true, Faction.NEUTRAL);
+        allCards.put(honeydewMage.getName(), honeydewMage);
+        allCharacters.add(honeydewMage);
+
+        CharacterCard bitterGourdScout = new CharacterCard(
+            "苦瓜凜冽偵察兵 (Bitter Gourd Astringent Scout)", 2, "【酥脆(1)】：減免1點傷害。【彈牙】：每回合可攻擊2次。", 
+            Rarity.COMMON, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(bitterGourdScout.getName(), bitterGourdScout);
+        allCharacters.add(bitterGourdScout);
+
+        CharacterCard winterMelonPriest = new CharacterCard(
+            "冬瓜清涼牧師 (Winter Melon Cooling Priest)", 4, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時使一個友方角色獲得+3/+3。", 
+            Rarity.RARE, 2, 4, false, Faction.NEUTRAL);
+        allCards.put(winterMelonPriest.getName(), winterMelonPriest);
+        allCharacters.add(winterMelonPriest);
+
+        CharacterCard luffaKnight = new CharacterCard(
+            "絲瓜網紋騎士 (Luffa Netted Knight)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【彈牙】：每回合可攻擊2次。", 
+            Rarity.RARE, 4, 4, false, Faction.NEUTRAL);
+        allCards.put(luffaKnight.getName(), luffaKnight);
+        allCharacters.add(luffaKnight);
+
+        CharacterCard bottleGourdMage = new CharacterCard(
+            "葫蘆容器術師 (Bottle Gourd Container Mage)", 4, "【開胃】：對一個敵方單位造成2點傷害。【回味】：死亡時使所有友方角色獲得+1/+1。", 
+            Rarity.RARE, 3, 3, false, Faction.NEUTRAL);
+        allCards.put(bottleGourdMage.getName(), bottleGourdMage);
+        allCharacters.add(bottleGourdMage);
+
+        CharacterCard snakeGourdArcher = new CharacterCard(
+            "蛇瓜曲線射手 (Snake Gourd Serpentine Archer)", 3, "【彈牙】：每回合可攻擊2次。【回味】：死亡時對一個敵方單位造成2點傷害。", 
+            Rarity.COMMON, 3, 2, true, Faction.NEUTRAL);
+        allCards.put(snakeGourdArcher.getName(), snakeGourdArcher);
+        allCharacters.add(snakeGourdArcher);
+
+        // 菇類食材
+        CharacterCard mushroomShaman = new CharacterCard(
+            "香菇靈能薩滿 (Shiitake Spirit Shaman)", 4, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            Rarity.RARE, 2, 3, false, Faction.NEUTRAL);
+        allCards.put(mushroomShaman.getName(), mushroomShaman);
+        allCharacters.add(mushroomShaman);
+
+        CharacterCard enokiMage = new CharacterCard(
+            "金針菇纖細法師 (Enoki Slender Mage)", 3, "【酥脆(1)】：減免1點傷害。【開胃】：抽一張牌。", 
+            Rarity.COMMON, 2, 2, true, Faction.NEUTRAL);
+        allCards.put(enokiMage.getName(), enokiMage);
+        allCharacters.add(enokiMage);
+
+        CharacterCard shiitakeGuard = new CharacterCard(
+            "香菇厚實守護者 (Shiitake Fleshy Protector)", 3, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：死亡時為一個友方角色恢復3點生命值。", 
+            Rarity.COMMON, 1, 5, false, Faction.NEUTRAL);
+        allCards.put(shiitakeGuard.getName(), shiitakeGuard);
+        allCharacters.add(shiitakeGuard);
+
+        CharacterCard oysterMushroomArcher = new CharacterCard(
+            "蠔菇扇形射擊手 (Oyster Mushroom Fan Shooter)", 3, "【彈牙】：每回合可攻擊2次。【回味】：死亡時使一個友方角色獲得+1/+1。", 
+            Rarity.COMMON, 3, 2, true, Faction.NEUTRAL);
+        allCards.put(oysterMushroomArcher.getName(), oysterMushroomArcher);
+        allCharacters.add(oysterMushroomArcher);
+
+        CharacterCard kingOysterWarrior = new CharacterCard(
+            "杏鮑菇巨柱戰士 (King Oyster Pillar Warrior)", 4, "【開胃】：獲得+2/+2直到回合結束。【回味】：死亡時對所有敵方單位造成1點傷害。", 
+            Rarity.RARE, 3, 4, false, Faction.NEUTRAL);
+        allCards.put(kingOysterWarrior.getName(), kingOysterWarrior);
+        allCharacters.add(kingOysterWarrior);
+
+        CharacterCard woodEarMage = new CharacterCard(
+            "木耳黑暗賢者 (Wood Ear Dark Sage)", 3, "【開胃】：為一個友方角色恢復2點生命值。【回味】：死亡時抽一張牌。", 
+            Rarity.RARE, 2, 2, true, Faction.NEUTRAL);
+        allCards.put(woodEarMage.getName(), woodEarMage);
+        allCharacters.add(woodEarMage);
+
+        CharacterCard cloudEarScout = new CharacterCard(
+            "雲耳飄逸斥候 (Cloud Ear Floating Scout)", 2, "【酥脆(1)】：減免1點傷害。【彈牙】：每回合可攻擊2次。", 
+            Rarity.COMMON, 2, 1, true, Faction.NEUTRAL);
+        allCards.put(cloudEarScout.getName(), cloudEarScout);
+        allCharacters.add(cloudEarScout);
+
+        CharacterCard reishiPriest = new CharacterCard(
+            "靈芝長壽祭司 (Reishi Longevity Priest)", 4, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時使一個友方角色獲得+2/+2。", 
+            Rarity.RARE, 2, 3, false, Faction.NEUTRAL);
+        allCards.put(reishiPriest.getName(), reishiPriest);
+        allCharacters.add(reishiPriest);
+
+        CharacterCard lionManeKnight = new CharacterCard(
+            "猴頭菇獅鬃騎士 (Lion's Mane Flowing Cavalier)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【彈牙】：每回合可攻擊2次。", 
+            Rarity.RARE, 4, 4, false, Faction.NEUTRAL);
+        allCards.put(lionManeKnight.getName(), lionManeKnight);
+        allCharacters.add(lionManeKnight);
+
+        CharacterCard cordycepsMage = new CharacterCard(
+            "蟲草神秘魔導士 (Cordyceps Mystic Archmage)", 4, "【開胃】：對一個敵方單位造成2點傷害。【回味】：死亡時使所有友方角色獲得+1/+1。", 
+            Rarity.RARE, 3, 3, false, Faction.NEUTRAL);
+        allCards.put(cordycepsMage.getName(), cordycepsMage);
         allCharacters.add(cordycepsMage);
 
         // 香料類無特性角色
