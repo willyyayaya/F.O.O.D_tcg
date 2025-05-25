@@ -171,11 +171,11 @@ public class Deck {
             
         Rarity rarity;
         double rarityRoll = random.nextDouble();
-        if (rarityRoll < 0.6) {
+        if (rarityRoll < Rarity.COMMON.getProbability()) {
             rarity = Rarity.COMMON;
-        } else if (rarityRoll < 0.85) {
+        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability()) {
             rarity = Rarity.RARE;
-        } else if (rarityRoll < 0.97) {
+        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability() + Rarity.EPIC.getProbability()) {
             rarity = Rarity.EPIC;
         } else {
             rarity = Rarity.LEGENDARY;
@@ -207,10 +207,10 @@ public class Deck {
                 "一個隨機生成的" + faction.getLocalizedName() + "陣營食物角色", 
                 rarity, 
                 attack, 
-                defense,
                 health,
                 isOffensive,
-                faction);
+                faction,
+                rarity.getPoints());
     }
     
     /**
@@ -229,11 +229,11 @@ public class Deck {
             
         Rarity rarity;
         double rarityRoll = random.nextDouble();
-        if (rarityRoll < 0.6) {
+        if (rarityRoll < Rarity.COMMON.getProbability()) {
             rarity = Rarity.COMMON;
-        } else if (rarityRoll < 0.85) {
+        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability()) {
             rarity = Rarity.RARE;
-        } else if (rarityRoll < 0.97) {
+        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability() + Rarity.EPIC.getProbability()) {
             rarity = Rarity.EPIC;
         } else {
             rarity = Rarity.LEGENDARY;
@@ -268,7 +268,8 @@ public class Deck {
                 "一個隨機生成的" + faction.getLocalizedName() + "陣營料理環境場地", 
                 rarity,
                 envEffectValue,
-                faction);
+                faction,
+                rarity.getPoints());
     }
     
     /**
@@ -310,33 +311,35 @@ public class Deck {
             SpellCard originalSpell = (SpellCard) original;
             return new SpellCard(
                     originalSpell.getName(),
-                    originalSpell.getTokenCost(),
+                    originalSpell.getCost(),
                     originalSpell.getDescription(),
                     originalSpell.getRarity(),
-                    originalSpell.getSpellType()
+                    originalSpell.getSpellType(),
+                    originalSpell.getPoints()
             );
         } else if (original instanceof CharacterCard) {
             CharacterCard originalChar = (CharacterCard) original;
             return new CharacterCard(
                     originalChar.getName(),
-                    originalChar.getTokenCost(),
+                    originalChar.getCost(),
                     originalChar.getDescription(),
                     originalChar.getRarity(),
                     originalChar.getAttack(),
-                    originalChar.getDefense(),
                     originalChar.getMaxHealth(),
                     originalChar.isOffensive(),
-                    originalChar.getFaction()
+                    originalChar.getFaction(),
+                    originalChar.getPoints()
             );
         } else if (original instanceof FieldCard) {
             FieldCard originalField = (FieldCard) original;
             return FieldCard.createEnvironmentField(
                     originalField.getName(),
-                    originalField.getTokenCost(),
+                    originalField.getCost(),
                     originalField.getDescription(),
                     originalField.getRarity(),
                     originalField.getEffectValue(),
-                    originalField.getFaction()
+                    originalField.getFaction(),
+                    originalField.getPoints()
             );
         }
         

@@ -332,12 +332,12 @@ public class CardLibrary {
             
             for (int i = 0; i < cards.size(); i++) {
                 Card card = cards.get(i);
-                String cardInfo = String.format("%2d. %-20s [費用:%d", (i + 1), card.getName(), card.getTokenCost());
+                String cardInfo = String.format("%2d. %-20s [費用:%d", (i + 1), card.getName(), card.getCost());
                 
                 if (card instanceof CharacterCard) {
                     CharacterCard character = (CharacterCard) card;
                     cardInfo += String.format(", 攻:%d, 防:%d, 生命:%d", 
-                            character.getAttack(), character.getDefense(), character.getCurrentHealth());
+                            character.getAttack(), character.getMaxHealth(), character.getCurrentHealth());
                 }
                 
                 cardInfo += String.format("] %s - %s", 
@@ -594,18 +594,18 @@ public class CardLibrary {
                 if (card instanceof SpellCard) {
                     SpellCard spell = (SpellCard) card;
                     System.out.printf("%2d. %-15s [費用:%d] (法術) %s\n", 
-                            i+1, spell.getName(), spell.getTokenCost(), 
+                            i+1, spell.getName(), spell.getCost(), 
                             getRaritySymbol(spell.getRarity()));
                 } else if (card instanceof CharacterCard) {
                     CharacterCard character = (CharacterCard) card;
                     System.out.printf("%2d. %-15s [費用:%d, 攻擊力:%d, 生命值:%d] %s\n", 
-                            i+1, character.getName(), character.getTokenCost(), 
+                            i+1, character.getName(), character.getCost(), 
                             character.getAttack(), character.getCurrentHealth(), 
                             getRaritySymbol(character.getRarity()));
                 } else if (card instanceof FieldCard) {
                     FieldCard fieldCard = (FieldCard) card;
                     System.out.printf("%2d. %-15s [費用:%d] [環境] %s\n", 
-                            i+1, fieldCard.getName(), fieldCard.getTokenCost(), 
+                            i+1, fieldCard.getName(), fieldCard.getCost(), 
                             getRaritySymbol(fieldCard.getRarity()));
                 }
             }

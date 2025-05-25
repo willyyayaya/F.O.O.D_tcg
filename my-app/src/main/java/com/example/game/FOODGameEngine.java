@@ -612,8 +612,9 @@ public class FOODGameEngine {
         for (int i = 0; i < characters.size(); i++) {
             CharacterCard character = characters.get(i);
             String status = character.canAttack() ? "[可攻擊]" : "[已消耗]";
-            System.out.printf("%d. %s [ATK:%d] %s\n", i + 1, character.getName(), 
-                            character.getAttack(), status);
+            System.out.printf("%d. %s %s [ATK:%d, HP:%d/%d]\n", 
+                i + 1, character.getName(), status, character.getAttack(), 
+                character.getCurrentHealth(), character.getMaxHealth());
                 
                 if (character.canAttack()) {
                     hasAttackableCharacter = true;
@@ -673,9 +674,9 @@ public class FOODGameEngine {
                     for (int i = 0; i < validTargets.size(); i++) {
                         CharacterCard target = validTargets.get(i);
                         String garnishedMark = target.getDescription().contains("【擺盤】") ? "[擺盤]" : "";
-                        System.out.printf("%d. %s %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
+                        System.out.printf("%d. %s %s [ATK:%d, HP:%d/%d]\n", 
                             i + 1, target.getName(), garnishedMark, target.getAttack(), 
-                        target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
+                        target.getCurrentHealth(), target.getMaxHealth());
                 }
                 
                     // AI 自動選擇目標（隨機選擇一個有效目標）
@@ -1066,9 +1067,9 @@ public class FOODGameEngine {
                     for (int i = 0; i < validTargets.size(); i++) {
                         CharacterCard target = validTargets.get(i);
                         String garnishedMark = target.getDescription().contains("【擺盤】") ? "[擺盤]" : "";
-                        System.out.printf("%d. %s %s [ATK:%d, DEF:%d, HP:%d/%d]\n", 
+                        System.out.printf("%d. %s %s [ATK:%d, HP:%d/%d]\n", 
                             i + 1, target.getName(), garnishedMark, target.getAttack(), 
-                            target.getDefense(), target.getCurrentHealth(), target.getMaxHealth());
+                            target.getCurrentHealth(), target.getMaxHealth());
                     }
                     
                     // AI 自動選擇目標（隨機選擇一個有效目標）

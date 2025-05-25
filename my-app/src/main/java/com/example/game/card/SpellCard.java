@@ -38,8 +38,14 @@ public class SpellCard extends Card {
         }
     }
     
-    public SpellCard(String name, int tokenCost, String description, Rarity rarity, SpellType spellType) {
-        super(name, tokenCost, description, rarity, CardType.FIELD, Faction.NEUTRAL);
+    public SpellCard(String name, int cost, String description, Rarity rarity, SpellType spellType) {
+        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL);
+        this.spellType = spellType;
+        initializeSpellProperties();
+    }
+    
+    public SpellCard(String name, int cost, String description, Rarity rarity, SpellType spellType, int points) {
+        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL, points);
         this.spellType = spellType;
         initializeSpellProperties();
     }
@@ -69,7 +75,7 @@ public class SpellCard extends Card {
                 this.hasDelayedEffect = false;
                 break;
             case DRAW:
-                this.value = Math.max(1, getTokenCost() / 2); // 抽牌數量適中
+                this.value = Math.max(1, getCost() / 2); // 抽牌數量適中
                 this.targetType = TargetType.SELF;
                 this.effectDuration = 1;
                 this.hasDelayedEffect = false;
@@ -83,13 +89,13 @@ public class SpellCard extends Card {
             case BUFF:
                 this.value = calculateEffectValue(1.0);
                 this.targetType = TargetType.FRIENDLY_CHARACTER;
-                this.effectDuration = getTokenCost() > 3 ? 2 : 1; // 高費buff可能持續多回合
+                this.effectDuration = getCost() > 3 ? 2 : 1; // 高費buff可能持續多回合
                 this.hasDelayedEffect = this.effectDuration > 1;
                 break;
             case DEBUFF:
                 this.value = calculateEffectValue(0.9);
                 this.targetType = TargetType.ENEMY_CHARACTER;
-                this.effectDuration = getTokenCost() > 3 ? 2 : 1; // 高費debuff可能持續多回合
+                this.effectDuration = getCost() > 3 ? 2 : 1; // 高費debuff可能持續多回合
                 this.hasDelayedEffect = this.effectDuration > 1;
                 break;
             case TRANSFORM:
@@ -99,7 +105,7 @@ public class SpellCard extends Card {
                 this.hasDelayedEffect = false;
                 break;
             case SUMMON:
-                this.value = Math.max(1, getTokenCost() / 2); // 召喚數量
+                this.value = Math.max(1, getCost() / 2); // 召喚數量
                 this.targetType = TargetType.NONE;
                 this.effectDuration = 0; // 永久效果
                 this.hasDelayedEffect = false;
@@ -111,7 +117,7 @@ public class SpellCard extends Card {
                 this.hasDelayedEffect = false;
                 break;
             default:
-                this.value = getTokenCost();
+                this.value = getCost();
                 this.targetType = TargetType.NONE;
                 this.effectDuration = 1;
                 this.hasDelayedEffect = false;
@@ -127,7 +133,7 @@ public class SpellCard extends Card {
      * @return 計算後的效果值
      */
     private int calculateEffectValue(double multiplier) {
-        return (int)Math.ceil(getTokenCost() * multiplier);
+        return (int)Math.ceil(getCost() * multiplier);
     }
     
     /**

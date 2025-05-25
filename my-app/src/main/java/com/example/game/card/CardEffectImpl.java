@@ -121,7 +121,6 @@ public class CardEffectImpl implements CardEffect {
             
             System.out.println("  觸發屬性加成效果: +" + attackBoost + "/+" + healthBoost);
             character.increaseAttack(attackBoost);
-            character.increaseDefense(healthBoost);
             
             return;
         }
@@ -144,7 +143,6 @@ public class CardEffectImpl implements CardEffect {
             int healthBoost = Integer.parseInt(healthMatcher.group(2));
             System.out.println("  觸發屬性加成效果: +" + attackBoost + "/+" + healthBoost);
             character.increaseAttack(attackBoost);
-            character.increaseDefense(healthBoost);
         }
     }
     
@@ -399,7 +397,7 @@ public class CardEffectImpl implements CardEffect {
                 Matcher costMatcher = costPattern.matcher(searchTarget);
                 if (costMatcher.find()) {
                     int cost = Integer.parseInt(costMatcher.group(1));
-                    if (card.getTokenCost() == cost) {
+                    if (card.getCost() == cost) {
                         matches = true;
                     }
                 }
@@ -469,7 +467,6 @@ public class CardEffectImpl implements CardEffect {
                         character.getDescription(), 
                         character.getRarity(),
                         character.getAttack(),
-                        character.getDefense(),
                         character.getMaxHealth(),
                         character.isOffensive(),
                         character.getFaction()

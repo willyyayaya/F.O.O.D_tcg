@@ -59,6 +59,15 @@ public class CharacterCard extends Card {
         }
     }
     
+    public CharacterCard(String name, int cost, String description, Rarity rarity, int attack, int health, boolean isRanged, Faction faction, int points) {
+        super(name, cost, description, rarity, CardType.CHARACTER, faction, points);
+        this.attack = attack;
+        this.maxHealth = health;
+        this.currentHealth = health;
+        this.isOffensive = isRanged;
+        this.faction = faction;
+    }
+    
     /**
      * 初始化酥脆值
      */

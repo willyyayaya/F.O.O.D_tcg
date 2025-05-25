@@ -73,7 +73,7 @@ public class GameBoard {
             for (int i = 0; i < player.getHand().size(); i++) {
                 var card = player.getHand().get(i);
                 System.out.println((i+1) + ". " + card.getName() + 
-                        " [類型:" + card.getType() + ", 費用:" + card.getTokenCost() + "]");
+                        " [類型:" + card.getType() + ", 費用:" + card.getCost() + "]");
             }
         }
         
@@ -142,9 +142,8 @@ public class GameBoard {
             System.out.println("\n" + player.getName() + " 的場上角色:");
             for (int i = 0; i < characters.size(); i++) {
                 CharacterCard character = characters.get(i);
-                System.out.printf("%2d. %-15s [攻擊:%d, 防禦:%d, 生命:%d/%d] %s\n", 
+                System.out.printf("%2d. %-15s [攻擊:%d, 生命:%d/%d] %s\n", 
                         i+1, character.getName(), character.getAttack(), 
-                        character.getDefense(),
                         character.getCurrentHealth(), character.getMaxHealth(), 
                         character.canAttack() ? "可攻擊" : "已消耗");
             }

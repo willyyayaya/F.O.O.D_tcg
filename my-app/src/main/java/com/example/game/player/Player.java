@@ -161,14 +161,14 @@ public class Player {
         
         // 如果不滿足拼盤條件，則檢查法力是否足夠
         if (!freeFromPlatterEffect) {
-            if (card.getTokenCost() > manaPoints) {
-                System.out.println("法力值不足! 需要: " + card.getTokenCost() + ", 實際有: " + manaPoints);
+            if (card.getCost() > manaPoints) {
+                System.out.println("法力值不足! 需要: " + card.getCost() + ", 實際有: " + manaPoints);
                 return false;
             }
             
             // 消耗法力值
-            manaPoints -= card.getTokenCost();
-            System.out.println(name + " 消耗了 " + card.getTokenCost() + " 點法力值");
+            manaPoints -= card.getCost();
+            System.out.println(name + " 消耗了 " + card.getCost() + " 點法力值");
         } else {
             System.out.println(name + " 透過【拼盤】效果免費打出 " + card.getName());
         }
@@ -297,7 +297,7 @@ public class Player {
         System.out.println(name + " 的手牌:");
         for (int i = 0; i < hand.size(); i++) {
             Card card = hand.get(i);
-            System.out.println((i+1) + ". " + card.getName() + " [費用:" + card.getTokenCost() + "]");
+            System.out.println((i+1) + ". " + card.getName() + " [費用:" + card.getCost() + "]");
         }
     }
     
@@ -406,29 +406,15 @@ public class Player {
                 if (card instanceof CharacterCard) {
                     CharacterCard character = (CharacterCard) card;
                     cardType = "角色";
-                    extraInfo = String.format("攻擊:%d 防禦:%d 生命:%d", 
-                                             character.getAttack(), 
-                                             character.getDefense(), 
-                                             character.getCurrentHealth());
+                    extraInfo = String.format("[攻擊:%d 生命:%d]", character.getAttack(), character.getMaxHealth());
                 } else if (card instanceof FieldCard) {
                     FieldCard field = (FieldCard) card;
                     cardType = "場地";
-                    
-                    switch (field.getFieldType()) {
-                        case COOKING_TECHNIQUE:
-                            extraInfo = "類型:烹飪技術";
-                            break;
-                        case COOKING_TOOL:
-                            extraInfo = "類型:料理工具";
-                            break;
-                        case ENVIRONMENT:
-                            extraInfo = "類型:環境";
-                            break;
-                    }
+                    extraInfo = String.format("[%s 效果值:%d]", field.isEnvironment() ? "環境" : "技術", field.getEffectValue());
                 }
                 
                 System.out.printf("%2d. %-15s [費用:%d] [%s] %s %s\n", 
-                        i+1, card.getName(), card.getTokenCost(), 
+                        i+1, card.getName(), card.getCost(), 
                         cardType, extraInfo, 
                         getRaritySymbol(card.getRarity()));
             }

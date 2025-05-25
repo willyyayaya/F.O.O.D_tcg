@@ -7,23 +7,31 @@ import com.example.game.player.Player;
  */
 public abstract class Card {
     protected String name;
-    protected int tokenCost;     // 變更為Token消耗而非魔力消耗
+    protected int cost;
     protected String description;
     protected Rarity rarity;
     protected CardType type;     // 添加卡牌類型
     protected Faction faction;   // 添加陣營屬性
+    protected int points;        // 添加點數屬性
     
-    public Card(String name, int tokenCost, String description, Rarity rarity, CardType type) {
-        this(name, tokenCost, description, rarity, type, Faction.NEUTRAL); // 預設為中立陣營
-    }
-    
-    public Card(String name, int tokenCost, String description, Rarity rarity, CardType type, Faction faction) {
+    public Card(String name, int cost, String description, Rarity rarity, CardType type, Faction faction) {
         this.name = name;
-        this.tokenCost = tokenCost;
+        this.cost = cost;
         this.description = description;
         this.rarity = rarity;
         this.type = type;
         this.faction = faction;
+        this.points = 1; // 預設點數為1
+    }
+    
+    public Card(String name, int cost, String description, Rarity rarity, CardType type, Faction faction, int points) {
+        this.name = name;
+        this.cost = cost;
+        this.description = description;
+        this.rarity = rarity;
+        this.type = type;
+        this.faction = faction;
+        this.points = points;
     }
     
     /**
@@ -36,8 +44,8 @@ public abstract class Card {
         return name;
     }
     
-    public int getTokenCost() {
-        return tokenCost;
+    public int getCost() {
+        return cost;
     }
     
     public String getDescription() {
@@ -56,17 +64,21 @@ public abstract class Card {
         return faction;
     }
     
+    public int getPoints() {
+        return points;
+    }
+    
     /**
      * 顯示卡牌詳細資訊
      */
     public void displayCardDetails() {
-        System.out.println("======= 卡牌資訊 =======");
-        System.out.println("名稱: " + name);
+        System.out.println("卡牌名稱: " + name);
+        System.out.println("費用: " + cost);
+        System.out.println("描述: " + description);
+        System.out.println("稀有度: " + getRarityText(rarity));
         System.out.println("類型: " + getCardTypeText(type));
         System.out.println("陣營: " + getFactionText());
-        System.out.println("費用: " + tokenCost + " 個Token");
-        System.out.println("稀有度: " + getRarityText(rarity));
-        System.out.println("描述: " + description);
+        System.out.println("點數: " + points + " 點");
         displaySpecificDetails();
         System.out.println("========================");
     }

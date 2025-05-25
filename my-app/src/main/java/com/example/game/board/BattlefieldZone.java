@@ -150,7 +150,7 @@ public class BattlefieldZone {
                 for (int i = 0; i < characters.size(); i++) {
                     CharacterCard card = characters.get(i);
                     System.out.println("  " + (i+1) + ". " + card.getName() + 
-                            " [攻擊:" + card.getAttack() + ", 防禦:" + card.getDefense() + "]");
+                            " [攻擊:" + card.getAttack() + "]");
                 }
             }
             

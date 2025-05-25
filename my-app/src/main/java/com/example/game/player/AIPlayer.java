@@ -325,8 +325,8 @@ public class AIPlayer extends Player {
         
         // 過濾出可以支付的卡牌
         List<Card> playableCards = hand.stream()
-            .filter(card -> card.getTokenCost() <= availableMana)
-            .sorted((c1, c2) -> Integer.compare(c2.getTokenCost(), c1.getTokenCost())) // 優先選擇高費卡牌
+            .filter(card -> card.getCost() <= availableMana)
+            .sorted((c1, c2) -> Integer.compare(c2.getCost(), c1.getCost())) // 優先選擇高費卡牌
             .collect(Collectors.toList());
         
         if (playableCards.isEmpty()) {
@@ -383,7 +383,7 @@ public class AIPlayer extends Player {
      * 評估卡牌放置的價值
      */
     private double evaluateCardPlacement(Card card, int area) {
-        double score = card.getTokenCost() * 1.5; // 基礎分數基於費用
+        double score = card.getCost() * 1.5; // 基礎分數基於費用
         
         // 根據卡牌類型和放置區域調整分數
         if (card instanceof CharacterCard) {
@@ -401,7 +401,6 @@ public class AIPlayer extends Player {
             
             // 基於角色屬性加分
             score += character.getAttack() * 0.5;
-            score += character.getDefense() * 0.3;
             score += character.getCurrentHealth() * 0.2;
         } else {
             // 非角色卡（場地卡等）
