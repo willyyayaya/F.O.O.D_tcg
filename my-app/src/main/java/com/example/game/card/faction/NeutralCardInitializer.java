@@ -379,6 +379,12 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCards.put(herbMaster.getName(), herbMaster);
         allCharacters.add(herbMaster);
 
+        CharacterCard rosemaryGuardian = new CharacterCard(
+            "迷迭香熾焰刺客 (Rosemary Blazing Assassin)", 2, "【熾焰】：攻擊敵方角色時，有50%機率造成1點額外傷害。", 
+            Rarity.CASUAL_BITES, 2, 2, false, Faction.NEUTRAL, 1);
+        allCards.put(rosemaryGuardian.getName(), rosemaryGuardian);
+        allCharacters.add(rosemaryGuardian);
+
         // 為各類食材添加無特性角色
 
         // 根莖類無特性角色
@@ -782,19 +788,6 @@ public class NeutralCardInitializer implements FactionCardInitializer {
             Rarity.GOURMET_DELIGHT, 3, Faction.NEUTRAL, 3);
         allCards.put(sacredGrove.getName(), sacredGrove);
         allFieldCards.add(sacredGrove);
-
-        // 添加遺漏的卡牌
-        CharacterCard rosemaryGuardian = new CharacterCard(
-            "迷迭香熾焰刺客 (Rosemary Blazing Assassin)", 2, "【熾焰】：攻擊敵方角色時，有50%機率造成1點額外傷害。", 
-            Rarity.CASUAL_BITES, 2, 2, false, Faction.NEUTRAL, 1);
-        allCards.put(rosemaryGuardian.getName(), rosemaryGuardian);
-        allCharacters.add(rosemaryGuardian);
-        
-        CharacterCard lotusRootGuard = new CharacterCard(
-            "蓮藕根脈守護者 (Lotus Root Vein Protector)", 3, "【酥脆(1)】：減免1點傷害。", 
-            Rarity.CASUAL_BITES, 1, 5, false, Faction.NEUTRAL, 1);
-        allCards.put(lotusRootGuard.getName(), lotusRootGuard);
-        allCharacters.add(lotusRootGuard);
     }
     
     @Override
