@@ -2,7 +2,6 @@ package com.example.game.card;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,8 +13,6 @@ import com.example.game.player.Player;
  * 實現了CardEffect接口中定義的各種卡牌效果
  */
 public class CardEffectImpl implements CardEffect {
-    
-    private static final Random random = new Random();
     
     // 酥脆效果的護甲值提取模式
     private static final Pattern CRISPY_PATTERN = Pattern.compile("【酥脆\\(([0-9]+)\\)】");
@@ -377,13 +374,13 @@ public class CardEffectImpl implements CardEffect {
                 matches = true;
             }
             // 根據稀有度匹配
-            else if (searchTarget.contains("傳說") && card.getRarity() == Rarity.LEGENDARY) {
+            else if (searchTarget.contains("極致美味") && card.getRarity() == Rarity.ULTIMATE_TASTE) {
                 matches = true;
-            } else if (searchTarget.contains("史詩") && card.getRarity() == Rarity.EPIC) {
+            } else if (searchTarget.contains("美食傳承") && card.getRarity() == Rarity.CULINARY_HERITAGE) {
                 matches = true;
-            } else if (searchTarget.contains("稀有") && card.getRarity() == Rarity.RARE) {
+            } else if (searchTarget.contains("風味饗宴") && card.getRarity() == Rarity.GOURMET_DELIGHT) {
                 matches = true;
-            } else if (searchTarget.contains("普通") && card.getRarity() == Rarity.COMMON) {
+            } else if (searchTarget.contains("輕鬆小食") && card.getRarity() == Rarity.CASUAL_BITES) {
                 matches = true;
             }
             // 根據名稱或描述匹配
