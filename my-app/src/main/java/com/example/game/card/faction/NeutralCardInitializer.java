@@ -39,31 +39,31 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(potatoGuardian);
 
         CharacterCard carrotArcher = new CharacterCard(
-            "胡蘿蔔地核祭司 (Carrot Earth Core Priest)", 3, "【彈牙】：每回合可攻擊2次。", 
+            "蕪菁地核祭司 (Turnip Earth Core Priest)", 3, "【彈牙】：每回合可攻擊2次。", 
             Rarity.CASUAL_BITES, 3, 3, true, Faction.NEUTRAL, 1);
         allCards.put(carrotArcher.getName(), carrotArcher);
         allCharacters.add(carrotArcher);
 
         CharacterCard radishScout = new CharacterCard(
-            "蘿蔔大地衛士 (Radish Earth Sentinel)", 2, "【酥脆(1)】：減免1點傷害。", 
+            "白蘿蔔大地衛士 (Radish Earth Sentinel)", 2, "【酥脆(1)】：減免1點傷害。", 
             Rarity.CASUAL_BITES, 2, 3, true, Faction.NEUTRAL, 1);
         allCards.put(radishScout.getName(), radishScout);
         allCharacters.add(radishScout);
 
         CharacterCard sweetPotatoMage = new CharacterCard(
-            "地瓜根系掘者 (Sweet Potato Root Digger)", 4, "【開胃】：使一個友方角色獲得+0/+3。【根系】：每當有友方角色受到傷害時，為其恢復1點生命值。", 
+            "地瓜根系掘者 (Sweet Potato Root Digger)", 4, "【開胃】：使一個友方角色獲得+0/+3。【酥脆(1)】：減免1點傷害。", 
             Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.NEUTRAL, 3);
         allCards.put(sweetPotatoMage.getName(), sweetPotatoMage);
         allCharacters.add(sweetPotatoMage);
 
         CharacterCard taroWarrior = new CharacterCard(
-            "芋頭土元素統御者 (Taro Earth Elemental Commander)", 4, "【擺盤】：敵人必須優先攻擊這個單位。【土元素】：場上每有一個根莖類角色，就獲得+0/+1。", 
+            "芋頭土元素統御者 (Taro Earth Elemental Commander)", 4, "【擺盤】：敵人必須優先攻擊這個單位。【酥脆(1)】：減免1點傷害。", 
             Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.NEUTRAL, 3);
         allCards.put(taroWarrior.getName(), taroWarrior);
         allCharacters.add(taroWarrior);
 
         CharacterCard gingerMage = new CharacterCard(
-            "薑根大地魔導師 (Ginger Earth Archmage)", 3, "【開胃】：為一個友方角色恢復2點生命值。【薑根強化】：每當你恢復生命值時，獲得+1/+1。", 
+            "薑根大地魔導師 (Ginger Earth Archmage)", 3, "【開胃】：為一個友方角色恢復2點生命值。", 
             Rarity.GOURMET_DELIGHT, 2, 2, true, Faction.NEUTRAL, 2);
         allCards.put(gingerMage.getName(), gingerMage);
         allCharacters.add(gingerMage);
@@ -88,7 +88,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(soyWarrior);
 
         CharacterCard redBeanMage = new CharacterCard(
-            "紅豆翱翔斥候 (Red Bean Soaring Scout)", 3, "【開胃】：抽一張牌。", 
+            "皇帝豆翱翔斥候 (Lima Bean Soaring Scout)", 3, "【開胃】：抽一張牌。", 
             Rarity.CASUAL_BITES, 2, 2, true, Faction.NEUTRAL, 1);
         allCards.put(redBeanMage.getName(), redBeanMage);
         allCharacters.add(redBeanMage);
@@ -106,25 +106,25 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(chickpeaArcher);
 
         CharacterCard blackBeanNinja = new CharacterCard(
-            "黑豆氣流騎士 (Black Bean Air Current Knight)", 3, "【酥脆(1)】：減免1點傷害。【風馳電掣】：攻擊時，敵方角色無法反擊。", 
+            "黑豆氣流騎士 (Black Bean Air Current Knight)", 3, "【酥脆(1)】：減免1點傷害。", 
             Rarity.GOURMET_DELIGHT, 3, 2, true, Faction.NEUTRAL, 3);
         allCards.put(blackBeanNinja.getName(), blackBeanNinja);
         allCharacters.add(blackBeanNinja);
 
         CharacterCard kidneyBeanGuard = new CharacterCard(
-            "腰豆風翼守衛 (Kidney Bean Wind Wing Guardian)", 3, "【擺盤】：敵人必須優先攻擊這個單位。【風翼】：每當敵方角色攻擊時，有30%機率使其攻擊力-1。", 
+            "腰豆風翼守衛 (Kidney Bean Wind Wing Guardian)", 3, "【擺盤】：敵人必須優先攻擊這個單位。", 
             Rarity.GOURMET_DELIGHT, 1, 4, false, Faction.NEUTRAL, 2);
         allCards.put(kidneyBeanGuard.getName(), kidneyBeanGuard);
         allCharacters.add(kidneyBeanGuard);
 
         CharacterCard lentilWarrior = new CharacterCard(
-            "扁豆疾風劍士 (Lentil Swift Wind Swordsman)", 4, "【現炸】：可以在出場的回合立即攻擊。【疾風】：每回合第一次攻擊後，獲得+1/+1。", 
+            "扁豆疾風劍士 (Lentil Swift Wind Swordsman)", 4, "【彈牙】：每回合可攻擊2次。【開胃】：獲得+1/+1。", 
             Rarity.GOURMET_DELIGHT, 3, 3, false, Faction.NEUTRAL, 3);
         allCards.put(lentilWarrior.getName(), lentilWarrior);
         allCharacters.add(lentilWarrior);
 
         CharacterCard peaPriest = new CharacterCard(
-            "豌豆風潮祭司 (Pea Wind Tide Priest)", 4, "【開胃】：使所有友方角色獲得【彈牙】效果直到回合結束。【風潮】：每回合結束時，使所有友方豆類角色獲得+1/+0。", 
+            "豌豆風潮祭司 (Pea Wind Tide Priest)", 4, "【開胃】：使所有友方角色獲得【彈牙】效果直到回合結束。", 
             Rarity.GOURMET_DELIGHT, 2, 3, false, Faction.NEUTRAL, 3);
         allCards.put(peaPriest.getName(), peaPriest);
         allCharacters.add(peaPriest);
@@ -173,7 +173,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(kaleWarrior);
 
         CharacterCard bokChoyMage = new CharacterCard(
-            "青江菜綠意治療師 (Bok Choy Green Essence Healer)", 3, "【開胃】：為一個友方角色恢復2點生命值。【滋養】：每回合結束時，為生命值最低的友方角色恢復1點生命值。", 
+            "青江菜綠意治療師 (Bok Choy Green Essence Healer)", 3, "【開胃】：為一個友方角色恢復2點生命值。", 
             Rarity.GOURMET_DELIGHT, 2, 2, true, Faction.NEUTRAL, 2);
         allCards.put(bokChoyMage.getName(), bokChoyMage);
         allCharacters.add(bokChoyMage);
@@ -185,7 +185,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(watercressScout);
 
         CharacterCard arugulaPriest = new CharacterCard(
-            "芝麻菜生機祝福者 (Arugula Vitality Blesser)", 4, "【開胃】：為所有友方角色恢復1點生命值。【生機共鳴】：每當你恢復生命值時，抽一張牌。", 
+            "芝麻菜生機祝福者 (Arugula Vitality Blesser)", 4, "【開胃】：為所有友方角色恢復1點生命值。【回味】：死亡時抽一張牌。", 
             Rarity.GOURMET_DELIGHT, 2, 3, false, Faction.NEUTRAL, 3);
         allCards.put(arugulaPriest.getName(), arugulaPriest);
         allCharacters.add(arugulaPriest);
@@ -197,7 +197,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(mustardKnight);
 
         CharacterCard chardMage = new CharacterCard(
-            "甜菜自然魔導師 (Swiss Chard Nature Archmage)", 4, "【開胃】：為所有友方角色恢復1點生命值。【自然共生】：每當一個友方角色恢復生命值時，使其獲得+1/+1直到回合結束。", 
+            "甜菜自然魔導師 (Swiss Chard Nature Archmage)", 4, "【開胃】：為所有友方角色恢復1點生命值。【酥脆(1)】：減免1點傷害。", 
             Rarity.GOURMET_DELIGHT, 3, 3, false, Faction.NEUTRAL, 3);
         allCards.put(chardMage.getName(), chardMage);
         allCharacters.add(chardMage);
@@ -222,13 +222,13 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(watermelonGuard);
 
         CharacterCard cantaloupeWarrior = new CharacterCard(
-            "哈密瓜漿流術士 (Cantaloupe Fluid Sorcerer)", 4, "【開胃】：使一個敵方角色無法攻擊直到回合結束。【漿流】：敵方角色費用+1。", 
+            "哈密瓜漿流術士 (Cantaloupe Fluid Sorcerer)", 4, "【開胃】：使一個敵方角色無法攻擊直到回合結束。", 
             Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.NEUTRAL, 3);
         allCards.put(cantaloupeWarrior.getName(), cantaloupeWarrior);
         allCharacters.add(cantaloupeWarrior);
 
         CharacterCard honeydewMage = new CharacterCard(
-            "蜜瓜水靈法師 (Honeydew Water Spirit Mage)", 3, "【開胃】：為一個友方角色恢復2點生命值。【水靈】：敵方法術費用+1。", 
+            "蜜瓜水靈法師 (Honeydew Water Spirit Mage)", 3, "【開胃】：為一個友方角色恢復2點生命值。", 
             Rarity.GOURMET_DELIGHT, 2, 2, true, Faction.NEUTRAL, 2);
         allCards.put(honeydewMage.getName(), honeydewMage);
         allCharacters.add(honeydewMage);
@@ -240,19 +240,19 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(bitterGourdScout);
 
         CharacterCard winterMelonPriest = new CharacterCard(
-            "冬瓜潮汐祭司 (Winter Melon Tide Priest)", 4, "【開胃】：對所有敵方角色造成1點傷害。【霜凍】：每回合結束時，隨機凍結一個敵方角色直到對手的下個回合結束。", 
+            "冬瓜潮汐祭司 (Winter Melon Tide Priest)", 4, "【開胃】：對所有敵方角色造成1點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.GOURMET_DELIGHT, 2, 4, false, Faction.NEUTRAL, 3);
         allCards.put(winterMelonPriest.getName(), winterMelonPriest);
         allCharacters.add(winterMelonPriest);
 
         CharacterCard luffaKnight = new CharacterCard(
-            "絲瓜水旋騎士 (Luffa Water Vortex Knight)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【水旋】：敵方角色進場時，使其費用+1直到對手回合結束。", 
+            "絲瓜水旋騎士 (Luffa Water Vortex Knight)", 5, "【擺盤】：敵人必須優先攻擊這個單位。【開胃】：使敵方角色費用+1直到對手回合結束。", 
             Rarity.GOURMET_DELIGHT, 4, 4, false, Faction.NEUTRAL, 3);
         allCards.put(luffaKnight.getName(), luffaKnight);
         allCharacters.add(luffaKnight);
 
         CharacterCard bottleGourdMage = new CharacterCard(
-            "葫蘆水源魔導師 (Bottle Gourd Water Source Archmage)", 4, "【開胃】：召喚一個水幕，使所有友方角色獲得【酥脆(1)】效果1回合。【水源】：每回合結束時，隨機使一個敵方角色攻擊力歸零直到對手回合結束。", 
+            "葫蘆水源魔導師 (Bottle Gourd Water Source Archmage)", 4, "【開胃】：使所有友方角色獲得【酥脆(1)】效果1回合。", 
             Rarity.GOURMET_DELIGHT, 3, 3, false, Faction.NEUTRAL, 3);
         allCards.put(bottleGourdMage.getName(), bottleGourdMage);
         allCharacters.add(bottleGourdMage);
@@ -283,19 +283,19 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(oysterMushroomArcher);
 
         CharacterCard mushroomShaman = new CharacterCard(
-            "香菇暗影術士 (Shiitake Shadow Arcanist)", 4, "【開胃】：使一個敵方角色-2/-0直到回合結束。【暗影掌控】：每回合開始時，隨機使一個敵方角色無法攻擊1回合。", 
+            "姬松茸暗影術士 (Matsutake Shadow Arcanist)", 4, "【開胃】：使一個敵方角色-2/-0直到回合結束。【酥脆(1)】：減免1點傷害。", 
             Rarity.GOURMET_DELIGHT, 2, 3, false, Faction.NEUTRAL, 3);
         allCards.put(mushroomShaman.getName(), mushroomShaman);
         allCharacters.add(mushroomShaman);
 
         CharacterCard kingOysterWarrior = new CharacterCard(
-            "杏鮑菇菌絲劍士 (King Oyster Mycelium Swordsman)", 4, "【開胃】：獲得+2/+2直到回合結束。【菌絲網絡】：每當敵方角色進場時，使其-1/-1。", 
+            "杏鮑菇菌絲劍士 (King Oyster Mycelium Swordsman)", 4, "【開胃】：獲得+2/+2直到回合結束。【彈牙】：每回合可攻擊2次。", 
             Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.NEUTRAL, 3);
         allCards.put(kingOysterWarrior.getName(), kingOysterWarrior);
         allCharacters.add(kingOysterWarrior);
 
         CharacterCard woodEarMage = new CharacterCard(
-            "木耳暗夜法師 (Wood Ear Dark Night Mage)", 3, "【開胃】：使一個敵方角色無法攻擊直到回合結束。【暗夜】：夜晚時，所有菇類角色+1/+1。", 
+            "木耳暗夜法師 (Wood Ear Dark Night Mage)", 3, "【開胃】：使一個敵方角色無法攻擊直到回合結束。", 
             Rarity.GOURMET_DELIGHT, 2, 2, true, Faction.NEUTRAL, 2);
         allCards.put(woodEarMage.getName(), woodEarMage);
         allCharacters.add(woodEarMage);
@@ -307,7 +307,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(cloudEarScout);
 
         CharacterCard reishiPriest = new CharacterCard(
-            "靈芝暗幕祭司 (Reishi Dark Veil Priest)", 4, "【開胃】：對所有敵方角色造成1點傷害。【暗幕】：敵方法術費用+1。", 
+            "靈芝暗幕祭司 (Reishi Dark Veil Priest)", 4, "【開胃】：對所有敵方角色造成1點傷害。【彈牙】：每回合可攻擊2次。", 
             Rarity.GOURMET_DELIGHT, 2, 3, false, Faction.NEUTRAL, 3);
         allCards.put(reishiPriest.getName(), reishiPriest);
         allCharacters.add(reishiPriest);
@@ -326,7 +326,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
 
         // 香料類食材
         CharacterCard blackPepperWarrior = new CharacterCard(
-            "黑胡椒烈焰狂戰 (Black Pepper Flame Berserker)", 2, "【烈焰】：每回合攻擊時，攻擊力+1。", 
+            "黑胡椒烈焰狂戰 (Black Pepper Flame Berserker)", 2, "【彈牙】：每回合可攻擊2次。", 
             Rarity.CASUAL_BITES, 3, 1, true, Faction.NEUTRAL, 1);
         allCards.put(blackPepperWarrior.getName(), blackPepperWarrior);
         allCharacters.add(blackPepperWarrior);
@@ -344,7 +344,7 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(cinnamonGuard);
 
         CharacterCard cuminMage = new CharacterCard(
-            "孜然味覺操控師 (Cumin Taste Controller)", 3, "【開胃】：使所有友方角色獲得+1/+0直到回合結束。【味覺操控】：敵方角色攻擊力-1。", 
+            "孜然味覺操控師 (Cumin Taste Controller)", 3, "【開胃】：使所有友方角色獲得+1/+0直到回合結束。", 
             Rarity.GOURMET_DELIGHT, 2, 2, true, Faction.NEUTRAL, 2);
         allCards.put(cuminMage.getName(), cuminMage);
         allCharacters.add(cuminMage);
@@ -356,19 +356,19 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(starAniseKnight);
 
         CharacterCard mustardAssassin = new CharacterCard(
-            "芥末燃燒領主 (Mustard Burning Lord)", 3, "【突刺】：每回合第一次攻擊時，攻擊力+2。【燃燒領域】：每回合開始時，對所有敵方角色造成1點傷害。", 
+            "芥末燃燒領主 (Mustard Burning Lord)", 3, "【開胃】：對所有敵方角色造成1點傷害。", 
             Rarity.GOURMET_DELIGHT, 4, 1, true, Faction.NEUTRAL, 3);
         allCards.put(mustardAssassin.getName(), mustardAssassin);
         allCharacters.add(mustardAssassin);
 
         CharacterCard turmericPriest = new CharacterCard(
-            "薑黃炙熱祭司 (Turmeric Scorching Priest)", 4, "【滋補】：回合結束時恢復2點生命值。【炙熱】：每回合結束時，使所有友方角色獲得+1/+0直到回合結束。", 
+            "薑黃炙熱祭司 (Turmeric Scorching Priest)", 4, "【開胃】：使所有友方角色獲得+1/+0直到回合結束。【回味】：死亡時恢復2點生命值。", 
             Rarity.GOURMET_DELIGHT, 2, 3, false, Faction.NEUTRAL, 3);
         allCards.put(turmericPriest.getName(), turmericPriest);
         allCharacters.add(turmericPriest);
 
         CharacterCard basilMonk = new CharacterCard(
-            "羅勒火舌修行者 (Basil Fire Tongue Monk)", 3, "【現炸】：可以在出場的回合立即攻擊。【火舌】：攻擊後，目標下回合攻擊力-1。", 
+            "羅勒火舌修行者 (Basil Fire Tongue Monk)", 3, "【彈牙】：每回合可攻擊2次。", 
             Rarity.GOURMET_DELIGHT, 3, 2, true, Faction.NEUTRAL, 2);
         allCards.put(basilMonk.getName(), basilMonk);
         allCharacters.add(basilMonk);
@@ -389,25 +389,25 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(plainRootVegetable);
         
         CharacterCard plainPotato = new CharacterCard(
-            "小馬鈴薯土脈學徒 (Small Potato Soil Vein Apprentice)", 1, "無特性", 
+            "芋艿土脈學徒 (Arrowroot Soil Vein Apprentice)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 1, false, Faction.NEUTRAL, 1);
         allCards.put(plainPotato.getName(), plainPotato);
         allCharacters.add(plainPotato);
         
         CharacterCard plainYam = new CharacterCard(
-            "山藥根系戰士 (Yam Root System Warrior)", 2, "無特性", 
+            "菱角根系學徒 (Water Caltrop Root System Apprentice)", 2, "無特性", 
             Rarity.CASUAL_BITES, 2, 3, false, Faction.NEUTRAL, 2);
         allCards.put(plainYam.getName(), plainYam);
         allCharacters.add(plainYam);
         
         CharacterCard plainTaro = new CharacterCard(
-            "芋頭大地衛兵 (Taro Earth Guard)", 3, "無特性", 
+            "茭白筍大地哨兵 (Water Bamboo Earth Sentinel)", 3, "無特性", 
             Rarity.CASUAL_BITES, 3, 3, false, Faction.NEUTRAL, 2);
         allCards.put(plainTaro.getName(), plainTaro);
         allCharacters.add(plainTaro);
         
         CharacterCard plainBurdock = new CharacterCard(
-            "牛蒡大地將軍 (Burdock Earth General)", 5, "無特性", 
+            "菊芋大地資深學徒 (Jerusalem Artichoke Earth Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 5, 5, false, Faction.NEUTRAL, 4);
         allCards.put(plainBurdock.getName(), plainBurdock);
         allCharacters.add(plainBurdock);
@@ -420,25 +420,25 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(plainBean);
         
         CharacterCard plainPea = new CharacterCard(
-            "豌豆氣流砲兵 (Green Pea Air Current Cannoneer)", 1, "無特性", 
+            "刀豆氣流見習砲手 (Hyacinth Bean Air Current Novice Cannoneer)", 1, "無特性", 
             Rarity.CASUAL_BITES, 2, 0, true, Faction.NEUTRAL, 1);
         allCards.put(plainPea.getName(), plainPea);
         allCharacters.add(plainPea);
         
         CharacterCard plainSoybean = new CharacterCard(
-            "黃豆風盾守衛 (Soybean Wind Shield Guardian)", 2, "無特性", 
+            "鵪鶉豆風盾哨兵 (Chickpea Wind Shield Sentinel)", 2, "無特性", 
             Rarity.CASUAL_BITES, 1, 3, false, Faction.NEUTRAL, 1);
         allCards.put(plainSoybean.getName(), plainSoybean);
         allCharacters.add(plainSoybean);
         
         CharacterCard plainLentil = new CharacterCard(
-            "扁豆疾風勇士 (Lentil Swift Wind Fighter)", 3, "無特性", 
+            "黑眼豆疾風見習生 (Black-eyed Pea Swift Wind Apprentice)", 3, "無特性", 
             Rarity.CASUAL_BITES, 3, 3, true, Faction.NEUTRAL, 2);
         allCards.put(plainLentil.getName(), plainLentil);
         allCharacters.add(plainLentil);
         
         CharacterCard plainBroadBean = new CharacterCard(
-            "蠶豆風暴將軍 (Broad Bean Storm General)", 5, "無特性", 
+            "利馬豆風暴資深學徒 (Lima Bean Storm Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 4, 6, false, Faction.NEUTRAL, 3);
         allCards.put(plainBroadBean.getName(), plainBroadBean);
         allCharacters.add(plainBroadBean);
@@ -457,112 +457,112 @@ public class NeutralCardInitializer implements FactionCardInitializer {
         allCharacters.add(plainGarlic);
         
         CharacterCard plainGinger = new CharacterCard(
-            "老薑火焰長者 (Ginger Flame Elder)", 2, "無特性", 
+            "小茴香火焰見習者 (Fennel Flame Apprentice)", 2, "無特性", 
             Rarity.CASUAL_BITES, 1, 4, false, Faction.NEUTRAL, 2);
         allCards.put(plainGinger.getName(), plainGinger);
         allCharacters.add(plainGinger);
         
         CharacterCard plainCinnamon = new CharacterCard(
-            "肉桂燃燒戰士 (Cinnamon Burning Warrior)", 3, "無特性", 
+            "陳皮燃燒學徒 (Dried Tangerine Peel Burning Apprentice)", 3, "無特性", 
             Rarity.CASUAL_BITES, 4, 2, true, Faction.NEUTRAL, 2);
         allCards.put(plainCinnamon.getName(), plainCinnamon);
         allCharacters.add(plainCinnamon);
         
         CharacterCard plainStarAnise = new CharacterCard(
-            "八角烈火大使 (Star Anise Fierce Fire Ambassador)", 5, "無特性", 
+            "丁香烈火資深見習生 (Clove Fierce Fire Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 5, 5, true, Faction.NEUTRAL, 3);
         allCards.put(plainStarAnise.getName(), plainStarAnise);
         allCharacters.add(plainStarAnise);
 
         // 葉菜類無特性角色
         CharacterCard plainLettuce = new CharacterCard(
-            "小生菜綠葉見習生 (Small Lettuce Green Leaf Apprentice)", 1, "無特性", 
+            "油菜綠葉見習生 (Rape Green Leaf Apprentice)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 2, true, Faction.NEUTRAL, 1);
         allCards.put(plainLettuce.getName(), plainLettuce);
         allCharacters.add(plainLettuce);
         
         CharacterCard plainSpinach = new CharacterCard(
-            "嫩菠菜生機學徒 (Tender Spinach Vitality Apprentice)", 1, "無特性", 
+            "茼蒿生機學徒 (Crown Daisy Vitality Apprentice)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 1, false, Faction.NEUTRAL, 1);
         allCards.put(plainSpinach.getName(), plainSpinach);
         allCharacters.add(plainSpinach);
         
         CharacterCard plainCabbage = new CharacterCard(
-            "高麗菜光合戰士 (Cabbage Photosynthesis Warrior)", 2, "無特性", 
+            "芥藍光合學徒 (Chinese Broccoli Photosynthesis Apprentice)", 2, "無特性", 
             Rarity.CASUAL_BITES, 2, 2, false, Faction.NEUTRAL, 1);
         allCards.put(plainCabbage.getName(), plainCabbage);
         allCharacters.add(plainCabbage);
         
         CharacterCard plainKale = new CharacterCard(
-            "羽衣甘藍生命衛士 (Kale Life Sentinel)", 3, "無特性", 
+            "莧菜生命哨兵 (Amaranth Life Sentinel)", 3, "無特性", 
             Rarity.CASUAL_BITES, 2, 4, false, Faction.NEUTRAL, 2);
         allCards.put(plainKale.getName(), plainKale);
         allCharacters.add(plainKale);
         
         CharacterCard plainChard = new CharacterCard(
-            "瑞士甜菜自然將軍 (Swiss Chard Nature General)", 5, "無特性", 
+            "紫蘇自然資深學徒 (Perilla Nature Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 3, 6, false, Faction.NEUTRAL, 3);
         allCards.put(plainChard.getName(), plainChard);
         allCharacters.add(plainChard);
 
         // 瓜果類無特性角色
         CharacterCard plainCucumber = new CharacterCard(
-            "小黃瓜汁液學徒 (Small Cucumber Juice Apprentice)", 1, "無特性", 
+            "節瓜汁液學徒 (Chayote Juice Apprentice)", 1, "無特性", 
             Rarity.CASUAL_BITES, 2, 1, true, Faction.NEUTRAL, 1);
         allCards.put(plainCucumber.getName(), plainCucumber);
         allCharacters.add(plainCucumber);
         
         CharacterCard plainBitterGourd = new CharacterCard(
-            "苦瓜水脈哨兵 (Bitter Gourd Water Vein Sentinel)", 1, "無特性", 
+            "佛手瓜水脈哨兵 (Buddha's Hand Water Vein Sentinel)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 2, false, Faction.NEUTRAL, 1);
         allCards.put(plainBitterGourd.getName(), plainBitterGourd);
         allCharacters.add(plainBitterGourd);
         
         CharacterCard plainPumpkin = new CharacterCard(
-            "南瓜水潮守衛 (Pumpkin Water Tide Guard)", 2, "無特性", 
+            "栗子南瓜水潮見習守衛 (Kabocha Water Tide Apprentice Guard)", 2, "無特性", 
             Rarity.CASUAL_BITES, 1, 4, false, Faction.NEUTRAL, 2);
         allCards.put(plainPumpkin.getName(), plainPumpkin);
         allCharacters.add(plainPumpkin);
         
         CharacterCard plainWatermelon = new CharacterCard(
-            "西瓜潮汐戰士 (Watermelon Tide Warrior)", 3, "無特性", 
+            "大荔瓜潮汐學徒 (Persian Melon Tide Apprentice)", 3, "無特性", 
             Rarity.CASUAL_BITES, 3, 3, false, Faction.NEUTRAL, 2);
         allCards.put(plainWatermelon.getName(), plainWatermelon);
         allCharacters.add(plainWatermelon);
         
         CharacterCard plainMelon = new CharacterCard(
-            "哈密瓜水源將軍 (Cantaloupe Water Source General)", 5, "無特性", 
+            "扁蒲水源資深學徒 (Wax Gourd Water Source Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 4, 5, false, Faction.NEUTRAL, 3);
         allCards.put(plainMelon.getName(), plainMelon);
         allCharacters.add(plainMelon);
 
         // 菇類無特性角色
         CharacterCard plainEnoki = new CharacterCard(
-            "金針菇幻影見習生 (Enoki Phantom Apprentice)", 1, "無特性", 
+            "鴻喜菇幻影見習生 (Flamulina Phantom Apprentice)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 1, true, Faction.NEUTRAL, 1);
         allCards.put(plainEnoki.getName(), plainEnoki);
         allCharacters.add(plainEnoki);
         
         CharacterCard plainShiitake = new CharacterCard(
-            "香菇暗影哨兵 (Shiitake Shadow Sentinel)", 1, "無特性", 
+            "白玉菇暗影哨兵 (White Beech Mushroom Shadow Sentinel)", 1, "無特性", 
             Rarity.CASUAL_BITES, 1, 2, false, Faction.NEUTRAL, 1);
         allCards.put(plainShiitake.getName(), plainShiitake);
         allCharacters.add(plainShiitake);
         
         CharacterCard plainOyster = new CharacterCard(
-            "蠔菇菌絲戰士 (Oyster Mushroom Mycelium Warrior)", 2, "無特性", 
+            "茶樹菇菌絲學徒 (Tea Tree Mushroom Mycelium Apprentice)", 2, "無特性", 
             Rarity.CASUAL_BITES, 2, 2, false, Faction.NEUTRAL, 1);
         allCards.put(plainOyster.getName(), plainOyster);
         allCharacters.add(plainOyster);
         
         CharacterCard plainWoodEar = new CharacterCard(
-            "木耳暗夜哨衛 (Wood Ear Dark Night Guard)", 3, "無特性", 
+            "毛木耳暗夜哨衛 (Velvet Dark Night Sentinel)", 3, "無特性", 
             Rarity.CASUAL_BITES, 2, 3, false, Faction.NEUTRAL, 2);
         allCards.put(plainWoodEar.getName(), plainWoodEar);
         allCharacters.add(plainWoodEar);
         
         CharacterCard plainReishi = new CharacterCard(
-            "靈芝暗幕將軍 (Reishi Dark Veil General)", 5, "無特性", 
+            "秀珍菇暗幕資深學徒 (Shimeji Dark Veil Senior Apprentice)", 5, "無特性", 
             Rarity.GOURMET_DELIGHT, 3, 6, false, Faction.NEUTRAL, 3);
         allCards.put(plainReishi.getName(), plainReishi);
         allCharacters.add(plainReishi);
@@ -795,13 +795,6 @@ public class NeutralCardInitializer implements FactionCardInitializer {
             Rarity.CASUAL_BITES, 1, 5, false, Faction.NEUTRAL, 1);
         allCards.put(lotusRootGuard.getName(), lotusRootGuard);
         allCharacters.add(lotusRootGuard);
-
-        // 設計拼盤卡片
-        CharacterCard masterChef = new CharacterCard(
-            "六大食材料理大師 (Six Ingredients Master Chef)", 8, "【拼盤】：當你控制根莖類、豆類、葉菜類、瓜果類、菇類和香料類各一個角色時，可免費打出此卡。【開胃】：使所有友方角色獲得+2/+2。【酥脆(2)】：減免2點傷害。", 
-            Rarity.ULTIMATE_TASTE, 6, 6, false, Faction.NEUTRAL, 6);
-        allCards.put(masterChef.getName(), masterChef);
-        allCharacters.add(masterChef);
     }
     
     @Override
