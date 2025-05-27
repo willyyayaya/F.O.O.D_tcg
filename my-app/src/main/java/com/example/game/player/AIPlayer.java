@@ -100,13 +100,13 @@ public class AIPlayer extends Player {
             // 簡單實現：遍歷並選擇稀有度較高的卡牌
             for (CastleCard castle : availableCastles) {
                 switch (castle.getRarity()) {
-                    case LEGENDARY:
+                    case ULTIMATE_TASTE:
                         if (random.nextDouble() < 0.8) return castle;
                         break;
-                    case EPIC:
+                    case CULINARY_HERITAGE:
                         if (random.nextDouble() < 0.6) return castle;
                         break;
-                    case RARE:
+                    case GOURMET_DELIGHT:
                         if (random.nextDouble() < 0.4) return castle;
                         break;
                 }
@@ -143,9 +143,9 @@ public class AIPlayer extends Player {
         
         // 根據卡牌稀有度加分
         switch (castle.getRarity()) {
-            case LEGENDARY: score += 3.0; break;
-            case EPIC: score += 2.0; break;
-            case RARE: score += 1.0; break;
+            case ULTIMATE_TASTE: score += 3.0; break;
+            case CULINARY_HERITAGE: score += 2.0; break;
+            case GOURMET_DELIGHT: score += 1.0; break;
         }
         
         // 根據效果關鍵字加分

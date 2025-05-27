@@ -446,10 +446,10 @@ public class Player {
     // 一個簡單的工具方法，用於顯示稀有度符號
     private String getRaritySymbol(Rarity rarity) {
         switch (rarity) {
-            case COMMON: return "★";
-            case RARE: return "★★";
-            case EPIC: return "★★★";
-            case LEGENDARY: return "★★★★";
+            case CASUAL_BITES: return "★";
+            case GOURMET_DELIGHT: return "★★";
+            case CULINARY_HERITAGE: return "★★★";
+            case ULTIMATE_TASTE: return "★★★★";
             default: return "";
         }
     }
