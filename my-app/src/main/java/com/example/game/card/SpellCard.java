@@ -141,16 +141,16 @@ public class SpellCard extends Card {
      */
     private void adjustValueByRarity() {
         switch (getRarity()) {
-            case COMMON:
+            case CASUAL_BITES:
                 // 不調整
                 break;
-            case RARE:
+            case GOURMET_DELIGHT:
                 this.value += 1;
                 break;
-            case EPIC:
+            case CULINARY_HERITAGE:
                 this.value += 2;
                 break;
-            case LEGENDARY:
+            case ULTIMATE_TASTE:
                 this.value += 3;
                 if (this.effectDuration > 1) {
                     this.effectDuration += 1; // 傳說卡持續效果增強
