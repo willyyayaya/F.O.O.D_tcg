@@ -730,61 +730,61 @@ public class NeutralCardInitializer implements FactionCardInitializer {
 
         // 場地卡
         FieldCard vitalVegetableGreenGarden = FieldCard.createEnvironmentField(
-            "生命蔬菜綠園 (Vital Vegetable Green Garden)", 2, "每回合結束時，為所有友方角色恢復1點生命值。", 
-            Rarity.CASUAL_BITES, 1, Faction.NEUTRAL, 2);
+            "生命蔬菜綠園 (Vital Vegetable Green Garden)", 2, "每當你打出一個葉菜類角色時，為其恢復1點生命值。", 
+            Rarity.CASUAL_BITES, 1, Faction.NEUTRAL, 1);
         allCards.put(vitalVegetableGreenGarden.getName(), vitalVegetableGreenGarden);
         allFieldCards.add(vitalVegetableGreenGarden);
 
         FieldCard juicyFruitOrchard = FieldCard.createEnvironmentField(
-            "多汁水果果園 (Juicy Fruit Orchard)", 3, "每當你打出一個角色時，使其獲得+1/+1。", 
-            Rarity.GOURMET_DELIGHT, 2, Faction.NEUTRAL, 3);
+            "多汁水果果園 (Juicy Fruit Orchard)", 3, "每當你打出一個瓜果類角色時，使其獲得【彈牙】效果。", 
+            Rarity.GOURMET_DELIGHT, 2, Faction.NEUTRAL, 2);
         allCards.put(juicyFruitOrchard.getName(), juicyFruitOrchard);
         allFieldCards.add(juicyFruitOrchard);
 
         FieldCard mysticMushroomFantasyForest = FieldCard.createEnvironmentField(
-            "神祕菇菇幻森 (Mystic Mushroom Fantasy Forest)", 4, "每回合開始時，隨機使一個友方角色獲得【酥脆(1)】效果。", 
+            "神祕菇菇幻森 (Mystic Mushroom Fantasy Forest)", 4, "每當你打出一個菇類角色時，使其獲得【回味】：死亡時抽一張牌。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.NEUTRAL, 3);
         allCards.put(mysticMushroomFantasyForest.getName(), mysticMushroomFantasyForest);
         allFieldCards.add(mysticMushroomFantasyForest);
 
         FieldCard goldenWheatAbundantField = FieldCard.createEnvironmentField(
-            "金黃麥穗豐田 (Golden Wheat Abundant Field)", 2, "每當你使用一張法術卡時，抽一張牌。", 
+            "金黃麥穗豐田 (Golden Wheat Abundant Field)", 2, "每當你打出一個根莖類角色時，使其獲得【酥脆(1)】效果。", 
             Rarity.CASUAL_BITES, 1, Faction.NEUTRAL, 1);
         allCards.put(goldenWheatAbundantField.getName(), goldenWheatAbundantField);
         allFieldCards.add(goldenWheatAbundantField);
 
         FieldCard aromaticHerbHealingGarden = FieldCard.createEnvironmentField(
-            "芳香香草療園 (Aromatic Herb Healing Garden)", 3, "每當一個友方角色受到傷害時，為其恢復1點生命值。", 
+            "芳香香草療園 (Aromatic Herb Healing Garden)", 3, "每當你打出一個香料類角色時，為所有友方角色恢復1點生命值。", 
             Rarity.GOURMET_DELIGHT, 2, Faction.NEUTRAL, 2);
         allCards.put(aromaticHerbHealingGarden.getName(), aromaticHerbHealingGarden);
         allFieldCards.add(aromaticHerbHealingGarden);
 
         FieldCard exoticSpiceMarketplace = FieldCard.createEnvironmentField(
-            "異國香料集市 (Exotic Spice Marketplace)", 4, "每回合開始時，使一個友方角色獲得+2攻擊力直到回合結束。", 
+            "異國香料集市 (Exotic Spice Marketplace)", 4, "每當你打出一個香料類角色時，使所有友方角色獲得+1/+0直到回合結束。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.NEUTRAL, 3);
         allCards.put(exoticSpiceMarketplace.getName(), exoticSpiceMarketplace);
         allFieldCards.add(exoticSpiceMarketplace);
 
         FieldCard ancientRootVegetableCellar = FieldCard.createEnvironmentField(
-            "古老根莖窖藏 (Ancient Root Vegetable Cellar)", 3, "每當一個友方角色死亡時，抽一張牌。", 
+            "古老根莖窖藏 (Ancient Root Vegetable Cellar)", 3, "每當你打出一個根莖類角色時，抽一張牌。", 
             Rarity.CASUAL_BITES, 2, Faction.NEUTRAL, 2);
         allCards.put(ancientRootVegetableCellar.getName(), ancientRootVegetableCellar);
         allFieldCards.add(ancientRootVegetableCellar);
 
         FieldCard vitalityBeanField = FieldCard.createEnvironmentField(
-            "活力豆類田野 (Vitality Bean Field)", 2, "每當你打出一個角色時，使其獲得【彈牙】效果。", 
+            "活力豆類田野 (Vitality Bean Field)", 2, "每當你打出一個豆類角色時，使其獲得【彈牙】效果。", 
             Rarity.GOURMET_DELIGHT, 1, Faction.NEUTRAL, 1);
         allCards.put(vitalityBeanField.getName(), vitalityBeanField);
         allFieldCards.add(vitalityBeanField);
 
         FieldCard ancientFarmingSanctuary = FieldCard.createEnvironmentField(
-            "遠古農耕聖地 (Ancient Farming Sanctuary)", 5, "每回合結束時，使所有友方角色獲得+1/+1。", 
-            Rarity.GOURMET_DELIGHT, 4, Faction.NEUTRAL, 5);
+            "遠古農耕聖地 (Ancient Farming Sanctuary)", 5, "每當你打出一個角色時，根據其食材類別獲得不同效果：葉菜類-恢復1點生命值；根莖類-獲得【酥脆(1)】；豆類-獲得【彈牙】；瓜果類-獲得+1/+1；菇類-抽一張牌；香料類-獲得+1/+0。", 
+            Rarity.CULINARY_HERITAGE, 4, Faction.NEUTRAL, 4);
         allCards.put(ancientFarmingSanctuary.getName(), ancientFarmingSanctuary);
         allFieldCards.add(ancientFarmingSanctuary);
 
         FieldCard sacredFoodGrove = FieldCard.createEnvironmentField(
-            "神聖食物樹林 (Sacred Food Grove)", 4, "每當你使用一張法術卡時，為所有友方角色恢復1點生命值。", 
+            "神聖食物樹林 (Sacred Food Grove)", 4, "每當你打出一個角色時，使所有友方角色獲得+0/+1。每當一個友方角色死亡時，為所有友方角色恢復1點生命值。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.NEUTRAL, 3);
         allCards.put(sacredFoodGrove.getName(), sacredFoodGrove);
         allFieldCards.add(sacredFoodGrove);
