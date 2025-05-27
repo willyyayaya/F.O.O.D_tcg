@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  */
 public class Deck {
     private List<Card> cards;
-    private static final int DECK_SIZE = 30; // 固定牌組大小為30張
+    private static final int MAX_DECK_POINTS = 50; // 最大牌組點數
     
     public Deck() {
         this.cards = new ArrayList<>();
@@ -26,50 +26,49 @@ public class Deck {
         List<FieldCard> allFields = CardLibrary.getAllFieldCards();
         
         if (allCharacters.isEmpty() && allFields.isEmpty()) {
-            System.out.println("卡牌圖鑑尚未初始化，使用隨機生成的卡牌");
-            initializeRandom();
+            System.out.println("卡牌圖鑑尚未初始化，無法創建牌組");
             return;
         }
         
         // 按照7:3的比例分配角色卡和場地卡
-        int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
-        int fieldCount = DECK_SIZE - characterCount; // 30%為場地卡
+        int totalPoints = 0;
+        Random random = new Random();
         
         // 從卡牌圖鑑中選擇角色卡
-        for (int i = 0; i < characterCount; i++) {
+        while (totalPoints < MAX_DECK_POINTS) {
             if (!allCharacters.isEmpty()) {
-                cards.add(copyCard(allCharacters.get(i % allCharacters.size())));
+                Card card = allCharacters.get(random.nextInt(allCharacters.size()));
+                int cardPoints = card.getPoints();
+                
+                if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                    cards.add(copyCard(card));
+                    totalPoints += cardPoints;
+                } else {
+                    break;
+                }
             } else {
-                // 如果沒有足夠的角色卡，則生成隨機角色卡
-                cards.add(createRandomCharacterCard(i));
+                break;
             }
         }
         
         // 從卡牌圖鑑中選擇場地卡
-        for (int i = 0; i < fieldCount; i++) {
+        while (totalPoints < MAX_DECK_POINTS) {
             if (!allFields.isEmpty()) {
-                cards.add(copyCard(allFields.get(i % allFields.size())));
-            } else {
-                // 如果沒有足夠的場地卡，則生成隨機場地卡
-                cards.add(createRandomFieldCard(i));
-            }
-        }
-        
-        // 確保牌組大小為30張
-        if (cards.size() > DECK_SIZE) {
-            cards = cards.subList(0, DECK_SIZE);
-        } else if (cards.size() < DECK_SIZE) {
-            // 不足30張時補充隨機卡牌
-            while (cards.size() < DECK_SIZE) {
-                if (Math.random() < 0.7) {
-                    cards.add(createRandomCharacterCard(cards.size()));
+                Card card = allFields.get(random.nextInt(allFields.size()));
+                int cardPoints = card.getPoints();
+                
+                if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                    cards.add(copyCard(card));
+                    totalPoints += cardPoints;
                 } else {
-                    cards.add(createRandomFieldCard(cards.size()));
+                    break;
                 }
+            } else {
+                break;
             }
         }
         
-        System.out.println("牌組初始化完成，共有 " + cards.size() + " 張卡牌");
+        System.out.println("牌組初始化完成，共有 " + cards.size() + " 張卡牌，總點數: " + totalPoints);
     }
     
     /**
@@ -84,14 +83,9 @@ public class Deck {
         List<FieldCard> allFields = CardLibrary.getAllFieldCards();
         
         if (allCharacters.isEmpty() && allFields.isEmpty()) {
-            System.out.println("卡牌圖鑑尚未初始化，使用隨機生成的陣營卡牌");
-            initializeRandomWithFaction(faction);
+            System.out.println("卡牌圖鑑尚未初始化，無法創建牌組");
             return;
         }
-        
-        // 按照7:3的比例分配角色卡和場地卡
-        int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
-        int fieldCount = DECK_SIZE - characterCount; // 30%為場地卡
         
         // 從卡牌圖鑑中選擇指定陣營的角色卡
         List<CharacterCard> factionCharacters = allCharacters.stream()
@@ -112,237 +106,281 @@ public class Deck {
         List<FieldCard> neutralFields = allFields.stream()
                 .filter(card -> card.getFaction() == Faction.NEUTRAL)
                 .collect(Collectors.toList());
-                
+        
+        // 選擇卡牌，直到總點數達到50
+        int totalPoints = 0;
+        Random random = new Random();
+        
         // 優先選擇陣營卡牌，然後是中立卡牌
-        for (int i = 0; i < characterCount; i++) {
+        while (totalPoints < MAX_DECK_POINTS) {
+            Card card = null;
+            int cardPoints = 0;
+            
+            // 優先選擇陣營角色卡
             if (!factionCharacters.isEmpty()) {
-                cards.add(copyCard(factionCharacters.get(i % factionCharacters.size())));
+                card = factionCharacters.get(random.nextInt(factionCharacters.size()));
             } else if (!neutralCharacters.isEmpty()) {
-                cards.add(copyCard(neutralCharacters.get(i % neutralCharacters.size())));
-            } else {
-                cards.add(createRandomCharacterCard(i, faction));
+                card = neutralCharacters.get(random.nextInt(neutralCharacters.size()));
             }
-        }
-        
-        for (int i = 0; i < fieldCount; i++) {
-            if (!factionFields.isEmpty()) {
-                cards.add(copyCard(factionFields.get(i % factionFields.size())));
-            } else if (!neutralFields.isEmpty()) {
-                cards.add(copyCard(neutralFields.get(i % neutralFields.size())));
-            } else {
-                cards.add(createRandomFieldCard(i, faction));
-            }
-        }
-        
-        // 確保牌組大小為30張
-        if (cards.size() > DECK_SIZE) {
-            cards = cards.subList(0, DECK_SIZE);
-        } else if (cards.size() < DECK_SIZE) {
-            // 不足30張時補充隨機卡牌
-            while (cards.size() < DECK_SIZE) {
-                if (Math.random() < 0.7) {
-                    cards.add(createRandomCharacterCard(cards.size(), faction));
+            
+            if (card != null) {
+                cardPoints = card.getPoints();
+                if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                    cards.add(copyCard(card));
+                    totalPoints += cardPoints;
                 } else {
-                    cards.add(createRandomFieldCard(cards.size(), faction));
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
+        // 選擇場地卡
+        while (totalPoints < MAX_DECK_POINTS) {
+            Card card = null;
+            int cardPoints = 0;
+            
+            // 優先選擇陣營場地卡
+            if (!factionFields.isEmpty()) {
+                card = factionFields.get(random.nextInt(factionFields.size()));
+            } else if (!neutralFields.isEmpty()) {
+                card = neutralFields.get(random.nextInt(neutralFields.size()));
+            }
+            
+            if (card != null) {
+                cardPoints = card.getPoints();
+                if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                    cards.add(copyCard(card));
+                    totalPoints += cardPoints;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
+        System.out.println(faction.getLocalizedName() + " 牌組初始化完成，共有 " + cards.size() + " 張卡牌，總點數: " + totalPoints);
+    }
+    
+    /**
+     * 創建一個隨機套牌，總點數為50
+     * @return 創建好的牌組
+     */
+    public static Deck createRandomDeck() {
+        Deck deck = new Deck();
+        List<Card> allCards = new ArrayList<>();
+        
+        // 從卡牌圖鑑中獲取所有可用卡牌
+        allCards.addAll(CardLibrary.getAllCharacters());
+        allCards.addAll(CardLibrary.getAllFieldCards());
+        
+        if (allCards.isEmpty()) {
+            System.out.println("卡牌圖鑑尚未初始化，無法創建隨機套牌");
+            return deck;
+        }
+        
+        // 隨機選擇卡牌，直到總點數達到50
+        Random random = new Random();
+        int totalPoints = 0;
+        
+        while (totalPoints < MAX_DECK_POINTS) {
+            Card card = allCards.get(random.nextInt(allCards.size()));
+            int cardPoints = card.getPoints();
+            
+            // 如果加入這張卡牌不會超過50點，則加入
+            if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                deck.cards.add(copyCard(card));
+                totalPoints += cardPoints;
+            } else {
+                break;
+            }
+        }
+        
+        System.out.println("隨機套牌創建完成，共有 " + deck.cards.size() + " 張卡牌，總點數: " + totalPoints);
+        return deck;
+    }
+    
+    /**
+     * 創建一個主題套牌，總點數為50
+     * @param faction 陣營
+     * @param theme 主題（例如：攻擊型、防禦型、控制型等）
+     * @return 創建好的牌組
+     */
+    public static Deck createThemedDeck(Faction faction, String theme) {
+        Deck deck = new Deck();
+        List<Card> factionCards = new ArrayList<>();
+        
+        // 從卡牌圖鑑中獲取指定陣營的卡牌
+        factionCards.addAll(CardLibrary.getAllCharacters().stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList()));
+        factionCards.addAll(CardLibrary.getAllFieldCards().stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList()));
+        
+        // 如果陣營卡牌不足，加入一些中立卡牌
+        if (factionCards.isEmpty()) {
+            List<Card> neutralCards = new ArrayList<>();
+            neutralCards.addAll(CardLibrary.getAllCharacters().stream()
+                    .filter(card -> card.getFaction() == Faction.NEUTRAL)
+                    .collect(Collectors.toList()));
+            neutralCards.addAll(CardLibrary.getAllFieldCards().stream()
+                    .filter(card -> card.getFaction() == Faction.NEUTRAL)
+                    .collect(Collectors.toList()));
+            factionCards.addAll(neutralCards);
+        }
+        
+        if (factionCards.isEmpty()) {
+            System.out.println("卡牌圖鑑尚未初始化，無法創建主題套牌");
+            return deck;
+        }
+        
+        // 根據主題篩選卡牌
+        List<Card> themedCards = filterCardsByTheme(factionCards, theme);
+        
+        // 選擇卡牌，直到總點數達到50
+        int totalPoints = 0;
+        Random random = new Random();
+        
+        while (totalPoints < MAX_DECK_POINTS) {
+            Card card = null;
+            int cardPoints = 0;
+            
+            if (!themedCards.isEmpty()) {
+                // 優先選擇主題卡牌
+                card = themedCards.get(random.nextInt(themedCards.size()));
+                themedCards.remove(card);
+            } else if (!factionCards.isEmpty()) {
+                // 如果主題卡牌用完，從所有卡牌中選擇
+                card = factionCards.get(random.nextInt(factionCards.size()));
+            }
+            
+            if (card != null) {
+                cardPoints = card.getPoints();
+                if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
+                    deck.cards.add(copyCard(card));
+                    totalPoints += cardPoints;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
+        System.out.println(faction.getLocalizedName() + " 主題套牌創建完成，共有 " + deck.cards.size() + " 張卡牌，總點數: " + totalPoints);
+        return deck;
+    }
+    
+    /**
+     * 根據主題篩選卡牌
+     * @param cards 卡牌列表
+     * @param theme 主題
+     * @return 符合主題的卡牌列表
+     */
+    private static List<Card> filterCardsByTheme(List<Card> cards, String theme) {
+        List<Card> themedCards = new ArrayList<>();
+        
+        for (Card card : cards) {
+            if (card instanceof CharacterCard) {
+                CharacterCard characterCard = (CharacterCard) card;
+                switch (theme.toLowerCase()) {
+                    case "攻擊型":
+                        if (characterCard.isOffensive() && characterCard.getAttack() > characterCard.getMaxHealth()) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "防禦型":
+                        if (!characterCard.isOffensive() && characterCard.getMaxHealth() > characterCard.getAttack()) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "控制型":
+                        if (characterCard.getDescription().contains("無法") || 
+                            characterCard.getDescription().contains("凍結") ||
+                            characterCard.getDescription().contains("暈眩")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "治療型":
+                        if (characterCard.getDescription().contains("恢復") || 
+                            characterCard.getDescription().contains("治療")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    default:
+                        themedCards.add(card);
+                        break;
+                }
+            } else if (card instanceof FieldCard) {
+                FieldCard fieldCard = (FieldCard) card;
+                switch (theme.toLowerCase()) {
+                    case "攻擊型":
+                        if (fieldCard.getDescription().contains("攻擊") || 
+                            fieldCard.getDescription().contains("傷害")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "防禦型":
+                        if (fieldCard.getDescription().contains("防禦") || 
+                            fieldCard.getDescription().contains("護甲")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "控制型":
+                        if (fieldCard.getDescription().contains("無法") || 
+                            fieldCard.getDescription().contains("凍結") ||
+                            fieldCard.getDescription().contains("暈眩")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    case "治療型":
+                        if (fieldCard.getDescription().contains("恢復") || 
+                            fieldCard.getDescription().contains("治療")) {
+                            themedCards.add(card);
+                        }
+                        break;
+                    default:
+                        themedCards.add(card);
+                        break;
                 }
             }
         }
         
-        System.out.println(faction.getLocalizedName() + " 牌組初始化完成，共有 " + cards.size() + " 張卡牌");
+        return themedCards;
     }
     
     /**
-     * 創建一個隨機角色卡
+     * 複製一張卡牌
      */
-    private CharacterCard createRandomCharacterCard(int index) {
-        return createRandomCharacterCard(index, Faction.NEUTRAL);
-    }
-    
-    /**
-     * 創建一個特定陣營的隨機角色卡
-     */
-    private CharacterCard createRandomCharacterCard(int index, Faction faction) {
-        Random random = new Random();
-        int cost = random.nextInt(10) + 1; // 1-10費
-        int attack = cost + random.nextInt(3) - 1; // 費用±1的攻擊力
-        int defense = random.nextInt(3); // 0-2的防禦力
-        int health = cost + random.nextInt(3); // 費用+0到2的生命值
-        boolean isOffensive = random.nextBoolean(); // 隨機決定是否為進攻型
-            
-        Rarity rarity;
-        double rarityRoll = random.nextDouble();
-        if (rarityRoll < Rarity.COMMON.getProbability()) {
-            rarity = Rarity.COMMON;
-        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability()) {
-            rarity = Rarity.RARE;
-        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability() + Rarity.EPIC.getProbability()) {
-            rarity = Rarity.EPIC;
-        } else {
-            rarity = Rarity.LEGENDARY;
-        }
-            
-        // 根據陣營生成名稱
-        String namePrefix = "";
-        switch (faction) {
-            case SPICY_KINGDOM:
-                namePrefix = "辣味";
-                break;
-            case HEALTHY_OASIS:
-                namePrefix = "健康";
-                break;
-            case FAST_FOOD_GUILD:
-                namePrefix = "速食";
-                break;
-            case DESSERT_UNION:
-                namePrefix = "甜點";
-                break;
-            default:
-                namePrefix = "中立";
-                break;
-        }
-        
-        return new CharacterCard(
-                namePrefix + "食物角色 #" + (index+1), 
-                cost, 
-                "一個隨機生成的" + faction.getLocalizedName() + "陣營食物角色", 
-                rarity, 
-                attack, 
-                health,
-                isOffensive,
-                faction,
-                rarity.getPoints());
-    }
-    
-    /**
-     * 創建一個隨機場地卡
-     */
-    private FieldCard createRandomFieldCard(int index) {
-        return createRandomFieldCard(index, Faction.NEUTRAL);
-    }
-    
-    /**
-     * 創建一個特定陣營的隨機場地卡
-     */
-    private FieldCard createRandomFieldCard(int index, Faction faction) {
-        Random random = new Random();
-        int cost = random.nextInt(7) + 1; // 1-7費
-            
-        Rarity rarity;
-        double rarityRoll = random.nextDouble();
-        if (rarityRoll < Rarity.COMMON.getProbability()) {
-            rarity = Rarity.COMMON;
-        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability()) {
-            rarity = Rarity.RARE;
-        } else if (rarityRoll < Rarity.COMMON.getProbability() + Rarity.RARE.getProbability() + Rarity.EPIC.getProbability()) {
-            rarity = Rarity.EPIC;
-        } else {
-            rarity = Rarity.LEGENDARY;
-        }
-            
-        // 根據陣營生成名稱
-        String namePrefix = "";
-        switch (faction) {
-            case SPICY_KINGDOM:
-                namePrefix = "辣味";
-                break;
-            case HEALTHY_OASIS:
-                namePrefix = "健康";
-                break;
-            case FAST_FOOD_GUILD:
-                namePrefix = "速食";
-                break;
-            case DESSERT_UNION:
-                namePrefix = "甜點";
-                break;
-            default:
-                namePrefix = "中立";
-                break;
-        }
-        
-        // 創建環境類場地卡
-        int envEffectValue = cost + random.nextInt(3); // 效果值基於費用
-        
-        return FieldCard.createEnvironmentField(
-                namePrefix + "料理環境 #" + (index+1), 
-                cost, 
-                "一個隨機生成的" + faction.getLocalizedName() + "陣營料理環境場地", 
-                rarity,
-                envEffectValue,
-                faction,
-                rarity.getPoints());
-    }
-    
-    /**
-     * 初始化隨機牌組，用於卡牌圖鑑尚未初始化的情況
-     */
-    private void initializeRandom() {
-        initializeRandomWithFaction(Faction.NEUTRAL);
-    }
-    
-    /**
-     * 初始化特定陣營的隨機牌組
-     */
-    private void initializeRandomWithFaction(Faction faction) {
-        // 生成隨機牌組，確保正好有30張卡牌
-        Random random = new Random();
-        
-        // 按照7:3的比例分配角色卡和場地卡
-        int characterCount = (int)(DECK_SIZE * 0.7); // 70%為角色卡
-        int fieldCount = DECK_SIZE - characterCount; // 30%為場地卡
-        
-        // 生成指定陣營的角色卡
-        for (int i = 0; i < characterCount; i++) {
-            cards.add(createRandomCharacterCard(i, faction));
-        }
-        
-        // 生成指定陣營的場地卡
-        for (int i = 0; i < fieldCount; i++) {
-            cards.add(createRandomFieldCard(i, faction));
-        }
-        
-        System.out.println(faction.getLocalizedName() + " 陣營牌組隨機初始化完成，共有 " + cards.size() + " 張卡牌");
-    }
-    
-    /**
-     * 複製卡牌，確保每張卡牌是獨立的實例
-     */
-    private Card copyCard(Card original) {
-        if (original instanceof SpellCard) {
-            SpellCard originalSpell = (SpellCard) original;
-            return new SpellCard(
-                    originalSpell.getName(),
-                    originalSpell.getCost(),
-                    originalSpell.getDescription(),
-                    originalSpell.getRarity(),
-                    originalSpell.getSpellType(),
-                    originalSpell.getPoints()
-            );
-        } else if (original instanceof CharacterCard) {
+    private static Card copyCard(Card original) {
+        if (original instanceof CharacterCard) {
             CharacterCard originalChar = (CharacterCard) original;
             return new CharacterCard(
-                    originalChar.getName(),
-                    originalChar.getCost(),
-                    originalChar.getDescription(),
-                    originalChar.getRarity(),
-                    originalChar.getAttack(),
-                    originalChar.getMaxHealth(),
-                    originalChar.isOffensive(),
-                    originalChar.getFaction(),
-                    originalChar.getPoints()
+                originalChar.getName(),
+                originalChar.getCost(),
+                originalChar.getDescription(),
+                originalChar.getRarity(),
+                originalChar.getAttack(),
+                originalChar.getMaxHealth(),
+                originalChar.isOffensive(),
+                originalChar.getFaction(),
+                originalChar.getPoints()
             );
         } else if (original instanceof FieldCard) {
             FieldCard originalField = (FieldCard) original;
             return FieldCard.createEnvironmentField(
-                    originalField.getName(),
-                    originalField.getCost(),
-                    originalField.getDescription(),
-                    originalField.getRarity(),
-                    originalField.getEffectValue(),
-                    originalField.getFaction(),
-                    originalField.getPoints()
+                originalField.getName(),
+                originalField.getCost(),
+                originalField.getDescription(),
+                originalField.getRarity(),
+                originalField.getDurability(),
+                originalField.getFaction(),
+                originalField.getPoints()
             );
         }
-        
         return null;
     }
     
@@ -351,22 +389,22 @@ public class Deck {
      */
     public void shuffle() {
         Collections.shuffle(cards);
-        System.out.println("牌組已洗牌");
     }
     
     /**
-     * 從牌組頂部抽一張牌
+     * 抽一張牌
+     * @return 抽到的卡牌，如果牌組為空則返回null
      */
     public Card drawCard() {
         if (cards.isEmpty()) {
             return null;
         }
-        
         return cards.remove(0);
     }
     
     /**
      * 檢查牌組是否為空
+     * @return 如果牌組為空返回true，否則返回false
      */
     public boolean isEmpty() {
         return cards.isEmpty();
@@ -374,35 +412,37 @@ public class Deck {
     
     /**
      * 獲取牌組大小
+     * @return 牌組中的卡牌數量
      */
     public int size() {
         return cards.size();
     }
     
     /**
-     * 添加卡牌到牌組
+     * 添加一張卡牌到牌組
+     * @param card 要添加的卡牌
+     * @return 如果添加成功返回true，否則返回false
      */
     public boolean addCard(Card card) {
-        if (cards.size() >= DECK_SIZE) {
+        int totalPoints = cards.stream().mapToInt(Card::getPoints).sum();
+        if (totalPoints + card.getPoints() > MAX_DECK_POINTS) {
             return false;
         }
-        
-        cards.add(card);
-        return true;
+        return cards.add(card);
     }
     
     /**
      * 獲取牌組中的所有卡牌
-     * @return 牌組中的卡牌列表
+     * @return 卡牌列表
      */
     public List<Card> getCards() {
-        return cards;
+        return new ArrayList<>(cards);
     }
     
     /**
-     * 從牌組中移除指定卡牌
+     * 從牌組中移除一張卡牌
      * @param card 要移除的卡牌
-     * @return 移除是否成功
+     * @return 如果移除成功返回true，否則返回false
      */
     public boolean removeCard(Card card) {
         return cards.remove(card);
