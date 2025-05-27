@@ -575,155 +575,155 @@ public class NeutralCardInitializer implements FactionCardInitializer {
 
         // 城牆回血法術
         SpellCard wallCreviceRestoration = new SpellCard(
-            "城牆磚縫修復術 (Wall Crevice Restoration)", 2, "為一個城牆恢復3點生命值。", 
+            "城牆磚縫修復術 (Wall Crevice Restoration)", 1, "為一個城牆恢復2點生命值。", 
             Rarity.CASUAL_BITES, SpellType.HEALING, 1);
         allCards.put(wallCreviceRestoration.getName(), wallCreviceRestoration);
         allSpells.add(wallCreviceRestoration);
 
         SpellCard emergencyDefenseReconstruction = new SpellCard(
-            "緊急防禦重建 (Emergency Defense Reconstruction)", 4, "為所有城牆恢復2點生命值。", 
-            Rarity.GOURMET_DELIGHT, SpellType.HEALING, 3);
+            "緊急防禦重建 (Emergency Defense Reconstruction)", 3, "為所有城牆恢復2點生命值。", 
+            Rarity.CASUAL_BITES, SpellType.HEALING, 2);
         allCards.put(emergencyDefenseReconstruction.getName(), emergencyDefenseReconstruction);
         allSpells.add(emergencyDefenseReconstruction);
 
         SpellCard masterStructuralReforging = new SpellCard(
-            "大師級結構重鑄 (Master Structural Reforging)", 6, "為一個城牆恢復5點生命值。", 
-            Rarity.GOURMET_DELIGHT, SpellType.HEALING, 4);
+            "大師級結構重鑄 (Master Structural Reforging)", 5, "為一個城牆恢復4點生命值，並使其獲得【酥脆(1)】效果直到回合結束。", 
+            Rarity.GOURMET_DELIGHT, SpellType.HEALING, 3);
         allCards.put(masterStructuralReforging.getName(), masterStructuralReforging);
         allSpells.add(masterStructuralReforging);
 
         SpellCard divineFrontlineBlessing = new SpellCard(
-            "神聖防線祝福 (Divine Frontline Blessing)", 8, "為所有城牆恢復4點生命值。", 
-            Rarity.GOURMET_DELIGHT, SpellType.HEALING, 5);
+            "神聖防線祝福 (Divine Frontline Blessing)", 7, "為所有城牆恢復3點生命值，並使其獲得【酥脆(1)】效果直到回合結束。", 
+            Rarity.CULINARY_HERITAGE, SpellType.HEALING, 4);
         allCards.put(divineFrontlineBlessing.getName(), divineFrontlineBlessing);
         allSpells.add(divineFrontlineBlessing);
         
         // 角色移動法術
         SpellCard rapidTacticalRedeployment = new SpellCard(
-            "快速戰術調動 (Rapid Tactical Redeployment)", 2, "將一個友方角色移動到另一個城牆。", 
+            "快速戰術調動 (Rapid Tactical Redeployment)", 1, "將一個友方角色移動到另一個城牆，並使其獲得+1/+0直到回合結束。", 
             Rarity.CASUAL_BITES, SpellType.SPECIAL, 1);
         allCards.put(rapidTacticalRedeployment.getName(), rapidTacticalRedeployment);
         allSpells.add(rapidTacticalRedeployment);
 
         SpellCard massForceRelocation = new SpellCard(
-            "群體兵力轉移 (Mass Force Relocation)", 4, "將兩個友方角色移動到另一個城牆。", 
-            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 3);
+            "群體兵力轉移 (Mass Force Relocation)", 3, "將兩個友方角色移動到另一個城牆。", 
+            Rarity.CASUAL_BITES, SpellType.SPECIAL, 2);
         allCards.put(massForceRelocation.getName(), massForceRelocation);
         allSpells.add(massForceRelocation);
 
         SpellCard emergencyRetreatEnhancement = new SpellCard(
-            "緊急撤退強化 (Emergency Retreat Enhancement)", 3, "將一個友方角色移動到另一個城牆，並使其獲得+1/+1。", 
+            "緊急撤退強化 (Emergency Retreat Enhancement)", 2, "將一個友方角色移動到另一個城牆，並使其獲得【酥脆(1)】效果直到回合結束。", 
             Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 2);
         allCards.put(emergencyRetreatEnhancement.getName(), emergencyRetreatEnhancement);
         allSpells.add(emergencyRetreatEnhancement);
 
         SpellCard strategicCompleteWithdrawal = new SpellCard(
-            "戰略全面撤退 (Strategic Complete Withdrawal)", 5, "將所有友方角色移動到另一個城牆。", 
-            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 4);
+            "戰略全面撤退 (Strategic Complete Withdrawal)", 4, "將所有友方角色移動到另一個城牆，並使其獲得+1/+1直到回合結束。", 
+            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 3);
         allCards.put(strategicCompleteWithdrawal.getName(), strategicCompleteWithdrawal);
         allSpells.add(strategicCompleteWithdrawal);
 
         // 其他輔助法術
         SpellCard rootVegetableEnergySupply = new SpellCard(
-            "根莖能量補給 (Root Vegetable Energy Supply)", 2, "抽一張牌。根莖類連動：如果你控制至少一個根莖類角色，則再抽一張牌。", 
+            "根莖能量補給 (Root Vegetable Energy Supply)", 2, "抽一張牌。根莖類連動：如果你控制至少一個根莖類角色，則再抽一張牌並獲得1點生命值。", 
             Rarity.CASUAL_BITES, SpellType.DRAW, 1);
         allCards.put(rootVegetableEnergySupply.getName(), rootVegetableEnergySupply);
         allSpells.add(rootVegetableEnergySupply);
 
         SpellCard mushroomNutrientStorage = new SpellCard(
-            "菇類養分儲藏 (Mushroom Nutrient Storage)", 4, "抽三張牌。菇類連動：如果你控制至少一個菇類角色，則使其獲得+0/+2。", 
-            Rarity.GOURMET_DELIGHT, SpellType.DRAW, 3);
+            "菇類養分儲藏 (Mushroom Nutrient Storage)", 3, "抽兩張牌。菇類連動：如果你控制至少一個菇類角色，則使一個友方角色獲得+1/+2。", 
+            Rarity.GOURMET_DELIGHT, SpellType.DRAW, 2);
         allCards.put(mushroomNutrientStorage.getName(), mushroomNutrientStorage);
         allSpells.add(mushroomNutrientStorage);
 
         SpellCard leafyVegetableFreshnessPreservation = new SpellCard(
-            "葉菜鮮度保存 (Leafy Vegetable Freshness Preservation)", 2, "使一個友方角色獲得+1/+1直到回合結束。葉菜類連動：如果目標是葉菜類角色，則效果變為+2/+2。", 
+            "葉菜鮮度保存 (Leafy Vegetable Freshness Preservation)", 2, "使一個友方角色獲得+1/+1直到回合結束。葉菜類連動：如果目標是葉菜類角色，則效果變為+2/+2並獲得【酥脆(1)】效果。", 
             Rarity.CASUAL_BITES, SpellType.BUFF, 1);
         allCards.put(leafyVegetableFreshnessPreservation.getName(), leafyVegetableFreshnessPreservation);
         allSpells.add(leafyVegetableFreshnessPreservation);
 
         SpellCard spiceFlavorEnhancement = new SpellCard(
-            "香料風味強化 (Spice Flavor Enhancement)", 3, "使一個友方角色獲得+2/+2直到回合結束。香料類連動：如果你控制至少一個香料類角色，則使所有友方角色獲得+1/+0。", 
+            "香料風味強化 (Spice Flavor Enhancement)", 3, "使一個友方角色獲得+2/+1直到回合結束。香料類連動：如果你控制至少一個香料類角色，則使所有友方角色獲得+1/+0並獲得【彈牙】效果。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, 2);
         allCards.put(spiceFlavorEnhancement.getName(), spiceFlavorEnhancement);
         allSpells.add(spiceFlavorEnhancement);
 
         SpellCard gourdSweetBlessing = new SpellCard(
-            "瓜果甜蜜祝福 (Gourd Sweet Blessing)", 4, "使所有友方角色獲得+1/+1直到回合結束。瓜果類連動：如果你控制至少一個瓜果類角色，則額外獲得【彈牙】效果。", 
+            "瓜果甜蜜祝福 (Gourd Sweet Blessing)", 4, "使所有友方角色獲得+1/+1直到回合結束。瓜果類連動：如果你控制至少一個瓜果類角色，則使所有友方角色獲得【彈牙】效果並抽一張牌。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, 3);
         allCards.put(gourdSweetBlessing.getName(), gourdSweetBlessing);
         allSpells.add(gourdSweetBlessing);
 
         SpellCard rootEntanglementCurse = new SpellCard(
-            "根莖纏繞詛咒 (Root Entanglement Curse)", 3, "使一個敵方角色獲得-1/-1直到回合結束。根莖類連動：如果你控制至少一個根莖類角色，則目標角色無法攻擊下回合。", 
+            "根莖纏繞詛咒 (Root Entanglement Curse)", 2, "使一個敵方角色獲得-1/-1直到回合結束。根莖類連動：如果你控制至少一個根莖類角色，則目標角色無法攻擊下回合並失去其特殊能力。", 
             Rarity.CASUAL_BITES, SpellType.DEBUFF, 1);
         allCards.put(rootEntanglementCurse.getName(), rootEntanglementCurse);
         allSpells.add(rootEntanglementCurse);
 
         SpellCard mushroomSporePoisoning = new SpellCard(
-            "菇類孢子中毒 (Mushroom Spore Poisoning)", 4, "使一個敵方角色獲得-2/-2直到回合結束。菇類連動：如果你控制至少一個菇類角色，則目標角色每回合開始時受到1點傷害。", 
+            "菇類孢子中毒 (Mushroom Spore Poisoning)", 3, "使一個敵方角色獲得-2/-1直到回合結束。菇類連動：如果你控制至少一個菇類角色，則目標角色每回合開始時受到1點傷害並失去其特殊能力。", 
             Rarity.GOURMET_DELIGHT, SpellType.DEBUFF, 2);
         allCards.put(mushroomSporePoisoning.getName(), mushroomSporePoisoning);
         allSpells.add(mushroomSporePoisoning);
 
         SpellCard beanParasiticPlague = new SpellCard(
-            "豆類寄生瘟疫 (Bean Parasitic Plague)", 5, "使所有敵方角色獲得-1/-1直到回合結束。豆類連動：如果你控制至少一個豆類角色，則敵方角色費用+1回合。", 
+            "豆類寄生瘟疫 (Bean Parasitic Plague)", 4, "使所有敵方角色獲得-1/-1直到回合結束。豆類連動：如果你控制至少一個豆類角色，則敵方角色費用+1並失去其特殊能力直到回合結束。", 
             Rarity.GOURMET_DELIGHT, SpellType.DEBUFF, 3);
         allCards.put(beanParasiticPlague.getName(), beanParasiticPlague);
         allSpells.add(beanParasiticPlague);
 
         SpellCard leafyVegetableRegenerationMiracle = new SpellCard(
-            "葉菜再生奇蹟 (Leafy Vegetable Regeneration Miracle)", 6, "使一個友方角色獲得+3/+3直到回合結束。葉菜類連動：如果你控制至少一個葉菜類角色，則目標角色獲得【酥脆(2)】效果。", 
+            "葉菜再生奇蹟 (Leafy Vegetable Regeneration Miracle)", 5, "使一個友方角色獲得+3/+2直到回合結束。葉菜類連動：如果你控制至少一個葉菜類角色，則目標角色獲得【酥脆(2)】效果並可以額外攻擊一次。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, 4);
         allCards.put(leafyVegetableRegenerationMiracle.getName(), leafyVegetableRegenerationMiracle);
         allSpells.add(leafyVegetableRegenerationMiracle);
 
         SpellCard spiceScorchingApocalypse = new SpellCard(
-            "香料灼燒末日 (Spice Scorching Apocalypse)", 7, "使所有敵方角色獲得-2/-2直到回合結束。香料類連動：如果你控制至少一個香料類角色，則所有敵方角色失去其特殊能力。", 
-            Rarity.GOURMET_DELIGHT, SpellType.DEBUFF, 5);
+            "香料灼燒末日 (Spice Scorching Apocalypse)", 6, "使所有敵方角色獲得-2/-2直到回合結束。香料類連動：如果你控制至少一個香料類角色，則所有敵方角色失去其特殊能力並每回合開始時受到1點傷害。", 
+            Rarity.CULINARY_HERITAGE, SpellType.DEBUFF, 5);
         allCards.put(spiceScorchingApocalypse.getName(), spiceScorchingApocalypse);
         allSpells.add(spiceScorchingApocalypse);
 
         // 特殊法術卡
         SpellCard chefOmnipotentBlessing = new SpellCard(
-            "廚神全能祝福 (Chef's Omnipotent Blessing)", 5, "計算場上你控制的不同食材類別數量。效果隨數量增強：1類-抽1張牌；2類-為所有友方角色恢復2點生命值；3類-所有友方角色獲得+1/+1；4類-對所有敵方角色造成2點傷害；5類-隨機召喚一個費用為3的角色；6類-你獲得一個額外的回合。", 
-            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 4);
+            "廚神全能祝福 (Chef's Omnipotent Blessing)", 6, "計算場上你控制的不同食材類別數量。效果隨數量增強：1類-抽2張牌；2類-為所有友方角色恢復2點生命值；3類-所有友方角色獲得+1/+1；4類-對所有敵方角色造成2點傷害；5類-隨機召喚一個費用為3的角色；6類-你獲得一個額外的回合。", 
+            Rarity.CULINARY_HERITAGE, SpellType.SPECIAL, 5);
         allCards.put(chefOmnipotentBlessing.getName(), chefOmnipotentBlessing);
         allSpells.add(chefOmnipotentBlessing);
 
         // 添加新的連動法術
         SpellCard beanProteinShield = new SpellCard(
-            "豆類蛋白護盾 (Bean Protein Shield)", 2, "使一個友方角色獲得【酥脆(1)】效果。豆類連動：如果目標是豆類角色，則改為獲得【酥脆(2)】效果並抽一張牌。", 
+            "豆類蛋白護盾 (Bean Protein Shield)", 1, "使一個友方角色獲得【酥脆(1)】效果。豆類連動：如果目標是豆類角色，則改為獲得【酥脆(2)】效果並抽一張牌。", 
             Rarity.CASUAL_BITES, SpellType.BUFF, 1);
         allCards.put(beanProteinShield.getName(), beanProteinShield);
         allSpells.add(beanProteinShield);
         
         SpellCard rootVegetableRapidGrowth = new SpellCard(
-            "根莖快速生長 (Root Vegetable Rapid Growth)", 3, "召喚一個1/2的根莖類食材代幣。根莖類連動：如果你控制至少兩個根莖類角色，則改為召喚一個2/3的代幣。", 
-            Rarity.CASUAL_BITES, SpellType.SPECIAL, 2);
+            "根莖快速生長 (Root Vegetable Rapid Growth)", 2, "召喚一個1/2的根莖類食材代幣。根莖類連動：如果你控制至少兩個根莖類角色，則改為召喚一個2/3的代幣並使其獲得【酥脆(1)】效果。", 
+            Rarity.CASUAL_BITES, SpellType.SPECIAL, 1);
         allCards.put(rootVegetableRapidGrowth.getName(), rootVegetableRapidGrowth);
         allSpells.add(rootVegetableRapidGrowth);
         
         SpellCard leafyVegetablePhotosynthesisRepair = new SpellCard(
-            "葉菜光合修復 (Leafy Vegetable Photosynthesis Repair)", 3, "為所有友方角色恢復1點生命值。葉菜類連動：如果你控制至少一個葉菜類角色，則改為恢復2點生命值。", 
-            Rarity.CASUAL_BITES, SpellType.HEALING, 2);
+            "葉菜光合修復 (Leafy Vegetable Photosynthesis Repair)", 2, "為所有友方角色恢復1點生命值。葉菜類連動：如果你控制至少一個葉菜類角色，則改為恢復2點生命值並使所有友方角色獲得+1/+0。", 
+            Rarity.CASUAL_BITES, SpellType.HEALING, 1);
         allCards.put(leafyVegetablePhotosynthesisRepair.getName(), leafyVegetablePhotosynthesisRepair);
         allSpells.add(leafyVegetablePhotosynthesisRepair);
         
         SpellCard fruitSugarBurst = new SpellCard(
-            "瓜果糖分爆發 (Gourd Sugar Burst)", 3, "使一個友方角色獲得+2攻擊力並可以額外攻擊一次。瓜果類連動：如果目標是瓜果類角色，則效果持續到下回合。", 
+            "瓜果糖分爆發 (Gourd Sugar Burst)", 3, "使一個友方角色獲得+2攻擊力並可以額外攻擊一次。瓜果類連動：如果目標是瓜果類角色，則效果持續到下回合並使其獲得【酥脆(1)】效果。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, 2);
         allCards.put(fruitSugarBurst.getName(), fruitSugarBurst);
         allSpells.add(fruitSugarBurst);
         
         SpellCard mushroomSporePropagation = new SpellCard(
-            "菇類孢子繁殖 (Mushroom Spore Propagation)", 4, "召喚兩個1/1菇類食材代幣。菇類連動：如果你控制至少一個菇類角色，則使這些代幣獲得【回味】：死亡時抽一張牌。", 
-            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 3);
+            "菇類孢子繁殖 (Mushroom Spore Propagation)", 3, "召喚兩個1/1菇類食材代幣。菇類連動：如果你控制至少一個菇類角色，則使這些代幣獲得【回味】：死亡時抽一張牌並使一個友方角色獲得+1/+1。", 
+            Rarity.GOURMET_DELIGHT, SpellType.SPECIAL, 2);
         allCards.put(mushroomSporePropagation.getName(), mushroomSporePropagation);
         allSpells.add(mushroomSporePropagation);
         
         SpellCard spicyHotFlavor = new SpellCard(
-            "香料火辣風味 (Spicy Hot Flavor)", 2, "使一個友方角色獲得【現炸】效果。香料類連動：如果你控制至少一個香料類角色，則使目標角色獲得+2/+0。", 
+            "香料火辣風味 (Spicy Hot Flavor)", 2, "使一個友方角色獲得【現炸】效果。香料類連動：如果你控制至少一個香料類角色，則使目標角色獲得+2/+0並可以額外攻擊一次。", 
             Rarity.CASUAL_BITES, SpellType.BUFF, 1);
         allCards.put(spicyHotFlavor.getName(), spicyHotFlavor);
         allSpells.add(spicyHotFlavor);
