@@ -1,6 +1,9 @@
 package com.example.game.card;
 
 import com.example.game.player.Player;
+import java.util.Map;
+import java.util.List;
+import com.example.game.card.Rarity;
 
 /**
  * 城堡效果實現類 - 為各陣營提供不同的城堡效果
@@ -21,6 +24,9 @@ public class CastleEffectImpl {
         public void applyEffect(Player player) {
             // 實際效果需要在遊戲引擎中實現，這裡只是模擬
             System.out.println("火辣王國城堡效果: 所有友方角色攻擊力+" + attackBonus + "，對敵方角色造成的傷害+1");
+            // TODO: 在遊戲引擎中實現實際效果
+            // 1. 增加所有友方角色的攻擊力
+            // 2. 增加對敵方角色造成的傷害
         }
         
         @Override
@@ -43,6 +49,9 @@ public class CastleEffectImpl {
         public void applyEffect(Player player) {
             // 實際效果需要在遊戲引擎中實現，這裡只是模擬
             System.out.println("健康綠洲城堡效果: 所有友方角色生命值+" + healthBonus + "，每回合結束時恢復1點生命值");
+            // TODO: 在遊戲引擎中實現實際效果
+            // 1. 增加所有友方角色的生命值
+            // 2. 每回合結束時恢復生命值
         }
         
         @Override
@@ -65,6 +74,9 @@ public class CastleEffectImpl {
         public void applyEffect(Player player) {
             // 實際效果需要在遊戲引擎中實現，這裡只是模擬
             System.out.println("速食工會城堡效果: 所有友方角色費用-" + costReduction + "，30%機率獲得【現炸】效果");
+            // TODO: 在遊戲引擎中實現實際效果
+            // 1. 減少所有友方角色的費用
+            // 2. 30%機率獲得【現炸】效果
         }
         
         @Override
@@ -87,6 +99,9 @@ public class CastleEffectImpl {
         public void applyEffect(Player player) {
             // 實際效果需要在遊戲引擎中實現，這裡只是模擬
             System.out.println("甜點聯盟城堡效果: 所有友方角色獲得+" + defenseBonus + "防禦，25%機率獲得【糖霜】效果");
+            // TODO: 在遊戲引擎中實現實際效果
+            // 1. 增加所有友方角色的防禦
+            // 2. 25%機率獲得【糖霜】效果
         }
         
         @Override
@@ -109,11 +124,232 @@ public class CastleEffectImpl {
         public void applyEffect(Player player) {
             // 實際效果需要在遊戲引擎中實現，這裡只是模擬
             System.out.println("中立城堡效果: 每回合開始時有" + (drawBonus * 10) + "%機率額外抽一張牌，所有友方角色獲得+1/+1");
+            // TODO: 在遊戲引擎中實現實際效果
+            // 1. 每回合開始時有機率額外抽牌
+            // 2. 所有友方角色獲得+1/+1
         }
         
         @Override
         public String getEffectDescription() {
             return "每回合開始時有" + (drawBonus * 10) + "%機率額外抽一張牌，所有友方角色獲得+1/+1";
         }
+    }
+
+    /**
+     * 初始化所有城堡卡
+     */
+    public static void initializeCastleCards(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 火辣王國城堡卡
+        initializeSpicyKingdomCastles(allCards, allCastles);
+        
+        // 健康綠洲城堡卡
+        initializeHealthyOasisCastles(allCards, allCastles);
+        
+        // 速食工會城堡卡
+        initializeFastFoodGuildCastles(allCards, allCastles);
+        
+        // 甜點聯盟城堡卡
+        initializeDessertUnionCastles(allCards, allCastles);
+        
+        // 中立城堡卡
+        initializeNeutralCastles(allCards, allCastles);
+    }
+
+    /**
+     * 初始化火辣王國城堡卡
+     */
+    private static void initializeSpicyKingdomCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 基礎城堡卡
+        CastleCard spicyCastle = new CastleCard(
+            "火辣王國城堡", 5, "每回合開始時，使所有友方角色獲得+1攻擊力。", 
+            Rarity.CULINARY_HERITAGE, Faction.SPICY_KINGDOM, new SpicyKingdomEffect(2));
+        addToCollection(spicyCastle, allCards, allCastles);
+        
+        // 更多城堡卡
+        CastleCard volcanoCastle = new CastleCard(
+            "火山城堡", 0, "【城堡效果】：每回合開始時，對所有敵方角色造成1點傷害。", 
+            Rarity.ULTIMATE_TASTE, Faction.SPICY_KINGDOM, new SpicyKingdomEffect(3));
+        addToCollection(volcanoCastle, allCards, allCastles);
+        
+        CastleCard spicyTemple = new CastleCard(
+            "辣味神殿", 0, "【城堡效果】：所有友方角色攻擊力+3，對敵方角色造成的傷害+2。", 
+            Rarity.ULTIMATE_TASTE, Faction.SPICY_KINGDOM, new SpicyKingdomEffect(3));
+        addToCollection(spicyTemple, allCards, allCastles);
+        
+        CastleCard chiliFortress = new CastleCard(
+            "辣椒要塞", 0, "【城堡效果】：所有友方角色攻擊力+2，獲得【灼燒】效果。", 
+            Rarity.CULINARY_HERITAGE, Faction.SPICY_KINGDOM, new SpicyKingdomEffect(2));
+        addToCollection(chiliFortress, allCards, allCastles);
+        
+        CastleCard pepperTower = new CastleCard(
+            "胡椒塔", 0, "【城堡效果】：所有友方角色攻擊力+1，獲得【連擊】效果。", 
+            Rarity.GOURMET_DELIGHT, Faction.SPICY_KINGDOM, new SpicyKingdomEffect(1));
+        addToCollection(pepperTower, allCards, allCastles);
+    }
+
+    /**
+     * 初始化健康綠洲城堡卡
+     */
+    private static void initializeHealthyOasisCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 基礎城堡卡
+        CastleCard healthyCastle = new CastleCard(
+            "健康綠洲城堡", 5, "每回合開始時，使所有友方角色獲得+1生命值。", 
+            Rarity.CULINARY_HERITAGE, Faction.HEALTHY_OASIS, new HealthyOasisEffect(3));
+        addToCollection(healthyCastle, allCards, allCastles);
+        
+        // 更多城堡卡
+        CastleCard gardenCastle = new CastleCard(
+            "花園城堡", 0, "【城堡效果】：每回合開始時，為所有友方角色恢復1點生命值。", 
+            Rarity.ULTIMATE_TASTE, Faction.HEALTHY_OASIS, new HealthyOasisEffect(3));
+        addToCollection(gardenCastle, allCards, allCastles);
+        
+        CastleCard healthyTemple = new CastleCard(
+            "健康神殿", 0, "【城堡效果】：所有友方角色生命值+4，每回合結束時恢復2點生命值。", 
+            Rarity.ULTIMATE_TASTE, Faction.HEALTHY_OASIS, new HealthyOasisEffect(4));
+        addToCollection(healthyTemple, allCards, allCastles);
+        
+        CastleCard vegetableFortress = new CastleCard(
+            "蔬菜要塞", 0, "【城堡效果】：所有友方角色生命值+3，獲得【滋補】效果。", 
+            Rarity.CULINARY_HERITAGE, Faction.HEALTHY_OASIS, new HealthyOasisEffect(3));
+        addToCollection(vegetableFortress, allCards, allCastles);
+        
+        CastleCard fruitTower = new CastleCard(
+            "水果塔", 0, "【城堡效果】：所有友方角色生命值+2，獲得【再生】效果。", 
+            Rarity.GOURMET_DELIGHT, Faction.HEALTHY_OASIS, new HealthyOasisEffect(2));
+        addToCollection(fruitTower, allCards, allCastles);
+    }
+
+    /**
+     * 初始化速食工會城堡卡
+     */
+    private static void initializeFastFoodGuildCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 基礎城堡卡
+        CastleCard burgerCastle = new CastleCard(
+            "漢堡城堡", 0, "【城堡效果】：友方角色攻擊力+2，你的卡牌費用-1（最低為1）。", 
+            Rarity.CULINARY_HERITAGE, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(2));
+        addToCollection(burgerCastle, allCards, allCastles);
+        
+        // 更多城堡卡
+        CastleCard frenchFryCastle = new CastleCard(
+            "薯條堡壘", 0, "【城堡效果】：每回合第一次打出的卡牌費用-2，友方角色獲得+1/+1。", 
+            Rarity.LEGENDARY, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(3));
+        addToCollection(frenchFryCastle, allCards, allCastles);
+        
+        CastleCard nuggetFortress = new CastleCard(
+            "雞塊要塞", 0, "【城堡效果】：每回合結束時，有50%機率召喚一個2/2的雞塊士兵。友方角色獲得【油潤】效果。", 
+            Rarity.RARE, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(2));
+        addToCollection(nuggetFortress, allCards, allCastles);
+        
+        CastleCard driveThruTower = new CastleCard(
+            "得來速塔", 0, "【城堡效果】：每回合開始時，抽一張牌。", 
+            Rarity.ULTIMATE_TASTE, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(3));
+        addToCollection(driveThruTower, allCards, allCastles);
+        
+        CastleCard fastFoodTemple = new CastleCard(
+            "速食神殿", 0, "【城堡效果】：友方角色攻擊力+3，你的卡牌費用-2（最低為1）。", 
+            Rarity.ULTIMATE_TASTE, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(3));
+        addToCollection(fastFoodTemple, allCards, allCastles);
+        
+        CastleCard burgerFortress = new CastleCard(
+            "漢堡要塞", 0, "【城堡效果】：友方角色攻擊力+2，你的卡牌費用-1（最低為1）。", 
+            Rarity.CULINARY_HERITAGE, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(2));
+        addToCollection(burgerFortress, allCards, allCastles);
+        
+        CastleCard pizzaTower = new CastleCard(
+            "披薩塔", 0, "【城堡效果】：友方角色的【連擊】和【速食】效果觸發機率+25%。友方角色獲得+1/+1。", 
+            Rarity.GOURMET_DELIGHT, Faction.FAST_FOOD_GUILD, new FastFoodGuildEffect(1));
+        addToCollection(pizzaTower, allCards, allCastles);
+    }
+
+    /**
+     * 初始化甜點聯盟城堡卡
+     */
+    private static void initializeDessertUnionCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 基礎城堡卡
+        CastleCard dessertCastle = new CastleCard(
+            "甜點聯盟城堡", 5, "每回合開始時，使所有友方角色獲得【糖霜】效果。", 
+            Rarity.CULINARY_HERITAGE, Faction.DESSERT_UNION, new DessertUnionEffect(2));
+        addToCollection(dessertCastle, allCards, allCastles);
+        
+        // 更多城堡卡
+        CastleCard cakeCastle = new CastleCard(
+            "蛋糕堡壘", 0, "【城堡效果】：所有友方角色獲得【糖霜】效果，攻擊時有25%機率使敵方失去1點攻擊力。", 
+            Rarity.LEGENDARY, Faction.DESSERT_UNION, new DessertUnionEffect(3));
+        addToCollection(cakeCastle, allCards, allCastles);
+        
+        CastleCard chocolateTower = new CastleCard(
+            "巧克力高塔", 0, "【城堡效果】：所有友方【糖爆】效果持續回合+1，並增加10%觸發機率。", 
+            Rarity.RARE, Faction.DESSERT_UNION, new DessertUnionEffect(2));
+        addToCollection(chocolateTower, allCards, allCastles);
+        
+        CastleCard iceCreamCastle = new CastleCard(
+            "冰淇淋城堡", 0, "【城堡效果】：每回合開始時，使一個友方角色獲得【糖霜】效果。", 
+            Rarity.GOURMET_DELIGHT, Faction.DESSERT_UNION, new DessertUnionEffect(1));
+        addToCollection(iceCreamCastle, allCards, allCastles);
+        
+        CastleCard dessertTemple = new CastleCard(
+            "甜點神殿", 0, "【城堡效果】：所有友方角色獲得+3防禦，50%機率獲得【糖霜】效果。", 
+            Rarity.ULTIMATE_TASTE, Faction.DESSERT_UNION, new DessertUnionEffect(3));
+        addToCollection(dessertTemple, allCards, allCastles);
+        
+        CastleCard cakeFortress = new CastleCard(
+            "蛋糕要塞", 0, "【城堡效果】：所有友方角色獲得+2防禦，25%機率獲得【糖霜】效果。", 
+            Rarity.CULINARY_HERITAGE, Faction.DESSERT_UNION, new DessertUnionEffect(2));
+        addToCollection(cakeFortress, allCards, allCastles);
+        
+        CastleCard cookieTower = new CastleCard(
+            "餅乾塔", 0, "【城堡效果】：所有友方角色獲得+1防禦，15%機率獲得【糖霜】效果。", 
+            Rarity.GOURMET_DELIGHT, Faction.DESSERT_UNION, new DessertUnionEffect(1));
+        addToCollection(cookieTower, allCards, allCastles);
+    }
+
+    /**
+     * 初始化中立城堡卡
+     */
+    private static void initializeNeutralCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
+        // 基礎城堡卡
+        CastleCard neutralCastle = new CastleCard(
+            "中立城堡", 5, "每回合開始時，使所有友方角色獲得+0/+1。", 
+            Rarity.GOURMET_DELIGHT, Faction.NEUTRAL, new NeutralEffect(3));
+        addToCollection(neutralCastle, allCards, allCastles);
+        
+        // 更多城堡卡
+        CastleCard culinaryFortress = new CastleCard(
+            "美食堡壘", 0, "【城堡效果】：所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果。", 
+            Rarity.LEGENDARY, Faction.NEUTRAL, new NeutralEffect(5));
+        addToCollection(culinaryFortress, allCards, allCastles);
+        
+        CastleCard worldCuisineCastle = new CastleCard(
+            "世界美食城堡", 0, "【城堡效果】：場上每有一種不同陣營的角色，所有友方角色獲得+1/+1。", 
+            Rarity.LEGENDARY, Faction.NEUTRAL, new NeutralEffect(4));
+        addToCollection(worldCuisineCastle, allCards, allCastles);
+        
+        CastleCard fusionCastle = new CastleCard(
+            "融合城堡", 0, "【城堡效果】：每回合開始時，使一個友方角色獲得+1/+1。", 
+            Rarity.GOURMET_DELIGHT, Faction.NEUTRAL, new NeutralEffect(2));
+        addToCollection(fusionCastle, allCards, allCastles);
+        
+        CastleCard neutralTemple = new CastleCard(
+            "美食神殿", 0, "【城堡效果】：每回合開始時有50%機率額外抽一張牌，所有友方角色獲得+2/+2。", 
+            Rarity.ULTIMATE_TASTE, Faction.NEUTRAL, new NeutralEffect(3));
+        addToCollection(neutralTemple, allCards, allCastles);
+        
+        CastleCard neutralFortress = new CastleCard(
+            "美食要塞", 0, "【城堡效果】：每回合開始時有30%機率額外抽一張牌，所有友方角色獲得+1/+1。", 
+            Rarity.CULINARY_HERITAGE, Faction.NEUTRAL, new NeutralEffect(2));
+        addToCollection(neutralFortress, allCards, allCastles);
+        
+        CastleCard neutralTower = new CastleCard(
+            "美食塔", 0, "【城堡效果】：每回合開始時有15%機率額外抽一張牌，所有友方角色獲得+0/+1。", 
+            Rarity.GOURMET_DELIGHT, Faction.NEUTRAL, new NeutralEffect(1));
+        addToCollection(neutralTower, allCards, allCastles);
+    }
+
+    /**
+     * 添加城堡卡到集合中
+     */
+    private static void addToCollection(CastleCard castle, Map<String, Card> allCards, List<CastleCard> allCastles) {
+        allCards.put(castle.getName(), castle);
+        allCastles.add(castle);
     }
 } 

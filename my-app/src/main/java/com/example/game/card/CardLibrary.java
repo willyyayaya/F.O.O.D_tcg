@@ -38,9 +38,6 @@ public class CardLibrary {
         allFieldCards.clear();
         allCastles.clear(); // 清空城堡卡列表
         
-        // 初始化各陣營的城堡卡
-        initializeCastleCards();
-        
         // 使用各陣營的初始化器類來初始化卡牌
         FactionCardInitializer[] initializers = {
             new SpicyKingdomInitializer(),     // 火辣王國
@@ -57,6 +54,16 @@ public class CardLibrary {
         
         System.out.println("卡牌圖鑑初始化完成，共 " + allCards.size() + " 張卡牌。");
         System.out.println("其中角色卡: " + allCharacters.size() + " 張，場地卡: " + allFieldCards.size() + " 張，法術卡: " + allSpells.size() + " 張，城堡卡: " + allCastles.size() + " 張");
+    }
+    
+    /**
+     * 遊戲開始時初始化玩家的城堡卡
+     */
+    public static void initializePlayerCastle(Player player) {
+        CastleCard castle = player.getCastleCard();
+        if (castle != null) {
+            castle.initialize();
+        }
     }
     
     /**
@@ -491,13 +498,13 @@ public class CardLibrary {
      */
     private static String getRaritySymbol(Rarity rarity) {
         switch (rarity) {
-            case COMMON:
+            case CASUAL_BITES:
                 return "★";
-            case RARE:
+            case GOURMET_DELIGHT:
                 return "★★";
-            case EPIC:
+            case CULINARY_HERITAGE:
                 return "★★★";
-            case LEGENDARY:
+            case ULTIMATE_TASTE:
                 return "★★★★";
             default:
                 return "";
@@ -655,140 +662,6 @@ public class CardLibrary {
         // 顯示搜尋結果
         System.out.println("\n找到 " + matchedCards.size() + " 張符合 '" + query + "' 的卡牌：");
         browseCardList(matchedCards, "搜尋結果", scanner);
-    }
-    
-    /**
-     * 初始化城堡卡
-     */
-    private static void initializeCastleCards() {
-        // 火辣王國城堡卡
-        CastleCard spicyCastle = new CastleCard(
-            "辣椒城堡", 0, "【城堡效果】：所有友方角色攻擊力+2，對敵方角色造成的傷害+1。", 
-            Rarity.EPIC, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(2));
-        addCastle(spicyCastle);
-        
-        // 健康綠洲城堡卡
-        CastleCard healthyCastle = new CastleCard(
-            "果蔬城堡", 0, "【城堡效果】：所有友方角色生命值+3，每回合結束時恢復1點生命值。", 
-            Rarity.EPIC, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(3));
-        addCastle(healthyCastle);
-        
-        // 速食工會城堡卡
-        CastleCard fastFoodCastle = new CastleCard(
-            "速食城堡", 0, "【城堡效果】：所有友方角色費用-1，30%機率獲得【現炸】效果。", 
-            Rarity.EPIC, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(1));
-        addCastle(fastFoodCastle);
-        
-        // 甜點聯盟城堡卡
-        CastleCard dessertCastle = new CastleCard(
-            "糖霜城堡", 0, "【城堡效果】：所有友方角色獲得+2防禦，25%機率獲得【糖霜】效果。", 
-            Rarity.EPIC, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(2));
-        addCastle(dessertCastle);
-        
-        // 中立城堡卡
-        CastleCard neutralCastle = new CastleCard(
-            "美食城堡", 0, "【城堡效果】：每回合開始時有30%機率額外抽一張牌，所有友方角色獲得+1/+1。", 
-            Rarity.EPIC, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(3));
-        addCastle(neutralCastle);
-        
-        // 傳說級城堡卡
-        CastleCard culinaryFortress = new CastleCard(
-            "美食堡壘", 0, "【城堡效果】：所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果。", 
-            Rarity.LEGENDARY, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(5) {
-                @Override
-                public String getEffectDescription() {
-                    return "所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果";
-                }
-                
-                @Override
-                public void applyEffect(Player player) {
-                    System.out.println("美食堡壘效果：所有友方角色獲得+2/+2，每回合開始時有20%機率獲得一個你所屬陣營的關鍵字效果");
-                }
-            });
-        addCastle(culinaryFortress);
-        
-        // 添加更多城堡卡 - 火辣王國
-        CastleCard volcanoCastle = new CastleCard(
-            "火山堡壘", 0, "【城堡效果】：回合結束時，對所有敵方角色造成1點傷害，所有友方角色攻擊力+1。", 
-            Rarity.LEGENDARY, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(3));
-        addCastle(volcanoCastle);
-        
-        CastleCard spicyFortress = new CastleCard(
-            "辣味要塞", 0, "【城堡效果】：所有友方【嗆辣】效果觸發兩次，友方角色攻擊力+2。", 
-            Rarity.RARE, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(1));
-        addCastle(spicyFortress);
-        
-        CastleCard pepperCastle = new CastleCard(
-            "辣椒碉堡", 0, "【城堡效果】：每回合開始時，有40%機率使一個隨機敵方角色獲得【嗆辣】效果。", 
-            Rarity.RARE, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(1));
-        addCastle(pepperCastle);
-        
-        // 添加更多城堡卡 - 健康綠洲
-        CastleCard gardenCastle = new CastleCard(
-            "花園堡壘", 0, "【城堡效果】：所有友方角色每回合恢復2點生命值，滿血時獲得+0/+2。", 
-            Rarity.LEGENDARY, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(4));
-        addCastle(gardenCastle);
-        
-        CastleCard vegetableTower = new CastleCard(
-            "蔬菜高塔", 0, "【城堡效果】：友方【滋補】效果額外恢復1點生命值，友方角色獲得+0/+3。", 
-            Rarity.RARE, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(2));
-        addCastle(vegetableTower);
-        
-        CastleCard fruitCastle = new CastleCard(
-            "水果堡壘", 0, "【城堡效果】：每當你恢復生命值時，有30%機率抽一張牌。", 
-            Rarity.RARE, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(1));
-        addCastle(fruitCastle);
-        
-        // 添加更多城堡卡 - 速食工會
-        CastleCard burgerCastle = new CastleCard(
-            "漢堡堡壘", 0, "【城堡效果】：所有友方角色費用-2，但每回合結束時攻擊力-1。", 
-            Rarity.LEGENDARY, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(3));
-        addCastle(burgerCastle);
-        
-        CastleCard friesFortress = new CastleCard(
-            "薯條要塞", 0, "【城堡效果】：所有友方【現炸】效果角色額外獲得+2攻擊力。", 
-            Rarity.RARE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(2));
-        addCastle(friesFortress);
-        
-        CastleCard sodaCastle = new CastleCard(
-            "汽水城堡", 0, "【城堡效果】：每當你打出一張速食工會卡牌，有20%機率獲得1點法力值。", 
-            Rarity.RARE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(1));
-        addCastle(sodaCastle);
-        
-        // 添加更多城堡卡 - 甜點聯盟
-        CastleCard cakeCastle = new CastleCard(
-            "蛋糕堡壘", 0, "【城堡效果】：所有友方角色獲得【糖霜】效果，攻擊時有25%機率使敵方失去1點攻擊力。", 
-            Rarity.LEGENDARY, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(3));
-        addCastle(cakeCastle);
-        
-        CastleCard chocolateTower = new CastleCard(
-            "巧克力高塔", 0, "【城堡效果】：所有友方【糖爆】效果持續回合+1，並增加10%觸發機率。", 
-            Rarity.RARE, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(2));
-        addCastle(chocolateTower);
-        
-        CastleCard iceCreamCastle = new CastleCard(
-            "冰淇淋城堡", 0, "【城堡效果】：每回合結束時，有30%機率使一個隨機敵方角色凍結一回合（無法攻擊）。", 
-            Rarity.RARE, Faction.DESSERT_UNION, new CastleEffectImpl.DessertUnionEffect(1));
-        addCastle(iceCreamCastle);
-        
-        // 添加更多中立城堡卡
-        CastleCard worldCuisineCastle = new CastleCard(
-            "世界美食城堡", 0, "【城堡效果】：場上每有一種不同陣營的角色，所有友方角色獲得+1/+1。", 
-            Rarity.LEGENDARY, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(4));
-        addCastle(worldCuisineCastle);
-        
-        CastleCard fusionCastle = new CastleCard(
-            "融合料理城堡", 0, "【城堡效果】：每當你打出一張與場上角色不同陣營的卡牌時，有25%機率抽一張牌。", 
-            Rarity.RARE, Faction.NEUTRAL, new CastleEffectImpl.NeutralEffect(2));
-        addCastle(fusionCastle);
-    }
-    
-    /**
-     * 添加城堡卡到圖鑑
-     */
-    private static void addCastle(CastleCard castle) {
-        allCards.put(castle.getName(), castle);
-        allCastles.add(castle);
     }
     
     /**

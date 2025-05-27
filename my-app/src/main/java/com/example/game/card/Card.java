@@ -95,14 +95,14 @@ public abstract class Card {
      */
     private String getRarityText(Rarity rarity) {
         switch (rarity) {
-            case COMMON:
-                return "普通";
-            case RARE:
-                return "稀有";
-            case EPIC:
-                return "史詩";
-            case LEGENDARY:
-                return "傳說";
+            case CASUAL_BITES:
+                return "輕鬆小食";
+            case GOURMET_DELIGHT:
+                return "風味饗宴";
+            case CULINARY_HERITAGE:
+                return "美食傳承";
+            case ULTIMATE_TASTE:
+                return "極致美味";
             default:
                 return "未知";
         }

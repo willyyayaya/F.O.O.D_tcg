@@ -9,6 +9,7 @@ public class CastleCard extends Card {
     private CastleCardZone zone;         // 城堡所在區域
     private CastleEffect effect;     // 城堡效果
     private boolean isActive;        // 城堡效果是否啟用
+    private boolean isInitialized;   // 是否已初始化
     
     /**
      * 創建城堡卡
@@ -16,8 +17,20 @@ public class CastleCard extends Card {
     public CastleCard(String name, int tokenCost, String description, Rarity rarity, Faction faction, CastleEffect effect) {
         super(name, tokenCost, description, rarity, CardType.CASTLE, faction);
         this.effect = effect;
-        this.isActive = true;
+        this.isActive = false;           // 初始未啟用
+        this.isInitialized = false;      // 初始未初始化
         this.zone = CastleCardZone.NONE; // 初始未分配區域
+    }
+    
+    /**
+     * 遊戲開始時初始化城堡卡
+     */
+    public void initialize() {
+        if (!isInitialized) {
+            isActive = true;
+            isInitialized = true;
+            System.out.println(name + " 已初始化，效果已啟用");
+        }
     }
     
     /**
@@ -32,7 +45,7 @@ public class CastleCard extends Card {
      * 啟用城堡效果
      */
     public void activateEffect(Player player) {
-        if (isActive) {
+        if (isActive && isInitialized) {
             System.out.println("城堡效果啟用: " + description);
             effect.applyEffect(player);
         }
@@ -42,7 +55,7 @@ public class CastleCard extends Card {
      * 當區域被摧毀時，檢查並處理城堡卡
      */
     public boolean checkZoneDestroyed(CastleCardZone destroyedZone) {
-        if (this.zone == destroyedZone) {
+        if (this.zone == destroyedZone && isActive) {
             deactivate();
             return true;
         }
@@ -67,6 +80,7 @@ public class CastleCard extends Card {
         System.out.println("類型: 城堡卡");
         System.out.println("區域: " + (zone == CastleCardZone.NONE ? "未分配" : getZoneText(zone)));
         System.out.println("狀態: " + (isActive ? "啟用中" : "已停用"));
+        System.out.println("初始化: " + (isInitialized ? "是" : "否"));
         System.out.println("效果: " + effect.getEffectDescription());
     }
     
@@ -98,5 +112,9 @@ public class CastleCard extends Card {
     
     public boolean isActive() {
         return isActive;
+    }
+    
+    public boolean isInitialized() {
+        return isInitialized;
     }
 } 
