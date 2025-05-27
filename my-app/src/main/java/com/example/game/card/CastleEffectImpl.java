@@ -307,51 +307,51 @@ public class CastleEffectImpl {
      * 初始化中立城堡卡
      */
     private static void initializeNeutralCastles(Map<String, Card> allCards, List<CastleCard> allCastles) {
-        // 基礎城堡卡 - 根莖類主題
+        // 根莖類主題城堡
         CastleCard rootCastle = new CastleCard(
-            "根莖王座", 5, "【城堡效果】：每回合開始時，使所有友方角色獲得【酥脆(1)】效果，並恢復1點生命值。", 
+            "大地根莖聖殿（The Rootspire Sanctuary）", 5, "【城堡效果】：每回合開始時，使所有友方根莖類角色獲得【酥脆(1)】效果，並恢復1點生命值。每當你打出一個根莖類角色時，抽一張牌。", 
             Rarity.CULINARY_HERITAGE, Faction.NEUTRAL, new NeutralEffect(2));
         addToCollection(rootCastle, allCards, allCastles);
         
         // 豆類主題城堡
         CastleCard beanCastle = new CastleCard(
-            "豆類堡壘", 0, "【城堡效果】：每回合開始時，使所有友方角色獲得【彈牙】效果，並有25%機率抽一張牌。", 
+            "豆響之塔（Resonant Beanspire）", 0, "【城堡效果】：每回合開始時，使所有友方豆類角色獲得【彈牙】效果，並有25%機率抽一張牌。每當你打出一個豆類角色時，使其獲得+1/+1。", 
             Rarity.GOURMET_DELIGHT, Faction.NEUTRAL, new NeutralEffect(3));
         addToCollection(beanCastle, allCards, allCastles);
         
         // 葉菜類主題城堡
         CastleCard leafyCastle = new CastleCard(
-            "葉菜城堡", 0, "【城堡效果】：每回合開始時，為所有友方角色恢復1點生命值，並使其獲得+0/+1。", 
+            "翠綠天穹庭（Verdant Canopy Keep）", 0, "【城堡效果】：每回合開始時，為所有友方葉菜類角色恢復1點生命值，並使其獲得+0/+1。每當你打出一個葉菜類角色時，使其獲得【開胃】效果。", 
             Rarity.GOURMET_DELIGHT, Faction.NEUTRAL, new NeutralEffect(2));
         addToCollection(leafyCastle, allCards, allCastles);
         
         // 瓜果類主題城堡
         CastleCard gourdCastle = new CastleCard(
-            "瓜果要塞", 0, "【城堡效果】：每回合開始時，使所有友方角色獲得+1/+0，並有30%機率獲得【彈牙】效果。", 
+            "芳甜籬堡（Aroma Melofort）", 0, "【城堡效果】：每回合開始時，使所有友方瓜果類角色獲得+1/+0，並有30%機率獲得【彈牙】效果。每當你打出一個瓜果類角色時，使其獲得【酥脆(1)】效果。", 
             Rarity.CULINARY_HERITAGE, Faction.NEUTRAL, new NeutralEffect(3));
         addToCollection(gourdCastle, allCards, allCastles);
         
         // 菇類主題城堡
         CastleCard mushroomCastle = new CastleCard(
-            "菇類神殿", 0, "【城堡效果】：每回合開始時，有40%機率使一個友方角色獲得【回味】效果，並抽一張牌。", 
+            "蕈靈回憶殿（Temple of Sporemind）", 0, "【城堡效果】：每回合開始時，有40%機率使一個友方菇類角色獲得【回味】效果，並抽一張牌。每當你打出一個菇類角色時，使其獲得【酥脆(1)】效果。", 
             Rarity.ULTIMATE_TASTE, Faction.NEUTRAL, new NeutralEffect(4));
         addToCollection(mushroomCastle, allCards, allCastles);
         
         // 香料類主題城堡
         CastleCard spiceCastle = new CastleCard(
-            "香料堡壘", 0, "【城堡效果】：每回合開始時，使所有友方角色獲得+1/+1，並有20%機率獲得【現炸】效果。", 
+            "萬香錘製所（Citadel of Seasonforge）", 0, "【城堡效果】：每回合開始時，使所有友方香料類角色獲得+1/+1，並有20%機率獲得【現炸】效果。每當你打出一個香料類角色時，使其獲得【彈牙】效果。", 
             Rarity.ULTIMATE_TASTE, Faction.NEUTRAL, new NeutralEffect(4));
         addToCollection(spiceCastle, allCards, allCastles);
         
         // 綜合主題城堡
         CastleCard fusionCastle = new CastleCard(
-            "融合王座", 0, "【城堡效果】：每回合開始時，根據場上不同食材類別數量獲得效果：1類-抽一張牌；2類-所有友方角色+1/+1；3類-恢復1點生命值；4類-獲得【酥脆(1)】；5類-獲得【彈牙】；6類-獲得【現炸】。", 
+            "千味交融壇（Pantaste Throne）", 0, "【城堡效果】：每回合開始時，根據場上不同食材類別數量獲得效果：1類-抽一張牌；2類-所有友方角色+1/+1；3類-恢復1點生命值；4類-獲得【酥脆(1)】；5類-獲得【彈牙】；6類-獲得【現炸】。每當你打出一個角色時，使其獲得對應食材類別的關鍵字效果。", 
             Rarity.ULTIMATE_TASTE, Faction.NEUTRAL, new NeutralEffect(5));
         addToCollection(fusionCastle, allCards, allCastles);
         
         // 特殊主題城堡
         CastleCard ancientCastle = new CastleCard(
-            "遠古美食堡壘", 0, "【城堡效果】：每回合開始時，使一個友方角色獲得+2/+2，並隨機獲得一個食材類別的關鍵字效果。", 
+            "古饕遺殿（Ancient Gourmet Reliquary）", 0, "【城堡效果】：每回合開始時，使一個友方角色獲得+2/+2，並隨機獲得一個食材類別的關鍵字效果。每當你打出一個角色時，使其獲得【回味】效果。", 
             Rarity.ULTIMATE_TASTE, Faction.NEUTRAL, new NeutralEffect(5));
         addToCollection(ancientCastle, allCards, allCastles);
     }
