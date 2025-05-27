@@ -106,7 +106,7 @@ public class Deck {
         List<FieldCard> neutralFields = allFields.stream()
                 .filter(card -> card.getFaction() == Faction.NEUTRAL)
                 .collect(Collectors.toList());
-        
+                
         // 選擇卡牌，直到總點數達到50
         int totalPoints = 0;
         Random random = new Random();
@@ -193,7 +193,7 @@ public class Deck {
             if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
                 deck.cards.add(copyCard(card));
                 totalPoints += cardPoints;
-            } else {
+        } else {
                 break;
             }
         }
@@ -263,7 +263,7 @@ public class Deck {
                     deck.cards.add(copyCard(card));
                     totalPoints += cardPoints;
                 } else {
-                    break;
+                break;
                 }
             } else {
                 break;
@@ -359,26 +359,26 @@ public class Deck {
         if (original instanceof CharacterCard) {
             CharacterCard originalChar = (CharacterCard) original;
             return new CharacterCard(
-                originalChar.getName(),
-                originalChar.getCost(),
-                originalChar.getDescription(),
-                originalChar.getRarity(),
-                originalChar.getAttack(),
-                originalChar.getMaxHealth(),
-                originalChar.isOffensive(),
-                originalChar.getFaction(),
-                originalChar.getPoints()
+                    originalChar.getName(),
+                    originalChar.getCost(),
+                    originalChar.getDescription(),
+                    originalChar.getRarity(),
+                    originalChar.getAttack(),
+                    originalChar.getMaxHealth(),
+                    originalChar.isOffensive(),
+                    originalChar.getFaction(),
+                    originalChar.getPoints()
             );
         } else if (original instanceof FieldCard) {
             FieldCard originalField = (FieldCard) original;
             return FieldCard.createEnvironmentField(
-                originalField.getName(),
-                originalField.getCost(),
-                originalField.getDescription(),
-                originalField.getRarity(),
+                    originalField.getName(),
+                    originalField.getCost(),
+                    originalField.getDescription(),
+                    originalField.getRarity(),
                 originalField.getDurability(),
-                originalField.getFaction(),
-                originalField.getPoints()
+                    originalField.getFaction(),
+                    originalField.getPoints()
             );
         }
         return null;

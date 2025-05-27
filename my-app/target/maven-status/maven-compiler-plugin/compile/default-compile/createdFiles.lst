@@ -1,12 +1,9 @@
 com\example\game\card\CastleCard$1.class
-com\example\game\card\CardLibrary$2.class
-com\example\game\player\AIPlayer$1.class
-com\example\game\card\Card$1.class
 com\example\game\board\CastleZone.class
 com\example\game\board\CastleZone$Wall.class
-com\example\game\card\FieldCard$1.class
-com\example\game\card\Deck$1.class
+com\example\game\player\AIPlayer$1.class
 com\example\game\player\Player$1.class
+com\example\game\card\Card$1.class
 com\example\game\card\SpellCard$1.class
-com\example\game\board\BattlefieldZone$1.class
+com\example\game\card\CardLibrary$1.class
 com\example\game\card\CastleCardZone.class
