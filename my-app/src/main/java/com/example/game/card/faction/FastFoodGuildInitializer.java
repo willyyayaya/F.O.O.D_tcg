@@ -38,405 +38,452 @@ public class FastFoodGuildInitializer implements FactionCardInitializer {
     }
     
     private void initializeCharacterCards(Map<String, Card> allCards, List<CharacterCard> allCharacters) {
-        // 基礎角色卡
-        CharacterCard burgerFlinger = new CharacterCard(
-            "漢堡投擲手", 2, "【開胃】：對一個敵方角色造成1點傷害。【連擊】：攻擊後，有50%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 1, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(burgerFlinger.getName(), burgerFlinger);
-        allCharacters.add(burgerFlinger);
+        // 漢堡類角色
+        CharacterCard cheeseburgerBrawler = new CharacterCard(
+            "起司漢堡鬥士 (Cheeseburger Brawler)", 3, "【開胃】：對一個敵方角色造成2點傷害。【連擊】：攻擊後，有40%機率再次攻擊。", 
+            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(cheeseburgerBrawler.getName(), cheeseburgerBrawler);
+        allCharacters.add(cheeseburgerBrawler);
         
-        CharacterCard frenchFriesMaster = new CharacterCard(
-            "薯條大師", 3, "【連擊】：攻擊後，有30%機率對同一目標再次造成1點傷害。【油潤】：受到傷害-1。", 
-            Rarity.CASUAL_BITES, 3, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(frenchFriesMaster.getName(), frenchFriesMaster);
-        allCharacters.add(frenchFriesMaster);
+        CharacterCard doublePattyGuardian = new CharacterCard(
+            "雙層肉排守衛 (Double Patty Guardian)", 4, "【油潤】：受到傷害-2。【速食】：每回合首次出牌時費用-1。", 
+            Rarity.GOURMET_DELIGHT, 3, 5, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(doublePattyGuardian.getName(), doublePattyGuardian);
+        allCharacters.add(doublePattyGuardian);
         
-        CharacterCard tacoDancer = new CharacterCard(
-            "墨西哥捲舞者", 2, "【開胃】：抽一張牌。【油潤】：每當你打出一張費用小於等於2的卡牌時，獲得+1攻擊力。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(tacoDancer.getName(), tacoDancer);
-        allCharacters.add(tacoDancer);
+        CharacterCard baconBurgerAssassin = new CharacterCard(
+            "培根漢堡刺客 (Bacon Burger Assassin)", 5, "【開胃】：獲得+1/+1。【連擊】：攻擊後，有50%機率再次攻擊。", 
+            Rarity.GOURMET_DELIGHT, 4, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(baconBurgerAssassin.getName(), baconBurgerAssassin);
+        allCharacters.add(baconBurgerAssassin);
         
-        CharacterCard sodaStreamer = new CharacterCard(
-            "汽水噴射者", 4, "【開胃】：對所有敵方角色造成1點傷害。【滿足】：使用過【速食】效果後，執行一次額外攻擊。", 
-            Rarity.CASUAL_BITES, 2, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(sodaStreamer.getName(), sodaStreamer);
-        allCharacters.add(sodaStreamer);
-        
-        CharacterCard nuggetCommander = new CharacterCard(
-            "雞塊指揮官", 5, "【開胃】：召喚兩個1/1的雞塊士兵。【集結】：友方雞塊士兵攻擊力+1。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(nuggetCommander.getName(), nuggetCommander);
-        allCharacters.add(nuggetCommander);
-        
-        // 傳說角色卡
         CharacterCard burgerEmperor = new CharacterCard(
-            "漢堡皇帝", 8, "【開胃】：對所有敵方角色造成2點傷害。【油潤】：受到傷害-2。【速食】：每回合首次出牌時費用-3。", 
+            "漢堡帝王 (Burger Emperor)", 8, "【開胃】：對所有敵方角色造成2點傷害。【油潤】：受到傷害-2。【速食】：每回合首次出牌時費用-3。", 
             Rarity.ULTIMATE_TASTE, 4, 8, true, Faction.FAST_FOOD_GUILD);
         allCards.put(burgerEmperor.getName(), burgerEmperor);
         allCharacters.add(burgerEmperor);
         
-        // 補充更多角色卡以達到20張
-        CharacterCard pizzaTosser = new CharacterCard(
-            "披薩投擲師", 3, "【開胃】：對一個敵方角色造成2點傷害。【油潤】：每次攻擊後，有25%機率不受反擊傷害。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(pizzaTosser.getName(), pizzaTosser);
-        allCharacters.add(pizzaTosser);
+        // 炸物類角色
+        CharacterCard crispyFriesWizard = new CharacterCard(
+            "酥脆薯條法師 (Crispy Fries Wizard)", 3, "【連擊】：攻擊後，有30%機率對同一目標再次造成1點傷害。【油潤】：受到傷害-1。", 
+            Rarity.CASUAL_BITES, 3, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(crispyFriesWizard.getName(), crispyFriesWizard);
+        allCharacters.add(crispyFriesWizard);
         
-        CharacterCard shawarmaChef = new CharacterCard(
-            "沙威瑪廚師", 4, "【開胃】：使一個友方角色獲得+2攻擊力。【油潤】：受到傷害-1。", 
-            Rarity.CASUAL_BITES, 3, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(shawarmaChef.getName(), shawarmaChef);
-        allCharacters.add(shawarmaChef);
-        
-        CharacterCard hotdogVendor = new CharacterCard(
-            "熱狗小販", 1, "【連擊】：攻擊後，有30%機率再次攻擊。【速食】：費用為1的卡牌使用時，觸發【開胃】效果兩次。", 
+        CharacterCard onionRingsThrower = new CharacterCard(
+            "洋蔥圈投擲者 (Onion Rings Thrower)", 2, "【開胃】：對一個敵方角色造成2點傷害，對其相鄰的角色造成1點傷害。", 
             Rarity.CASUAL_BITES, 1, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(hotdogVendor.getName(), hotdogVendor);
-        allCharacters.add(hotdogVendor);
+        allCards.put(onionRingsThrower.getName(), onionRingsThrower);
+        allCharacters.add(onionRingsThrower);
         
-        CharacterCard milkshakeMixer = new CharacterCard(
-            "奶昔調配師", 3, "【開胃】：為一個友方角色恢復2點生命值。【滿足】：成功治療後，攻擊力+1，持續到下個回合。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(milkshakeMixer.getName(), milkshakeMixer);
-        allCharacters.add(milkshakeMixer);
-        
-        CharacterCard fastFoodCashier = new CharacterCard(
-            "速食收銀員", 2, "【開胃】：抽一張牌。【速食】：每回合第一次使用費用小於等於3的卡牌時，獲得+1/+1。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(fastFoodCashier.getName(), fastFoodCashier);
-        allCharacters.add(fastFoodCashier);
-        
-        CharacterCard chickenFryer = new CharacterCard(
-            "炸雞師傅", 3, "【開胃】：對一個敵方角色造成3點傷害，但自身受到1點傷害。【油潤】：受到傷害-1。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(chickenFryer.getName(), chickenFryer);
-        allCharacters.add(chickenFryer);
-        
-        CharacterCard bubbleTeaBarista = new CharacterCard(
-            "珍珠奶茶師", 3, "【開胃】：使一個友方角色獲得【連擊】效果。【速食】：費用小於等於2的法術卡牌使用時，複製一份到手牌中。", 
-            Rarity.CASUAL_BITES, 2, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(bubbleTeaBarista.getName(), bubbleTeaBarista);
-        allCharacters.add(bubbleTeaBarista);
-        
-        CharacterCard onionRingThrower = new CharacterCard(
-            "洋蔥圈投擲者", 2, "【開胃】：對一個敵方角色造成2點傷害，對其相鄰的角色造成1點傷害。", 
+        CharacterCard hashBrownScout = new CharacterCard(
+            "馬鈴薯餅斥候 (Hash Brown Scout)", 1, "【開胃】：從牌庫抽一張費用為1的卡牌。【速食】：使用費用為1的卡牌時，獲得+1攻擊力。", 
             Rarity.CASUAL_BITES, 1, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(onionRingThrower.getName(), onionRingThrower);
-        allCharacters.add(onionRingThrower);
-        
-        CharacterCard burgerAssembler = new CharacterCard(
-            "漢堡組裝師", 5, "【集結】：每當你使用一張費用小於等於3的卡牌時，獲得+1/+0。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(burgerAssembler.getName(), burgerAssembler);
-        allCharacters.add(burgerAssembler);
-        
-        CharacterCard friesScavenger = new CharacterCard(
-            "薯條搶奪者", 1, "【開胃】：從牌庫抽一張費用為1的卡牌。【速食】：使用費用為1的卡牌時，獲得+1攻擊力。", 
-            Rarity.CASUAL_BITES, 1, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(friesScavenger.getName(), friesScavenger);
-        allCharacters.add(friesScavenger);
-        
-        CharacterCard sushiRoller = new CharacterCard(
-            "壽司卷師", 4, "【開胃】：抽一張牌。如果抽到的是速食工會卡牌，則獲得+1/+1。【油潤】：受到傷害-1。", 
-            Rarity.CASUAL_BITES, 3, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(sushiRoller.getName(), sushiRoller);
-        allCharacters.add(sushiRoller);
+        allCards.put(hashBrownScout.getName(), hashBrownScout);
+        allCharacters.add(hashBrownScout);
         
         CharacterCard friedChickenGeneral = new CharacterCard(
-            "炸雞將軍", 6, "【開胃】：召喚兩個2/2的炸雞士兵。【油潤】：受到傷害-2，並且使相鄰友方角色受到傷害-1。", 
+            "炸雞將軍 (Fried Chicken General)", 6, "【開胃】：召喚兩個2/2的炸雞士兵。【油潤】：受到傷害-2，並且使相鄰友方角色受到傷害-1。", 
             Rarity.GOURMET_DELIGHT, 3, 6, true, Faction.FAST_FOOD_GUILD);
         allCards.put(friedChickenGeneral.getName(), friedChickenGeneral);
         allCharacters.add(friedChickenGeneral);
         
+        // 飲料類角色
+        CharacterCard colaBomber = new CharacterCard(
+            "可樂轟炸手 (Cola Bomber)", 4, "【開胃】：對所有敵方角色造成1點傷害。【滿足】：使用過【速食】效果後，執行一次額外攻擊。", 
+            Rarity.CASUAL_BITES, 2, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(colaBomber.getName(), colaBomber);
+        allCharacters.add(colaBomber);
+        
+        CharacterCard milkshakeMage = new CharacterCard(
+            "奶昔魔導師 (Milkshake Mage)", 3, "【開胃】：為一個友方角色恢復2點生命值。【滿足】：成功治療後，攻擊力+1，持續到下個回合。", 
+            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(milkshakeMage.getName(), milkshakeMage);
+        allCharacters.add(milkshakeMage);
+        
+        CharacterCard bubbleTeaArcher = new CharacterCard(
+            "珍珠奶茶射手 (Bubble Tea Archer)", 3, "【開胃】：使一個友方角色獲得【連擊】效果。【速食】：費用小於等於2的法術卡牌使用時，複製一份到手牌中。", 
+            Rarity.CASUAL_BITES, 2, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(bubbleTeaArcher.getName(), bubbleTeaArcher);
+        allCharacters.add(bubbleTeaArcher);
+        
+        CharacterCard energyDrinkBerserker = new CharacterCard(
+            "能量飲料狂戰士 (Energy Drink Berserker)", 2, "【連擊】：攻擊後，有70%機率再次攻擊。【虛弱】：每次攻擊後，自身受到1點傷害。", 
+            Rarity.CASUAL_BITES, 1, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(energyDrinkBerserker.getName(), energyDrinkBerserker);
+        allCharacters.add(energyDrinkBerserker);
+        
+        // 甜點類角色
+        CharacterCard donutMystic = new CharacterCard(
+            "甜甜圈神秘師 (Donut Mystic)", 3, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
+            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(donutMystic.getName(), donutMystic);
+        allCharacters.add(donutMystic);
+        
+        CharacterCard softServePriestess = new CharacterCard(
+            "霜淇淋女祭司 (Soft Serve Priestess)", 5, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
+            Rarity.GOURMET_DELIGHT, 3, 5, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(softServePriestess.getName(), softServePriestess);
+        allCharacters.add(softServePriestess);
+        
+        CharacterCard applePieDefender = new CharacterCard(
+            "蘋果派防衛者 (Apple Pie Defender)", 4, "【開胃】：為一個友方角色恢復2點生命值。【速食】：每回合第一次使用治療效果時，治療量+2。", 
+            Rarity.GOURMET_DELIGHT, 2, 5, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(applePieDefender.getName(), applePieDefender);
+        allCharacters.add(applePieDefender);
+        
+        CharacterCard cookieCrumbleRogue = new CharacterCard(
+            "餅乾碎盜賊 (Cookie Crumble Rogue)", 2, "【開胃】：抽一張牌。【連擊】：攻擊後，有35%機率再次攻擊。", 
+            Rarity.CASUAL_BITES, 2, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(cookieCrumbleRogue.getName(), cookieCrumbleRogue);
+        allCharacters.add(cookieCrumbleRogue);
+        
+        // 三明治類角色
+        CharacterCard clubSandwichKnight = new CharacterCard(
+            "總匯三明治騎士 (Club Sandwich Knight)", 4, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
+            Rarity.GOURMET_DELIGHT, 2, 5, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(clubSandwichKnight.getName(), clubSandwichKnight);
+        allCharacters.add(clubSandwichKnight);
+        
+        CharacterCard chickenWrapAssassin = new CharacterCard(
+            "雞肉捲刺客 (Chicken Wrap Assassin)", 3, "【開胃】：對一個敵方角色造成3點傷害，但自身受到1點傷害。【油潤】：受到傷害-1。", 
+            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(chickenWrapAssassin.getName(), chickenWrapAssassin);
+        allCharacters.add(chickenWrapAssassin);
+        
+        CharacterCard tunaMeltSorcerer = new CharacterCard(
+            "鮪魚起司法師 (Tuna Melt Sorcerer)", 4, "【開胃】：抽一張牌。如果抽到的是速食工會卡牌，則獲得+1/+1。【油潤】：受到傷害-1。", 
+            Rarity.CASUAL_BITES, 3, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(tunaMeltSorcerer.getName(), tunaMeltSorcerer);
+        allCharacters.add(tunaMeltSorcerer);
+        
         CharacterCard potatoChipMaster = new CharacterCard(
-            "洋芋片大師", 3, "【開胃】：使一個友方角色獲得【油潤】效果。【速食】：每回合第一次出牌時費用-1。", 
+            "洋芋片大師 (Potato Chip Master)", 3, "【開胃】：使一個友方角色獲得【油潤】效果。【速食】：每回合第一次出牌時費用-1。", 
             Rarity.CASUAL_BITES, 3, 3, true, Faction.FAST_FOOD_GUILD);
         allCards.put(potatoChipMaster.getName(), potatoChipMaster);
         allCharacters.add(potatoChipMaster);
         
-        CharacterCard energyDrinkEnthusiast = new CharacterCard(
-            "能量飲料愛好者", 2, "【連擊】：攻擊後，有70%機率再次攻擊。【虛弱】：每次攻擊後，自身受到1點傷害。", 
+        // 墨西哥風味角色
+        CharacterCard tacoBellDancer = new CharacterCard(
+            "墨西哥捲舞者 (Taco Bell Dancer)", 2, "【開胃】：抽一張牌。【油潤】：每當你打出一張費用小於等於2的卡牌時，獲得+1攻擊力。", 
             Rarity.CASUAL_BITES, 1, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(energyDrinkEnthusiast.getName(), energyDrinkEnthusiast);
-        allCharacters.add(energyDrinkEnthusiast);
+        allCards.put(tacoBellDancer.getName(), tacoBellDancer);
+        allCharacters.add(tacoBellDancer);
         
-        CharacterCard fastFoodManager = new CharacterCard(
-            "速食店經理", 5, "【開胃】：使所有友方角色獲得+1攻擊力。【速食】：每回合第一次使用速食工會卡牌時，抽一張牌。", 
-            Rarity.GOURMET_DELIGHT, 4, 5, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(fastFoodManager.getName(), fastFoodManager);
-        allCharacters.add(fastFoodManager);
-        
-        CharacterCard comboMealSpecialist = new CharacterCard(
-            "套餐專家", 4, "【開胃】：獲得+1/+1。【集結】：場上每有一個費用小於3的友方角色，獲得+1攻擊力。", 
-            Rarity.GOURMET_DELIGHT, 2, 4, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(comboMealSpecialist.getName(), comboMealSpecialist);
-        allCharacters.add(comboMealSpecialist);
-        
-        CharacterCard burgerKing = new CharacterCard(
-            "漢堡王", 5, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
-            Rarity.CULINARY_HERITAGE, 4, 6, false, Faction.FAST_FOOD_GUILD);
-        allCards.put(burgerKing.getName(), burgerKing);
-        allCharacters.add(burgerKing);
-        
-        CharacterCard frenchFryArcher = new CharacterCard(
-            "薯條射手", 2, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。", 
-            Rarity.CASUAL_BITES, 2, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(frenchFryArcher.getName(), frenchFryArcher);
-        allCharacters.add(frenchFryArcher);
-        
-        CharacterCard chickenNuggetWarrior = new CharacterCard(
-            "雞塊戰士", 3, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(chickenNuggetWarrior.getName(), chickenNuggetWarrior);
-        allCharacters.add(chickenNuggetWarrior);
-        
-        CharacterCard pizzaMage = new CharacterCard(
-            "披薩法師", 4, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.FAST_FOOD_GUILD);
-        allCards.put(pizzaMage.getName(), pizzaMage);
-        allCharacters.add(pizzaMage);
-        
-        CharacterCard hotDogPriest = new CharacterCard(
-            "熱狗祭司", 4, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
-            Rarity.GOURMET_DELIGHT, 2, 5, false, Faction.FAST_FOOD_GUILD);
-        allCards.put(hotDogPriest.getName(), hotDogPriest);
-        allCharacters.add(hotDogPriest);
-        
-        CharacterCard tacoRogue = new CharacterCard(
-            "塔可盜賊", 3, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
+        CharacterCard burritoBlaster = new CharacterCard(
+            "墨西哥捲餅爆破手 (Burrito Blaster)", 3, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
             Rarity.CASUAL_BITES, 3, 2, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(tacoRogue.getName(), tacoRogue);
-        allCharacters.add(tacoRogue);
+        allCards.put(burritoBlaster.getName(), burritoBlaster);
+        allCharacters.add(burritoBlaster);
         
-        CharacterCard sandwichGuard = new CharacterCard(
-            "三明治衛士", 4, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
-            Rarity.GOURMET_DELIGHT, 2, 5, false, Faction.FAST_FOOD_GUILD);
-        allCards.put(sandwichGuard.getName(), sandwichGuard);
-        allCharacters.add(sandwichGuard);
+        CharacterCard nachosNinja = new CharacterCard(
+            "玉米脆片忍者 (Nachos Ninja)", 3, "【開胃】：使一個友方角色獲得+2攻擊力。【油潤】：受到傷害-1。", 
+            Rarity.CASUAL_BITES, 3, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(nachosNinja.getName(), nachosNinja);
+        allCharacters.add(nachosNinja);
         
-        CharacterCard donutMage = new CharacterCard(
-            "甜甜圈法師", 3, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
+        CharacterCard quesadillaShadow = new CharacterCard(
+            "起司墨西哥薄餅影衛 (Quesadilla Shadow)", 2, "【開胃】：對一個敵方角色造成2點傷害。【連擊】：攻擊後，有25%機率再次攻擊。", 
+            Rarity.CASUAL_BITES, 2, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(quesadillaShadow.getName(), quesadillaShadow);
+        allCharacters.add(quesadillaShadow);
+        
+        // 披薩類角色
+        CharacterCard cheesePizzaArcher = new CharacterCard(
+            "起司披薩射手 (Cheese Pizza Archer)", 2, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。", 
+            Rarity.CASUAL_BITES, 2, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(cheesePizzaArcher.getName(), cheesePizzaArcher);
+        allCharacters.add(cheesePizzaArcher);
+        
+        CharacterCard pepperoniPizzaMage = new CharacterCard(
+            "臘腸披薩法師 (Pepperoni Pizza Mage)", 4, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免1點傷害。", 
+            Rarity.GOURMET_DELIGHT, 3, 4, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(pepperoniPizzaMage.getName(), pepperoniPizzaMage);
+        allCharacters.add(pepperoniPizzaMage);
+        
+        CharacterCard hawaiianPizzaTosser = new CharacterCard(
+            "夏威夷披薩投擲師 (Hawaiian Pizza Tosser)", 3, "【開胃】：對一個敵方角色造成2點傷害。【油潤】：每次攻擊後，有25%機率不受反擊傷害。", 
             Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
-        allCards.put(donutMage.getName(), donutMage);
-        allCharacters.add(donutMage);
+        allCards.put(hawaiianPizzaTosser.getName(), hawaiianPizzaTosser);
+        allCharacters.add(hawaiianPizzaTosser);
         
-        CharacterCard iceCreamPriest = new CharacterCard(
-            "冰淇淋祭司", 5, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 5, false, Faction.FAST_FOOD_GUILD);
-        allCards.put(iceCreamPriest.getName(), iceCreamPriest);
-        allCharacters.add(iceCreamPriest);
+        CharacterCard stuffedCrustGuardian = new CharacterCard(
+            "起司邊披薩守衛 (Stuffed Crust Guardian)", 5, "【開胃】：使所有友方角色獲得+1攻擊力。【速食】：每回合第一次使用速食工會卡牌時，抽一張牌。", 
+            Rarity.GOURMET_DELIGHT, 4, 5, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(stuffedCrustGuardian.getName(), stuffedCrustGuardian);
+        allCharacters.add(stuffedCrustGuardian);
+        
+        // 速食早餐類角色
+        CharacterCard mcmuffinPaladin = new CharacterCard(
+            "早餐漢堡聖騎士 (McMuffin Paladin)", 3, "【開胃】：獲得+1/+1。【集結】：場上每有一個費用小於3的友方角色，獲得+1攻擊力。", 
+            Rarity.GOURMET_DELIGHT, 2, 4, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(mcmuffinPaladin.getName(), mcmuffinPaladin);
+        allCharacters.add(mcmuffinPaladin);
+        
+        CharacterCard waffleFryCleric = new CharacterCard(
+            "格子薯餅牧師 (Waffle Fry Cleric)", 2, "【開胃】：抽一張牌。【速食】：每回合第一次使用費用小於等於3的卡牌時，獲得+1/+1。", 
+            Rarity.CASUAL_BITES, 2, 3, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(waffleFryCleric.getName(), waffleFryCleric);
+        allCharacters.add(waffleFryCleric);
+        
+        CharacterCard breakfastBurritoStriker = new CharacterCard(
+            "早餐捲餅突擊手 (Breakfast Burrito Striker)", 1, "【連擊】：攻擊後，有30%機率再次攻擊。【速食】：費用為1的卡牌使用時，觸發【開胃】效果兩次。", 
+            Rarity.CASUAL_BITES, 1, 2, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(breakfastBurritoStriker.getName(), breakfastBurritoStriker);
+        allCharacters.add(breakfastBurritoStriker);
+        
+        CharacterCard hotcakesWizard = new CharacterCard(
+            "鬆餅法師 (Hotcakes Wizard)", 5, "【速食】：每回合第一次攻擊時，可以額外攻擊一次。【油潤】：受到傷害時，減免2點傷害。", 
+            Rarity.CULINARY_HERITAGE, 4, 6, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(hotcakesWizard.getName(), hotcakesWizard);
+        allCharacters.add(hotcakesWizard);
+        
+        // 傳說角色 - 速食工會代表
+        CharacterCard fastFoodKing = new CharacterCard(
+            "速食之王 (Fast Food King)", 7, "【開胃】：對所有敵方角色造成2點傷害。【速食】：每回合首次出牌時費用-2。【油潤】：受到傷害-2。【連擊】：攻擊後，有50%機率再次攻擊。", 
+            Rarity.ULTIMATE_TASTE, 5, 7, true, Faction.FAST_FOOD_GUILD);
+        allCards.put(fastFoodKing.getName(), fastFoodKing);
+        allCharacters.add(fastFoodKing);
+        
+        CharacterCard valueComboMaster = new CharacterCard(
+            "超值套餐大師 (Value Combo Master)", 6, "【開胃】：抽2張牌。【集結】：友方角色獲得+1/+1。【速食】：每回合第一次使用速食工會卡牌時，降低其費用2點。", 
+            Rarity.ULTIMATE_TASTE, 4, 6, false, Faction.FAST_FOOD_GUILD);
+        allCards.put(valueComboMaster.getName(), valueComboMaster);
+        allCharacters.add(valueComboMaster);
     }
     
     private void initializeSpellCards(Map<String, Card> allCards, List<SpellCard> allSpells) {
         // 基礎法術卡
         SpellCard quickBite = new SpellCard(
-            "快速一口", 1, "造成2點傷害，或使一個友方角色獲得+1攻擊力。", 
+            "快速一口 (Quick Bite)", 1, "造成2點傷害，或使一個友方角色獲得+1攻擊力。", 
             Rarity.CASUAL_BITES, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(quickBite.getName(), quickBite);
         allSpells.add(quickBite);
         
         SpellCard speedyDelivery = new SpellCard(
-            "極速配送", 2, "抽2張牌。如果你在一回合內已經打出過3張或更多卡牌，則抽3張牌。", 
+            "極速配送 (Speedy Delivery)", 2, "抽2張牌。如果你在一回合內已經打出過3張或更多卡牌，則抽3張牌。", 
             Rarity.GOURMET_DELIGHT, SpellType.DRAW, Faction.FAST_FOOD_GUILD);
         allCards.put(speedyDelivery.getName(), speedyDelivery);
         allSpells.add(speedyDelivery);
         
         SpellCard superSize = new SpellCard(
-            "超大杯", 3, "使一個友方角色獲得+2/+2和【油潤】效果。", 
+            "超大杯 (Super Size)", 3, "使一個友方角色獲得+2/+2和【油潤】效果。", 
             Rarity.CASUAL_BITES, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
         allCards.put(superSize.getName(), superSize);
         allSpells.add(superSize);
         
         SpellCard greaseSplash = new SpellCard(
-            "油花四濺", 4, "對所有敵方角色造成2點傷害，並使其獲得【油潤】效果：受到傷害-1，但速度-1。", 
+            "油花四濺 (Grease Splash)", 4, "對所有敵方角色造成2點傷害，並使其獲得【油潤】效果：受到傷害-1，但速度-1。", 
             Rarity.GOURMET_DELIGHT, SpellType.AOE, Faction.FAST_FOOD_GUILD);
         allCards.put(greaseSplash.getName(), greaseSplash);
         allSpells.add(greaseSplash);
         
         SpellCard comboMeal = new SpellCard(
-            "套餐組合", 5, "使用此卡牌時，從牌庫中隨機抽出一張費用分別為1、2、3的卡牌。", 
+            "套餐組合 (Combo Meal)", 5, "使用此卡牌時，從牌庫中隨機抽出一張費用分別為1、2、3的卡牌。", 
             Rarity.CULINARY_HERITAGE, SpellType.DRAW, Faction.FAST_FOOD_GUILD);
         allCards.put(comboMeal.getName(), comboMeal);
         allSpells.add(comboMeal);
         
         // 補充更多法術卡以達到20張
         SpellCard frenchFriesAssault = new SpellCard(
-            "薯條突襲", 2, "對一個敵方角色造成3點傷害，對其相鄰單位造成1點傷害。", 
+            "薯條突襲 (French Fries Assault)", 2, "對一個敵方角色造成3點傷害，對其相鄰單位造成1點傷害。", 
             Rarity.CASUAL_BITES, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(frenchFriesAssault.getName(), frenchFriesAssault);
         allSpells.add(frenchFriesAssault);
         
         SpellCard burgerFlip = new SpellCard(
-            "漢堡翻轉", 1, "將一個敵方或友方角色返回其擁有者的手牌中，其費用-1。", 
+            "漢堡翻轉 (Burger Flip)", 1, "將一個敵方或友方角色返回其擁有者的手牌中，其費用-1。", 
             Rarity.CASUAL_BITES, SpellType.SPECIAL, Faction.FAST_FOOD_GUILD);
         allCards.put(burgerFlip.getName(), burgerFlip);
         allSpells.add(burgerFlip);
         
         SpellCard fastFoodMarketing = new SpellCard(
-            "速食營銷", 2, "抽一張牌，如果是速食工會卡牌，則再抽一張牌並使其費用-1。", 
+            "速食營銷 (Fast Food Marketing)", 2, "抽一張牌，如果是速食工會卡牌，則再抽一張牌並使其費用-1。", 
             Rarity.CASUAL_BITES, SpellType.DRAW, Faction.FAST_FOOD_GUILD);
         allCards.put(fastFoodMarketing.getName(), fastFoodMarketing);
         allSpells.add(fastFoodMarketing);
         
         SpellCard driveThruRush = new SpellCard(
-            "得來速衝刺", 3, "使一個友方角色獲得【連擊】效果，並在本回合可以額外攻擊一次。", 
+            "得來速衝刺 (Drive-Thru Rush)", 3, "使一個友方角色獲得【連擊】效果，並在本回合可以額外攻擊一次。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
         allCards.put(driveThruRush.getName(), driveThruRush);
         allSpells.add(driveThruRush);
         
         SpellCard chickenNuggetBarrage = new SpellCard(
-            "雞塊彈幕", 4, "隨機對敵方角色造成共6點傷害，分配到2-4個目標。", 
+            "雞塊彈幕 (Chicken Nugget Barrage)", 4, "隨機對敵方角色造成共6點傷害，分配到2-4個目標。", 
             Rarity.GOURMET_DELIGHT, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(chickenNuggetBarrage.getName(), chickenNuggetBarrage);
         allSpells.add(chickenNuggetBarrage);
         
         SpellCard valueMenuBlitz = new SpellCard(
-            "超值菜單衝擊", 3, "使你手牌中費用小於等於3的卡牌費用-1，持續到你的下個回合結束。", 
+            "超值菜單衝擊 (Value Menu Blitz)", 3, "使你手牌中費用小於等於3的卡牌費用-1，持續到你的下個回合結束。", 
             Rarity.CULINARY_HERITAGE, SpellType.SPECIAL, Faction.FAST_FOOD_GUILD);
         allCards.put(valueMenuBlitz.getName(), valueMenuBlitz);
         allSpells.add(valueMenuBlitz);
         
         SpellCard deepFryBeam = new SpellCard(
-            "油炸光束", 2, "對一個敵方角色造成4點傷害，但其獲得【油潤】效果，減免1點傷害。", 
+            "油炸光束 (Deep Fry Beam)", 2, "對一個敵方角色造成4點傷害，但其獲得【油潤】效果，減免1點傷害。", 
             Rarity.CASUAL_BITES, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(deepFryBeam.getName(), deepFryBeam);
         allSpells.add(deepFryBeam);
         
         SpellCard friesReinforcement = new SpellCard(
-            "薯條增援", 3, "召喚三個1/1的薯條士兵，它們具有【連擊】效果。", 
+            "薯條增援 (Fries Reinforcement)", 3, "召喚三個1/1的薯條士兵，它們具有【連擊】效果。", 
             Rarity.GOURMET_DELIGHT, SpellType.SUMMON, Faction.FAST_FOOD_GUILD);
         allCards.put(friesReinforcement.getName(), friesReinforcement);
         allSpells.add(friesReinforcement);
         
         SpellCard ketchupBlast = new SpellCard(
-            "番茄醬爆發", 1, "對一個敵方角色造成2點傷害，如果你在本回合內已經使用過一張速食工會卡牌，則改為造成3點傷害。", 
+            "番茄醬爆發 (Ketchup Blast)", 1, "對一個敵方角色造成2點傷害，如果你在本回合內已經使用過一張速食工會卡牌，則改為造成3點傷害。", 
             Rarity.CASUAL_BITES, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(ketchupBlast.getName(), ketchupBlast);
         allSpells.add(ketchupBlast);
         
         SpellCard sodaExplosion = new SpellCard(
-            "汽水炸裂", 4, "對所有敵方角色造成2點傷害。對使用過【開胃】效果的敵方角色造成額外1點傷害。", 
+            "汽水炸裂 (Soda Explosion)", 4, "對所有敵方角色造成2點傷害。對使用過【開胃】效果的敵方角色造成額外1點傷害。", 
             Rarity.GOURMET_DELIGHT, SpellType.AOE, Faction.FAST_FOOD_GUILD);
         allCards.put(sodaExplosion.getName(), sodaExplosion);
         allSpells.add(sodaExplosion);
         
         SpellCard fastFoodFrenzy = new SpellCard(
-            "速食狂熱", 5, "使所有友方角色獲得+1/+1和【連擊】效果，持續2回合。", 
+            "速食狂熱 (Fast Food Frenzy)", 5, "使所有友方角色獲得+1/+1和【連擊】效果，持續2回合。", 
             Rarity.CULINARY_HERITAGE, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
         allCards.put(fastFoodFrenzy.getName(), fastFoodFrenzy);
         allSpells.add(fastFoodFrenzy);
         
         SpellCard massProduction = new SpellCard(
-            "批量生產", 6, "在場上放置一個隨機的費用小於等於4的速食工會角色卡的複製。", 
+            "批量生產 (Mass Production)", 6, "在場上放置一個隨機的費用小於等於4的速食工會角色卡的複製。", 
             Rarity.CULINARY_HERITAGE, SpellType.SUMMON, Faction.FAST_FOOD_GUILD);
         allCards.put(massProduction.getName(), massProduction);
         allSpells.add(massProduction);
         
         SpellCard coffeeJolt = new SpellCard(
-            "咖啡提神", 2, "使一個友方角色獲得+2攻擊力和【連擊】效果，持續1回合。", 
+            "咖啡提神 (Coffee Jolt)", 2, "使一個友方角色獲得+2攻擊力和【連擊】效果，持續1回合。", 
             Rarity.CASUAL_BITES, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
         allCards.put(coffeeJolt.getName(), coffeeJolt);
         allSpells.add(coffeeJolt);
         
         SpellCard microwave = new SpellCard(
-            "微波加熱", 1, "對一個敵方角色造成1點傷害，如果你在本回合使用過另一張法術卡，則改為造成3點傷害。", 
+            "微波加熱 (Microwave Heating)", 1, "對一個敵方角色造成1點傷害，如果你在本回合使用過另一張法術卡，則改為造成3點傷害。", 
             Rarity.CASUAL_BITES, SpellType.DAMAGE, Faction.FAST_FOOD_GUILD);
         allCards.put(microwave.getName(), microwave);
         allSpells.add(microwave);
         
         SpellCard rushHour = new SpellCard(
-            "營業高峰期", 3, "使所有友方角色獲得+1攻擊力，並使所有友方【速食】和【連擊】效果本回合觸發兩次。", 
+            "營業高峰期 (Rush Hour)", 3, "使所有友方角色獲得+1攻擊力，並使所有友方【速食】和【連擊】效果本回合觸發兩次。", 
             Rarity.GOURMET_DELIGHT, SpellType.BUFF, Faction.FAST_FOOD_GUILD);
         allCards.put(rushHour.getName(), rushHour);
         allSpells.add(rushHour);
+        
+        SpellCard extraDip = new SpellCard(
+            "額外醬料 (Extra Dip)", 2, "為一個友方角色恢復3點生命值，並使其獲得【油潤】效果，持續2回合。", 
+            Rarity.CASUAL_BITES, SpellType.HEALING, Faction.FAST_FOOD_GUILD);
+        allCards.put(extraDip.getName(), extraDip);
+        allSpells.add(extraDip);
+        
+        SpellCard kidsMealSurprise = new SpellCard(
+            "兒童餐驚喜 (Kids Meal Surprise)", 3, "隨機召喚一個費用為2的速食工會角色，並使其獲得+1/+1。", 
+            Rarity.CASUAL_BITES, SpellType.SUMMON, Faction.FAST_FOOD_GUILD);
+        allCards.put(kidsMealSurprise.getName(), kidsMealSurprise);
+        allSpells.add(kidsMealSurprise);
     }
     
     private void initializeFieldCards(Map<String, Card> allCards, List<FieldCard> allFieldCards) {
         // 基礎場地卡
         FieldCard fastFoodRestaurant = FieldCard.createEnvironmentField(
-            "速食餐廳", 4, "每回合第一次使用費用小於等於3的卡牌時，抽一張牌。友方角色的【速食】效果觸發機率+20%。", 
+            "速食連鎖餐廳 (Fast Food Chain Restaurant)", 4, "每回合第一次使用費用小於等於3的卡牌時，抽一張牌。友方角色的【速食】效果觸發機率+20%。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.FAST_FOOD_GUILD);
         allCards.put(fastFoodRestaurant.getName(), fastFoodRestaurant);
         allFieldCards.add(fastFoodRestaurant);
         
         FieldCard fryer = FieldCard.createEnvironmentField(
-            "油炸鍋", 2, "使一個友方角色獲得【油潤】效果：受到傷害時，減免2點傷害。", 
+            "油炸機 (Deep Fryer)", 2, "使一個友方角色獲得【油潤】效果：受到傷害時，減免2點傷害。", 
             Rarity.CASUAL_BITES, 3, Faction.FAST_FOOD_GUILD);
         allCards.put(fryer.getName(), fryer);
         allFieldCards.add(fryer);
         
         FieldCard quickServiceSystem = FieldCard.createEnvironmentField(
-            "快速服務系統", 3, "使一個友方角色獲得【速食】效果：每回合第一次攻擊時，可以額外攻擊一次。", 
+            "快速服務系統 (Quick Service System)", 3, "使一個友方角色獲得【速食】效果：每回合第一次攻擊時，可以額外攻擊一次。", 
             Rarity.GOURMET_DELIGHT, 2, Faction.FAST_FOOD_GUILD);
         allCards.put(quickServiceSystem.getName(), quickServiceSystem);
         allFieldCards.add(quickServiceSystem);
         
         // 補充更多場地卡以達到10張
         FieldCard driveThru = FieldCard.createEnvironmentField(
-            "得來速車道", 3, "每回合第一次打出的費用小於等於2的卡牌，費用-1。友方角色獲得+1攻擊力。", 
+            "得來速車道 (Drive-Thru Lane)", 3, "每回合第一次打出的費用小於等於2的卡牌，費用-1。友方角色獲得+1攻擊力。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.FAST_FOOD_GUILD);
         allCards.put(driveThru.getName(), driveThru);
         allFieldCards.add(driveThru);
         
         FieldCard sodaMachine = FieldCard.createEnvironmentField(
-            "汽水機", 2, "每回合可以使一個友方角色獲得【連擊】效果，持續1回合。", 
+            "汽水機 (Soda Fountain Machine)", 2, "每回合可以使一個友方角色獲得【連擊】效果，持續1回合。", 
             Rarity.CASUAL_BITES, 2, Faction.FAST_FOOD_GUILD);
         allCards.put(sodaMachine.getName(), sodaMachine);
         allFieldCards.add(sodaMachine);
         
         FieldCard valueMenuBoard = FieldCard.createEnvironmentField(
-            "超值菜單欄", 5, "費用小於等於3的友方卡牌費用-1。每當打出一張費用小於等於3的速食工會卡牌時，有30%機率抽一張牌。", 
+            "超值菜單欄 (Value Menu Board)", 5, "費用小於等於3的友方卡牌費用-1。每當打出一張費用小於等於3的速食工會卡牌時，有30%機率抽一張牌。", 
             Rarity.CULINARY_HERITAGE, 3, Faction.FAST_FOOD_GUILD);
         allCards.put(valueMenuBoard.getName(), valueMenuBoard);
         allFieldCards.add(valueMenuBoard);
         
         FieldCard chickenBucket = FieldCard.createEnvironmentField(
-            "炸雞桶", 3, "召喚一個2/2的炸雞士兵。每回合結束時，有30%機率再召喚一個。", 
+            "炸雞全家桶 (Fried Chicken Bucket)", 3, "召喚一個2/2的炸雞士兵。每回合結束時，有30%機率再召喚一個。", 
             Rarity.CASUAL_BITES, 2, Faction.FAST_FOOD_GUILD);
         allCards.put(chickenBucket.getName(), chickenBucket);
         allFieldCards.add(chickenBucket);
         
         FieldCard fastFoodKitchen = FieldCard.createEnvironmentField(
-            "速食廚房", 4, "每回合開始時，有25%機率發現一張速食工會法術卡。友方【連擊】效果觸發率+15%。", 
+            "速食廚房 (Fast Food Kitchen)", 4, "每回合開始時，有25%機率發現一張速食工會法術卡。友方【連擊】效果觸發率+15%。", 
             Rarity.GOURMET_DELIGHT, 3, Faction.FAST_FOOD_GUILD);
         allCards.put(fastFoodKitchen.getName(), fastFoodKitchen);
         allFieldCards.add(fastFoodKitchen);
         
         FieldCard grillStation = FieldCard.createEnvironmentField(
-            "烤爐站", 3, "每回合可以使一個友方角色獲得+2攻擊力和【油潤】效果，持續1回合。", 
+            "烤肉站 (Grill Station)", 3, "每回合可以使一個友方角色獲得+2攻擊力和【油潤】效果，持續1回合。", 
             Rarity.CASUAL_BITES, 2, Faction.FAST_FOOD_GUILD);
         allCards.put(grillStation.getName(), grillStation);
         allFieldCards.add(grillStation);
+        
+        FieldCard selfServeArea = FieldCard.createEnvironmentField(
+            "自助取餐區 (Self-Serve Area)", 3, "每回合開始時，有40%機率從牌庫中發現一張速食工會角色卡。", 
+            Rarity.CASUAL_BITES, 2, Faction.FAST_FOOD_GUILD);
+        allCards.put(selfServeArea.getName(), selfServeArea);
+        allFieldCards.add(selfServeArea);
     }
     
     private void initializeCastleCards(Map<String, Card> allCards, List<CastleCard> allCastles) {
         // 基礎城堡卡
         CastleCard burgerCastle = new CastleCard(
-            "漢堡城堡", 0, "【城堡效果】：友方角色攻擊力+2，你的卡牌費用-1（最低為1）。", 
+            "漢堡城堡 (Burger Castle)", 0, "【城堡效果】：友方角色攻擊力+2，你的卡牌費用-1（最低為1）。", 
             Rarity.CULINARY_HERITAGE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(2));
         addToCollection(burgerCastle, allCards, allCastles);
         
         // 更多城堡卡
         CastleCard frenchFryCastle = new CastleCard(
-            "薯條堡壘", 0, "【城堡效果】：每回合第一次打出的卡牌費用-2，友方角色獲得+1/+1。", 
+            "薯條堡壘 (French Fries Fortress)", 0, "【城堡效果】：每回合第一次打出的卡牌費用-2，友方角色獲得+1/+1。", 
             Rarity.ULTIMATE_TASTE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(3));
         addToCollection(frenchFryCastle, allCards, allCastles);
         
         CastleCard nuggetFortress = new CastleCard(
-            "雞塊要塞", 0, "【城堡效果】：每回合結束時，有50%機率召喚一個2/2的雞塊士兵。友方角色獲得【油潤】效果。", 
+            "雞塊要塞 (Chicken Nugget Stronghold)", 0, "【城堡效果】：每回合結束時，有50%機率召喚一個2/2的炸雞士兵。友方角色獲得【油潤】效果。", 
             Rarity.GOURMET_DELIGHT, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(2));
         addToCollection(nuggetFortress, allCards, allCastles);
         
         CastleCard driveThruTower = new CastleCard(
-            "得來速塔樓", 0, "【城堡效果】：每回合第一次打出的費用小於等於3的卡牌抽一張牌。友方角色攻擊力+1。", 
+            "得來速塔樓 (Drive-Thru Tower)", 0, "【城堡效果】：每回合第一次打出的費用小於等於3的卡牌抽一張牌。友方角色攻擊力+1。", 
             Rarity.GOURMET_DELIGHT, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(1));
         addToCollection(driveThruTower, allCards, allCastles);
         
         CastleCard pizzaKeep = new CastleCard(
-            "披薩堡壘", 0, "【城堡效果】：友方角色的【連擊】和【速食】效果觸發機率+25%。友方角色獲得+1/+1。", 
+            "披薩堡壘 (Pizza Fortress)", 0, "【城堡效果】：友方角色的【連擊】和【速食】效果觸發機率+25%。友方角色獲得+1/+1。", 
             Rarity.CULINARY_HERITAGE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(2));
         addToCollection(pizzaKeep, allCards, allCastles);
+        
+        CastleCard comboMealCitadel = new CastleCard(
+            "套餐組合城塞 (Combo Meal Citadel)", 0, "【城堡效果】：每回合第一次使用速食工會卡牌時，從牌庫抽一張卡。友方角色獲得+1/+2。", 
+            Rarity.ULTIMATE_TASTE, Faction.FAST_FOOD_GUILD, new CastleEffectImpl.FastFoodGuildEffect(3));
+        addToCollection(comboMealCitadel, allCards, allCastles);
     }
     
     private void addToCollection(CastleCard castle, Map<String, Card> allCards, List<CastleCard> allCastles) {
