@@ -76,8 +76,15 @@ public class FOODGameEngine {
     public void start() {
         System.out.println("歡迎來到 F.O.O.D TCG - 食物擬人對戰卡牌遊戲!");
         
-        initializePlayers();
-        gameLoop();
+        while (true) {
+            initializePlayers();
+            if (player1 == null || player2 == null) {
+                // 如果玩家未初始化（例如選擇返回主選單），重新開始
+                continue;
+            }
+            gameLoop();
+            break;
+        }
     }
     
     private void initializeCardLibrary() {
@@ -106,6 +113,7 @@ public class FOODGameEngine {
         System.out.println("1. 玩家對戰玩家");
         System.out.println("2. 玩家對戰AI");
         System.out.println("3. 抽卡包");
+        System.out.println("0. 返回主選單");
         
         int gameMode = 1; // 預設為玩家對戰玩家
         boolean vsAI = false;
@@ -115,15 +123,19 @@ public class FOODGameEngine {
             gameMode = scanner.nextInt();
             scanner.nextLine(); // 清除輸入緩衝
             
-            if (gameMode == 2) {
+            if (gameMode == 0) {
+                return;
+            } else if (gameMode == 2) {
                 vsAI = true;
                 System.out.println("您選擇了玩家對戰AI模式!");
             } else if (gameMode == 3) {
                 System.out.println("您選擇了抽卡包模式!");
                 openCardPack();
-                return; // 抽完卡包後結束遊戲
-            } else {
+                return; // 抽完卡包後回到主選單
+            } else if (gameMode == 1) {
                 System.out.println("您選擇了玩家對戰玩家模式!");
+            } else {
+                System.out.println("無效的選擇，預設使用玩家對戰玩家模式!");
             }
         } catch (Exception e) {
             System.out.println("輸入無效，預設使用玩家對戰玩家模式!");
@@ -1408,63 +1420,69 @@ public class FOODGameEngine {
      * 開啟卡包
      */
     private void openCardPack() {
-        System.out.println("\n===== 開啟卡包 =====");
-        System.out.println("每包卡包包含5張卡牌，按照以下機率獲得不同稀有度：");
-        System.out.println("- 輕鬆小食 (50%)");
-        System.out.println("- 風味饗宴 (30%)");
-        System.out.println("- 美食傳承 (15%)");
-        System.out.println("- 極致美味 (5%)");
-        
-        // 初始化卡牌圖鑑
-        initializeCardLibrary();
-        
-        // 抽5張卡
-        List<Card> packCards = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Card card = drawRandomCard();
-            packCards.add(card);
-        }
-        
-        // 顯示抽到的卡
-        System.out.println("\n您抽到了以下卡牌：");
-        for (int i = 0; i < packCards.size(); i++) {
-            Card card = packCards.get(i);
-            System.out.printf("%d. %s [%s]\n", 
-                i + 1, 
-                card.getName(), 
-                card.getRarity().getChineseName());
-        }
-        
-        // 詢問是否要查看卡牌詳情
         Scanner scanner = new Scanner(System.in);
+        
         while (true) {
-            System.out.println("\n請選擇操作：");
-            System.out.println("1. 查看卡牌詳情");
-            System.out.println("2. 結束");
+            System.out.println("\n===== 開啟卡包 =====");
+            System.out.println("每包卡包包含5張卡牌，按照以下機率獲得不同稀有度：");
+            System.out.println("- 輕鬆小食 (50%)");
+            System.out.println("- 風味饗宴 (30%)");
+            System.out.println("- 美食傳承 (15%)");
+            System.out.println("- 極致美味 (5%)");
             
-            try {
-                int choice = scanner.nextInt();
-                if (choice == 1) {
-                    System.out.print("請輸入要查看的卡牌編號(1-5): ");
-                    int cardIndex = scanner.nextInt();
-                    if (cardIndex >= 1 && cardIndex <= 5) {
-                        Card selectedCard = packCards.get(cardIndex - 1);
-                        System.out.println("\n卡牌詳情：");
-                        System.out.println("名稱：" + selectedCard.getName());
-                        System.out.println("費用：" + selectedCard.getCost());
-                        System.out.println("稀有度：" + selectedCard.getRarity().getChineseName());
-                        System.out.println("描述：" + selectedCard.getDescription());
+            // 初始化卡牌圖鑑
+            initializeCardLibrary();
+            
+            // 抽5張卡
+            List<Card> packCards = new ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                Card card = drawRandomCard();
+                packCards.add(card);
+            }
+            
+            // 顯示抽到的卡
+            System.out.println("\n您抽到了以下卡牌：");
+            for (int i = 0; i < packCards.size(); i++) {
+                Card card = packCards.get(i);
+                System.out.printf("%d. %s [%s]\n", 
+                    i + 1, 
+                    card.getName(), 
+                    card.getRarity().getChineseName());
+            }
+            
+            // 詢問是否要查看卡牌詳情
+            while (true) {
+                System.out.println("\n請選擇操作：");
+                System.out.println("1. 查看卡牌詳情");
+                System.out.println("2. 再抽一包");
+                System.out.println("3. 返回主選單");
+                
+                try {
+                    int choice = scanner.nextInt();
+                    if (choice == 1) {
+                        System.out.print("請輸入要查看的卡牌編號(1-5): ");
+                        int cardIndex = scanner.nextInt();
+                        if (cardIndex >= 1 && cardIndex <= 5) {
+                            Card selectedCard = packCards.get(cardIndex - 1);
+                            System.out.println("\n卡牌詳情：");
+                            System.out.println("名稱：" + selectedCard.getName());
+                            System.out.println("費用：" + selectedCard.getCost());
+                            System.out.println("稀有度：" + selectedCard.getRarity().getChineseName());
+                            System.out.println("描述：" + selectedCard.getDescription());
+                        } else {
+                            System.out.println("無效的卡牌編號！");
+                        }
+                    } else if (choice == 2) {
+                        break; // 跳出內層迴圈，重新抽一包
+                    } else if (choice == 3) {
+                        return; // 返回主選單
                     } else {
-                        System.out.println("無效的卡牌編號！");
+                        System.out.println("無效的選擇！");
                     }
-                } else if (choice == 2) {
-                    break;
-                } else {
-                    System.out.println("無效的選擇！");
+                } catch (Exception e) {
+                    System.out.println("輸入錯誤！");
+                    scanner.nextLine(); // 清除輸入緩衝
                 }
-            } catch (Exception e) {
-                System.out.println("輸入錯誤！");
-                scanner.nextLine(); // 清除輸入緩衝
             }
         }
     }
