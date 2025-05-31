@@ -15,7 +15,7 @@ public class CastleCard extends Card {
      * 創建城堡卡
      */
     public CastleCard(String name, int tokenCost, String description, Rarity rarity, Faction faction, CastleEffect effect) {
-        super(name, tokenCost, description, rarity, CardType.CASTLE, faction);
+        super(name, tokenCost, description, rarity, CardType.CASTLE, faction, rarity.getMinPoints());
         this.effect = effect;
         this.isActive = false;           // 初始未啟用
         this.isInitialized = false;      // 初始未初始化

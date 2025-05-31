@@ -39,19 +39,20 @@ public class SpellCard extends Card {
     }
     
     public SpellCard(String name, int cost, String description, Rarity rarity, SpellType spellType) {
-        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL);
+        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL, rarity.getMinPoints());
         this.spellType = spellType;
         initializeSpellProperties();
     }
     
     public SpellCard(String name, int cost, String description, Rarity rarity, SpellType spellType, int points) {
-        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL, points);
+        super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL, 
+            Math.min(Math.max(points, rarity.getMinPoints()), rarity.getMaxPoints()));
         this.spellType = spellType;
         initializeSpellProperties();
     }
     
     public SpellCard(String name, int tokenCost, String description, Rarity rarity, SpellType spellType, Faction faction) {
-        super(name, tokenCost, description, rarity, CardType.FIELD, faction);
+        super(name, tokenCost, description, rarity, CardType.FIELD, faction, rarity.getMinPoints());
         this.spellType = spellType;
         initializeSpellProperties();
     }

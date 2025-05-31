@@ -42,7 +42,7 @@ public class CharacterCard extends Card {
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
                         int attack, int maxHealth, boolean isOffensive, Faction faction) {
-        super(name, tokenCost, description, rarity, CardType.CHARACTER, faction);
+        super(name, tokenCost, description, rarity, CardType.CHARACTER, faction, rarity.getMinPoints());
         this.attack = attack;
         this.maxHealth = maxHealth;
         this.currentHealth = maxHealth;

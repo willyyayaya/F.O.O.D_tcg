@@ -14,16 +14,6 @@ public abstract class Card {
     protected Faction faction;   // 添加陣營屬性
     protected int points;        // 添加點數屬性
     
-    public Card(String name, int cost, String description, Rarity rarity, CardType type, Faction faction) {
-        this.name = name;
-        this.cost = cost;
-        this.description = description;
-        this.rarity = rarity;
-        this.type = type;
-        this.faction = faction;
-        this.points = 1; // 預設點數為1
-    }
-    
     public Card(String name, int cost, String description, Rarity rarity, CardType type, Faction faction, int points) {
         this.name = name;
         this.cost = cost;

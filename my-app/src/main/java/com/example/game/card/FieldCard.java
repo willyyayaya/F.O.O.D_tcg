@@ -11,7 +11,7 @@ public class FieldCard extends Card {
     private int effectValue;
 
     private FieldCard(String name, int cost, String description, Rarity rarity, int durability, Faction faction, boolean isEnvironment) {
-        super(name, cost, description, rarity, CardType.FIELD, faction);
+        super(name, cost, description, rarity, CardType.FIELD, faction, rarity.getMinPoints());
         this.durability = durability;
         this.isEnvironment = isEnvironment;
         this.effectValue = durability;
