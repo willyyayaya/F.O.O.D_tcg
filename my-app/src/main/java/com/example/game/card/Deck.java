@@ -193,7 +193,7 @@ public class Deck {
             if (totalPoints + cardPoints <= MAX_DECK_POINTS) {
                 deck.cards.add(copyCard(card));
                 totalPoints += cardPoints;
-        } else {
+            } else {
                 break;
             }
         }
@@ -358,28 +358,39 @@ public class Deck {
     private static Card copyCard(Card original) {
         if (original instanceof CharacterCard) {
             CharacterCard originalChar = (CharacterCard) original;
-            return new CharacterCard(
-                    originalChar.getName(),
-                    originalChar.getCost(),
-                    originalChar.getDescription(),
-                    originalChar.getRarity(),
-                    originalChar.getAttack(),
-                    originalChar.getMaxHealth(),
-                    originalChar.isOffensive(),
-                    originalChar.getFaction(),
-                    originalChar.getPoints()
-            );
+            return CharacterCard.builder()
+                    .name(originalChar.getName())
+                    .cost(originalChar.getCost())
+                    .description(originalChar.getDescription())
+                    .rarity(originalChar.getRarity())
+                    .attack(originalChar.getAttack())
+                    .health(originalChar.getMaxHealth())
+                    .faction(originalChar.getFaction())
+                    .points(originalChar.getPoints())
+                    .build();
         } else if (original instanceof FieldCard) {
             FieldCard originalField = (FieldCard) original;
-            return FieldCard.createEnvironmentField(
-                    originalField.getName(),
-                    originalField.getCost(),
-                    originalField.getDescription(),
-                    originalField.getRarity(),
-                originalField.getDurability(),
-                    originalField.getFaction(),
-                    originalField.getPoints()
-            );
+            return FieldCard.builder()
+                    .name(originalField.getName())
+                    .cost(originalField.getCost())
+                    .description(originalField.getDescription())
+                    .rarity(originalField.getRarity())
+                    .durability(originalField.getDurability())
+                    .faction(originalField.getFaction())
+                    .points(originalField.getPoints())
+                    .isEnvironment(originalField.isEnvironment())
+                    .build();
+        } else if (original instanceof CastleCard) {
+            CastleCard originalCastle = (CastleCard) original;
+            return CastleCard.builder()
+                    .name(originalCastle.getName())
+                    .cost(originalCastle.getCost())
+                    .description(originalCastle.getDescription())
+                    .rarity(originalCastle.getRarity())
+                    .faction(originalCastle.getFaction())
+                    .points(originalCastle.getPoints())
+                    .health(originalCastle.getMaxHealth())
+                    .build();
         }
         return null;
     }

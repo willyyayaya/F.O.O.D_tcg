@@ -14,16 +14,82 @@ public class CastleCard extends Card {
     private int maxHealth;           // 最大生命值
     
     /**
+     * Builder 類別
+     */
+    public static class Builder {
+        private String name;
+        private int cost;
+        private String description;
+        private Rarity rarity;
+        private Faction faction = Faction.NEUTRAL;
+        private int points;
+        private int health;
+        
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        
+        public Builder cost(int cost) {
+            this.cost = cost;
+            return this;
+        }
+        
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+        
+        public Builder rarity(Rarity rarity) {
+            this.rarity = rarity;
+            return this;
+        }
+        
+        public Builder faction(Faction faction) {
+            this.faction = faction;
+            return this;
+        }
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        public Builder health(int health) {
+            this.health = health;
+            return this;
+        }
+        
+        public CastleCard build() {
+            if (name == null || description == null || rarity == null) {
+                throw new IllegalStateException("Required fields are missing");
+            }
+            
+            CastleCard card = new CastleCard(name, cost, description, rarity, faction);
+            card.currentHealth = health;
+            card.maxHealth = health;
+            if (points > 0) {
+                card.setPoints(points);
+            }
+            return card;
+        }
+    }
+    
+    public static Builder builder() {
+        return new Builder();
+    }
+    
+    /**
      * 創建城堡卡
      */
-    public CastleCard(String name, int tokenCost, String description, Rarity rarity, Faction faction, CastleEffect effect) {
-        super(name, tokenCost, description, rarity, CardType.CASTLE, faction, rarity.getMinPoints());
-        this.effect = effect;
+    public CastleCard(String name, int cost, String description, Rarity rarity, Faction faction) {
+        super(name, cost, description, rarity, CardType.CASTLE, faction, rarity.getMinPoints());
+        this.effect = null;
         this.isActive = false;           // 初始未啟用
         this.isInitialized = false;      // 初始未初始化
         this.zone = CastleCardZone.NONE; // 初始未分配區域
-        this.maxHealth = 20;             // 默認最大生命值
-        this.currentHealth = maxHealth;   // 初始滿血
+        this.currentHealth = 30; // 預設生命值
+        this.maxHealth = 30;
     }
     
     /**
@@ -51,7 +117,9 @@ public class CastleCard extends Card {
     public void activateEffect(Player player) {
         if (isActive && isInitialized) {
             System.out.println("城堡效果啟用: " + description);
-            effect.applyEffect(player);
+            if (effect != null) {
+                effect.applyEffect(player);
+            }
         }
     }
     
@@ -85,7 +153,7 @@ public class CastleCard extends Card {
         System.out.println("區域: " + (zone == CastleCardZone.NONE ? "未分配" : getZoneText(zone)));
         System.out.println("狀態: " + (isActive ? "啟用中" : "已停用"));
         System.out.println("初始化: " + (isInitialized ? "是" : "否"));
-        System.out.println("效果: " + effect.getEffectDescription());
+        System.out.println("效果: " + (effect != null ? effect.getEffectDescription() : "無效果"));
     }
     
     /**
@@ -179,5 +247,20 @@ public class CastleCard extends Card {
         this.maxHealth = Math.max(1, maxHealth);
         // 確保當前生命值不超過新的最大生命值
         this.currentHealth = Math.min(this.currentHealth, this.maxHealth);
+    }
+
+    /**
+     * 設置卡牌點數
+     */
+    public void setPoints(int points) {
+        if (points < getRarity().getMinPoints() || points > getRarity().getMaxPoints()) {
+            throw new IllegalArgumentException(
+                String.format("Points must be between %d and %d for %s rarity",
+                    getRarity().getMinPoints(),
+                    getRarity().getMaxPoints(),
+                    getRarity().name())
+            );
+        }
+        this.points = points;
     }
 } 

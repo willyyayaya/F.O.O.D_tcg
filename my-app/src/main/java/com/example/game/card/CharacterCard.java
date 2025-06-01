@@ -80,12 +80,12 @@ public class CharacterCard extends Card {
         }
 
         public Builder attack(int attack) {
-            this.attack = attack;
+        this.attack = attack;
             return this;
         }
 
         public Builder health(int maxHealth) {
-            this.maxHealth = maxHealth;
+        this.maxHealth = maxHealth;
             return this;
         }
 

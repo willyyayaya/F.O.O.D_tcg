@@ -60,4 +60,89 @@ public class FieldCard extends Card {
         System.out.println("環境類型: " + (isEnvironment ? "環境" : "非環境"));
         System.out.println("效果值: " + effectValue);
     }
+
+    /**
+     * Builder 類別
+     */
+    public static class Builder {
+        private String name;
+        private int cost;
+        private String description;
+        private Rarity rarity;
+        private Faction faction = Faction.NEUTRAL;
+        private int points;
+        private int durability;
+        private boolean isEnvironment = false;
+        
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        
+        public Builder cost(int cost) {
+            this.cost = cost;
+            return this;
+        }
+        
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+        
+        public Builder rarity(Rarity rarity) {
+            this.rarity = rarity;
+            return this;
+        }
+        
+        public Builder faction(Faction faction) {
+            this.faction = faction;
+            return this;
+        }
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        public Builder durability(int durability) {
+            this.durability = durability;
+            return this;
+        }
+        
+        public Builder isEnvironment(boolean isEnvironment) {
+            this.isEnvironment = isEnvironment;
+            return this;
+        }
+        
+        public FieldCard build() {
+            if (name == null || description == null || rarity == null) {
+                throw new IllegalStateException("Required fields are missing");
+            }
+            
+            FieldCard card = new FieldCard(name, cost, description, rarity, durability, faction, isEnvironment);
+            if (points > 0) {
+                card.setPoints(points);
+            }
+            return card;
+        }
+    }
+    
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    /**
+     * 設置卡牌點數
+     */
+    public void setPoints(int points) {
+        if (points < getRarity().getMinPoints() || points > getRarity().getMaxPoints()) {
+            throw new IllegalArgumentException(
+                String.format("Points must be between %d and %d for %s rarity",
+                    getRarity().getMinPoints(),
+                    getRarity().getMaxPoints(),
+                    getRarity().name())
+            );
+        }
+        this.points = points;
+    }
 } 

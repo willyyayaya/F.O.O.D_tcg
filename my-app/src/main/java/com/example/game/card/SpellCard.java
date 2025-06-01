@@ -37,7 +37,7 @@ public class SpellCard extends Card {
             return localizedName;
         }
     }
-
+    
     /**
      * Builder 類別
      */
