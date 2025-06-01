@@ -60,7 +60,7 @@ public class CardLibrary {
      * 遊戲開始時初始化玩家的城堡卡
      */
     public static void initializePlayerCastle(Player player) {
-        CastleCard castle = player.getCastleCard();
+        CastleCard castle = player.getCastle();
         if (castle != null) {
             castle.initialize();
         }
@@ -762,7 +762,7 @@ public class CardLibrary {
      * 檢查區域是否被摧毀，並處理城堡卡效果
      */
     public static void checkZoneDestroyed(Player player, CastleCardZone zone) {
-        CastleCard castle = player.getCastleCard();
+        CastleCard castle = player.getCastle();
         if (castle != null) {
             if (castle.checkZoneDestroyed(zone)) {
                 System.out.println(player.getName() + " 的城堡被摧毀了！");

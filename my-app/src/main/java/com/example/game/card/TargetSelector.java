@@ -238,4 +238,46 @@ public class TargetSelector {
         System.out.println("選擇了所有敵方角色作為目標，共 " + enemyCharacters.size() + " 個");
         return new ArrayList<>(enemyCharacters);
     }
+    
+    /**
+     * 選擇一個城牆作為效果目標
+     * @param player 當前玩家
+     * @param message 選擇提示信息
+     * @return 選擇的城牆類型（1=抽牌區，2=法力區，3=出牌區），如果取消則返回0
+     */
+    public static int selectCastleWall(Player player, String message) {
+        if (player == null) {
+            System.out.println("無效的玩家！");
+            return 0;
+        }
+
+        System.out.println("\n" + message);
+        System.out.println("1. 抽牌區城牆");
+        System.out.println("2. 法力區城牆");
+        System.out.println("3. 出牌區城牆");
+        System.out.println("0. 取消選擇");
+
+        System.out.print("請選擇城牆 (0-3): ");
+        int choice = scanner.nextInt();
+        scanner.nextLine(); // 清除輸入緩衝
+
+        if (choice < 0 || choice > 3) {
+            System.out.println("無效的選擇！");
+            return 0;
+        }
+
+        if (choice == 0) {
+            System.out.println("已取消選擇！");
+            return 0;
+        }
+
+        String wallName = "";
+        switch (choice) {
+            case 1: wallName = "抽牌區城牆"; break;
+            case 2: wallName = "法力區城牆"; break;
+            case 3: wallName = "出牌區城牆"; break;
+        }
+        System.out.println("已選擇: " + wallName);
+        return choice;
+    }
 } 

@@ -105,6 +105,8 @@ public abstract class Card {
         switch (type) {
             case CHARACTER:
                 return "角色";
+            case SPELL:
+                return "法術";
             case FIELD:
                 return "場地";
             case QUEST:

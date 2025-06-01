@@ -224,7 +224,7 @@ public class FOODGameEngine {
         // 讓AI選擇城堡卡
         com.example.game.card.CastleCard castle = aiPlayer.chooseAICastle();
         if (castle != null) {
-            aiPlayer.setCastleCard(castle);
+            aiPlayer.setCastle(castle);
             
             // 讓AI選擇放置區域
             com.example.game.card.CastleCardZone zone = aiPlayer.chooseAICastleZone();
@@ -306,7 +306,7 @@ public class FOODGameEngine {
         // 選擇城堡卡
         com.example.game.card.CastleCard castle = CardLibrary.chooseCastleCard(scanner, playerFaction);
         if (castle != null) {
-            player.setCastleCard(castle);
+            player.setCastle(castle);
             
             // 選擇放置區域
             com.example.game.card.CastleCardZone zone = CardLibrary.chooseCastleZone(scanner, castle);

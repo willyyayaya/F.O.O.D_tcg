@@ -53,7 +53,7 @@ public class CharacterCard extends Card {
         initCrispyValue();
         
         // 現炸效果檢查
-        if (effectProcessor.processFreshFriedEffect(this)) {
+        if (effectProcessor.processSizzleEffect(this)) {
             this.canAttack = true;
             System.out.println(name + " 具有【現炸】效果，可以立即攻擊！");
         }
@@ -208,7 +208,7 @@ public class CharacterCard extends Card {
         System.out.println(name + " 攻擊了 " + target.getName() + "，造成 " + damage + " 點傷害!");
         
         // 檢查爆炒效果（有機率直接消滅目標）
-        if (!targetKilled && effectProcessor.processOverheatEffect(this, target)) {
+        if (!targetKilled && effectProcessor.processSearEffect(this, target)) {
             target.takeDamage(target.getCurrentHealth()); // 直接消滅目標
             System.out.println(name + " 的【爆炒】效果觸發，直接消滅了 " + target.getName() + "！");
         }
@@ -228,7 +228,7 @@ public class CharacterCard extends Card {
         }
         
         // 檢查是否有糖爆效果
-        int effectStrength = effectProcessor.processSugarCrashEffect(this, target);
+        int effectStrength = effectProcessor.processSugarRushEffect(this, target);
         if (effectStrength > 0) {
             // 設置狀態標記
             this.canAttack = false; // 本回合不能再攻擊
@@ -271,7 +271,7 @@ public class CharacterCard extends Card {
         if (currentHealth <= 0 && getDescription().contains("【回味】")) {
             System.out.println(name + " 的【回味】效果觸發！");
             if (owner != null) {
-                effectProcessor.processAftertasteEffect(this, owner);
+                effectProcessor.processAftertasteEffect(this, owner, null);
             } else {
                 System.out.println("  無法確定卡牌擁有者，無法處理回味效果");
             }
@@ -316,19 +316,19 @@ public class CharacterCard extends Card {
         this.usedChewBiteEffect = false;
         
         // 處理油膩效果（每回合攻擊力減少）
-        int attackReduction = effectProcessor.processGlossyEffect(this);
+        int attackReduction = effectProcessor.processGreasyEffect(this);
         if (attackReduction > 0) {
             this.attack = Math.max(1, this.attack - attackReduction); // 最低降至1
         }
         
         // 處理滋補效果（回合結束時恢復生命值）
-        int healAmount = effectProcessor.processNourishingEffect(this);
+        int healAmount = effectProcessor.processHeartyEffect(this);
         if (healAmount > 0) {
             heal(healAmount);
         }
         
         // 處理嗆辣效果（回合結束損失生命值）
-        int damageAmount = effectProcessor.processSpicyEffect(this);
+        int damageAmount = effectProcessor.processFieryEffect(this);
         if (damageAmount > 0) {
             takeDamage(damageAmount);
         }
@@ -427,7 +427,7 @@ public class CharacterCard extends Card {
      */
     public boolean checkChewBiteEffect() {
         if (getDescription().contains("【彈牙】") && attackedOnce && !usedChewBiteEffect) {
-            return effectProcessor.processChewBiteEffect(this, owner);
+            return effectProcessor.processChewyEffect(this, owner);
         }
         return false;
     }

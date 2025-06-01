@@ -504,18 +504,20 @@ public class Player {
     
     /**
      * 獲取玩家的城堡卡
+     * @return 玩家的城堡卡，如果沒有則返回null
      */
-    public CastleCard getCastleCard() {
+    public CastleCard getCastle() {
         return castleCard;
     }
     
     /**
      * 設置玩家的城堡卡
+     * @param castle 要設置的城堡卡
      */
-    public void setCastleCard(CastleCard castle) {
+    public void setCastle(CastleCard castle) {
         this.castleCard = castle;
         if (castle != null) {
-            System.out.println(name + " 選擇了城堡卡: " + castle.getName());
+            System.out.println(name + " 設置了城堡卡: " + castle.getName());
         }
     }
     

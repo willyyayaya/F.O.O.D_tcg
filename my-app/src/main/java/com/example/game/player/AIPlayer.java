@@ -187,7 +187,7 @@ public class AIPlayer extends Player {
         
         // 困難模式：根據城堡卡效果和陣營特點選擇
         Faction faction = getFaction();
-        CastleCard castle = getCastleCard();
+        CastleCard castle = getCastle();
         
         if (castle != null) {
             String desc = castle.getDescription().toLowerCase();
