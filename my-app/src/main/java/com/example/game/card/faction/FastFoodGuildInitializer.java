@@ -1,22 +1,38 @@
 package com.example.game.card.faction;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+
 import com.example.game.card.Card;
-import com.example.game.card.SpellCard;
-import com.example.game.card.CharacterCard;
-import com.example.game.card.FieldCard;
 import com.example.game.card.CastleCard;
-import com.example.game.card.Faction;
-import com.example.game.card.Rarity;
-import com.example.game.card.SpellType;
-import com.example.game.card.FieldEffectType;
 import com.example.game.card.CastleEffectImpl;
+import com.example.game.card.CharacterCard;
+import com.example.game.card.Faction;
+import com.example.game.card.FieldCard;
+import com.example.game.card.Rarity;
+import com.example.game.card.SpellCard;
+import com.example.game.card.SpellType;
 
 /**
  * 速食工會陣營卡牌初始化實現類
  */
 public class FastFoodGuildInitializer implements FactionCardInitializer {
+    
+    private CharacterCard createCharacterCard(
+        String name, int cost, String description, Rarity rarity,
+        int attack, int health, Faction faction, int points
+    ) {
+        return CharacterCard.builder()
+            .name(name)
+            .cost(cost)
+            .description(description)
+            .rarity(rarity)
+            .attack(attack)
+            .health(health)
+            .faction(faction)
+            .points(points)
+            .build();
+    }
     
     @Override
     public void initializeCards(

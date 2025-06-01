@@ -391,7 +391,7 @@ public class CardLibrary {
             System.out.println("【拼盤】(Platter): 符合條件的卡片都在場時，可免費打出融合卡（但還是算出一張牌）");
         }
         if (description.contains("【彈牙】")) {
-            System.out.println("【彈牙】(Chewy Bite): 每回合可攻擊 2 次");
+            System.out.println("【彈牙】(Chewy): 每回合可攻擊 2 次");
         }
         if (description.contains("【酥脆】")) {
             // 從卡片描述中提取護甲值

@@ -227,7 +227,7 @@ public class CardEffectImpl implements CardEffect {
                         player, 
                         opponent, 
                         "選擇一個敵方角色造成" + damageAmount + "點傷害"
-                    );
+                );
                 }
                 
                 // 應用傷害效果
@@ -473,16 +473,16 @@ public class CardEffectImpl implements CardEffect {
                         } else {
                             // 否則使用目標選擇器
                             CharacterCard selectedTarget = TargetSelector.selectFriendlyCharacter(
-                                player,
-                                card,
-                                "【回味】效果 - 選擇一個友方角色恢復" + healAmount + "點生命值"
-                            );
-                            
+                            player,
+                            card,
+                            "【回味】效果 - 選擇一個友方角色恢復" + healAmount + "點生命值"
+                        );
+                        
                             if (selectedTarget != null) {
                                 selectedTarget.heal(healAmount);
                                 System.out.println("  " + selectedTarget.getName() + " 恢復了 " + healAmount + " 點生命值");
-                            } else {
-                                System.out.println("  取消了治療效果");
+                        } else {
+                            System.out.println("  取消了治療效果");
                             }
                         }
                     }
@@ -738,7 +738,7 @@ public class CardEffectImpl implements CardEffect {
         // 使用正則表達式提取糖爆效果描述
         Matcher matcher = SUGAR_RUSH_PATTERN.matcher(description);
         
-        if (matcher.find()) {
+            if (matcher.find()) {
             String effectDescription = matcher.group(1);
             System.out.println("  糖爆效果描述: " + effectDescription);
             
@@ -783,7 +783,7 @@ public class CardEffectImpl implements CardEffect {
                         System.out.println("  " + selectedTarget.getName() + " 受到了 " + damage + 
                                 " 點傷害" + (survived ? "" : "，已被摧毀！"));
                         return damage;
-                    } else {
+                } else {
                         System.out.println("  沒有選擇目標，取消傷害效果");
                         return 0;
                     }
@@ -851,7 +851,7 @@ public class CardEffectImpl implements CardEffect {
                     if (wall != null) {
                         wall.heal(healAmount);
                         System.out.println("  為 " + (wallType == 1 ? "抽牌區" : wallType == 2 ? "法力區" : "出牌區") + " 城牆回復了 " + healAmount + " 點生命值");
-                        return healAmount;
+                return healAmount;
                     }
                 }
             }
@@ -871,14 +871,14 @@ public class CardEffectImpl implements CardEffect {
                 }
                 
                 if (selectedTarget != null) {
-                    Pattern healPattern = Pattern.compile("回復(\\d+)點");
-                    Matcher healMatcher = healPattern.matcher(effectDescription);
-                    
-                    int healAmount = 1; // 默認回復1點
-                    if (healMatcher.find()) {
-                        healAmount = Integer.parseInt(healMatcher.group(1));
-                    }
-                    
+                Pattern healPattern = Pattern.compile("回復(\\d+)點");
+                Matcher healMatcher = healPattern.matcher(effectDescription);
+                
+                int healAmount = 1; // 默認回復1點
+                if (healMatcher.find()) {
+                    healAmount = Integer.parseInt(healMatcher.group(1));
+                }
+                
                     selectedTarget.heal(healAmount);
                     System.out.println("  為 " + selectedTarget.getName() + " 回復了 " + healAmount + " 點生命值");
                     return healAmount;

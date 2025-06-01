@@ -9,7 +9,6 @@ import com.example.game.card.CastleEffectImpl;
 import com.example.game.card.CharacterCard;
 import com.example.game.card.Faction;
 import com.example.game.card.FieldCard;
-import com.example.game.card.FieldEffectType;
 import com.example.game.card.Rarity;
 import com.example.game.card.SpellCard;
 import com.example.game.card.SpellType;
@@ -18,6 +17,22 @@ import com.example.game.card.SpellType;
  * 健康綠洲陣營卡牌初始化實現類
  */
 public class HealthyOasisInitializer implements FactionCardInitializer {
+    
+    private CharacterCard createCharacterCard(
+        String name, int cost, String description, Rarity rarity,
+        int attack, int health, Faction faction, int points
+    ) {
+        return CharacterCard.builder()
+            .name(name)
+            .cost(cost)
+            .description(description)
+            .rarity(rarity)
+            .attack(attack)
+            .health(health)
+            .faction(faction)
+            .points(points)
+            .build();
+    }
     
     @Override
     public void initializeCards(

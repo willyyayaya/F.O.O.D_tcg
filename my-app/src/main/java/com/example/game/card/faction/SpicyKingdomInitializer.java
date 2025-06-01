@@ -1,22 +1,38 @@
 package com.example.game.card.faction;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
+
 import com.example.game.card.Card;
-import com.example.game.card.SpellCard;
-import com.example.game.card.CharacterCard;
-import com.example.game.card.FieldCard;
 import com.example.game.card.CastleCard;
-import com.example.game.card.Faction;
-import com.example.game.card.Rarity;
-import com.example.game.card.SpellType;
-import com.example.game.card.FieldEffectType;
 import com.example.game.card.CastleEffectImpl;
+import com.example.game.card.CharacterCard;
+import com.example.game.card.Faction;
+import com.example.game.card.FieldCard;
+import com.example.game.card.Rarity;
+import com.example.game.card.SpellCard;
+import com.example.game.card.SpellType;
 
 /**
  * 火辣王國陣營卡牌初始化實現類
  */
 public class SpicyKingdomInitializer implements FactionCardInitializer {
+    
+    private CharacterCard createCharacterCard(
+        String name, int cost, String description, Rarity rarity,
+        int attack, int health, Faction faction, int points
+    ) {
+        return CharacterCard.builder()
+            .name(name)
+            .cost(cost)
+            .description(description)
+            .rarity(rarity)
+            .attack(attack)
+            .health(health)
+            .faction(faction)
+            .points(points)
+            .build();
+    }
     
     @Override
     public void initializeCards(
@@ -39,202 +55,202 @@ public class SpicyKingdomInitializer implements FactionCardInitializer {
     
     private void initializeCharacterCards(Map<String, Card> allCards, List<CharacterCard> allCharacters) {
         // 辣醬類角色
-        CharacterCard oilChiliSoldier = new CharacterCard(
+        CharacterCard oilChiliSoldier = createCharacterCard(
             "油潑辣子斥候 (Chili Oil Scout)", 3, "【開胃】：獲得+1攻擊力。【回味】：使一個友方角色獲得+1攻擊力。", 
-            Rarity.CASUAL_BITES, 3, 2, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 2, Faction.SPICY_KINGDOM, 2);
         allCards.put(oilChiliSoldier.getName(), oilChiliSoldier);
         allCharacters.add(oilChiliSoldier);
         
-        CharacterCard srirachaBerserker = new CharacterCard(
+        CharacterCard srirachaBerserker = createCharacterCard(
             "是拉差狂戰士 (Sriracha Berserker)", 5, "【開胃】：自身攻擊力+2。【嗆辣】：每次攻擊後，自身生命值-1，攻擊力+1。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 5, Faction.SPICY_KINGDOM, 3);
         allCards.put(srirachaBerserker.getName(), srirachaBerserker);
         allCharacters.add(srirachaBerserker);
         
-        CharacterCard doubanjiangMage = new CharacterCard(
+        CharacterCard doubanjiangMage = createCharacterCard(
             "豆瓣醬法師 (Doubanjiang Mage)", 3, "【開胃】：使一個敵方角色獲得-1/-1。【連擊】：攻擊後，有40%機率再次攻擊。", 
-            Rarity.GOURMET_DELIGHT, 2, 4, true, Faction.SPICY_KINGDOM);
+            Rarity.GOURMET_DELIGHT, 2, 4, Faction.SPICY_KINGDOM, 2);
         allCards.put(doubanjiangMage.getName(), doubanjiangMage);
         allCharacters.add(doubanjiangMage);
         
-        CharacterCard sambalGuardian = new CharacterCard(
+        CharacterCard sambalGuardian = createCharacterCard(
             "參巴醬守衛 (Sambal Guardian)", 4, "【嗆辣】：每回合結束時，對對手造成1點傷害。【酥脆(1)】：減免1點傷害。", 
-            Rarity.CASUAL_BITES, 2, 4, false, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 4, Faction.SPICY_KINGDOM, 2);
         allCards.put(sambalGuardian.getName(), sambalGuardian);
         allCharacters.add(sambalGuardian);
         
         // 麻辣火鍋類角色
-        CharacterCard hotPotEmperor = new CharacterCard(
+        CharacterCard hotPotEmperor = createCharacterCard(
             "麻辣火鍋帝王 (Hot Pot Emperor)", 8, "【開胃】：對所有敵方角色造成3點傷害並施加【嗆辣】效果。【爆炒】：攻擊時有50%機率摧毀目標，每回合只能發動一次。【回味】：對敵方英雄造成5點傷害。", 
-            Rarity.ULTIMATE_TASTE, 5, 8, true, Faction.SPICY_KINGDOM);
+            Rarity.ULTIMATE_TASTE, 5, 8, Faction.SPICY_KINGDOM, 5);
         allCards.put(hotPotEmperor.getName(), hotPotEmperor);
         allCharacters.add(hotPotEmperor);
         
-        CharacterCard sichuanHotPotGuard = new CharacterCard(
+        CharacterCard sichuanHotPotGuard = createCharacterCard(
             "四川火鍋守護者 (Sichuan Hot Pot Guardian)", 6, "【擺盤】：敵人必須優先攻擊這個單位。【嗆辣】：每回合結束時，對兩個隨機敵方角色造成1點傷害。", 
-            Rarity.CASUAL_BITES, 5, 6, false, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 5, 6, Faction.SPICY_KINGDOM, 3);
         allCards.put(sichuanHotPotGuard.getName(), sichuanHotPotGuard);
         allCharacters.add(sichuanHotPotGuard);
         
-        CharacterCard spicySoupTureen = new CharacterCard(
+        CharacterCard spicySoupTureen = createCharacterCard(
             "麻辣湯盅法師 (Spicy Soup Tureen Mage)", 6, "【開胃】：對所有敵方角色造成1點傷害。【爆炒】：攻擊時有30%機率造成雙倍傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 6, true, Faction.SPICY_KINGDOM);
+            Rarity.GOURMET_DELIGHT, 3, 6, Faction.SPICY_KINGDOM, 3);
         allCards.put(spicySoupTureen.getName(), spicySoupTureen);
         allCharacters.add(spicySoupTureen);
         
-        CharacterCard boiledFishMaster = new CharacterCard(
+        CharacterCard boiledFishMaster = createCharacterCard(
             "水煮魚大師 (Boiled Fish Master)", 4, "【開胃】：對一個敵方角色造成3點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 5, Faction.SPICY_KINGDOM, 2);
         allCards.put(boiledFishMaster.getName(), boiledFishMaster);
         allCharacters.add(boiledFishMaster);
         
         // 辣麵類角色
-        CharacterCard dandanNoodleAdept = new CharacterCard(
+        CharacterCard dandanNoodleAdept = createCharacterCard(
             "擔擔麵達人 (Dandan Noodle Adept)", 3, "【連擊】：攻擊後，有50%機率可再次攻擊。【嗆辣】：受到傷害時，攻擊力+1。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(dandanNoodleAdept.getName(), dandanNoodleAdept);
         allCharacters.add(dandanNoodleAdept);
         
-        CharacterCard spicyRamenWarrior = new CharacterCard(
+        CharacterCard spicyRamenWarrior = createCharacterCard(
             "麻辣拉麵武士 (Spicy Ramen Warrior)", 3, "【彈牙】：每回合可攻擊 2 次。【酥脆(1)】：減免1點傷害。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(spicyRamenWarrior.getName(), spicyRamenWarrior);
         allCharacters.add(spicyRamenWarrior);
         
-        CharacterCard malatangSorcerer = new CharacterCard(
+        CharacterCard malatangSorcerer = createCharacterCard(
             "麻辣燙法師 (Malatang Sorcerer)", 4, "【開胃】：使一個敵方角色獲得【嗆辣】效果。【爆炒】：當攻擊時，有25%機率直接消滅目標。", 
-            Rarity.GOURMET_DELIGHT, 5, 4, true, Faction.SPICY_KINGDOM);
+            Rarity.GOURMET_DELIGHT, 5, 4, Faction.SPICY_KINGDOM, 3);
         allCards.put(malatangSorcerer.getName(), malatangSorcerer);
         allCharacters.add(malatangSorcerer);
         
-        CharacterCard redOilNoodleSniper = new CharacterCard(
+        CharacterCard redOilNoodleSniper = createCharacterCard(
             "紅油麵狙擊手 (Red Oil Noodle Sniper)", 4, "【遠程】：無視防禦進行攻擊。【潛行】：進場時不會觸發敵方的陷阱效果。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(redOilNoodleSniper.getName(), redOilNoodleSniper);
         allCharacters.add(redOilNoodleSniper);
         
         // 辣餃類角色
-        CharacterCard redOilDumplingArcher = new CharacterCard(
+        CharacterCard redOilDumplingArcher = createCharacterCard(
             "紅油餃子射手 (Red Oil Dumpling Archer)", 2, "【彈牙】：每回合可攻擊 2 次。【嗆辣】：對被攻擊目標施加【嗆辣】效果。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 1);
         allCards.put(redOilDumplingArcher.getName(), redOilDumplingArcher);
         allCharacters.add(redOilDumplingArcher);
         
-        CharacterCard spicyWontonNinja = new CharacterCard(
+        CharacterCard spicyWontonNinja = createCharacterCard(
             "紅油抄手忍者 (Spicy Wonton Ninja)", 3, "【潛行】：進場時不會觸發敵方的陷阱效果。【嗆辣】：對被攻擊目標施加【嗆辣】效果。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(spicyWontonNinja.getName(), spicyWontonNinja);
         allCharacters.add(spicyWontonNinja);
         
-        CharacterCard chiliOilGyozaTosser = new CharacterCard(
+        CharacterCard chiliOilGyozaTosser = createCharacterCard(
             "辣油煎餃投擲者 (Chili Oil Gyoza Tosser)", 2, "【開胃】：對一個敵方角色造成1點傷害。【連擊】：攻擊後，有30%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 2, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 3, Faction.SPICY_KINGDOM, 1);
         allCards.put(chiliOilGyozaTosser.getName(), chiliOilGyozaTosser);
         allCharacters.add(chiliOilGyozaTosser);
         
-        CharacterCard spicyDumplingMerchant = new CharacterCard(
+        CharacterCard spicyDumplingMerchant = createCharacterCard(
             "麻辣水餃商人 (Spicy Dumpling Merchant)", 2, "【開胃】：抽一張牌。【爆炒】：如果抽到的是火辣王國卡牌，獲得+1/+1。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 1);
         allCards.put(spicyDumplingMerchant.getName(), spicyDumplingMerchant);
         allCharacters.add(spicyDumplingMerchant);
         
         // 辣燒烤類角色
-        CharacterCard spicyGrilledFishKnight = new CharacterCard(
+        CharacterCard spicyGrilledFishKnight = createCharacterCard(
             "麻辣烤魚騎士 (Spicy Grilled Fish Knight)", 5, "【開胃】：對所有敵方角色造成1點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 5, Faction.SPICY_KINGDOM, 3);
         allCards.put(spicyGrilledFishKnight.getName(), spicyGrilledFishKnight);
         allCharacters.add(spicyGrilledFishKnight);
         
-        CharacterCard hotWingsBreather = new CharacterCard(
+        CharacterCard hotWingsBreather = createCharacterCard(
             "辣味雞翅吐火者 (Hot Wings Fire Breather)", 5, "【開胃】：對所有敵方角色造成1點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。", 
-            Rarity.CASUAL_BITES, 3, 5, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 5, Faction.SPICY_KINGDOM, 3);
         allCards.put(hotWingsBreather.getName(), hotWingsBreather);
         allCharacters.add(hotWingsBreather);
         
-        CharacterCard spicySkewersWarrior = new CharacterCard(
+        CharacterCard spicySkewersWarrior = createCharacterCard(
             "麻辣串串戰士 (Spicy Skewers Warrior)", 2, "【開胃】：獲得+1攻擊力。【連擊】：攻擊後，有30%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 2, 2, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 2, Faction.SPICY_KINGDOM, 1);
         allCards.put(spicySkewersWarrior.getName(), spicySkewersWarrior);
         allCharacters.add(spicySkewersWarrior);
         
-        CharacterCard saucyRibsGuardian = new CharacterCard(
+        CharacterCard saucyRibsGuardian = createCharacterCard(
             "醬香排骨守衛 (Saucy Ribs Guardian)", 3, "【嗆辣】：每回合結束時對敵方英雄造成1點傷害。【回味】：回復1點生命值。", 
-            Rarity.CASUAL_BITES, 3, 4, false, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 3, 4, Faction.SPICY_KINGDOM, 2);
         allCards.put(saucyRibsGuardian.getName(), saucyRibsGuardian);
         allCharacters.add(saucyRibsGuardian);
         
         // 辣炒菜類角色
-        CharacterCard mapoTofuMaster = new CharacterCard(
+        CharacterCard mapoTofuMaster = createCharacterCard(
             "麻婆豆腐大師 (Mapo Tofu Master)", 6, "【開胃】：對所有敵方角色造成2點傷害。【連擊】：攻擊後，有50%機率再次攻擊。", 
-            Rarity.ULTIMATE_TASTE, 4, 6, true, Faction.SPICY_KINGDOM);
+            Rarity.ULTIMATE_TASTE, 4, 6, Faction.SPICY_KINGDOM, 4);
         allCards.put(mapoTofuMaster.getName(), mapoTofuMaster);
         allCharacters.add(mapoTofuMaster);
         
-        CharacterCard kungpaoPaladin = new CharacterCard(
+        CharacterCard kungpaoPaladin = createCharacterCard(
             "宮保聖騎士 (Kung Pao Paladin)", 7, "【開胃】：使所有友方角色獲得+1/+1。【爆炒】：攻擊時有30%機率使目標失去所有效果。", 
-            Rarity.GOURMET_DELIGHT, 3, 7, true, Faction.SPICY_KINGDOM);
+            Rarity.GOURMET_DELIGHT, 3, 7, Faction.SPICY_KINGDOM, 4);
         allCards.put(kungpaoPaladin.getName(), kungpaoPaladin);
         allCharacters.add(kungpaoPaladin);
         
-        CharacterCard spicyEggplantPriest = new CharacterCard(
+        CharacterCard spicyEggplantPriest = createCharacterCard(
             "魚香茄子祭司 (Yu-Shiang Eggplant Priest)", 3, "【開胃】：使一個友方角色獲得【爆炒】效果。【彈牙】：每回合可攻擊 2 次。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(spicyEggplantPriest.getName(), spicyEggplantPriest);
         allCharacters.add(spicyEggplantPriest);
         
-        CharacterCard chilliChickenTactician = new CharacterCard(
+        CharacterCard chilliChickenTactician = createCharacterCard(
             "辣子雞戰術家 (Chilli Chicken Tactician)", 4, "【開胃】：對一個敵方角色造成2點傷害。【嗆辣】：每次攻擊時，有50%機率使目標無法使用特殊效果一回合。", 
-            Rarity.GOURMET_DELIGHT, 2, 5, true, Faction.SPICY_KINGDOM);
+            Rarity.GOURMET_DELIGHT, 2, 5, Faction.SPICY_KINGDOM, 3);
         allCards.put(chilliChickenTactician.getName(), chilliChickenTactician);
         allCharacters.add(chilliChickenTactician);
         
         // 辣小吃類角色
-        CharacterCard spicyBeefJerkyRogue = new CharacterCard(
+        CharacterCard spicyBeefJerkyRogue = createCharacterCard(
             "麻辣牛肉幹盜賊 (Spicy Beef Jerky Rogue)", 3, "【開胃】：抽一張牌。【連擊】：攻擊後，有35%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 2, 2, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 2, 2, Faction.SPICY_KINGDOM, 2);
         allCards.put(spicyBeefJerkyRogue.getName(), spicyBeefJerkyRogue);
         allCharacters.add(spicyBeefJerkyRogue);
         
-        CharacterCard spicyTofu = new CharacterCard(
+        CharacterCard spicyTofu = createCharacterCard(
             "麻辣豆干行者 (Spicy Tofu Wanderer)", 2, "【開胃】：抽一張牌。【酥脆(1)】：減免1點傷害。", 
-            Rarity.CASUAL_BITES, 1, 3, true, Faction.SPICY_KINGDOM);
+            Rarity.CASUAL_BITES, 1, 3, Faction.SPICY_KINGDOM, 1);
         allCards.put(spicyTofu.getName(), spicyTofu);
         allCharacters.add(spicyTofu);
         
-        CharacterCard spicyDuckNeckGeneral = new CharacterCard(
-            "香辣鴨脖將軍 (Spicy Duck Neck General)", 5, "【開胃】：使所有友方角色獲得+1攻擊力。【嗆辣】：攻擊時對目標施加【嗆辣】效果，使其每回合受到1點傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 5, true, Faction.SPICY_KINGDOM);
+        CharacterCard spicyDuckNeckGeneral = createCharacterCard(
+            "香辣鴨脖將軍 (Spicy Duck Neck General)", 4, "【開胃】：對一個敵方角色造成2點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。", 
+            Rarity.GOURMET_DELIGHT, 3, 4, Faction.SPICY_KINGDOM, 3);
         allCards.put(spicyDuckNeckGeneral.getName(), spicyDuckNeckGeneral);
         allCharacters.add(spicyDuckNeckGeneral);
         
-        CharacterCard hotpotFlavoredChips = new CharacterCard(
-            "火鍋味薯片刺客 (Hotpot Flavored Chips Assassin)", 3, "【開胃】：對一個敵方角色造成2點傷害。【酥脆(2)】：減免2點傷害。", 
-            Rarity.CASUAL_BITES, 2, 4, true, Faction.SPICY_KINGDOM);
+        CharacterCard hotpotFlavoredChips = createCharacterCard(
+            "火鍋味薯片戰士 (Hotpot Flavored Chips Warrior)", 3, "【開胃】：獲得+1攻擊力。【酥脆(1)】：減免1點傷害。", 
+            Rarity.CASUAL_BITES, 2, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(hotpotFlavoredChips.getName(), hotpotFlavoredChips);
         allCharacters.add(hotpotFlavoredChips);
         
-        // 辣調味品類角色
-        CharacterCard sichuanPepperDuelist = new CharacterCard(
-            "花椒粉決鬥者 (Sichuan Pepper Duelist)", 4, "【開胃】：使一個敵方角色獲得【嗆辣】效果和-1攻擊力。【爆炒】：當攻擊時，有20%機率使目標眩暈一回合。", 
-            Rarity.GOURMET_DELIGHT, 3, 4, true, Faction.SPICY_KINGDOM);
+        // 辣香料類角色
+        CharacterCard sichuanPepperDuelist = createCharacterCard(
+            "花椒決鬥者 (Sichuan Pepper Duelist)", 4, "【開胃】：使一個敵方角色獲得【嗆辣】效果。【連擊】：攻擊後，有40%機率再次攻擊。", 
+            Rarity.GOURMET_DELIGHT, 3, 4, Faction.SPICY_KINGDOM, 3);
         allCards.put(sichuanPepperDuelist.getName(), sichuanPepperDuelist);
         allCharacters.add(sichuanPepperDuelist);
         
-        CharacterCard fiveSpiceSage = new CharacterCard(
-            "五香辣粉賢者 (Five-Spice Sage)", 6, "【開胃】：使一個友方角色獲得+2/+2。【爆炒】：友方角色攻擊時，有15%機率使目標無法反擊。", 
-            Rarity.CULINARY_HERITAGE, 3, 6, false, Faction.SPICY_KINGDOM);
+        CharacterCard fiveSpiceSage = createCharacterCard(
+            "五香賢者 (Five Spice Sage)", 5, "【開胃】：使所有友方角色獲得+1/+1。【回味】：死亡時抽一張牌。", 
+            Rarity.GOURMET_DELIGHT, 3, 5, Faction.SPICY_KINGDOM, 3);
         allCards.put(fiveSpiceSage.getName(), fiveSpiceSage);
         allCharacters.add(fiveSpiceSage);
         
-        CharacterCard chilliPowderElementalist = new CharacterCard(
-            "辣椒粉元素使 (Chilli Powder Elementalist)", 5, "【開胃】：對敵方生命值最低的角色造成2點傷害。【彈牙】：每回合可攻擊 2 次。", 
-            Rarity.CASUAL_BITES, 3, 4, true, Faction.SPICY_KINGDOM);
+        CharacterCard chilliPowderElementalist = createCharacterCard(
+            "辣椒粉元素使 (Chilli Powder Elementalist)", 3, "【開胃】：對所有敵方角色造成1點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。", 
+            Rarity.CASUAL_BITES, 2, 3, Faction.SPICY_KINGDOM, 2);
         allCards.put(chilliPowderElementalist.getName(), chilliPowderElementalist);
         allCharacters.add(chilliPowderElementalist);
         
-        CharacterCard hotCurryMonarch = new CharacterCard(
-            "辣咖哩君王 (Hot Curry Monarch)", 7, "【開胃】：對所有敵方角色造成2點傷害。【嗆辣】：友方角色攻擊帶有【嗆辣】效果的敵方角色時，額外造成1點傷害。", 
-            Rarity.ULTIMATE_TASTE, 4, 7, true, Faction.SPICY_KINGDOM);
+        CharacterCard hotCurryMonarch = createCharacterCard(
+            "咖哩君王 (Hot Curry Monarch)", 6, "【開胃】：對所有敵方角色造成2點傷害。【嗆辣】：攻擊後，使被攻擊目標獲得【嗆辣】效果。【回味】：死亡時對敵方英雄造成3點傷害。", 
+            Rarity.ULTIMATE_TASTE, 4, 6, Faction.SPICY_KINGDOM, 4);
         allCards.put(hotCurryMonarch.getName(), hotCurryMonarch);
         allCharacters.add(hotCurryMonarch);
     }

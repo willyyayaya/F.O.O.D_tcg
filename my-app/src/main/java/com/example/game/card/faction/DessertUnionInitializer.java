@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.example.game.card.Card;
 import com.example.game.card.CastleCard;
+import com.example.game.card.CastleEffectImpl;
 import com.example.game.card.CharacterCard;
 import com.example.game.card.Faction;
 import com.example.game.card.FieldCard;
@@ -17,6 +18,22 @@ import com.example.game.card.SpellType;
  */
 public class DessertUnionInitializer implements FactionCardInitializer {
     
+    private CharacterCard createCharacterCard(
+        String name, int cost, String description, Rarity rarity,
+        int attack, int health, Faction faction, int points
+    ) {
+        return CharacterCard.builder()
+            .name(name)
+            .cost(cost)
+            .description(description)
+            .rarity(rarity)
+            .attack(attack)
+            .health(health)
+            .faction(faction)
+            .points(points)
+            .build();
+    }
+    
     @Override
     public void initializeCards(
         Map<String, Card> allCards,
@@ -25,6 +42,18 @@ public class DessertUnionInitializer implements FactionCardInitializer {
         List<FieldCard> allFieldCards,
         List<CastleCard> allCastles
     ) {
+        initializeCharacterCards(allCards, allCharacters);
+        initializeSpellCards(allCards, allSpells);
+        initializeFieldCards(allCards, allFieldCards);
+        initializeCastleCards(allCards, allCastles);
+    }
+    
+    @Override
+    public String getFactionName() {
+        return "甜點聯盟";
+    }
+    
+    private void initializeCharacterCards(Map<String, Card> allCards, List<CharacterCard> allCharacters) {
         // 蛋糕類角色卡
         CharacterCard spongeCakeWarrior = new CharacterCard(
             "海綿蛋糕吸收大師 (Sponge Cake Absorber)", 3, "【糖霜】：抵擋一次傷害。【酥脆(1)】：減免1點傷害。", 
@@ -774,8 +803,4 @@ public class DessertUnionInitializer implements FactionCardInitializer {
         allCharacters.add(dessertCastle);
     }
     
-    @Override
-    public String getFactionName() {
-        return "甜點聯盟";
-    }
 } 

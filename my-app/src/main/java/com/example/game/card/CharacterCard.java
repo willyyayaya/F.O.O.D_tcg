@@ -7,12 +7,15 @@ import com.example.game.player.Player;
 
 /**
  * 角色卡 - 代表F.O.O.D TCG中的食物擬人角色
+ * 命名規則：
+ * 1. 基本格式：[食材名] + [元素/魔法屬性] + [職業]
+ * 2. 職業系統：保持奇幻風格（守衛者、戰士、騎士等）
+ * 3. 元素系統：融入烹飪魔法（大地之力、風之力等）
  */
 public class CharacterCard extends Card {
     private int attack;         // 攻擊力
     private int maxHealth;      // 最大生命值
     private int currentHealth;  // 當前生命值
-    private boolean isOffensive; // 是否為進攻型角色
     private boolean canAttack;   // 是否可以攻擊（本回合）
     
     // 效果處理器
@@ -35,18 +38,81 @@ public class CharacterCard extends Card {
     private boolean attackedOnce = false;       // 是否已經攻擊過一次
     private boolean usedChewyEffect = false; // 是否已使用彈牙效果
     
-    public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
-                        int attack, int maxHealth, boolean isOffensive) {
-        this(name, tokenCost, description, rarity, attack, maxHealth, isOffensive, Faction.NEUTRAL);
+    /**
+     * 角色卡建造者
+     */
+    public static class Builder {
+        private String name;
+        private int tokenCost;
+        private String description;
+        private Rarity rarity;
+        private int attack;
+        private int maxHealth;
+        private Faction faction = Faction.NEUTRAL;
+        private int points;
+
+        public Builder(String name, int tokenCost, String description, Rarity rarity, int points) {
+            this.name = name;
+            this.tokenCost = tokenCost;
+            this.description = description;
+            this.rarity = rarity;
+            this.points = points;
+        }
+
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Builder cost(int tokenCost) {
+            this.tokenCost = tokenCost;
+            return this;
+        }
+
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Builder rarity(Rarity rarity) {
+            this.rarity = rarity;
+            return this;
+        }
+
+        public Builder attack(int attack) {
+            this.attack = attack;
+            return this;
+        }
+
+        public Builder health(int maxHealth) {
+            this.maxHealth = maxHealth;
+            return this;
+        }
+
+        public Builder faction(Faction faction) {
+            this.faction = faction;
+            return this;
+        }
+
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+
+        public CharacterCard build() {
+            return new CharacterCard(this);
+        }
     }
-    
-    public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
-                        int attack, int maxHealth, boolean isOffensive, Faction faction) {
-        super(name, tokenCost, description, rarity, CardType.CHARACTER, faction, rarity.getMinPoints());
-        this.attack = attack;
-        this.maxHealth = maxHealth;
-        this.currentHealth = maxHealth;
-        this.isOffensive = isOffensive;
+
+    /**
+     * 單一構造函數
+     */
+    private CharacterCard(Builder builder) {
+        super(builder.name, builder.tokenCost, builder.description, builder.rarity, 
+              CardType.CHARACTER, builder.faction, builder.points);
+        this.attack = builder.attack;
+        this.maxHealth = builder.maxHealth;
+        this.currentHealth = builder.maxHealth;
         this.canAttack = false;  // 剛出場的角色通常不能立即攻擊
         
         // 初始化酥脆值
@@ -57,15 +123,6 @@ public class CharacterCard extends Card {
             this.canAttack = true;
             System.out.println(name + " 具有【現炸】效果，可以立即攻擊！");
         }
-    }
-    
-    public CharacterCard(String name, int cost, String description, Rarity rarity, int attack, int health, boolean isRanged, Faction faction, int points) {
-        super(name, cost, description, rarity, CardType.CHARACTER, faction, points);
-        this.attack = attack;
-        this.maxHealth = health;
-        this.currentHealth = health;
-        this.isOffensive = isRanged;
-        this.faction = faction;
     }
     
     /**
@@ -372,10 +429,6 @@ public class CharacterCard extends Card {
         return maxHealth;
     }
     
-    public boolean isOffensive() {
-        return isOffensive;
-    }
-    
     public boolean canAttack() {
         return canAttack;
     }
@@ -388,11 +441,25 @@ public class CharacterCard extends Card {
         return sugarRushUsed;
     }
     
+    /**
+     * 判斷角色類型
+     * @return 角色類型描述
+     */
+    private String getCharacterType() {
+        if (attack > maxHealth) {
+            return "進攻型";
+        } else if (attack < maxHealth) {
+            return "防禦型";
+        } else {
+            return "平衡型";
+        }
+    }
+    
     @Override
     protected void displaySpecificDetails() {
         System.out.println("攻擊力: " + attack);
         System.out.println("生命值: " + currentHealth + "/" + maxHealth);
-        System.out.println("類別: " + (isOffensive ? "進攻型" : "防禦型"));
+        System.out.println("類別: " + getCharacterType());
         
         // 顯示特殊效果狀態
         if (hasFrostedEffect) {
@@ -447,5 +514,22 @@ public class CharacterCard extends Card {
     
     public void setCanAttack(boolean canAttack) {
         this.canAttack = canAttack;
+    }
+
+    /**
+     * 創建角色卡的輔助方法
+     * 使用範例：
+     * CharacterCard card = CharacterCard.create()
+     *     .name("玉米大地守衛者")
+     *     .cost(3)
+     *     .description("【酥脆(2)】")
+     *     .rarity(Rarity.CASUAL_BITES)
+     *     .attack(2)
+     *     .health(4)
+     *     .faction(Faction.EARTH)
+     *     .build();
+     */
+    public static Builder builder() {
+        return new Builder(null, 0, null, null, 0);
     }
 }
