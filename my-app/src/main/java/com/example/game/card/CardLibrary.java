@@ -267,14 +267,14 @@ public class CardLibrary {
             System.out.println("6. 擺盤 (Garnished) - 敵人必須優先攻擊此單位");
             
             System.out.println("\n陣營特定關鍵字:");
-            System.out.println("7. 現炸 (Fresh-Fried) - 速食工會：進場當回合即可攻擊");
-            System.out.println("8. 油膩 (Glossy) - 速食工會：每回合攻擊力減少 1（最低降至 1）");
+            System.out.println("7. 現炸 (Sizzle) - 速食工會：進場當回合即可攻擊");
+            System.out.println("8. 油膩 (Greasy) - 速食工會：每回合攻擊力減少 1（最低降至 1）");
             System.out.println("9. 糖霜 (Frosted) - 甜點聯盟：抵擋一次攻擊");
-            System.out.println("10. 糖爆 (Sugar Crash) - 甜點聯盟：可選糖爆的行動代替攻擊，但下回合無法攻擊或使用技能");
-            System.out.println("11. 滋補 (Nourishing) - 健康綠洲：回合結束時恢復全滿血量");
+            System.out.println("10. 糖爆 (Sugar Rush) - 甜點聯盟：可選糖爆的行動代替攻擊，但下回合無法攻擊或使用技能");
+            System.out.println("11. 滋補 (Hearty) - 健康綠洲：回合結束時恢復全滿血量");
             System.out.println("12. 清淡 (Bland) - 健康綠洲：滿血時無法攻擊");
-            System.out.println("13. 爆炒 (Overheat) - 火辣王國：直接消滅一個單位");
-            System.out.println("14. 嗆辣 (Spicy) - 火辣王國：每回合結束損失一點生命值");
+            System.out.println("13. 爆炒 (Sear) - 火辣王國：直接消滅一個單位");
+            System.out.println("14. 嗆辣 (Fiery) - 火辣王國：每回合結束損失一點生命值");
             System.out.println("0. 返回");
             System.out.print("請選擇關鍵字: ");
             
@@ -411,36 +411,36 @@ public class CardLibrary {
             System.out.println("【擺盤】(Garnished): 敵人必須優先攻擊這個單位");
         }
         if (description.contains("【現炸】")) {
-            System.out.println("【現炸】(Fresh-Fried): 進場當回合即可攻擊");
+            System.out.println("【現炸】(Sizzle): 進場當回合即可攻擊");
         }
         if (description.contains("【油膩】")) {
-            System.out.println("【油膩】(Glossy): 每回合開始時攻擊力減少 1（最低降至 1）");
+            System.out.println("【油膩】(Greasy): 每回合開始時攻擊力減少 1（最低降至 1）");
         }
         if (description.contains("【糖霜】")) {
             System.out.println("【糖霜】(Frosted): 抵擋一次攻擊");
         }
         if (description.contains("【糖爆】")) {
-            System.out.println("【糖爆】(Sugar Crash): 執行文字效果，下回合無法攻擊與無法使用糖爆");
+            System.out.println("【糖爆】(Sugar Rush): 執行文字效果，下回合無法攻擊與無法使用糖爆");
             
             // 提取糖爆效果描述
-            Pattern sugarCrashPattern = Pattern.compile("【糖爆】：([^。]+)[。]?");
-            Matcher sugarCrashMatcher = sugarCrashPattern.matcher(description);
-            if (sugarCrashMatcher.find()) {
-                String effectText = sugarCrashMatcher.group(1);
+            Pattern sugarRushPattern = Pattern.compile("【糖爆】：([^。]+)[。]?");
+            Matcher sugarRushMatcher = sugarRushPattern.matcher(description);
+            if (sugarRushMatcher.find()) {
+                String effectText = sugarRushMatcher.group(1);
                 System.out.println("  效果文字: " + effectText);
             }
         }
         if (description.contains("【滋補】")) {
-            System.out.println("【滋補】(Nourishing): 回合結束時恢復全滿血量");
+            System.out.println("【滋補】(Hearty): 回合結束時恢復全滿血量");
         }
         if (description.contains("【清淡】")) {
             System.out.println("【清淡】(Bland): 滿血時無法攻擊");
         }
         if (description.contains("【爆炒】")) {
-            System.out.println("【爆炒】(Overheat): 消滅攻擊力低於特定值的單位");
+            System.out.println("【爆炒】(Sear): 消滅攻擊力低於特定值的單位");
         }
         if (description.contains("【嗆辣】")) {
-            System.out.println("【嗆辣】(Spicy): 每回合結束損失一點生命值");
+            System.out.println("【嗆辣】(Fiery): 每回合結束損失一點生命值");
         }
         
         System.out.println("-------------------------");

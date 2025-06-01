@@ -28,12 +28,12 @@ public class CharacterCard extends Card {
     
     // 效果狀態
     private boolean hasFrostedEffect = false;   // 是否有糖霜效果
-    private boolean sugarCrashUsed = false;     // 是否使用過糖爆
+    private boolean sugarRushUsed = false;     // 是否使用過糖爆
     private boolean cannotAttackNextTurn = false; // 下回合無法攻擊的標記（糖爆效果）
     
     // 彈牙效果相關
     private boolean attackedOnce = false;       // 是否已經攻擊過一次
-    private boolean usedChewBiteEffect = false; // 是否已使用彈牙效果
+    private boolean usedChewyEffect = false; // 是否已使用彈牙效果
     
     public CharacterCard(String name, int tokenCost, String description, Rarity rarity, 
                         int attack, int maxHealth, boolean isOffensive) {
@@ -221,7 +221,7 @@ public class CharacterCard extends Card {
      * @param target 可選的目標角色
      * @return 執行效果的強度
      */
-    public int useSugarCrash(CharacterCard target) {
+    public int useSugarRush(CharacterCard target) {
         if (!canAttack) {
             System.out.println(name + " 本回合不能使用【糖爆】效果!");
             return 0;
@@ -232,7 +232,7 @@ public class CharacterCard extends Card {
         if (effectStrength > 0) {
             // 設置狀態標記
             this.canAttack = false; // 本回合不能再攻擊
-            this.sugarCrashUsed = true; // 已使用糖爆
+            this.sugarRushUsed = true; // 已使用糖爆
             this.cannotAttackNextTurn = true; // 下回合不能攻擊
             
             System.out.println(name + " 使用了【糖爆】效果，下回合將無法攻擊");
@@ -313,7 +313,7 @@ public class CharacterCard extends Card {
         
         // 重置彈牙效果狀態
         this.attackedOnce = false;
-        this.usedChewBiteEffect = false;
+        this.usedChewyEffect = false;
         
         // 處理油膩效果（每回合攻擊力減少）
         int attackReduction = effectProcessor.processGreasyEffect(this);
@@ -384,8 +384,8 @@ public class CharacterCard extends Card {
         return hasFrostedEffect;
     }
     
-    public boolean hasSugarCrashUsed() {
-        return sugarCrashUsed;
+    public boolean hasSugarRushUsed() {
+        return sugarRushUsed;
     }
     
     @Override
@@ -425,8 +425,8 @@ public class CharacterCard extends Card {
     /**
      * 檢查是否具有彈牙效果，並在攻擊後處理
      */
-    public boolean checkChewBiteEffect() {
-        if (getDescription().contains("【彈牙】") && attackedOnce && !usedChewBiteEffect) {
+    public boolean checkChewyEffect() {
+        if (getDescription().contains("【彈牙】") && attackedOnce && !usedChewyEffect) {
             return effectProcessor.processChewyEffect(this, owner);
         }
         return false;
@@ -437,12 +437,12 @@ public class CharacterCard extends Card {
         return attackedOnce;
     }
     
-    public boolean hasUsedChewBiteEffect() {
-        return usedChewBiteEffect;
+    public boolean hasUsedChewyEffect() {
+        return usedChewyEffect;
     }
     
-    public void setUsedChewBiteEffect(boolean usedChewBiteEffect) {
-        this.usedChewBiteEffect = usedChewBiteEffect;
+    public void setUsedChewyEffect(boolean usedChewyEffect) {
+        this.usedChewyEffect = usedChewyEffect;
     }
     
     public void setCanAttack(boolean canAttack) {

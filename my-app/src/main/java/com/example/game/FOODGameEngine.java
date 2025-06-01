@@ -727,8 +727,8 @@ public class FOODGameEngine {
                     }
                 }
                     
-                    // 檢查是否有彈牙效果可用
-                    if (attacker.checkChewBiteEffect()) {
+                    // 檢查是否可以使用彈牙效果進行第二次攻擊
+                    if (attacker.checkChewyEffect()) {
                         System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
                         // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
                     } else {
@@ -759,8 +759,8 @@ public class FOODGameEngine {
                 attacker.attack(attacker); // 利用現有方法將 canAttack 設為 false
                 System.out.println(attacker.getName() + " 攻擊了 " + opponentRef.getName() + " 的城牆!");
                     
-                    // 檢查是否有彈牙效果可用
-                    if (attacker.checkChewBiteEffect()) {
+                    // 檢查是否可以使用彈牙效果進行第二次攻擊
+                    if (attacker.checkChewyEffect()) {
                         System.out.println(attacker.getName() + " 可以使用【彈牙】效果進行第二次攻擊！");
                         // 不結束戰鬥階段，等待玩家選擇下一次攻擊目標
                     } else {
@@ -1125,7 +1125,7 @@ public class FOODGameEngine {
                     }
                     
                     // 檢查是否可以使用彈牙效果進行第二次攻擊
-                    if (attacker.checkChewBiteEffect() && aiPlayer.shouldUseChewBiteEffect(attacker)) {
+                    if (attacker.checkChewyEffect() && aiPlayer.shouldUseChewyEffect(attacker)) {
                         System.out.println(aiPlayer.getName() + " 的 " + attacker.getName() + " 使用【彈牙】效果進行第二次攻擊！");
                         
                         // AI再次選擇攻擊目標
@@ -1197,7 +1197,7 @@ public class FOODGameEngine {
                     }
                     
                     // 檢查是否可以使用彈牙效果進行第二次攻擊
-                    if (attacker.checkChewBiteEffect() && aiPlayer.shouldUseChewBiteEffect(attacker)) {
+                    if (attacker.checkChewyEffect() && aiPlayer.shouldUseChewyEffect(attacker)) {
                         System.out.println(aiPlayer.getName() + " 的 " + attacker.getName() + " 使用【彈牙】效果進行第二次攻擊！");
                         
                         // AI再次選擇攻擊目標
@@ -1362,7 +1362,7 @@ public class FOODGameEngine {
      * @param opponent 對手玩家
      */
     public void handleSugarCrashEffect(CharacterCard character, CharacterCard target, Player player, Player opponent) {
-        int effectStrength = character.useSugarCrash(target);
+        int effectStrength = character.useSugarRush(target);
         if (effectStrength <= 0) {
             return; // 糖爆效果未觸發或無效
         }

@@ -480,9 +480,9 @@ public class AIPlayer extends Player {
      * @param attacker 具有彈牙效果的攻擊者
      * @return 是否應該使用彈牙效果
      */
-    public boolean shouldUseChewBiteEffect(CharacterCard attacker) {
-        // 檢查是否有彈牙效果可用
-        if (attacker.getDescription().contains("【彈牙】") && attacker.hasAttackedOnce() && !attacker.hasUsedChewBiteEffect()) {
+    public boolean shouldUseChewyEffect(CharacterCard attacker) {
+        // 檢查是否可以使用彈牙效果
+        if (attacker.getDescription().contains("【彈牙】") && attacker.hasAttackedOnce() && !attacker.hasUsedChewyEffect()) {
             // 根據AI難度決定使用機率
             double useChance = 0.8; // 簡單模式下80%機率使用
             

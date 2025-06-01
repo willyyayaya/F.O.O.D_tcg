@@ -19,10 +19,10 @@ public class CardEffectImpl implements CardEffect {
     private static final Pattern CRISPY_PATTERN = Pattern.compile("【酥脆\\(([0-9]+)\\)】");
     
     // 糖爆效果的文字提取模式
-    private static final Pattern SUGAR_CRASH_PATTERN = Pattern.compile("【糖爆】：([^。]+)[。]?");
+    private static final Pattern SUGAR_RUSH_PATTERN = Pattern.compile("【糖爆】：([^。]+)[。]?");
     
     // 爆炒效果的正則表達式
-    private static final Pattern OVERHEAT_PATTERN = Pattern.compile("【爆炒\\(([0-9]+)\\)】");
+    private static final Pattern SEAR_PATTERN = Pattern.compile("【爆炒\\(([0-9]+)\\)】");
     
     @Override
     public boolean processAppetizerEffect(Card card, Player player, Object target) {
@@ -660,10 +660,10 @@ public class CardEffectImpl implements CardEffect {
             if (!character.hasAttackedOnce()) {
                 // 第一次攻擊，不需要特殊處理
                 return false;
-            } else if (!character.hasUsedChewBiteEffect()) {
+            } else if (!character.hasUsedChewyEffect()) {
                 // 已經攻擊過一次，但還沒使用彈牙效果
                 System.out.println(character.getName() + " 的【彈牙】效果觸發，可以再次攻擊！");
-                character.setUsedChewBiteEffect(true);
+                character.setUsedChewyEffect(true);
                 character.setCanAttack(true); // 重新設為可攻擊
                 return true;
             } else {
@@ -736,7 +736,7 @@ public class CardEffectImpl implements CardEffect {
         }
         
         // 使用正則表達式提取糖爆效果描述
-        Matcher matcher = SUGAR_CRASH_PATTERN.matcher(description);
+        Matcher matcher = SUGAR_RUSH_PATTERN.matcher(description);
         
         if (matcher.find()) {
             String effectDescription = matcher.group(1);
@@ -930,7 +930,7 @@ public class CardEffectImpl implements CardEffect {
         String description = card.getDescription();
         
         if (description.contains("【爆炒")) {
-            Matcher matcher = OVERHEAT_PATTERN.matcher(description);
+            Matcher matcher = SEAR_PATTERN.matcher(description);
             if (matcher.find()) {
                 int attackThreshold = Integer.parseInt(matcher.group(1));
                 
