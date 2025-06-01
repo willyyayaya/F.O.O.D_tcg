@@ -288,12 +288,12 @@ public class Deck {
                 CharacterCard characterCard = (CharacterCard) card;
                 switch (theme.toLowerCase()) {
                     case "攻擊型":
-                        if (characterCard.isOffensive() && characterCard.getAttack() > characterCard.getMaxHealth()) {
+                        if (characterCard.getAttack() > characterCard.getMaxHealth()) {
                             themedCards.add(card);
                         }
                         break;
                     case "防禦型":
-                        if (!characterCard.isOffensive() && characterCard.getMaxHealth() > characterCard.getAttack()) {
+                        if (characterCard.getMaxHealth() > characterCard.getAttack()) {
                             themedCards.add(card);
                         }
                         break;

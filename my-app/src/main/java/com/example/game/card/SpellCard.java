@@ -37,6 +37,70 @@ public class SpellCard extends Card {
             return localizedName;
         }
     }
+
+    /**
+     * Builder 類別
+     */
+    public static class Builder {
+        private String name;
+        private int cost;
+        private String description;
+        private Rarity rarity;
+        private SpellType spellType;
+        private Faction faction = Faction.NEUTRAL;
+        private int points;
+        
+        public Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+        
+        public Builder cost(int cost) {
+            this.cost = cost;
+            return this;
+        }
+        
+        public Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+        
+        public Builder rarity(Rarity rarity) {
+            this.rarity = rarity;
+            return this;
+        }
+        
+        public Builder spellType(SpellType spellType) {
+            this.spellType = spellType;
+            return this;
+        }
+        
+        public Builder faction(Faction faction) {
+            this.faction = faction;
+            return this;
+        }
+        
+        public Builder points(int points) {
+            this.points = points;
+            return this;
+        }
+        
+        public SpellCard build() {
+            if (name == null || description == null || rarity == null || spellType == null) {
+                throw new IllegalStateException("Required fields are missing");
+            }
+            
+            SpellCard card = new SpellCard(name, cost, description, rarity, spellType, faction);
+            if (points > 0) {
+                card.setPoints(points);
+            }
+            return card;
+        }
+    }
+    
+    public static Builder builder() {
+        return new Builder();
+    }
     
     public SpellCard(String name, int cost, String description, Rarity rarity, SpellType spellType) {
         super(name, cost, description, rarity, CardType.SPELL, Faction.NEUTRAL, rarity.getMinPoints());
@@ -508,6 +572,22 @@ public class SpellCard extends Card {
     
     public TargetType getTargetType() {
         return targetType;
+    }
+    
+    /**
+     * 設置卡牌點數
+     * @param points 新的點數值
+     */
+    public void setPoints(int points) {
+        if (points < getRarity().getMinPoints() || points > getRarity().getMaxPoints()) {
+            throw new IllegalArgumentException(
+                String.format("Points must be between %d and %d for %s rarity",
+                    getRarity().getMinPoints(),
+                    getRarity().getMaxPoints(),
+                    getRarity().name())
+            );
+        }
+        this.points = points;
     }
     
     /**
