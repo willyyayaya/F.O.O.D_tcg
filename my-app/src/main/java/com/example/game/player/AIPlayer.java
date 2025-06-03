@@ -365,7 +365,7 @@ public class AIPlayer extends Player {
             
             if (bestCard instanceof CharacterCard) {
                 CharacterCard character = (CharacterCard) bestCard;
-                if (character.isOffensive()) {
+                if (character.getAttack() > (character.getMaxHealth() / 2)) {
                     bestArea = 3; // 進攻型角色放在出牌區
                 } else {
                     bestArea = 1; // 防禦型角色放在抽牌區
@@ -389,7 +389,7 @@ public class AIPlayer extends Player {
         if (card instanceof CharacterCard) {
             CharacterCard character = (CharacterCard) card;
             
-            if (character.isOffensive()) {
+            if (character.getAttack() > (character.getMaxHealth() / 2)) {
                 // 進攻型角色
                 if (area == 3) score += 3.0; // 出牌區加分
                 else if (area == 2) score += 1.0; // 法力區次之
@@ -421,7 +421,12 @@ public class AIPlayer extends Player {
      *         targetIndex: 目標索引 (角色索引或城牆類型)
      */
     public int[] chooseAttackTarget() {
-        List<CharacterCard> characters = getBattlefieldZone().getCharacters();
+        // 獲取所有區域的角色卡
+        List<CharacterCard> characters = new ArrayList<>();
+        characters.addAll(getBattlefieldZone().getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
+        characters.addAll(getBattlefieldZone().getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
+        characters.addAll(getBattlefieldZone().getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
+        
         List<CharacterCard> canAttack = characters.stream()
             .filter(CharacterCard::canAttack)
             .collect(Collectors.toList());
