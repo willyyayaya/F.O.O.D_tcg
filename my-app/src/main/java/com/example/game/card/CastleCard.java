@@ -182,6 +182,14 @@ public class CastleCard extends Card {
         return effect;
     }
     
+    /**
+     * 設置城堡效果
+     * @param effect 要設置的城堡效果
+     */
+    public void setEffect(CastleEffect effect) {
+        this.effect = effect;
+    }
+    
     public boolean isActive() {
         return isActive;
     }
