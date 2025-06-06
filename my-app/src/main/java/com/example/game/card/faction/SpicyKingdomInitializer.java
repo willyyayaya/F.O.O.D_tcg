@@ -588,25 +588,49 @@ public class SpicyKingdomInitializer implements FactionCardInitializer {
     
     private void initializeCastleCards(Map<String, Card> allCards, List<CastleCard> allCastles) {
         // 基礎城堡卡
-        CastleCard spicyCastle = new CastleCard(
-            "麻辣火鍋城堡 (Mala Hot Pot Castle)", 0, "【城堡效果】：所有友方角色攻擊力+2，對敵方角色造成的傷害+1。", 
-            Rarity.CULINARY_HERITAGE, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(2));
+        CastleCard spicyCastle = CastleCard.builder()
+            .name("麻辣火鍋城堡 (Mala Hot Pot Castle)")
+            .cost(0)
+            .description("【城堡效果】：所有友方角色攻擊力+2，對敵方角色造成的傷害+1。")
+            .rarity(Rarity.CULINARY_HERITAGE)
+            .faction(Faction.SPICY_KINGDOM)
+            .health(30)
+            .build();
+        spicyCastle.setEffect(new CastleEffectImpl.SpicyKingdomEffect(2));
         addToCollection(spicyCastle, allCards, allCastles);
         
         // 更多城堡卡
-        CastleCard volcanoCastle = new CastleCard(
-            "辣子雞火山堡壘 (Chilli Chicken Volcano Fortress)", 0, "【城堡效果】：回合結束時，對所有敵方角色造成1點傷害，所有友方角色攻擊力+1。", 
-            Rarity.ULTIMATE_TASTE, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(3));
+        CastleCard volcanoCastle = CastleCard.builder()
+            .name("辣子雞火山堡壘 (Chilli Chicken Volcano Fortress)")
+            .cost(0)
+            .description("【城堡效果】：回合結束時，對所有敵方角色造成1點傷害，所有友方角色攻擊力+1。")
+            .rarity(Rarity.ULTIMATE_TASTE)
+            .faction(Faction.SPICY_KINGDOM)
+            .health(30)
+            .build();
+        volcanoCastle.setEffect(new CastleEffectImpl.SpicyKingdomEffect(3));
         addToCollection(volcanoCastle, allCards, allCastles);
         
-        CastleCard spicyFortress = new CastleCard(
-            "水煮魚要塞 (Boiled Fish Fortress)", 0, "【城堡效果】：所有友方【嗆辣】效果觸發兩次，友方角色攻擊力+2。", 
-            Rarity.GOURMET_DELIGHT, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(1));
+        CastleCard spicyFortress = CastleCard.builder()
+            .name("水煮魚要塞 (Boiled Fish Fortress)")
+            .cost(0)
+            .description("【城堡效果】：所有友方【嗆辣】效果觸發兩次，友方角色攻擊力+2。")
+            .rarity(Rarity.GOURMET_DELIGHT)
+            .faction(Faction.SPICY_KINGDOM)
+            .health(30)
+            .build();
+        spicyFortress.setEffect(new CastleEffectImpl.SpicyKingdomEffect(1));
         addToCollection(spicyFortress, allCards, allCastles);
         
-        CastleCard pepperCastle = new CastleCard(
-            "麻婆豆腐碉堡 (Mapo Tofu Stronghold)", 0, "【城堡效果】：每回合開始時，有40%機率使一個隨機敵方角色獲得【嗆辣】效果。", 
-            Rarity.GOURMET_DELIGHT, Faction.SPICY_KINGDOM, new CastleEffectImpl.SpicyKingdomEffect(1));
+        CastleCard pepperCastle = CastleCard.builder()
+            .name("麻婆豆腐碉堡 (Mapo Tofu Stronghold)")
+            .cost(0)
+            .description("【城堡效果】：每回合開始時，有40%機率使一個隨機敵方角色獲得【嗆辣】效果。")
+            .rarity(Rarity.GOURMET_DELIGHT)
+            .faction(Faction.SPICY_KINGDOM)
+            .health(30)
+            .build();
+        pepperCastle.setEffect(new CastleEffectImpl.SpicyKingdomEffect(1));
         addToCollection(pepperCastle, allCards, allCastles);
     }
     
