@@ -55,167 +55,167 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
     
     private void initializeCharacterCards(Map<String, Card> allCards, List<CharacterCard> allCharacters) {
         // 沙拉類角色
-        CharacterCard caesarSaladGuardian = new CharacterCard(
+        CharacterCard caesarSaladGuardian = createCharacterCard(
             "凱撒沙拉守衛 (Caesar Salad Guardian)", 4, "【滋補】：回合結束時恢復全滿血量。【酥脆(2)】：減免2點傷害。", 
-            Rarity.GOURMET_DELIGHT, 3, 5, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 3, 5, Faction.HEALTHY_OASIS, 3);
         allCards.put(caesarSaladGuardian.getName(), caesarSaladGuardian);
         allCharacters.add(caesarSaladGuardian);
 
-        CharacterCard greekSaladMage = new CharacterCard(
+        CharacterCard greekSaladMage = createCharacterCard(
             "希臘沙拉法師 (Greek Salad Mage)", 2, "【開胃】：為一個友方角色恢復3點生命值。【清淡】：滿血時無法攻擊。", 
-            Rarity.CASUAL_BITES, 2, 2, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 2, Faction.HEALTHY_OASIS, 1);
         allCards.put(greekSaladMage.getName(), greekSaladMage);
         allCharacters.add(greekSaladMage);
         
-        CharacterCard fruitSaladProtector = new CharacterCard(
+        CharacterCard fruitSaladProtector = createCharacterCard(
             "水果沙拉守護者 (Fruit Salad Protector)", 3, "【開胃】：從牌庫抽一張卡牌。【回味】：為所有友方角色恢復2點生命值。", 
-            Rarity.CASUAL_BITES, 3, 3, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 3, 3, Faction.HEALTHY_OASIS, 2);
         allCards.put(fruitSaladProtector.getName(), fruitSaladProtector);
         allCharacters.add(fruitSaladProtector);
         
-        CharacterCard seasonalSaladSwordsman = new CharacterCard(
+        CharacterCard seasonalSaladSwordsman = createCharacterCard(
             "時蔬沙拉劍士 (Seasonal Salad Swordsman)", 2, "【開胃】：為一個友方角色恢復1點生命值。【連擊】：攻擊後，有30%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 2, 2, true, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 2, Faction.HEALTHY_OASIS, 1);
         allCards.put(seasonalSaladSwordsman.getName(), seasonalSaladSwordsman);
         allCharacters.add(seasonalSaladSwordsman);
         
         // 穀物類角色
-        CharacterCard oatmealDefender = new CharacterCard(
+        CharacterCard oatmealDefender = createCharacterCard(
             "燕麥粥防衛者 (Oatmeal Defender)", 3, "【酥脆(3)】：減免3點傷害。【清淡】：滿血時無法攻擊，但為相鄰友方角色提供【酥脆(1)】效果。", 
-            Rarity.GOURMET_DELIGHT, 1, 6, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 1, 6, Faction.HEALTHY_OASIS, 3);
         allCards.put(oatmealDefender.getName(), oatmealDefender);
         allCharacters.add(oatmealDefender);
 
-        CharacterCard quinoaRiceKnight = new CharacterCard(
+        CharacterCard quinoaRiceKnight = createCharacterCard(
             "藜麥飯騎士 (Quinoa Rice Knight)", 3, "【開胃】：獲得+0/+3。【清淡】：滿血時無法攻擊，但獲得額外2點防禦力。", 
-            Rarity.CASUAL_BITES, 2, 2, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 2, Faction.HEALTHY_OASIS, 2);
         allCards.put(quinoaRiceKnight.getName(), quinoaRiceKnight);
         allCharacters.add(quinoaRiceKnight);
         
-        CharacterCard wholeWheatBreadWarrior = new CharacterCard(
+        CharacterCard wholeWheatBreadWarrior = createCharacterCard(
             "全麥麵包戰士 (Whole Wheat Bread Warrior)", 3, "【開胃】：獲得+0/+2。【滋補】：每回合結束時，恢復1點生命值。", 
-            Rarity.CASUAL_BITES, 2, 4, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 4, Faction.HEALTHY_OASIS, 2);
         allCards.put(wholeWheatBreadWarrior.getName(), wholeWheatBreadWarrior);
         allCharacters.add(wholeWheatBreadWarrior);
         
-        CharacterCard brownRicePorridgeArchmage = new CharacterCard(
+        CharacterCard brownRicePorridgeArchmage = createCharacterCard(
             "糙米粥魔導師 (Brown Rice Porridge Archmage)", 6, "【酥脆(2)】：減免2點傷害。【清淡】：滿血時，友方城牆耐久度+2。", 
-            Rarity.CULINARY_HERITAGE, 4, 4, false, Faction.HEALTHY_OASIS);
+            Rarity.CULINARY_HERITAGE, 4, 4, Faction.HEALTHY_OASIS, 4);
         allCards.put(brownRicePorridgeArchmage.getName(), brownRicePorridgeArchmage);
         allCharacters.add(brownRicePorridgeArchmage);
         
         // 蛋白質類角色
-        CharacterCard boiledChickenBreastGuard = new CharacterCard(
+        CharacterCard boiledChickenBreastGuard = createCharacterCard(
             "水煮雞胸衛兵 (Boiled Chicken Breast Guard)", 4, "【擺盤】：敵人必須優先攻擊這個單位。【酥脆(3)】：減免3點傷害。",
-            Rarity.CASUAL_BITES, 2, 5, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 5, Faction.HEALTHY_OASIS, 2);
         allCards.put(boiledChickenBreastGuard.getName(), boiledChickenBreastGuard);
         allCharacters.add(boiledChickenBreastGuard);
         
-        CharacterCard nonfatYogurtPriest = new CharacterCard(
+        CharacterCard nonfatYogurtPriest = createCharacterCard(
             "無脂優格祭司 (Non-fat Yogurt Priest)", 3, "【開胃】：為兩個友方角色恢復2點生命值。【滋補】：治癒友方角色時，自身獲得+0/+1。", 
-            Rarity.GOURMET_DELIGHT, 2, 2, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 2, 2, Faction.HEALTHY_OASIS, 3);
         allCards.put(nonfatYogurtPriest.getName(), nonfatYogurtPriest);
         allCharacters.add(nonfatYogurtPriest);
         
-        CharacterCard tofuMaster = new CharacterCard(
+        CharacterCard tofuMaster = createCharacterCard(
             "豆腐師傅 (Tofu Master)", 3, "【滋補】：當友方角色恢復生命值時，使其獲得+0/+1。", 
-            Rarity.GOURMET_DELIGHT, 2, 2, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 2, 2, Faction.HEALTHY_OASIS, 3);
         allCards.put(tofuMaster.getName(), tofuMaster);
         allCharacters.add(tofuMaster);
         
-        CharacterCard steamedEggArcher = new CharacterCard(
+        CharacterCard steamedEggArcher = createCharacterCard(
             "蒸蛋神射手 (Steamed Egg Archer)", 2, "【遠程】：無視對方防禦進行攻擊。【滋補】：每次攻擊後，恢復1點生命值。", 
-            Rarity.CASUAL_BITES, 3, 1, true, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 3, 1, Faction.HEALTHY_OASIS, 1);
         allCards.put(steamedEggArcher.getName(), steamedEggArcher);
         allCharacters.add(steamedEggArcher);
         
         // 飲品類角色
-        CharacterCard greenLatteMage = new CharacterCard(
+        CharacterCard greenLatteMage = createCharacterCard(
             "綠拿鐵法師 (Green Latte Mage)", 3, "【開胃】：使一個友方角色獲得+1/+1。【連擊】：攻擊後，有40%機率再次攻擊。", 
-            Rarity.GOURMET_DELIGHT, 3, 2, true, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 3, 2, Faction.HEALTHY_OASIS, 3);
         allCards.put(greenLatteMage.getName(), greenLatteMage);
         allCharacters.add(greenLatteMage);
         
-        CharacterCard vegetableJuiceScout = new CharacterCard(
+        CharacterCard vegetableJuiceScout = createCharacterCard(
             "蔬果汁斥候 (Vegetable Juice Scout)", 1, "【開胃】：從牌庫抽一張卡牌。【滋補】：抽到健康綠洲卡牌時，獲得+1/+1。", 
-            Rarity.CASUAL_BITES, 1, 1, true, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 1, 1, Faction.HEALTHY_OASIS, 1);
         allCards.put(vegetableJuiceScout.getName(), vegetableJuiceScout);
         allCharacters.add(vegetableJuiceScout);
         
-        CharacterCard nutMilkArcher = new CharacterCard(
+        CharacterCard nutMilkArcher = createCharacterCard(
             "堅果奶射手 (Nut Milk Archer)", 2, "【開胃】：為一個友方角色恢復2點生命值。【酥脆(1)】：減免1點傷害。", 
-            Rarity.CASUAL_BITES, 1, 2, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 1, 2, Faction.HEALTHY_OASIS, 1);
         allCards.put(nutMilkArcher.getName(), nutMilkArcher);
         allCharacters.add(nutMilkArcher);
         
-        CharacterCard orangeJuiceHealer = new CharacterCard(
+        CharacterCard orangeJuiceHealer = createCharacterCard(
             "柳橙汁治療師 (Orange Juice Healer)", 3, "【開胃】：使一個友方角色獲得【滋補】效果。【清淡】：滿血時，法術消耗-1。", 
-            Rarity.GOURMET_DELIGHT, 3, 3, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 3, 3, Faction.HEALTHY_OASIS, 3);
         allCards.put(orangeJuiceHealer.getName(), orangeJuiceHealer);
         allCharacters.add(orangeJuiceHealer);
         
         // 堅果類角色
-        CharacterCard mixedNutsGuardian = new CharacterCard(
+        CharacterCard mixedNutsGuardian = createCharacterCard(
             "堅果混合守衛 (Mixed Nuts Guardian)", 6, "【擺盤】：敵人必須優先攻擊這個單位。【回味】：為相鄰友方角色恢復2點生命值。", 
-            Rarity.GOURMET_DELIGHT, 3, 5, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 3, 5, Faction.HEALTHY_OASIS, 3);
         allCards.put(mixedNutsGuardian.getName(), mixedNutsGuardian);
         allCharacters.add(mixedNutsGuardian);
         
-        CharacterCard almondButterAssassin = new CharacterCard(
+        CharacterCard almondButterAssassin = createCharacterCard(
             "杏仁醬刺客 (Almond Butter Assassin)", 4, "【開胃】：召喚一個2/2的植物精靈。【滋補】：每回合結束時，所有友方角色恢復1點生命值。", 
-            Rarity.CULINARY_HERITAGE, 3, 3, false, Faction.HEALTHY_OASIS);
+            Rarity.CULINARY_HERITAGE, 3, 3, Faction.HEALTHY_OASIS, 4);
         allCards.put(almondButterAssassin.getName(), almondButterAssassin);
         allCharacters.add(almondButterAssassin);
         
         // 湯品類角色
-        CharacterCard vegetableSoupWizard = new CharacterCard(
+        CharacterCard vegetableSoupWizard = createCharacterCard(
             "蔬菜湯巫師 (Vegetable Soup Wizard)", 4, "【開胃】：使一個友方角色獲得【滋補】效果。【清淡】：滿血時，使友方城牆恢復1點耐久度。", 
-            Rarity.GOURMET_DELIGHT, 2, 4, false, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 2, 4, Faction.HEALTHY_OASIS, 3);
         allCards.put(vegetableSoupWizard.getName(), vegetableSoupWizard);
         allCharacters.add(vegetableSoupWizard);
         
-        CharacterCard chickenBrothKnight = new CharacterCard(
+        CharacterCard chickenBrothKnight = createCharacterCard(
             "雞肉清湯騎士 (Chicken Broth Knight)", 3, "【開胃】：從牌庫底抽一張健康綠洲卡牌。【回味】：使一個友方角色獲得+0/+2。", 
-            Rarity.CASUAL_BITES, 2, 3, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 3, Faction.HEALTHY_OASIS, 2);
         allCards.put(chickenBrothKnight.getName(), chickenBrothKnight);
         allCharacters.add(chickenBrothKnight);
         
         // 烤製類角色
-        CharacterCard grilledSalmonWarrior = new CharacterCard(
+        CharacterCard grilledSalmonWarrior = createCharacterCard(
             "烤鮭魚戰士 (Grilled Salmon Warrior)", 5, "【開胃】：使一個友方角色獲得【滋補】效果。【連擊】：攻擊後，有40%機率再次攻擊。", 
-            Rarity.GOURMET_DELIGHT, 4, 3, true, Faction.HEALTHY_OASIS);
+            Rarity.GOURMET_DELIGHT, 4, 3, Faction.HEALTHY_OASIS, 3);
         allCards.put(grilledSalmonWarrior.getName(), grilledSalmonWarrior);
         allCharacters.add(grilledSalmonWarrior);
         
-        CharacterCard roastedVegetablesProtector = new CharacterCard(
+        CharacterCard roastedVegetablesProtector = createCharacterCard(
             "烤蔬菜守護者 (Roasted Vegetables Protector)", 4, "【開胃】：為所有友方角色恢復1點生命值。【酥脆(2)】：減免2點傷害。", 
-            Rarity.CASUAL_BITES, 2, 4, false, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 4, Faction.HEALTHY_OASIS, 2);
         allCards.put(roastedVegetablesProtector.getName(), roastedVegetablesProtector);
         allCharacters.add(roastedVegetablesProtector);
         
         // 輕食類角色
-        CharacterCard sandwichScout = new CharacterCard(
+        CharacterCard sandwichScout = createCharacterCard(
             "三明治斥候 (Sandwich Scout)", 2, "【開胃】：從牌庫抽一張卡牌。【彈牙】：每回合可攻擊2次。", 
-            Rarity.CASUAL_BITES, 2, 1, true, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 2, 1, Faction.HEALTHY_OASIS, 1);
         allCards.put(sandwichScout.getName(), sandwichScout);
         allCharacters.add(sandwichScout);
         
-        CharacterCard vegetableWrapSwordsman = new CharacterCard(
+        CharacterCard vegetableWrapSwordsman = createCharacterCard(
             "蔬菜包捲劍士 (Vegetable Wrap Swordsman)", 3, "【開胃】：獲得+1/+1。【連擊】：攻擊後，有30%機率再次攻擊。", 
-            Rarity.CASUAL_BITES, 3, 2, true, Faction.HEALTHY_OASIS);
+            Rarity.CASUAL_BITES, 3, 2, Faction.HEALTHY_OASIS, 2);
         allCards.put(vegetableWrapSwordsman.getName(), vegetableWrapSwordsman);
         allCharacters.add(vegetableWrapSwordsman);
         
         // 傳說角色卡 - 各類別整合
-        CharacterCard holisticNutritionMaster = new CharacterCard(
+        CharacterCard holisticNutritionMaster = createCharacterCard(
             "整合營養大師 (Holistic Nutrition Master)", 8, "【開胃】：為所有友方角色恢復全部生命值。【滋補】：每回合結束時，所有友方角色恢復2點生命值。【酥脆(3)】：減免所有傷害的50%。", 
-            Rarity.ULTIMATE_TASTE, 4, 6, false, Faction.HEALTHY_OASIS);
+            Rarity.ULTIMATE_TASTE, 4, 6, Faction.HEALTHY_OASIS, 5);
         allCards.put(holisticNutritionMaster.getName(), holisticNutritionMaster);
         allCharacters.add(holisticNutritionMaster);
         
-        CharacterCard balancedMealMaster = new CharacterCard(
+        CharacterCard balancedMealMaster = createCharacterCard(
             "均衡餐點大師 (Balanced Meal Master)", 6, "【開胃】：為所有友方角色恢復2點生命值。【連擊】：攻擊後，有50%機率再次攻擊。", 
-            Rarity.ULTIMATE_TASTE, 4, 4, true, Faction.HEALTHY_OASIS);
+            Rarity.ULTIMATE_TASTE, 4, 4, Faction.HEALTHY_OASIS, 4);
         allCards.put(balancedMealMaster.getName(), balancedMealMaster);
         allCharacters.add(balancedMealMaster);
     }
@@ -428,25 +428,49 @@ public class HealthyOasisInitializer implements FactionCardInitializer {
     
     private void initializeCastleCards(Map<String, Card> allCards, List<CastleCard> allCastles) {
         // 基礎城堡卡
-        CastleCard balancedNutritionCastle = new CastleCard(
-            "均衡營養堡壘 (Balanced Nutrition Fortress)", 0, "【城堡效果】：所有友方角色生命值+3，每回合結束時恢復1點生命值。", 
-            Rarity.CULINARY_HERITAGE, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(3));
+        CastleCard balancedNutritionCastle = CastleCard.builder()
+            .name("均衡營養堡壘 (Balanced Nutrition Fortress)")
+            .cost(0)
+            .description("【城堡效果】：所有友方角色生命值+3，每回合結束時恢復1點生命值。")
+            .rarity(Rarity.CULINARY_HERITAGE)
+            .faction(Faction.HEALTHY_OASIS)
+            .health(30)
+            .build();
+        balancedNutritionCastle.setEffect(new CastleEffectImpl.HealthyOasisEffect(3));
         addToCollection(balancedNutritionCastle, allCards, allCastles);
         
         // 更多城堡卡
-        CastleCard wellnessSanctuary = new CastleCard(
-            "健康養生聖殿 (Wellness Sanctuary)", 0, "【城堡效果】：所有友方角色每回合恢復2點生命值，滿血時獲得+0/+2。", 
-            Rarity.ULTIMATE_TASTE, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(4));
+        CastleCard wellnessSanctuary = CastleCard.builder()
+            .name("健康養生聖殿 (Wellness Sanctuary)")
+            .cost(0)
+            .description("【城堡效果】：所有友方角色每回合恢復2點生命值，滿血時獲得+0/+2。")
+            .rarity(Rarity.ULTIMATE_TASTE)
+            .faction(Faction.HEALTHY_OASIS)
+            .health(30)
+            .build();
+        wellnessSanctuary.setEffect(new CastleEffectImpl.HealthyOasisEffect(4));
         addToCollection(wellnessSanctuary, allCards, allCastles);
         
-        CastleCard plantBasedTower = new CastleCard(
-            "植物能量高塔 (Plant-Based Tower)", 0, "【城堡效果】：友方【滋補】效果額外恢復1點生命值，友方角色獲得+0/+3。", 
-            Rarity.GOURMET_DELIGHT, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(2));
+        CastleCard plantBasedTower = CastleCard.builder()
+            .name("植物能量高塔 (Plant-Based Tower)")
+            .cost(0)
+            .description("【城堡效果】：友方【滋補】效果額外恢復1點生命值，友方角色獲得+0/+3。")
+            .rarity(Rarity.GOURMET_DELIGHT)
+            .faction(Faction.HEALTHY_OASIS)
+            .health(30)
+            .build();
+        plantBasedTower.setEffect(new CastleEffectImpl.HealthyOasisEffect(2));
         addToCollection(plantBasedTower, allCards, allCastles);
         
-        CastleCard nutritionPlazaCastle = new CastleCard(
-            "營養廣場城堡 (Nutrition Plaza Castle)", 0, "【城堡效果】：每當你恢復生命值時，有30%機率抽一張牌。", 
-            Rarity.GOURMET_DELIGHT, Faction.HEALTHY_OASIS, new CastleEffectImpl.HealthyOasisEffect(1));
+        CastleCard nutritionPlazaCastle = CastleCard.builder()
+            .name("營養廣場城堡 (Nutrition Plaza Castle)")
+            .cost(0)
+            .description("【城堡效果】：每當你恢復生命值時，有30%機率抽一張牌。")
+            .rarity(Rarity.GOURMET_DELIGHT)
+            .faction(Faction.HEALTHY_OASIS)
+            .health(30)
+            .build();
+        nutritionPlazaCastle.setEffect(new CastleEffectImpl.HealthyOasisEffect(1));
         addToCollection(nutritionPlazaCastle, allCards, allCastles);
     }
     
