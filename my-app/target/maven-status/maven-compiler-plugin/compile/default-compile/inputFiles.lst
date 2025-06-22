@@ -2,6 +2,9 @@ C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\App.java
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\Card.java
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\CardEffectImpl.java
+C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\controller\GameController.java
+C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\faction\AbstractCardInitializer.java
+C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\service\GameService.java
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\CardEffect.java
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\faction\HealthyOasisInitializer.java
 C:\Users\USER\Desktop\side_project\F.O.O.G_tcg\F.O.O.D_tcg\my-app\src\main\java\com\example\game\card\faction\DessertUnionInitializer.java

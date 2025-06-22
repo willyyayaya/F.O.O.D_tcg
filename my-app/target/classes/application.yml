@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: food-tcg
+  
+  # H2 數據庫配置 (開發用)
+  datasource:
+    url: jdbc:h2:mem:foodtcg
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+  
+  # JPA 配置
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  
+  # H2 控制台 (開發用)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+# 遊戲配置
+game:
+  tcg:
+    max-players: 2
+    max-deck-size: 40
+    starting-health: 20
+    max-hand-size: 7
+
+# 日誌配置
+logging:
+  level:
+    com.example: DEBUG
+    org.springframework.web: DEBUG 

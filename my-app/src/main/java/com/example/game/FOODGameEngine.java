@@ -7,6 +7,8 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.stereotype.Service;
+
 import com.example.game.board.BattlefieldZone;
 import com.example.game.board.CastleZone.Wall;
 import com.example.game.board.GameBoard;
@@ -21,6 +23,7 @@ import com.example.game.player.Player;
 /**
  * F.O.O.D TCG遊戲引擎 - 控制食物擬人卡牌遊戲的流程和規則
  */
+@Service
 public class FOODGameEngine {
     private GameBoard gameBoard;
     private Player player1;
