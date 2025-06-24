@@ -3,7 +3,6 @@ package com.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.Bean;
 
 import com.example.game.FOODGameEngine;
 
@@ -27,13 +26,5 @@ public class App {
         System.out.println("F.O.O.D TCG Spring Boot 應用程式已啟動!");
         System.out.println("Web API 可在 http://localhost:8080 訪問");
         System.out.println("使用 --console 參數啟動控制台模式");
-    }
-    
-    /**
-     * 將遊戲引擎註冊為Spring Bean
-     */
-    @Bean
-    public FOODGameEngine foodGameEngine() {
-        return new FOODGameEngine();
     }
 }
