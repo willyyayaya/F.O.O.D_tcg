@@ -684,7 +684,16 @@ public class CardLibrary {
      * 獲取所有城堡卡
      */
     public static List<CastleCard> getAllCastles() {
-        return allCastles;
+        return new ArrayList<>(allCastles);
+    }
+    
+    /**
+     * 獲取指定陣營的角色卡
+     */
+    public static List<CharacterCard> getCharactersByFaction(Faction faction) {
+        return allCharacters.stream()
+                .filter(card -> card.getFaction() == faction)
+                .collect(Collectors.toList());
     }
     
     /**

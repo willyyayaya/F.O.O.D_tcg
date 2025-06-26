@@ -4,154 +4,107 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.example</groupId>
-  <artifactId>my-app</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <!-- 使用Spring Boot Parent -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.18</version>
+    <relativePath/>
+  </parent>
 
-  <name>F.O.O.D TCG</name>
-  <!-- FIXME change it to the project's website -->
+  <groupId>com.example</groupId>
+  <artifactId>food-tcg</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>F.O.O.D TCG Spring Boot</name>
+  <description>F.O.O.D TCG 食物擬人對戰卡牌遊戲 - Spring Boot版本</description>
   <url>http://www.example.com</url>
 
   <properties>
+    <java.version>11</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>11</maven.compiler.source>
-    <maven.compiler.target>11</maven.compiler.target>
   </properties>
 
   <dependencies>
+    <!-- Spring Boot Web Starter -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    
+    <!-- Spring Boot Data JPA (數據持久化) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    
+    <!-- H2 數據庫 (開發用) -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    
+    <!-- Spring Boot Validation -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    
+    <!-- Spring Boot Test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    
+    <!-- WebSocket支持 (即時遊戲) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-websocket</artifactId>
+    </dependency>
+    
+    <!-- Jackson for JSON處理 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+    
+    <!-- Spring Boot DevTools (開發工具) -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-devtools</artifactId>
+      <scope>runtime</scope>
+      <optional>true</optional>
+    </dependency>
+    
+    <!-- Spring Boot Configuration Processor -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
     </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- default lifecycle, jar packaging: see https://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_jar_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-jar-plugin</artifactId>
-          <version>3.0.2</version>
-          <configuration>
-            <archive>
-              <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <mainClass>com.example.App</mainClass>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>2.8.2</version>
-        </plugin>
-        <!-- site lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#site_Lifecycle -->
-        <plugin>
-          <artifactId>maven-site-plugin</artifactId>
-          <version>3.7.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-project-info-reports-plugin</artifactId>
-          <version>3.0.0</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
-      <!-- 添加Maven Shade插件創建胖JAR文件 -->
+      <!-- Spring Boot Maven Plugin -->
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <configuration>
+          <executable>true</executable>
+        </configuration>
+      </plugin>
+      
+      <!-- Maven Compiler Plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-            <configuration>
-              <transformers>
-                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                  <mainClass>com.example.App</mainClass>
-                </transformer>
-              </transformers>
-              <finalName>F.O.O.D-tcg-executable</finalName>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      
-      <!-- 添加Launch4j插件將JAR轉換為EXE -->
-      <plugin>
-        <groupId>com.akathist.maven.plugins.launch4j</groupId>
-        <artifactId>launch4j-maven-plugin</artifactId>
-        <version>2.1.3</version>
-        <executions>
-          <execution>
-            <id>l4j-clui</id>
-            <phase>package</phase>
-            <goals>
-              <goal>launch4j</goal>
-            </goals>
-            <configuration>
-              <headerType>console</headerType>
-              <jar>${project.build.directory}/F.O.O.D-tcg-executable.jar</jar>
-              <outfile>${project.build.directory}/F.O.O.D-tcg.exe</outfile>
-              <downloadUrl>http://java.com/download</downloadUrl>
-              <classPath>
-                <mainClass>com.example.App</mainClass>
-                <preCp>anything</preCp>
-              </classPath>
-              <jre>
-                <minVersion>11.0.0</minVersion>
-                <jdkPreference>preferJre</jdkPreference>
-              </jre>
-              <versionInfo>
-                <fileVersion>1.0.0.0</fileVersion>
-                <txtFileVersion>${project.version}</txtFileVersion>
-                <fileDescription>F.O.O.D TCG 食物擬人對戰卡牌遊戲</fileDescription>
-                <copyright>Copyright © 2023</copyright>
-                <productVersion>1.0.0.0</productVersion>
-                <txtProductVersion>1.0.0.0</txtProductVersion>
-                <productName>F.O.O.D TCG</productName>
-                <companyName>F.O.O.D TCG</companyName>
-                <internalName>F.O.O.D-tcg</internalName>
-                <originalFilename>F.O.O.D-tcg.exe</originalFilename>
-              </versionInfo>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>3.1.0</version>
+        <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
-          <mainClass>com.example.App</mainClass>
+          <source>11</source>
+          <target>11</target>
         </configuration>
       </plugin>
     </plugins>
