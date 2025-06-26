@@ -11,6 +11,8 @@ import com.example.game.player.Player;
  */
 public class GameBoard {
     
+    private static final Scanner scanner = new Scanner(System.in);
+    
     public GameBoard() {
         // 初始化遊戲板
     }
@@ -94,8 +96,6 @@ public class GameBoard {
      * 顯示戰場上的角色詳情
      */
     public void displayBattlefieldDetails(Player player1, Player player2, Player currentPlayer) {
-        Scanner scanner = new Scanner(System.in);
-        
         try {
             while (true) {
                 System.out.println("\n======= 戰場角色詳情 =======");
@@ -128,7 +128,6 @@ public class GameBoard {
      * 顯示玩家場上的角色詳情
      */
     private void displayPlayerCharacters(Player player) {
-        Scanner scanner = new Scanner(System.in);
         List<CharacterCard> characters = player.getBattlefieldZone().getCharacters();
         
         if (characters.isEmpty()) {
