@@ -40,6 +40,8 @@ public class FOODGameEngine {
     
     private Random random;
     
+    private static final Scanner scanner = new Scanner(System.in);
+    
     public FOODGameEngine() {
         this.gameBoard = new GameBoard();
         this.gameOver = false;
@@ -109,8 +111,6 @@ public class FOODGameEngine {
     }
     
     private void initializePlayers() {
-        Scanner scanner = new Scanner(System.in);
-        
         // 選擇遊戲模式
         System.out.println("\n===== 選擇遊戲模式 =====");
         System.out.println("1. 玩家對戰玩家");
@@ -300,7 +300,6 @@ public class FOODGameEngine {
      * 為玩家設置城堡卡
      */
     private void setupPlayerCastle(Player player) {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("\n" + player.getName() + " 請選擇你的城堡卡:");
         
         // 使用玩家選擇的陣營
@@ -325,8 +324,6 @@ public class FOODGameEngine {
     }
     
     private void gameLoop() {
-        Scanner scanner = new Scanner(System.in);
-        
         while (!gameOver) {
             startTurn();
             
@@ -364,8 +361,6 @@ public class FOODGameEngine {
     }
     
     private void placeNewToken() {
-        Scanner scanner = new Scanner(System.in);
-        
         // 檢查是否已經放置過Token
         if (hasPlacedTokenThisTurn) {
             System.out.println("您本回合已經放置過Token了，每回合只能放置一次!");
@@ -600,7 +595,6 @@ public class FOODGameEngine {
     }
     
     private void battle() {
-        Scanner scanner = new Scanner(System.in);
         Player currentPlayerRef = currentPlayer; // 保存當前玩家引用以避免混淆
         Player opponentRef = (currentPlayerRef == player1) ? player2 : player1; // 獲取對手引用
         
@@ -1423,8 +1417,6 @@ public class FOODGameEngine {
      * 開啟卡包
      */
     private void openCardPack() {
-        Scanner scanner = new Scanner(System.in);
-        
         while (true) {
             System.out.println("\n===== 開啟卡包 =====");
             System.out.println("每包卡包包含5張卡牌，按照以下機率獲得不同稀有度：");
