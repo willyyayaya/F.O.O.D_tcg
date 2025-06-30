@@ -502,8 +502,6 @@ public class FOODGameEngine {
     }
     
     private void playCardsPhase(Player player, Scanner scanner) {
-        Player opponent = (player == player1) ? player2 : player1;
-        
         while (true) {
             gameBoard.displayBoard(player1, player2, player);
             gameBoard.displayPlayerHand(player);
@@ -1057,7 +1055,12 @@ public class FOODGameEngine {
             int targetType = attackChoice[1];
             int targetIndex = attackChoice[2];
             
-            List<CharacterCard> aiCharacters = aiPlayer.getBattlefieldZone().getCharacters();
+            BattlefieldZone aiBattlefield = aiPlayer.getBattlefieldZone();
+            List<CharacterCard> aiCharacters = new ArrayList<>();
+            aiCharacters.addAll(aiBattlefield.getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
+            aiCharacters.addAll(aiBattlefield.getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
+            aiCharacters.addAll(aiBattlefield.getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
+            
             if (attackerIndex >= 0 && attackerIndex < aiCharacters.size()) {
                 CharacterCard attacker = aiCharacters.get(attackerIndex);
                 Player opponent = (aiPlayer == player1) ? player2 : player1;
