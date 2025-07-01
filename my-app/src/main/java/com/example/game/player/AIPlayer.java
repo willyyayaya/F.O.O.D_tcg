@@ -110,7 +110,6 @@ public class AIPlayer extends Player {
                         if (random.nextDouble() < 0.4) return castle;
                         break;
                     case CASUAL_BITES:
-                        // 可以什麼都不做，或加 break;
                         break;
                     default:
                         break;
@@ -151,6 +150,8 @@ public class AIPlayer extends Player {
             case ULTIMATE_TASTE: score += 3.0; break;
             case CULINARY_HERITAGE: score += 2.0; break;
             case GOURMET_DELIGHT: score += 1.0; break;
+            case CASUAL_BITES: break;
+            default: break;
         }
         
         // 根據效果關鍵字加分
