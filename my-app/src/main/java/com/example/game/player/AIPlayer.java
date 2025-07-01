@@ -109,6 +109,11 @@ public class AIPlayer extends Player {
                     case GOURMET_DELIGHT:
                         if (random.nextDouble() < 0.4) return castle;
                         break;
+                    case CASUAL_BITES:
+                        // 可以什麼都不做，或加 break;
+                        break;
+                    default:
+                        break;
                 }
             }
             // 如果沒有選到高稀有度卡牌，就隨機選一張
