@@ -111,8 +111,10 @@ public class Player {
         updateResourceTokens();
         
         // 刷新所有角色的攻擊狀態
-        for (CharacterCard character : battlefieldZone.getCharacters()) {
-            character.refreshForNewTurn();
+        for (int areaType : new int[] {BattlefieldZone.DRAW_AREA, BattlefieldZone.MANA_AREA, BattlefieldZone.PLAY_AREA}) {
+            for (CharacterCard character : battlefieldZone.getAreaByType(areaType).getCharacters()) {
+                character.refreshForNewTurn();
+            }
         }
     }
     
