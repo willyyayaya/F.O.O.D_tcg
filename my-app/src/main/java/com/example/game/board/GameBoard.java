@@ -128,7 +128,11 @@ public class GameBoard {
      * 顯示玩家場上的角色詳情
      */
     private void displayPlayerCharacters(Player player) {
-        List<CharacterCard> characters = player.getBattlefieldZone().getCharacters();
+        BattlefieldZone zone = player.getBattlefieldZone();
+        List<CharacterCard> characters = new java.util.ArrayList<>();
+        characters.addAll(zone.getAreaByType(BattlefieldZone.DRAW_AREA).getCharacters());
+        characters.addAll(zone.getAreaByType(BattlefieldZone.MANA_AREA).getCharacters());
+        characters.addAll(zone.getAreaByType(BattlefieldZone.PLAY_AREA).getCharacters());
         
         if (characters.isEmpty()) {
             System.out.println(player.getName() + " 的場上沒有角色");
