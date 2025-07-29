@@ -21,6 +21,7 @@ import com.example.game.player.Player;
  * 卡牌圖鑑 - 管理所有可用的卡牌
  */
 public class CardLibrary {
+    private static final Scanner scanner = new Scanner(System.in);
     private static Map<String, Card> allCards = new HashMap<>();
     private static List<SpellCard> allSpells = new ArrayList<>();
     private static List<CharacterCard> allCharacters = new ArrayList<>();
@@ -70,7 +71,6 @@ public class CardLibrary {
      * 顯示卡牌圖鑑介面
      */
     public static void showLibrary() {
-        Scanner scanner = new Scanner(System.in);
         
         // 檢查圖鑑是否為空
         if (allCards.isEmpty()) {
@@ -450,7 +450,6 @@ public class CardLibrary {
      * 瀏覽所有法術卡
      */
     private static void browseSpells() {
-        Scanner scanner = new Scanner(System.in);
         
         if (allSpells.isEmpty()) {
             System.out.println("\n目前沒有法術卡可供瀏覽");
@@ -466,7 +465,6 @@ public class CardLibrary {
      * 瀏覽所有角色卡
      */
     private static void browseCharacters() {
-        Scanner scanner = new Scanner(System.in);
         
         if (allCharacters.isEmpty()) {
             System.out.println("\n目前沒有角色卡可供瀏覽");
@@ -482,7 +480,6 @@ public class CardLibrary {
      * 瀏覽所有場地卡
      */
     private static void browseFieldCards() {
-        Scanner scanner = new Scanner(System.in);
         
         if (allFieldCards.isEmpty()) {
             System.out.println("\n目前沒有場地卡可供瀏覽");
@@ -545,7 +542,6 @@ public class CardLibrary {
      * 查看玩家手牌
      */
     private static void showPlayerHands() {
-        Scanner scanner = new Scanner(System.in);
         
         // 獲取當前遊戲中的玩家
         com.example.game.player.Player player1 = com.example.game.FOODGameEngine.getPlayer1();
@@ -584,7 +580,6 @@ public class CardLibrary {
      * 顯示玩家手牌的詳細信息
      */
     private static void showPlayerCards(com.example.game.player.Player player) {
-        Scanner scanner = new Scanner(System.in);
         List<Card> cards = player.getHand();
         
         if (cards.isEmpty()) {
@@ -668,7 +663,6 @@ public class CardLibrary {
      * 瀏覽所有城堡卡
      */
     private static void browseCastleCards() {
-        Scanner scanner = new Scanner(System.in);
         
         if (allCastles.isEmpty()) {
             System.out.println("\n目前沒有城堡卡可供瀏覽");
