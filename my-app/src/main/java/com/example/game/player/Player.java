@@ -215,6 +215,11 @@ public class Player {
                     return false;
                 }
                 break;
+            case SPELL:
+                // 法術卡直接使用並棄掉
+                System.out.println(name + " 使用法術: " + card.getName());
+                card.play(this);
+                break;
             case QUEST:
                 // 任務卡添加到資源區
                 System.out.println(name + " 接受任務: " + card.getName());
