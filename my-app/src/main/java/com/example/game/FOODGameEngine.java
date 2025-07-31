@@ -110,6 +110,37 @@ public class FOODGameEngine {
         System.out.println("- 城堡卡: " + CardLibrary.getAllCastles().size() + " 張");
     }
     
+    /**
+     * 設置玩家（用於Spring Boot API）
+     */
+    public void setupPlayers(String player1Name, String player2Name) {
+        // 重置遊戲狀態
+        this.gameOver = false;
+        this.turnNumber = 1;
+        this.hasPlacedTokenThisTurn = false;
+        
+        // 創建玩家
+        this.player1 = new Player(player1Name);
+        this.player2 = new Player(player2Name);
+        
+        // 設置玩家的對手關係
+        this.player1.setOpponent(this.player2);
+        this.player2.setOpponent(this.player1);
+        
+        // 使用預設陣營（中立）初始化牌組
+        this.player1.initializeDeck();
+        this.player2.initializeDeck();
+        
+        // 抽初始手牌
+        this.player1.drawInitialHand();
+        this.player2.drawInitialHand();
+        
+        // 設置先手玩家
+        this.currentPlayer = this.player1;
+        
+        System.out.println("遊戲已設置完成: " + player1Name + " vs " + player2Name);
+    }
+    
     private void initializePlayers() {
         // 選擇遊戲模式
         System.out.println("\n===== 選擇遊戲模式 =====");
@@ -808,7 +839,7 @@ public class FOODGameEngine {
         System.out.println("- 出牌區: " + currentPlayer.getCastleZone().getPlayWall().getTokenCount() + " 個 Token (影響出牌上限)");
     }
     
-    private void endTurn() {
+    public void endTurn() {
         System.out.println(currentPlayer.getName() + " 結束回合");
         
         // 切換玩家
@@ -1534,5 +1565,21 @@ public class FOODGameEngine {
         
         // 如果沒有找到符合稀有度的卡牌，返回null
         return null;
+    }
+    
+    // Spring Boot API需要的getter方法
+    
+    /**
+     * 獲取回合數
+     */
+    public int getTurnNumber() {
+        return turnNumber;
+    }
+    
+    /**
+     * 檢查遊戲是否結束
+     */
+    public boolean isGameOver() {
+        return gameOver;
     }
 } 

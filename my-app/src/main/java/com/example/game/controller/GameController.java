@@ -1,24 +1,33 @@
 package com.example.game.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import com.example.game.FOODGameEngine;
-import com.example.game.card.CardLibrary;
-import com.example.game.card.Faction;
-import com.example.game.service.GameService;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.game.FOODGameEngine;
+import com.example.game.card.Card;
+import com.example.game.card.CardLibrary;
+import com.example.game.dto.GameStateDto;
+import com.example.game.dto.PlayCardRequest;
+import com.example.game.player.Player;
+import com.example.game.service.GameService;
+
 /**
- * F.O.O.D TCG 遊戲控制器
- * 提供REST API來操作遊戲
+ * 遊戲API控制器 - 提供RESTful API接口
  */
 @RestController
 @RequestMapping("/game")
-@CrossOrigin(origins = "*") // 允許跨域請求
+@CrossOrigin(origins = "*")
 public class GameController {
     
     @Autowired
@@ -28,50 +37,21 @@ public class GameController {
     private FOODGameEngine gameEngine;
     
     /**
-     * 獲取遊戲狀態
+     * 初始化卡牌圖鑑
      */
-    @GetMapping("/status")
-    public ResponseEntity<Map<String, Object>> getGameStatus() {
-        Map<String, Object> status = new HashMap<>();
-        status.put("message", "F.O.O.D TCG Spring Boot API 運行中");
-        status.put("version", "1.0.0");
-        status.put("totalCards", getTotalCardCount());
-        return ResponseEntity.ok(status);
-    }
-    
-    /**
-     * 獲取所有可用的陣營
-     */
-    @GetMapping("/factions")
-    public ResponseEntity<Faction[]> getAllFactions() {
-        return ResponseEntity.ok(Faction.values());
-    }
-    
-    /**
-     * 獲取卡牌庫統計
-     */
-    @GetMapping("/cards/stats")
-    public ResponseEntity<Map<String, Object>> getCardStats() {
-        Map<String, Object> stats = new HashMap<>();
-        stats.put("characters", CardLibrary.getAllCharacters().size());
-        stats.put("spells", CardLibrary.getAllSpells().size());
-        stats.put("fields", CardLibrary.getAllFieldCards().size());
-        stats.put("castles", CardLibrary.getAllCastles().size());
-        stats.put("total", getTotalCardCount());
-        return ResponseEntity.ok(stats);
-    }
-    
-    /**
-     * 獲取指定陣營的角色卡
-     */
-    @GetMapping("/cards/characters/{faction}")
-    public ResponseEntity<Object> getCharactersByFaction(@PathVariable String faction) {
+    @PostMapping("/initialize")
+    public ResponseEntity<Map<String, String>> initializeGame() {
         try {
-            Faction factionEnum = Faction.valueOf(faction.toUpperCase());
-            return ResponseEntity.ok(CardLibrary.getCharactersByFaction(factionEnum));
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest()
-                .body(Map.of("error", "無效的陣營: " + faction));
+            CardLibrary.initialize();
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "遊戲初始化成功");
+            response.put("status", "success");
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            Map<String, String> response = new HashMap<>();
+            response.put("message", "遊戲初始化失敗: " + e.getMessage());
+            response.put("status", "error");
+            return ResponseEntity.badRequest().body(response);
         }
     }
     
@@ -79,61 +59,140 @@ public class GameController {
      * 開始新遊戲
      */
     @PostMapping("/start")
-    public ResponseEntity<Map<String, Object>> startNewGame(
-            @RequestBody Map<String, String> request) {
-        
-        String player1Name = request.getOrDefault("player1", "玩家1");
-        String player2Name = request.getOrDefault("player2", "玩家2");
-        
+    public ResponseEntity<GameStateDto> startNewGame(@RequestBody Map<String, String> request) {
         try {
-            String gameId = gameService.createNewGame(player1Name, player2Name);
-            Map<String, Object> response = new HashMap<>();
-            response.put("gameId", gameId);
-            response.put("message", "新遊戲已創建");
-            response.put("players", Map.of("player1", player1Name, "player2", player2Name));
+            String player1Name = request.get("player1Name");
+            String player2Name = request.get("player2Name");
             
-            return ResponseEntity.ok(response);
+            GameStateDto gameState = gameService.startNewGame(player1Name, player2Name);
+            return ResponseEntity.ok(gameState);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                .body(Map.of("error", "創建遊戲失敗: " + e.getMessage()));
+            return ResponseEntity.badRequest().build();
         }
     }
     
     /**
-     * 獲取遊戲詳情
+     * 獲取當前遊戲狀態
      */
-    @GetMapping("/{gameId}")
-    public ResponseEntity<Object> getGameDetails(@PathVariable String gameId) {
+    @GetMapping("/state")
+    public ResponseEntity<GameStateDto> getGameState() {
         try {
-            Object gameDetails = gameService.getGameDetails(gameId);
-            return ResponseEntity.ok(gameDetails);
+            GameStateDto gameState = gameService.getCurrentGameState();
+            return ResponseEntity.ok(gameState);
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
     
     /**
-     * 測試控制台遊戲啟動
+     * 打出手牌
      */
-    @PostMapping("/console/start")
-    public ResponseEntity<Map<String, String>> startConsoleGame() {
+    @PostMapping("/play-card")
+    public ResponseEntity<GameStateDto> playCard(@RequestBody PlayCardRequest request) {
         try {
-            // 在新執行緒中啟動控制台遊戲，避免阻塞API
-            new Thread(() -> {
-                gameEngine.start();
-            }).start();
-            
-            return ResponseEntity.ok(Map.of("message", "控制台遊戲已啟動"));
+            GameStateDto gameState = gameService.playCard(
+                request.getPlayerName(),
+                request.getHandIndex(),
+                request.getAreaType()
+            );
+            return ResponseEntity.ok(gameState);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                .body(Map.of("error", "啟動控制台遊戲失敗: " + e.getMessage()));
+            return ResponseEntity.badRequest().build();
         }
     }
     
-    private int getTotalCardCount() {
-        return CardLibrary.getAllCharacters().size() + 
-               CardLibrary.getAllSpells().size() + 
-               CardLibrary.getAllFieldCards().size() + 
-               CardLibrary.getAllCastles().size();
+    /**
+     * 結束回合
+     */
+    @PostMapping("/end-turn")
+    public ResponseEntity<GameStateDto> endTurn(@RequestBody Map<String, String> request) {
+        try {
+            String playerName = request.get("playerName");
+            GameStateDto gameState = gameService.endTurn(playerName);
+            return ResponseEntity.ok(gameState);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    /**
+     * 放置Token
+     */
+    @PostMapping("/place-token")
+    public ResponseEntity<GameStateDto> placeToken(@RequestBody Map<String, Object> request) {
+        try {
+            String playerName = (String) request.get("playerName");
+            Integer wallType = (Integer) request.get("wallType");
+            
+            GameStateDto gameState = gameService.placeToken(playerName, wallType);
+            return ResponseEntity.ok(gameState);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    /**
+     * 獲取卡牌圖鑑
+     */
+    @GetMapping("/cards")
+    public ResponseEntity<Map<String, Object>> getCardLibrary() {
+        try {
+            Map<String, Object> response = new HashMap<>();
+            response.put("characters", CardLibrary.getAllCharacters());
+            response.put("spells", CardLibrary.getAllSpells());
+            response.put("fields", CardLibrary.getAllFieldCards());
+            response.put("castles", CardLibrary.getAllCastles());
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    /**
+     * 根據名稱獲取特定卡牌
+     */
+    @GetMapping("/cards/{cardName}")
+    public ResponseEntity<Card> getCard(@PathVariable String cardName) {
+        try {
+            Card card = CardLibrary.getCardByName(cardName);
+            if (card != null) {
+                return ResponseEntity.ok(card);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+    
+    /**
+     * 獲取玩家手牌
+     */
+    @GetMapping("/player/{playerName}/hand")
+    public ResponseEntity<List<Card>> getPlayerHand(@PathVariable String playerName) {
+        try {
+            List<Card> hand = gameService.getPlayerHand(playerName);
+            return ResponseEntity.ok(hand);
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    
+    /**
+     * 攻擊城牆
+     */
+    @PostMapping("/attack-wall")
+    public ResponseEntity<GameStateDto> attackWall(@RequestBody Map<String, Object> request) {
+        try {
+            String attackerName = (String) request.get("attackerName");
+            String targetPlayerName = (String) request.get("targetPlayerName");
+            Integer wallType = (Integer) request.get("wallType");
+            Integer damage = (Integer) request.get("damage");
+            
+            GameStateDto gameState = gameService.attackWall(attackerName, targetPlayerName, wallType, damage);
+            return ResponseEntity.ok(gameState);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 } 

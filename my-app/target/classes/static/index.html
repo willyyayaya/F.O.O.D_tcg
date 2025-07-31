@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F.O.O.D TCG - Spring Boot版本</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 3em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .api-section {
+            margin: 30px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+        
+        .api-section h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .btn-success {
+            background: linear-gradient(45deg, #56ab2f, #a8e6cf);
+        }
+        
+        .response {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            white-space: pre-wrap;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .input-group {
+            margin: 10px 0;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .input-group input {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            width: 200px;
+            font-size: 14px;
+        }
+        
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        
+        .status.connected {
+            background: rgba(40, 167, 69, 0.8);
+        }
+        
+        .status.disconnected {
+            background: rgba(220, 53, 69, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <div class="status" id="status">檢查連線中...</div>
+    
+    <div class="container">
+        <h1>🍔 F.O.O.D TCG 🎮</h1>
+        <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+            食物擬人對戰卡牌遊戲 - Spring Boot版本
+        </p>
+        
+        <!-- 系統狀態 -->
+        <div class="api-section">
+            <h2>🔧 系統狀態</h2>
+            <button class="btn btn-primary" onclick="checkStatus()">檢查API狀態</button>
+            <button class="btn btn-success" onclick="initializeGame()">初始化遊戲</button>
+            <div class="response" id="statusResponse"></div>
+        </div>
+        
+        <!-- 遊戲管理 -->
+        <div class="api-section">
+            <h2>🎲 遊戲管理</h2>
+            <div class="input-group">
+                <label>玩家1名稱：</label>
+                <input type="text" id="player1Name" value="玩家1" />
+            </div>
+            <div class="input-group">
+                <label>玩家2名稱：</label>
+                <input type="text" id="player2Name" value="玩家2" />
+            </div>
+            <button class="btn btn-success" onclick="startNewGame()">開始新遊戲</button>
+            <button class="btn btn-primary" onclick="getGameState()">獲取遊戲狀態</button>
+            <div class="response" id="gameResponse"></div>
+        </div>
+        
+        <!-- 卡牌圖鑑 -->
+        <div class="api-section">
+            <h2>📚 卡牌圖鑑</h2>
+            <button class="btn" onclick="getCardLibrary()">查看所有卡牌</button>
+            <button class="btn" onclick="getCharacterCards()">角色卡</button>
+            <button class="btn" onclick="getSpellCards()">法術卡</button>
+            <button class="btn" onclick="getFieldCards()">場地卡</button>
+            <button class="btn" onclick="getCastleCards()">城堡卡</button>
+            <div class="response" id="cardResponse"></div>
+        </div>
+        
+        <!-- 遊戲操作 -->
+        <div class="api-section">
+            <h2>🎯 遊戲操作</h2>
+            <div class="input-group">
+                <label>玩家名稱：</label>
+                <input type="text" id="actionPlayerName" value="玩家1" />
+            </div>
+            <button class="btn" onclick="endTurn()">結束回合</button>
+            <button class="btn" onclick="placeToken()">放置Token</button>
+            <div class="response" id="actionResponse"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = '';
+        
+        // 檢查API狀態
+        async function checkStatus() {
+            try {
+                const response = await fetch(`${API_BASE}/game/state`);
+                const data = await response.text();
+                document.getElementById('statusResponse').textContent = `API狀態: ${response.status}\n回應: ${data}`;
+                document.getElementById('status').textContent = 'API 已連線';
+                document.getElementById('status').className = 'status connected';
+            } catch (error) {
+                document.getElementById('statusResponse').textContent = `錯誤: ${error.message}`;
+                document.getElementById('status').textContent = 'API 離線';
+                document.getElementById('status').className = 'status disconnected';
+            }
+        }
+        
+        // 初始化遊戲
+        async function initializeGame() {
+            try {
+                const response = await fetch(`${API_BASE}/game/initialize`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const data = await response.json();
+                document.getElementById('statusResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('statusResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 開始新遊戲
+        async function startNewGame() {
+            const player1Name = document.getElementById('player1Name').value;
+            const player2Name = document.getElementById('player2Name').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/game/start`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ player1Name, player2Name })
+                });
+                const data = await response.json();
+                document.getElementById('gameResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('gameResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 獲取遊戲狀態
+        async function getGameState() {
+            try {
+                const response = await fetch(`${API_BASE}/game/state`);
+                const data = await response.json();
+                document.getElementById('gameResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('gameResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 獲取卡牌圖鑑
+        async function getCardLibrary() {
+            try {
+                const response = await fetch(`${API_BASE}/game/cards`);
+                const data = await response.json();
+                document.getElementById('cardResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('cardResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 結束回合
+        async function endTurn() {
+            const playerName = document.getElementById('actionPlayerName').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/game/end-turn`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ playerName })
+                });
+                const data = await response.json();
+                document.getElementById('actionResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('actionResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 放置Token
+        async function placeToken() {
+            const playerName = document.getElementById('actionPlayerName').value;
+            const wallType = 1; // 預設放置在抽牌區
+            
+            try {
+                const response = await fetch(`${API_BASE}/game/place-token`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ playerName, wallType })
+                });
+                const data = await response.json();
+                document.getElementById('actionResponse').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('actionResponse').textContent = `錯誤: ${error.message}`;
+            }
+        }
+        
+        // 頁面載入時檢查狀態
+        window.onload = function() {
+            checkStatus();
+        };
+    </script>
+</body>
+</html> 

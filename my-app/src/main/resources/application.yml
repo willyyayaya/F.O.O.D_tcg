@@ -1,20 +1,22 @@
 server:
   port: 8080
-  servlet:
-    context-path: /api
 
 spring:
   application:
     name: food-tcg
   
-  # H2 數據庫配置 (開發用)
+  # H2 數據庫配置
   datasource:
     url: jdbc:h2:mem:foodtcg
-    driver-class-name: org.h2.Driver
+    driverClassName: org.h2.Driver
     username: sa
-    password: 
-  
-  # JPA 配置
+    password: password
+    
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
@@ -23,23 +25,24 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  
-  # H2 控制台 (開發用)
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+        
+  # JSON配置
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    default-property-inclusion: non-null
 
 # 遊戲配置
 game:
-  tcg:
-    max-players: 2
-    max-deck-size: 40
-    starting-health: 20
-    max-hand-size: 7
-
+  max-players: 8
+  timeout-minutes: 30
+  auto-save: true
+  
 # 日誌配置
 logging:
   level:
-    com.example: DEBUG
-    org.springframework.web: DEBUG 
+    com.example.game: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n" 
