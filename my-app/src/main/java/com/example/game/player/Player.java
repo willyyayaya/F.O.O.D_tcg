@@ -500,6 +500,14 @@ public class Player {
     public void updateResourceTokens() {
         int totalCastleTokens = castleZone.getTotalTokenCount();
         resourceZone.setTokenCount(totalCastleTokens);
+        
+        // 更新法力值（根據法力區Token數量）
+        int manaTokens = castleZone.getManaWall().getTokenCount();
+        this.manaPoints = manaTokens; // 直接設置而不是累加
+        
+        // 更新出牌數量限制（根據出牌區Token數量）
+        int playTokens = castleZone.getPlayWall().getTokenCount();
+        updateMaxCardsToPlay(playTokens);
     }
     
     /**

@@ -281,20 +281,125 @@ public class ConsoleGameRunner {
         
         switch (choice) {
             case "1":
-                System.out.println("📄 角色卡總數: " + CardLibrary.getAllCharacters().size());
+                showCardList("角色卡", CardLibrary.getAllCharacters());
                 break;
             case "2":
-                System.out.println("📄 法術卡總數: " + CardLibrary.getAllSpells().size());
+                showCardList("法術卡", CardLibrary.getAllSpells());
                 break;
             case "3":
-                System.out.println("📄 場地卡總數: " + CardLibrary.getAllFieldCards().size());
+                showCardList("場地卡", CardLibrary.getAllFieldCards());
                 break;
             case "4":
-                System.out.println("📄 城堡卡總數: " + CardLibrary.getAllCastles().size());
+                showCardList("城堡卡", CardLibrary.getAllCastles());
                 break;
             default:
                 System.out.println("❌ 無效選項");
         }
+    }
+    
+    private static void showCardList(String cardType, java.util.List<? extends com.example.game.card.Card> cards) {
+        System.out.println("\n📄 " + cardType + " 總數: " + cards.size());
+        
+        if (cards.isEmpty()) {
+            System.out.println("❌ 沒有找到任何卡牌");
+            return;
+        }
+        
+        final int CARDS_PER_PAGE = 10;
+        int totalPages = (cards.size() + CARDS_PER_PAGE - 1) / CARDS_PER_PAGE;
+        int currentPage = 1;
+        
+        while (true) {
+            System.out.println("\n" + "=".repeat(60));
+            System.out.println("📖 " + cardType + " - 第 " + currentPage + "/" + totalPages + " 頁");
+            System.out.println("=".repeat(60));
+            
+            // 顯示當前頁的卡牌
+            int startIndex = (currentPage - 1) * CARDS_PER_PAGE;
+            int endIndex = Math.min(startIndex + CARDS_PER_PAGE, cards.size());
+            
+            for (int i = startIndex; i < endIndex; i++) {
+                var card = cards.get(i);
+                displayCardInfo(i + 1, card);
+            }
+            
+            // 顯示操作選項
+            System.out.println("\n操作選項:");
+            if (currentPage > 1) System.out.println("p - 上一頁");
+            if (currentPage < totalPages) System.out.println("n - 下一頁");
+            System.out.println("d [編號] - 查看詳細資訊 (例: d 5)");
+            System.out.println("q - 返回上級選單");
+            System.out.print("請輸入選項: ");
+            
+            String input = scanner.nextLine().trim().toLowerCase();
+            
+            if (input.equals("q")) {
+                break;
+            } else if (input.equals("p") && currentPage > 1) {
+                currentPage--;
+            } else if (input.equals("n") && currentPage < totalPages) {
+                currentPage++;
+            } else if (input.startsWith("d ")) {
+                try {
+                    int cardNum = Integer.parseInt(input.substring(2).trim());
+                    if (cardNum >= 1 && cardNum <= cards.size()) {
+                        showDetailedCardInfo(cards.get(cardNum - 1));
+                    } else {
+                        System.out.println("❌ 無效的卡牌編號");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("❌ 請輸入有效的數字");
+                }
+            } else {
+                System.out.println("❌ 無效選項");
+            }
+        }
+    }
+    
+    private static void displayCardInfo(int number, com.example.game.card.Card card) {
+        String info = String.format("[%3d] %-25s", number, card.getName());
+        info += " (費用:" + card.getCost() + ")";
+        
+        // 根據卡牌類型顯示不同資訊
+        if (card instanceof com.example.game.card.CharacterCard) {
+            var charCard = (com.example.game.card.CharacterCard) card;
+            info += " [攻:" + charCard.getAttack() + "/血:" + charCard.getCurrentHealth() + "]";
+        } else if (card instanceof com.example.game.card.SpellCard) {
+            info += " [法術]";
+        } else if (card instanceof com.example.game.card.FieldCard) {
+            info += " [場地]";
+        } else if (card instanceof com.example.game.card.CastleCard) {
+            info += " [城堡]";
+        }
+        
+        // 顯示稀有度
+        info += " (" + card.getRarity().getChineseName() + ")";
+        
+        System.out.println(info);
+    }
+    
+    private static void showDetailedCardInfo(com.example.game.card.Card card) {
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println("🔍 卡牌詳細資訊");
+        System.out.println("=".repeat(50));
+        
+        System.out.println("📛 名稱: " + card.getName());
+        System.out.println("💰 費用: " + card.getCost());
+        System.out.println("⭐ 稀有度: " + card.getRarity().getChineseName());
+        System.out.println("🏷️  陣營: " + card.getFaction().getLocalizedName());
+        
+        if (card instanceof com.example.game.card.CharacterCard) {
+            var charCard = (com.example.game.card.CharacterCard) card;
+            System.out.println("⚔️  攻擊力: " + charCard.getAttack());
+            System.out.println("❤️  生命值: " + charCard.getCurrentHealth() + "/" + charCard.getMaxHealth());
+            
+            // 關鍵字功能暫未實現
+        }
+        
+        System.out.println("📝 描述: " + card.getDescription());
+        
+        System.out.print("\n按Enter鍵返回...");
+        scanner.nextLine();
     }
     
     private static void switchPlayer() {
