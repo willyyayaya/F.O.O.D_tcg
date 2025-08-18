@@ -10,7 +10,7 @@ import com.example.game.player.Player;
  */
 public class ConsoleGameRunner {
     
-    private static Scanner scanner = new Scanner(System.in);
+    private static final Scanner scanner = new Scanner(System.in);
     private static Player player1;
     private static Player player2;
     private static Player currentPlayer;
