@@ -181,6 +181,12 @@ public class SpellCard extends Card {
                 this.effectDuration = 0;
                 this.hasDelayedEffect = false;
                 break;
+            case ECONOMIC:
+                this.value = Math.max(1, getCost()); // 經濟效果值等於費用
+                this.targetType = TargetType.SELF;
+                this.effectDuration = 1;
+                this.hasDelayedEffect = false;
+                break;
             default:
                 this.value = getCost();
                 this.targetType = TargetType.NONE;
@@ -257,6 +263,9 @@ public class SpellCard extends Card {
             case SPECIAL:
                 applySpecial(player, null);
                 break;
+            case ECONOMIC:
+                applyEconomic(player);
+                break;
         }
     }
     
@@ -297,6 +306,9 @@ public class SpellCard extends Card {
                 break;
             case SPECIAL:
                 applySpecial(player, target);
+                break;
+            case ECONOMIC:
+                applyEconomic(player);
                 break;
         }
     }
@@ -500,6 +512,43 @@ public class SpellCard extends Card {
         }
     }
     
+    private void applyEconomic(Player player) {
+        System.out.println("經濟效果法術：增加 " + value + " 點法力");
+        
+        // 增加玩家的法力值
+        player.updateManaPoints(value);
+        
+        // 經濟法術的額外效果
+        if (getFaction() != Faction.NEUTRAL) {
+            // 有陣營的經濟法術可能有額外效果
+            System.out.println("陣營加成：" + getFaction().getLocalizedName() + " 的經濟效果");
+            
+            // 根據不同陣營提供不同的經濟效果
+            switch (getFaction()) {
+                case FAST_FOOD_GUILD:
+                    // 速食工會：額外抽一張牌
+                    player.drawCard();
+                    System.out.println("速食工會效果：額外抽一張牌");
+                    break;
+                case DESSERT_UNION:
+                    // 甜點聯盟：下一張卡牌費用-1
+                    System.out.println("甜點聯盟效果：下一張卡牌費用減少1");
+                    // TODO: 實現下張牌減費效果
+                    break;
+                case HEALTHY_OASIS:
+                    // 健康綠洲：恢復1點生命值
+                    player.heal(1);
+                    System.out.println("健康綠洲效果：恢復1點生命值");
+                    break;
+                case SPICY_KINGDOM:
+                    // 火辣王國：增加1點額外法力
+                    player.updateManaPoints(1);
+                    System.out.println("火辣王國效果：額外增加1點法力");
+                    break;
+            }
+        }
+    }
+    
     @Override
     protected void displaySpecificDetails() {
         System.out.println("類型: 法術");
@@ -548,6 +597,8 @@ public class SpellCard extends Card {
                 return "召喚 (召喚" + value + "個角色)";
             case SPECIAL:
                 return "特殊效果 (具有獨特效果的法術)";
+            case ECONOMIC:
+                return "經濟 (增加" + value + "點法力或降低卡牌費用)";
             default:
                 return "未知";
         }
