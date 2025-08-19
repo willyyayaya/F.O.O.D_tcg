@@ -10,7 +10,7 @@ import com.example.game.player.Player;
  */
 public class ConsoleGameRunner {
     
-    private static final Scanner scanner = new Scanner(System.in);
+    private static Scanner scanner;
     private static Player player1;
     private static Player player2;
     private static Player currentPlayer;
@@ -18,22 +18,25 @@ public class ConsoleGameRunner {
     private static boolean gameOver = false;
     
     public static void main(String[] args) {
-        System.out.println("🍔 歡迎來到 F.O.O.D TCG 食物擬人對戰卡牌遊戲 - 控制台版本! 🎮");
-        System.out.println("========================================================");
-        
-        // 初始化卡牌圖鑑
-        initializeCardLibrary();
-        
-        // 初始化玩家
-        initializePlayers();
-        
-        if (player1 != null && player2 != null) {
-            // 開始遊戲循環
-            gameLoop();
+        try (Scanner scannerResource = new Scanner(System.in)) {
+            scanner = scannerResource;
+            
+            System.out.println("🍔 歡迎來到 F.O.O.D TCG 食物擬人對戰卡牌遊戲 - 控制台版本! 🎮");
+            System.out.println("========================================================");
+            
+            // 初始化卡牌圖鑑
+            initializeCardLibrary();
+            
+            // 初始化玩家
+            initializePlayers();
+            
+            if (player1 != null && player2 != null) {
+                // 開始遊戲循環
+                gameLoop();
+            }
+            
+            System.out.println("\n👋 感謝遊玩 F.O.O.D TCG！");
         }
-        
-        System.out.println("\n👋 感謝遊玩 F.O.O.D TCG！");
-        scanner.close();
     }
     
     private static void initializeCardLibrary() {
