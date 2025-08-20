@@ -545,6 +545,10 @@ public class SpellCard extends Card {
                     player.updateManaPoints(1);
                     System.out.println("火辣王國效果：額外增加1點法力");
                     break;
+                case NEUTRAL:
+                    // 中立陣營：無額外效果
+                    System.out.println("中立陣營：無額外經濟效果");
+                    break;
             }
         }
     }
