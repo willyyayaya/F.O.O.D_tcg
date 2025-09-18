@@ -167,8 +167,8 @@ public class GameService {
      * 根據名稱獲取玩家
      */
     private Player getPlayerByName(String playerName) {
-        Player player1 = gameEngine.getPlayer1();
-        Player player2 = gameEngine.getPlayer2();
+        Player player1 = FOODGameEngine.getPlayer1();
+        Player player2 = FOODGameEngine.getPlayer2();
         
         if (player1 != null && player1.getName().equals(playerName)) {
             return player1;
@@ -183,8 +183,8 @@ public class GameService {
      * 獲取對手
      */
     private Player getOpponent(Player player) {
-        Player player1 = gameEngine.getPlayer1();
-        Player player2 = gameEngine.getPlayer2();
+        Player player1 = FOODGameEngine.getPlayer1();
+        Player player2 = FOODGameEngine.getPlayer2();
         
         if (player == player1) {
             return player2;
