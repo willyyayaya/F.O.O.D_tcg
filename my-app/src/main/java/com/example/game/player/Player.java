@@ -33,9 +33,9 @@ public class Player {
     private int cardsPlayedThisTurn; // 本回合已出牌數量
     
     // F.O.O.D TCG專用區域
-    private CastleZone castleZone;
-    private BattlefieldZone battlefieldZone;
-    private ResourceZone resourceZone;
+    private final CastleZone castleZone;
+    private final BattlefieldZone battlefieldZone;
+    private final ResourceZone resourceZone;
     
     // 玩家的對手
     private Player opponent;
