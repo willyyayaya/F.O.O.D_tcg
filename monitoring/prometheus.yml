@@ -1,0 +1,33 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  # - "first_rules.yml"
+  # - "second_rules.yml"
+
+scrape_configs:
+  # F.O.O.D TCG 應用程式監控
+  - job_name: 'food-tcg-app'
+    static_configs:
+      - targets: ['food-tcg-app:8080']
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 10s
+    
+  # PostgreSQL 監控
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres:5432']
+    scrape_interval: 30s
+    
+  # Redis 監控
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 30s
+    
+  # Nginx 監控
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx:80']
+    scrape_interval: 30s
